@@ -28,6 +28,17 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+
+  const url = event.request.url;
+  if (
+    url.includes('ads.txt') ||
+    url.includes('googlesyndication.com') ||
+    url.includes('doubleclick.net') ||
+    url.includes('googleadservices.com')
+  ) {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) return cachedResponse;
