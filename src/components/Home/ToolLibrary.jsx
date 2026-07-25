@@ -264,6 +264,10 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
 
   return (
     <main id="monitor-tools-home" className="ms-library" tabIndex={-1} aria-labelledby="library-title">
+      {/* Desktop Side Skyscraper Ads */}
+      <AdSenseUnit format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--left" style={{ width: '160px', minHeight: '600px' }} />
+      <AdSenseUnit format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--right" style={{ width: '160px', minHeight: '600px' }} />
+
       <section className="ms-hero" aria-describedby="library-description">
         {/* SVG Dot Pattern Background */}
         <DotPattern cx={1} cy={1} cr={1} />

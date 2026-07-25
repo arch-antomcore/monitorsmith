@@ -4552,7 +4552,23 @@ button.wbp-navbar__mode:hover {
   pointer-events: none;
 }
 
-.ms-flow-btn:hover .ms-flow-btn__shimmer {
-  opacity: 1;
-  animation: ms-shimmer-sweep 1.8s infinite cubic-bezier(0.4, 0, 0.2, 1);
+.ms-side-ad-gutter {
+  position: fixed;
+  top: 100px;
+  width: 160px;
+  max-height: 600px;
+  z-index: 10;
+  display: none;
+}
+
+@media (min-width: 1480px) {
+  .ms-side-ad-gutter {
+    display: block;
+  }
+  .ms-side-ad-gutter--left {
+    left: 18px;
+  }
+  .ms-side-ad-gutter--right {
+    right: 18px;
+  }
 }
