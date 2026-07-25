@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 export default function AdSenseUnit({
   slot = "0000000000",
-  client = "ca-pub-XXXXXXXXXXXXXXXX",
+  client = "ca-pub-5926952327268950",
   format = "auto",
   responsive = true,
   className = "",
