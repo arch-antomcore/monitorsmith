@@ -1,0 +1,76 @@
+import { forwardRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+
+const joinClasses = (...values) => values.filter(Boolean).join(' ');
+
+/**
+ * Botão base do MonitorSmith. Mantém os estados visuais e de acessibilidade
+ * centralizados, sem impor uma acao ou iconografia especifica ao consumidor.
+ */
+const Button = forwardRef(function Button(
+  {
+    children,
+    className,
+    variant = 'secondary',
+    size = 'md',
+    icon,
+    iconPosition = 'left',
+    loading = false,
+    loadingLabel = 'Aguarde',
+    fullWidth = false,
+    disabled = false,
+    motionProps,
+    type = 'button',
+    ...buttonProps
+  },
+  ref,
+) {
+  const shouldReduceMotion = useReducedMotion();
+  const isDisabled = disabled || loading;
+  const hasOnlyIcon = !children && Boolean(icon);
+
+  return (
+    <motion.button
+      ref={ref}
+      type={type}
+      className={joinClasses(
+        'wbp-button',
+        `wbp-button--${variant}`,
+        `wbp-button--${size}`,
+        fullWidth && 'wbp-button--full-width',
+        hasOnlyIcon && 'wbp-button--icon-only',
+        loading && 'is-loading',
+        className,
+      )}
+      data-variant={variant}
+      disabled={isDisabled}
+      aria-busy={loading || undefined}
+      whileHover={
+        !isDisabled && !shouldReduceMotion
+          ? { y: -1, transition: { duration: 0.16 } }
+          : undefined
+      }
+      whileTap={!isDisabled && !shouldReduceMotion ? { scale: 0.98 } : undefined}
+      transition={{ type: 'spring', stiffness: 360, damping: 26 }}
+      {...buttonProps}
+      {...motionProps}
+    >
+      {loading ? <span className="wbp-button__spinner" aria-hidden="true" /> : null}
+      {icon && iconPosition === 'left' ? (
+        <span className="wbp-button__icon" aria-hidden="true">
+          {icon}
+        </span>
+      ) : null}
+      {children ? <span className="wbp-button__label">{loading ? loadingLabel : children}</span> : null}
+      {icon && iconPosition === 'right' ? (
+        <span className="wbp-button__icon" aria-hidden="true">
+          {icon}
+        </span>
+      ) : null}
+      {!children && loading ? <span className="sr-only">{loadingLabel}</span> : null}
+    </motion.button>
+  );
+});
+
+export { joinClasses };
+export default Button;

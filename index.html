@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#030304" />
+    <meta name="description" content="MonitorSmith reúne ferramentas para monitor: tela preta OLED, tela verde chroma, teste de pixels, limpeza, verificação visual, luz suave, foco e mensagens em tela cheia." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="MonitorSmith — Ferramentas para Monitor | EXVORN.TECH" />
+    <meta property="og:description" content="Uma suíte para testar, cuidar, iluminar e usar seu monitor como espaço de foco, presença ou criação." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="MonitorSmith — Ferramentas para Monitor | EXVORN.TECH" />
+    <meta name="twitter:description" content="Uma suíte para testar, cuidar, iluminar e usar seu monitor como espaço de foco, presença ou criação." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MonitorSmith" />
+    <title>MonitorSmith — Ferramentas para Monitor | EXVORN.TECH</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <main>
+        <h1>MonitorSmith</h1>
+        <p>Ferramentas para monitor: tela preta OLED, teste de pixels, limpeza, cor, foco e sinalização da EXVORN.TECH.</p>
+      </main>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
+  </body>
+</html>
