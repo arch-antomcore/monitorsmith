@@ -309,6 +309,8 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
           <FlowButton text="Instalar Aplicativo no Windows" />
         </div>
 
+        <AdSenseUnit format="auto" className="ms-ad-slot--hero" style={{ maxWidth: '780px', marginTop: '32px' }} />
+
         <motion.div
           className="ms-hero__cta"
           initial={shouldReduceMotion ? false : { opacity: 0 }}

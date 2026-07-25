@@ -22,41 +22,45 @@ export default function AdSenseUnit({
     <div
       className={`ms-ad-container ${className}`}
       style={{
-        margin: '28px auto',
-        padding: '16px 12px 12px',
+        margin: '24px auto',
+        padding: '12px 16px 16px',
         maxWidth: '920px',
         width: '100%',
         borderRadius: '16px',
-        background: 'rgba(13, 16, 23, 0.45)',
-        border: '1px solid rgba(255, 255, 255, 0.07)',
+        background: 'rgba(13, 16, 23, 0.55)',
+        border: '1px dashed rgba(52, 211, 153, 0.3)',
         backdropFilter: 'blur(10px)',
         textAlign: 'center',
         boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)',
+        boxSizing: 'border-box',
         ...style,
       }}
     >
-      <span
-        className="ms-ad-label"
-        style={{
-          display: 'inline-block',
-          fontSize: '0.62rem',
-          color: 'rgba(255,255,255,0.35)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.12em',
-          marginBottom: '8px',
-          fontFamily: 'monospace',
-        }}
-      >
-        Publicidade • Anúncio Patrocinado
-      </span>
-      <ins
-        className="adsbygoogle"
-        style={{ display: 'block', minHeight: '90px', borderRadius: '12px', overflow: 'hidden' }}
-        data-ad-client={client}
-        data-ad-slot={slot}
-        data-ad-format={format}
-        data-full-width-responsive={responsive ? 'true' : 'false'}
-      />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '8px' }}>
+        <span
+          className="ms-ad-label"
+          style={{
+            fontSize: '0.64rem',
+            color: 'rgba(52, 211, 153, 0.85)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.12em',
+            fontWeight: 600,
+            fontFamily: 'monospace',
+          }}
+        >
+          📢 Espaço de Anúncio AdSense • Publicidade Patrocinada
+        </span>
+      </div>
+      <div style={{ position: 'relative', minHeight: '90px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px', background: 'rgba(0,0,0,0.2)' }}>
+        <ins
+          className="adsbygoogle"
+          style={{ display: 'block', width: '100%', minHeight: '90px', borderRadius: '10px', overflow: 'hidden' }}
+          data-ad-client={client}
+          data-ad-slot={slot}
+          data-ad-format={format}
+          data-full-width-responsive={responsive ? 'true' : 'false'}
+        />
+      </div>
     </div>
   );
 }
