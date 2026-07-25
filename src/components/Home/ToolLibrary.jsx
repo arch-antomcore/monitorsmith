@@ -5,6 +5,7 @@ import Button from '../UI/Button';
 import GlassCard from '../UI/GlassCard';
 import DotPattern from '../UI/DotPattern';
 import FlowButton from '../UI/FlowButton';
+import AdSenseUnit from '../UI/AdSenseUnit';
 import { ControlIcon } from '../Controls/Navbar';
 
 const TOOL_LIBRARY = [
@@ -327,12 +328,16 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
           </p>
         </div>
 
+        <AdSenseUnit format="auto" className="ms-ad-slot--leaderboard" style={{ maxWidth: '840px' }} />
+
         <div className="ms-tool-grid">
           {TOOL_LIBRARY.map((tool, index) => (
             <ToolCard key={tool.id} tool={tool} index={index} onLaunch={onLaunch} />
           ))}
         </div>
       </section>
+
+      <AdSenseUnit format="auto" className="ms-ad-slot--footer" style={{ maxWidth: '970px', marginBottom: '32px' }} />
 
       <footer className="ms-library__footer">
         <span>MONITORSMITH</span>
