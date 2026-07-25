@@ -32,4 +32,24 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
+# OpenAI ChatGPT Search Bot (most important for ChatGPT discovery)
+User-agent: OAI-SearchBot
+Allow: /
+
+# Amazon AI Bot
+User-agent: Amazonbot
+Allow: /
+
+# ByteDance / TikTok AI Bot
+User-agent: Bytespider
+Allow: /
+
+# Meta AI Bot
+User-agent: FacebookBot
+Allow: /
+
+# Microsoft Copilot Bot
+User-agent: Bingbot
+Allow: /
+
 Sitemap: https://monitorsmith.app/sitemap.xml

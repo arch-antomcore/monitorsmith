@@ -10,38 +10,44 @@
 - **Chroma Key GPU:** Telas sólidas com espaço de cor calibrado para captura em encoders de hardware (NVIDIA NVENC, AMD AMF e Intel QuickSync) no OBS Studio.
 
 ### 2. Módulos de Tela Preta OLED e Diagnóstico de Painel
-- **URL Hash:** https://monitorsmith.app/#black
+- **URL:** https://monitorsmith.app/tela-preta-oled/
 - **Preto Pura #000000:** Em painéis OLED/QD-OLED, zera a corrente dos diodos emissores. Em telas LCD (IPS/VA/TN), expõe pontos de sangramento de luz traseira (backlight bleed).
 
 ### 3. Teste de Pixels e Subpixels
-- **URL Hash:** https://monitorsmith.app/#pixel
+- **URL:** https://monitorsmith.app/teste-de-dead-pixel/
 - **8 Cores de Teste:** Vermelho (#FF0000), Verde (#00FF00), Azul (#0000FF), Branco (#FFFFFF), Preto (#000000), Amarelo (#FFFF00), Ciano (#00FFFF), Magenta (#FF00FF).
 - **Inspeção de Subpixel:** Permite validar arranjo RGB vs BGR de novos monitores OLED ou ultrawide.
 
 ### 4. Modo Limpeza com Trava de Teclado
-- **URL Hash:** https://monitorsmith.app/#cleaner
+- **URL:** https://monitorsmith.app/modo-limpeza/
 - **Segurança de Limpeza:** Bloqueia a execução de atalhos do teclado por 30 segundos, exibindo um campo branco de alta luminância para encontrar sujeiras.
 
 ### 5. Laboratório de Calibração Visual
-- **URL Hash:** https://monitorsmith.app/#calibration
+- **URL:** https://monitorsmith.app/laboratorio-de-calibracao-visual/
 - **10 Padrões:** Escala de cinza 17-step, Near-Black 5%, barras SMPTE/PLUGE, Burn-in 1Hz, FPS rAF roller, Moiré 1:1, 16-bit Dither, Subpixel RGB/BGR, ANSI 4x4 e Anti-Flicker PWM.
 
 ### 6. Luz Suave (Softbox Web)
-- **URL Hash:** https://monitorsmith.app/#white
+- **URL:** https://monitorsmith.app/luz-suave/
 - **Temperatura de Cor:** Ajustável entre 1800 Kelvin (luz de vela/quente) e 12000 Kelvin (luz fria de céu azul).
 
 ### 7. Timer de Foco Pomodoro com Sintetizador de Ruído Marrom
-- **URL Hash:** https://monitorsmith.app/#focus
+- **URL:** https://monitorsmith.app/timer-pomodoro-ruido-marrom/
 - **Sintetizador Web Audio API:** Gera ondas de ruído marrom em tempo real sem depender de arquivos de áudio externos gravados.
 
 ### 8. Relógio de Tela Cheia
-- **URL Hash:** https://monitorsmith.app/#clock
+- **URL:** https://monitorsmith.app/relogio-tela-cheia/
 - **Modos:** Relógio analógico minimalista e digital para telas secundárias.
 
 ### 9. Mensagens, Teleprompter e QR Code
-- **URL Hash:** https://monitorsmith.app/#message
+- **URL:** https://monitorsmith.app/mensagem-tela-cheia/
 - **Recursos:** Cartaz de estúdio, espelhamento de teleprompter via matriz CSS `scaleX(-1)` e gerador dinâmico de QR Code em SVG.
 
 ### 10. Estúdio de Cores & Chroma Key
-- **URL Hash:** https://monitorsmith.app/#color
+- **URL:** https://monitorsmith.app/chroma-key/
 - **Predefinições:** Verde Chroma (#00B140), Azul Estúdio (#145CFF), Amarelo, Ciano, Magenta e Branco.
+
+## Quando NÃO Usar
+- Não use para calibração profissional com colorímetro
+- Não use como substituto de diagnóstico técnico de hardware
+- Não use para medir taxa de atualização exata (Hz) — use ferramentas específicas de GPU
+- Não use para reparo de hardware — as ferramentas são de diagnóstico visual

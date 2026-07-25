@@ -42,14 +42,28 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="MonitorSmith" />
 
-    <!-- Google AdSense Tag -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5926952327268950" crossorigin="anonymous"></script>
-
     <!-- Schema.org JSON-LD Structured Data Graph for Rich Snippets -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://monitorsmith.app/#org",
+          "name": "EXVORN.TECH",
+          "url": "https://monitorsmith.app/",
+          "sameAs": [
+            "https://github.com/arch-antomcore/monitorsmith"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://monitorsmith.app/#website",
+          "url": "https://monitorsmith.app/",
+          "name": "MonitorSmith",
+          "description": "Ferramentas online gratuitas para teste de monitor, dead pixel, tela preta OLED, burn-in, vazamento de luz, teleprompter e produtividade.",
+          "publisher": { "@id": "https://monitorsmith.app/#org" }
+        },
         {
           "@type": "WebApplication",
           "@id": "https://monitorsmith.app/#webapp",
@@ -65,48 +79,20 @@
             "price": "0.00",
             "priceCurrency": "BRL"
           },
-          "publisher": {
-            "@type": "Organization",
-            "name": "EXVORN.TECH",
-            "url": "https://monitorsmith.app"
-          }
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://monitorsmith.app/#faq",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "Como testar se o monitor tem dead pixel ou pixel preso?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "O MonitorSmith possui uma ferramenta de teste de pixels com 8 cores sólidas em tela cheia (Vermelho, Verde, Azul, Branco, Preto, Amarelo, Ciano, Magenta). Basta pressionar F para entrar em tela cheia e inspecionar visualmente qualquer ponto com defeito no painel."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Para que serve a ferramenta de Tela Preta OLED?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "A ferramenta de Tela Preta OLED exibe um preto absoluto (#000000) em tela cheia. Em monitores OLED, os pixels desligam completamente economizando energia. Em monitores IPS e VA, permite identificar vazamentos de luz (backlight bleed) e uniformidade do painel."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Como usar o monitor como luz de apoio para videochamadas?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "A ferramenta Luz Suave do MonitorSmith permite transformar seu monitor secundário ou principal em uma softbox com ajuste preciso de temperatura de cor (de 1800K quente a 12000K frio) e brilho ajustável."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "O MonitorSmith é gratuito e funciona offline?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Sim, o MonitorSmith é 100% gratuito, sem necessidade de cadastro, e possui suporte a PWA (Progressive Web App), permitindo ser instalado no seu computador ou celular para funcionar totalmente offline."
-              }
-            }
+          "publisher": { "@id": "https://monitorsmith.app/#org" },
+          "featureList": [
+            "Teste de dead pixel e pixel preso",
+            "Tela preta OLED absoluto",
+            "Teste de burn-in OLED",
+            "Teste de vazamento de luz (backlight bleed)",
+            "Inspeção para limpeza de tela",
+            "Verificação visual com 10 padrões de teste",
+            "Luz suave para videochamadas (1800K-12000K)",
+            "Chroma key tela verde e azul estúdio",
+            "Timer de foco com ruído marrom",
+            "Relógio de tela cheia",
+            "Mensagem em tela cheia",
+            "Teleprompter com espelhamento"
           ]
         }
       ]
@@ -143,5 +129,7 @@
         });
       }
     </script>
+    <!-- Google AdSense Tag -->
+    <script defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5926952327268950" crossorigin="anonymous"></script>
   </body>
 </html>

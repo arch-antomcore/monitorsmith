@@ -286,7 +286,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
           </div>
 
           <h1 id="library-title" className="ms-hero__title">
-            Seu monitor é <span className="ms-hero__title-gradient">mais do que uma tela</span>.
+            Ferramentas para Testar <span className="ms-hero__title-gradient">Monitor, Pixels e Tela OLED</span>
           </h1>
 
           <p id="library-description" className="ms-hero__subtitle">
@@ -345,6 +345,52 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
       </section>
 
       <AdSenseUnit format="auto" className="ms-ad-slot--footer" style={{ maxWidth: '970px', marginBottom: '32px' }} />
+
+      {/* SEO: Seção "O que é" — texto semântico para Google e LLMs */}
+      <section className="ms-library__section ms-seo-about" aria-labelledby="about-title">
+        <div className="ms-library__section-heading">
+          <div>
+            <p className="ms-library__eyebrow">SOBRE</p>
+            <h2 id="about-title">O que é o MonitorSmith?</h2>
+          </div>
+        </div>
+        <div className="ms-seo-text" style={{ maxWidth: '780px', margin: '0 auto', padding: '0 20px', lineHeight: 1.7, color: 'rgba(229,231,235,0.8)', fontSize: '0.95rem' }}>
+          <p>
+            O <strong>MonitorSmith</strong> é uma suíte web 100% gratuita de ferramentas para testar monitores, diagnosticar dead pixels, tela preta OLED, vazamento de luz (backlight bleed), burn-in e mais. Desenvolvido pela <strong>EXVORN.TECH</strong>, funciona diretamente no navegador — sem download, sem cadastro e sem instalação.
+          </p>
+          <p style={{ marginTop: '12px' }}>
+            Ideal para quem comprou um monitor novo, quer testar um usado antes de fechar negócio, precisa de uma luz suave para videochamadas, um teleprompter para gravações, ou simplesmente quer um relógio elegante na tela secundária.
+          </p>
+        </div>
+      </section>
+
+      {/* SEO: FAQ visível — corresponde às intenções de busca e ajuda LLMs a extrair respostas */}
+      <section className="ms-library__section ms-seo-faq" aria-labelledby="faq-title">
+        <div className="ms-library__section-heading">
+          <div>
+            <p className="ms-library__eyebrow">PERGUNTAS FREQUENTES</p>
+            <h2 id="faq-title">Dúvidas comuns sobre teste de monitor</h2>
+          </div>
+        </div>
+        <div className="ms-seo-faq-list" style={{ maxWidth: '780px', margin: '0 auto', padding: '0 20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div>
+            <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#e5e7eb', marginBottom: '6px' }}>Como testar se o monitor tem dead pixel ou pixel preso?</h3>
+            <p style={{ color: 'rgba(229,231,235,0.75)', lineHeight: 1.6, fontSize: '0.9rem' }}>Abra o teste de pixels em tela cheia e alterne entre preto, branco, vermelho, verde e azul. Pixels que não mudam de cor ou permanecem apagados podem estar defeituosos. O MonitorSmith oferece 8 cores sólidas para inspeção completa.</p>
+          </div>
+          <div>
+            <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#e5e7eb', marginBottom: '6px' }}>Este teste funciona em OLED e LCD?</h3>
+            <p style={{ color: 'rgba(229,231,235,0.75)', lineHeight: 1.6, fontSize: '0.9rem' }}>Sim. Em monitores OLED, ajuda a identificar burn-in e retenção de imagem. Em LCD (IPS, VA, TN), detecta pixels presos, vazamento de luz (backlight bleed) e uniformidade do painel.</p>
+          </div>
+          <div>
+            <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#e5e7eb', marginBottom: '6px' }}>O teste funciona no celular?</h3>
+            <p style={{ color: 'rgba(229,231,235,0.75)', lineHeight: 1.6, fontSize: '0.9rem' }}>Sim, desde que o navegador entre em tela cheia corretamente. Funciona em Android e iOS com Chrome, Safari e outros navegadores modernos.</p>
+          </div>
+          <div>
+            <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#e5e7eb', marginBottom: '6px' }}>O MonitorSmith é gratuito e funciona offline?</h3>
+            <p style={{ color: 'rgba(229,231,235,0.75)', lineHeight: 1.6, fontSize: '0.9rem' }}>100% gratuito, sem cadastro e sem download. Possui suporte a PWA (Progressive Web App) — instale no Windows, macOS, Linux, Android ou iOS para usar totalmente offline.</p>
+          </div>
+        </div>
+      </section>
 
       <footer className="ms-library__footer">
         <span>MONITORSMITH</span>
