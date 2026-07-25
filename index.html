@@ -4,29 +4,133 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#030304" />
-    <meta name="description" content="MonitorSmith reúne ferramentas para monitor: tela preta OLED, tela verde chroma, teste de pixels, limpeza, verificação visual, luz suave, foco e mensagens em tela cheia." />
+    <!-- SEO Meta Tags & Keywords -->
+    <meta name="description" content="MonitorSmith reúne as melhores ferramentas para monitor: teste de dead pixels, tela preta OLED absoluto, limpeza de tela, teste visual de display, luz suave para chamadas, timer de foco com ruído marrom, teleprompter com espelhamento e gerador de QR code." />
+    <meta name="keywords" content="ferramentas para monitor, teste de dead pixel, tela preta oled, teste de pixel preso, teste de vazamento de luz, limpeza de monitor, calibracao de tela, luz para videochamada, ruído marrom foco, teleprompter online, chroma key tela verde" />
+    <meta name="author" content="EXVORN.TECH" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+    <!-- OpenGraph & Social Cards -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />
-    <meta property="og:title" content="MonitorSmith — Ferramentas para Monitor | EXVORN.TECH" />
-    <meta property="og:description" content="Uma suíte para testar, cuidar, iluminar e usar seu monitor como espaço de foco, presença ou criação." />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="MonitorSmith — Ferramentas para Monitor | EXVORN.TECH" />
-    <link rel="canonical" href="https://monitorsmith.app/" />
+    <meta property="og:site_name" content="MonitorSmith" />
+    <meta property="og:title" content="MonitorSmith — Teste de Pixels, Tela Preta OLED & Ferramentas para Monitor" />
+    <meta property="og:description" content="O canivete suíço definitivo para displays: diagnostique dead pixels, tela preta OLED, luz suave de estúdio, timer com ruído marrom, teleprompter e limpeza de tela." />
     <meta property="og:url" content="https://monitorsmith.app/" />
+    <meta property="og:image" content="https://monitorsmith.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="MonitorSmith — Suíte Completa de Ferramentas para Monitor" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MonitorSmith — Ferramentas Definitivas para Monitor" />
+    <meta name="twitter:description" content="Diagnóstico de pixels presos, tela preta OLED, iluminação de estúdio, ruído marrom e teleprompter. 100% gratuito e instalável." />
+    <meta name="twitter:image" content="https://monitorsmith.app/og-image.png" />
+
+    <!-- Resource Preconnect & Canonical Links -->
+    <link rel="canonical" href="https://monitorsmith.app/" />
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin />
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- Mobile & PWA Specs -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="MonitorSmith" />
+
+    <!-- Google AdSense Tag -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5926952327268950" crossorigin="anonymous"></script>
-    <title>MonitorSmith — Ferramentas para Monitor | EXVORN.TECH</title>
+
+    <!-- Schema.org JSON-LD Structured Data Graph for Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://monitorsmith.app/#webapp",
+          "name": "MonitorSmith",
+          "url": "https://monitorsmith.app/",
+          "description": "Suíte completa de ferramentas web para monitor: teste de dead pixels, tela preta OLED absoluto, teste de vazamento de luz, limpeza de tela, luz de apoio para chamadas, timer de foco com ruído marrom e teleprompter.",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All (Windows, macOS, Linux, Android, iOS)",
+          "browserRequirements": "Requires HTML5, Web Audio API, ServiceWorker support",
+          "softwareVersion": "1.0.0",
+          "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "BRL"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "EXVORN.TECH",
+            "url": "https://monitorsmith.app"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://monitorsmith.app/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Como testar se o monitor tem dead pixel ou pixel preso?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "O MonitorSmith possui uma ferramenta de teste de pixels com 8 cores sólidas em tela cheia (Vermelho, Verde, Azul, Branco, Preto, Amarelo, Ciano, Magenta). Basta pressionar F para entrar em tela cheia e inspecionar visualmente qualquer ponto com defeito no painel."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Para que serve a ferramenta de Tela Preta OLED?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A ferramenta de Tela Preta OLED exibe um preto absoluto (#000000) em tela cheia. Em monitores OLED, os pixels desligam completamente economizando energia. Em monitores IPS e VA, permite identificar vazamentos de luz (backlight bleed) e uniformidade do painel."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Como usar o monitor como luz de apoio para videochamadas?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A ferramenta Luz Suave do MonitorSmith permite transformar seu monitor secundário ou principal em uma softbox com ajuste preciso de temperatura de cor (de 1800K quente a 12000K frio) e brilho ajustável."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "O MonitorSmith é gratuito e funciona offline?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sim, o MonitorSmith é 100% gratuito, sem necessidade de cadastro, e possui suporte a PWA (Progressive Web App), permitindo ser instalado no seu computador ou celular para funcionar totalmente offline."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <title>MonitorSmith — Teste de Pixels, Tela Preta OLED & Ferramentas para Monitor</title>
   </head>
   <body>
     <div id="root"></div>
     <noscript>
-      <main>
-        <h1>MonitorSmith</h1>
-        <p>Ferramentas para monitor: tela preta OLED, teste de pixels, limpeza, cor, foco e sinalização da EXVORN.TECH.</p>
+      <main style="max-width: 800px; margin: 40px auto; padding: 20px; font-family: system-ui, sans-serif; color: #333;">
+        <h1>MonitorSmith — O Canivete Suíço em Ferramentas para o seu Monitor</h1>
+        <p>Desenvolvido pela <strong>EXVORN.TECH</strong>, o MonitorSmith é a suíte de ferramentas web definitiva para testes, diagnósticos e utilitários de tela.</p>
+        <h2>Ferramentas Disponíveis:</h2>
+        <ul>
+          <li><strong>Tela Preta OLED:</strong> Preto absoluto #000000 para economia de energia em telas OLED e teste de vazamento de luz em monitores IPS/VA.</li>
+          <li><strong>Teste de Pixels:</strong> Diagnóstico de dead pixels e pixels presos com 8 cores padrão e alternância via atalhos.</li>
+          <li><strong>Modo Limpeza:</strong> Tela de inspeção de poeira e impressões digitais com trava de atalhos por 30 segundos.</li>
+          <li><strong>Verificação Visual de Display:</strong> 10 padrões de teste físico incluindo grinalda SMPTE, Near-Black 5%, burn-in 1Hz e Moiré 1:1.</li>
+          <li><strong>Luz Suave:</strong> Transforme seu monitor em softbox para videochamadas com temperatura ajustável de 1800K a 12000K.</li>
+          <li><strong>Timer de Foco com Ruído Marrom:</strong> Cronômetro Pomodoro integrado com gerador de ruído marrom synthesized via Web Audio API.</li>
+          <li><strong>Relógio de Tela Cheia:</strong> Exibição de hora analógica e digital elegante para telas secundárias.</li>
+          <li><strong>Mensagens em Tela:</strong> Cartaz de aviso, teleprompter espelhado (scaleX-1) e gerador de QR code.</li>
+          <li><strong>Chroma Key & Cor:</strong> Fundo verde (#00B140) e azul estúdio para recorte em transmissões.</li>
+        </ul>
       </main>
     </noscript>
     <script type="module" src="/src/main.jsx"></script>

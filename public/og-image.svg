@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <!-- Dark Studio Background -->
+  <rect width="1200" height="630" fill="#060709"/>
+  
+  <!-- Subtle Emerald Ambient Glow -->
+  <circle cx="600" cy="315" r="450" fill="#059669" fill-opacity="0.15" filter="blur(120px)"/>
+  <circle cx="950" cy="150" r="300" fill="#10b981" fill-opacity="0.1" filter="blur(100px)"/>
+
+  <!-- Subtle Grid Pattern -->
+  <path d="M0 100H1200M0 200H1200M0 300H1200M0 400H1200M0 500H1200M100 0V630M200 0V630M300 0V630M400 0V630M500 0V630M600 0V630M700 0V630M800 0V630M900 0V630M1000 0V630M1100 0V630" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+
+  <!-- Brand Eyebrow Tag -->
+  <rect x="80" y="140" width="140" height="34" rx="17" fill="#059669" fill-opacity="0.25" stroke="#34d399" stroke-opacity="0.4"/>
+  <text x="150" y="162" fill="#34d399" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">EXVORN.TECH</text>
+
+  <!-- Main Headline Title -->
+  <text x="80" y="260" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="800" letter-spacing="-1.5">MONITORSMITH</text>
+  <text x="80" y="325" fill="#34d399" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="600">O Canivete Suíço em Ferramentas para Monitor</text>
+
+  <!-- Subtitle Feature List -->
+  <text x="80" y="390" fill="#a1a1aa" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="400">Tela Preta OLED • Teste de Pixels • Limpeza • Calibração Visual</text>
+  <text x="80" y="425" fill="#a1a1aa" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="400">Luz Suave de Apoio • Timer Ruído Marrom • Teleprompter • Chroma Key</text>
+
+  <!-- Website URL Badge -->
+  <rect x="80" y="480" width="280" height="54" rx="27" fill="#10b981"/>
+  <text x="220" y="514" fill="#030304" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" text-anchor="middle">https://monitorsmith.app</text>
+</svg>
