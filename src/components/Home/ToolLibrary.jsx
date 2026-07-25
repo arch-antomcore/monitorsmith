@@ -6,6 +6,7 @@ import GlassCard from '../UI/GlassCard';
 import DotPattern from '../UI/DotPattern';
 import FlowButton from '../UI/FlowButton';
 import AdSenseUnit from '../UI/AdSenseUnit';
+import PrivacyModal from '../UI/PrivacyModal';
 import { ControlIcon } from '../Controls/Navbar';
 
 const TOOL_LIBRARY = [
@@ -347,6 +348,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
 
       <footer className="ms-library__footer">
         <span>MONITORSMITH</span>
+        <PrivacyModal />
         <span>EXVORN.TECH</span>
       </footer>
     </main>
