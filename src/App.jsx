@@ -15,6 +15,7 @@ import FullScreenClockMode from './components/Modes/FullScreenClockMode';
 import MessageOverlayMode from './components/Modes/MessageOverlayMode';
 import RadialMenu from './components/UI/RadialMenu';
 import ShortcutToast from './components/UI/ShortcutToast';
+import ToolTransitionOverlay from './components/UI/ToolTransitionOverlay';
 import AppProvider, { MODES, useApp } from './context/AppContext';
 import { DEFAULT_DOCK_MODES, SHORTCUTS } from './constants/shortcuts';
 
@@ -90,6 +91,7 @@ function DisplaySuite() {
   const [isFocusRunning, setIsFocusRunning] = useState(false);
   const [ambientBrightness, setAmbientBrightness] = useState(72);
   const [homeFocusRequest, setHomeFocusRequest] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const previousModeRef = useRef(activeMode);
   const homeFocusOriginRef = useRef(null);
   const handledHomeFocusRequestRef = useRef(0);
@@ -162,6 +164,10 @@ function DisplaySuite() {
     (mode, homeFocusOriginId) => {
       if (activeMode === MODES.HOME) {
         homeFocusOriginRef.current = homeFocusOriginId || null;
+      }
+
+      if (mode !== activeMode && mode !== MODES.HOME) {
+        setIsTransitioning(true);
       }
 
       activateMode(mode);
@@ -380,10 +386,10 @@ function DisplaySuite() {
           id="main-content"
           className={`app-mode-layer ${activeMode === MODES.HOME ? 'app-mode-layer--library' : ''}`}
           tabIndex={-1}
-          initial={shouldReduceMotion ? false : { opacity: 0.001 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.22 }}
+          initial={shouldReduceMotion ? false : { opacity: 0.001, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.015 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.28, ease: [0.16, 1, 0.3, 1] }}
         >
           {activeMode !== MODES.HOME ? (
             <h1 className="sr-only">{MODE_PAGE_TITLES[activeMode] || 'MonitorSmith'}</h1>
@@ -422,6 +428,11 @@ function DisplaySuite() {
 
       <RadialMenu activeMode={activeMode} onSelectMode={handleSelectMode} />
       <ShortcutToast toast={toast} />
+      <ToolTransitionOverlay
+        activeMode={activeMode}
+        isTransitioning={isTransitioning}
+        onTransitionComplete={() => setIsTransitioning(false)}
+      />
     </div>
   );
 }
