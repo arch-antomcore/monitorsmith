@@ -55,7 +55,7 @@ export default function MessageOverlayMode({
   );
   const [isTeleprompter, setIsTeleprompter] = useState(false);
   const [showQrCode, setShowQrCode] = useState(false);
-  const [qrContent, setQrContent] = useState('https://monitorsmith.com');
+  const [qrContent, setQrContent] = useState('https://monitorsmith.app');
   const [isPanelClosed, setIsPanelClosed] = useState(false);
 
   const messageIsControlled = typeof message === "string";
