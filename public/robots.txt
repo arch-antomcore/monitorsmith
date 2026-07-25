@@ -1,10 +1,35 @@
 User-agent: *
 Allow: /
 
+# Google AdSense Crawler
 User-agent: Mediapartners-Google
 Allow: /
 
+# Google Search Indexer
 User-agent: Googlebot
+Allow: /
+
+# OpenAI ChatGPT & GPTBot
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Perplexity AI Bot
+User-agent: PerplexityBot
+Allow: /
+
+# Anthropic Claude Bot
+User-agent: ClaudeBot
+Allow: /
+
+# Google Gemini / Extended AI Crawler
+User-agent: Google-Extended
+Allow: /
+
+# Apple AI Bot
+User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: https://monitorsmith.app/sitemap.xml
