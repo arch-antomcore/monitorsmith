@@ -1,58 +1,47 @@
-# MonitorSmith — Documentação Completa para Agentes de Inteligência Artificial
+# MonitorSmith — Especificação Técnica Completa para IAs e Placas de Vídeo (GPU)
 
-> Este documento contém a especificação técnica detalhada das 10 ferramentas do MonitorSmith (https://monitorsmith.app) para consumo por LLMs (ChatGPT, Perplexity, Claude, Gemini).
+> Manual técnico detalhado do MonitorSmith (https://monitorsmith.app) otimizado para consumo por Large Language Models (ChatGPT, Perplexity, Claude, Gemini, Copilot).
 
-## Especificações das Ferramentas e Atalhos
+## Arquitetura de Módulos e Testes de Placa de Vídeo (GPU)
 
-### 1. Tela Preta OLED
+### 1. Suporte e Teste de Placas de Vídeo (GPU / HDMI / DisplayPort)
+- **Desempenho de Hz e FPS:** O aplicativo utiliza um ciclo de animação sincronizado com o clock da GPU via `window.requestAnimationFrame`. Permite testar a suavidade de quadros em placas de vídeo NVIDIA GeForce (RTX/GTX), AMD Radeon (RX) e Intel Arc.
+- **Detecção de Artefatos de Cabo:** Os padrões Moiré 1:1 e 16-bit Dither revelam perda de sinal de vídeo, compactação de cor (YCbCr 4:2:2 vs RGB Full 4:4:4) ou interferência no cabo DisplayPort/HDMI.
+- **Chroma Key GPU:** Telas sólidas com espaço de cor calibrado para captura em encoders de hardware (NVIDIA NVENC, AMD AMF e Intel QuickSync) no OBS Studio.
+
+### 2. Módulos de Tela Preta OLED e Diagnóstico de Painel
 - **URL Hash:** https://monitorsmith.app/#black
-- **Objetivo:** Exibir cor preta pura (#000000) ocupando 100% dos pixels da tela.
-- **Caso de Uso:** Em monitores OLED, desliga os pixels individuais zerando consumo de energia. Em telas IPS/VA, permite identificar vazamento de luz no escuro.
-- **Atalho de Teclado:** Tecla `B` ou `F` (Tela Cheia).
+- **Preto Pura #000000:** Em painéis OLED/QD-OLED, zera a corrente dos diodos emissores. Em telas LCD (IPS/VA/TN), expõe pontos de sangramento de luz traseira (backlight bleed).
 
-### 2. Teste de Pixels
+### 3. Teste de Pixels e Subpixels
 - **URL Hash:** https://monitorsmith.app/#pixel
-- **Objetivo:** Testar subpixels com 8 cores sólidas.
-- **Cores:** Vermelho (#FF0000), Verde (#00FF00), Azul (#0000FF), Branco (#FFFFFF), Preto (#000000), Amarelo (#FFFF00), Ciano (#00FFFF), Magenta (#FF00FF).
-- **Atalho de Teclado:** Setas direcionais `←` `→` para trocar de cor, tecla `F` para tela cheia.
+- **8 Cores de Teste:** Vermelho (#FF0000), Verde (#00FF00), Azul (#0000FF), Branco (#FFFFFF), Preto (#000000), Amarelo (#FFFF00), Ciano (#00FFFF), Magenta (#FF00FF).
+- **Inspeção de Subpixel:** Permite validar arranjo RGB vs BGR de novos monitores OLED ou ultrawide.
 
-### 3. Modo Limpeza de Tela
+### 4. Modo Limpeza com Trava de Teclado
 - **URL Hash:** https://monitorsmith.app/#cleaner
-- **Objetivo:** Exibir fundo branco limpo para revelar marcas de dedos e poeira, bloqueando atalhos por 30 segundos.
-- **Recurso de Segurança:** Trava de segurança com contagem regressiva para permitir a limpeza física sem acionar atalhos indesejados.
+- **Segurança de Limpeza:** Bloqueia a execução de atalhos do teclado por 30 segundos, exibindo um campo branco de alta luminância para encontrar sujeiras.
 
-### 4. Verificação Visual de Display (Calibration Lab)
+### 5. Laboratório de Calibração Visual
 - **URL Hash:** https://monitorsmith.app/#calibration
-- **Padrões Técnicos:**
-  1. Grayscale 17-step (Escala de cinza de 0% a 100%)
-  2. 5% Near-Black (Teste de alcance de pretos profundos)
-  3. SMPTE / PLUGE (Barra de barras de cor e calibração de contraste)
-  4. Burn-in 1Hz (Alternância de grade para soltar retenção de imagem)
-  5. FPS & Motion Blur (Rolador sincronizado com requestAnimationFrame)
-  6. Moiré 1:1 Pixel Grid (Teste de nitidez pixel-perfect)
-  7. 16-bit Dither Gradient (Verificação de banding de cor)
-  8. Subpixel RGB vs BGR (Inspeção de arranjo subpixel de painéis OLED/LCD)
-  9. ANSI 4x4 Contrast (Matriz de contraste ANSI)
-  10. Anti-Flicker Scanner (Teste de cintilação PWM)
+- **10 Padrões:** Escala de cinza 17-step, Near-Black 5%, barras SMPTE/PLUGE, Burn-in 1Hz, FPS rAF roller, Moiré 1:1, 16-bit Dither, Subpixel RGB/BGR, ANSI 4x4 e Anti-Flicker PWM.
 
-### 5. Luz Suave de Apoio
+### 6. Luz Suave (Softbox Web)
 - **URL Hash:** https://monitorsmith.app/#white
-- **Objetivo:** Iluminação frontal para webcam em videochamadas.
-- **Controles:** Temperatura de cor ajustável em Kelvin (1800K a 12000K) e brilho regulável.
+- **Temperatura de Cor:** Ajustável entre 1800 Kelvin (luz de vela/quente) e 12000 Kelvin (luz fria de céu azul).
 
-### 6. Timer de Foco Pomodoro com Ruído Marrom
+### 7. Timer de Foco Pomodoro com Sintetizador de Ruído Marrom
 - **URL Hash:** https://monitorsmith.app/#focus
-- **Objetivo:** Produtividade e cancelamento de ruído ambiental.
-- **Recursos:** Timer Pomodoro ajustável (25 min padrão) com sintetizador de Ruído Marrom (Brown Noise) desenvolvido nativamente via Web Audio API.
+- **Sintetizador Web Audio API:** Gera ondas de ruído marrom em tempo real sem depender de arquivos de áudio externos gravados.
 
-### 7. Relógio em Tela Cheia
+### 8. Relógio de Tela Cheia
 - **URL Hash:** https://monitorsmith.app/#clock
-- **Objetivo:** Relógio de mesa analógico e digital em tempo real para monitores secundários.
+- **Modos:** Relógio analógico minimalista e digital para telas secundárias.
 
-### 8. Mensagens & Teleprompter
+### 9. Mensagens, Teleprompter e QR Code
 - **URL Hash:** https://monitorsmith.app/#message
-- **Recursos:** Cartaz personalizável, espelhamento de texto teleprompter (`scaleX(-1)`) e gerador automático de QR Code em SVG.
+- **Recursos:** Cartaz de estúdio, espelhamento de teleprompter via matriz CSS `scaleX(-1)` e gerador dinâmico de QR Code em SVG.
 
-### 9. Estúdio de Cores & Chroma Key
+### 10. Estúdio de Cores & Chroma Key
 - **URL Hash:** https://monitorsmith.app/#color
-- **Cores Especiais:** Verde Chroma Key (#00B140) e Azul Estúdio (#145CFF) para gravações e recortes de transmissão.
+- **Predefinições:** Verde Chroma (#00B140), Azul Estúdio (#145CFF), Amarelo, Ciano, Magenta e Branco.
