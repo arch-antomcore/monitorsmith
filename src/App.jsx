@@ -110,15 +110,29 @@ function DisplaySuite() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const handleHash = () => {
+    const handleUrlState = () => {
+      // 1. Check URL Hash (#black, #dead-pixel, etc.)
       const hash = window.location.hash.replace('#', '').toLowerCase();
-      if (hash && MODES[hash.toUpperCase()]) {
-        activateMode(MODES[hash.toUpperCase()]);
+      if (hash) {
+        const modeByHash = Object.values(MODES).find((m) => m.toLowerCase() === hash);
+        if (modeByHash) {
+          activateMode(modeByHash);
+          return;
+        }
+      }
+      // 2. Check Query Parameter (?tool=black, ?tool=dead-pixel, etc.)
+      const params = new URLSearchParams(window.location.search);
+      const toolParam = params.get('tool')?.toLowerCase();
+      if (toolParam) {
+        const modeByParam = Object.values(MODES).find((m) => m.toLowerCase() === toolParam);
+        if (modeByParam) {
+          activateMode(modeByParam);
+        }
       }
     };
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
+    handleUrlState();
+    window.addEventListener('hashchange', handleUrlState);
+    return () => window.removeEventListener('hashchange', handleUrlState);
   }, [activateMode]);
 
   const touchStartRef = useRef(null);

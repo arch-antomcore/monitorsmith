@@ -440,85 +440,122 @@ function generateHTML(page) {
       --bg: #030304;
       --text: #e5e7eb;
       --accent: #34d399;
-      --card-bg: #111113;
-      --border: #1f2937;
+      --card-bg: rgba(16, 18, 26, 0.7);
+      --border: rgba(255, 255, 255, 0.1);
     }
     body {
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background-color: var(--bg);
+      background-image: radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.08), transparent 40rem);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.65;
     }
     header {
       border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem;
-      background: var(--bg);
+      padding: 1.1rem 2rem;
+      background: rgba(3, 3, 4, 0.85);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    header a {
-      color: var(--text);
+    header a.brand {
+      color: #ffffff;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 1.25rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    header .brand-badge {
+      font-size: 0.65rem;
+      font-family: monospace;
+      color: var(--accent);
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(52, 211, 153, 0.12);
+      border: 1px solid rgba(52, 211, 153, 0.3);
     }
     main {
       max-width: 860px;
       margin: 0 auto;
-      padding: 2rem 1rem;
+      padding: 2.5rem 1.25rem;
     }
     h1 {
-      color: white;
-      font-size: 2.5rem;
+      color: #ffffff;
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
       margin-top: 0;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.15;
     }
     h2 {
-      color: white;
+      color: #ffffff;
+      font-size: 1.35rem;
       margin-top: 2rem;
       border-bottom: 1px solid var(--border);
       padding-bottom: 0.5rem;
+      letter-spacing: -0.01em;
     }
     .intro {
       font-size: 1.125rem;
-      color: #9ca3af;
+      color: rgba(229, 231, 235, 0.8);
       margin-bottom: 2rem;
+      line-height: 1.7;
     }
     .cta-btn {
-      display: inline-block;
-      background: var(--accent);
-      color: #000;
-      padding: 1rem 2rem;
-      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #34d399, #10b981);
+      color: #030304;
+      padding: 1rem 2.2rem;
+      border-radius: 12px;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 1.125rem;
-      margin: 2rem 0;
-      transition: opacity 0.2s;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin: 1.5rem 0 2.5rem;
+      box-shadow: 0 8px 24px rgba(52, 211, 153, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .cta-btn:hover {
-      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(52, 211, 153, 0.5);
     }
     .section {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.5rem;
+      border-radius: 16px;
+      padding: 1.75rem;
       margin-bottom: 2rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     }
     ul, ol {
       padding-left: 1.5rem;
     }
     li {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
+      color: rgba(229, 231, 235, 0.9);
     }
     .faq-q {
-      font-weight: bold;
-      color: white;
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 1.05rem;
       margin-top: 1.5rem;
     }
     .faq-a {
-      color: #9ca3af;
+      color: rgba(229, 231, 235, 0.75);
+      margin-top: 4px;
     }
     footer {
       margin-top: 4rem;
@@ -530,6 +567,7 @@ function generateHTML(page) {
     footer a {
       color: var(--accent);
       text-decoration: none;
+      font-weight: 600;
     }
     footer a:hover {
       text-decoration: underline;
@@ -538,14 +576,18 @@ function generateHTML(page) {
 </head>
 <body>
   <header>
-    <a href="/">MonitorSmith</a>
+    <a href="/" class="brand">
+      <span>MonitorSmith</span>
+      <span class="brand-badge">EXVORN.TECH</span>
+    </a>
+    <a href="/" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem;">← Todas as ferramentas</a>
   </header>
   
   <main>
     <h1>${page.h1}</h1>
     <p class="intro">${page.intro}</p>
     
-    <a href="/?tool=${page.toolId}" class="cta-btn">Abrir Ferramenta Online</a>
+    <a href="/?tool=${page.toolId}" class="cta-btn">🚀 Abrir Ferramenta Online em Tela Cheia</a>
     
     <div class="section">
       <h2>Como usar</h2>
@@ -584,6 +626,7 @@ function generateHTML(page) {
     
     <footer>
       <p><a href="/">Voltar para todas as ferramentas do MonitorSmith</a></p>
+      <p style="font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 12px;">© EXVORN.TECH — Suíte Gratuita de Ferramentas Web para Display & Monitores</p>
     </footer>
   </main>
 </body>
