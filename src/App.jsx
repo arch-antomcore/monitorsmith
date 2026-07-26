@@ -313,7 +313,7 @@ const HASH_ALIASES = {
         );
       case MODES.CLEANER:
         return (
-          <ScreenCleanerModeLazy
+          <ScreenCleanerMode
             {...commonModeProps}
             pattern={cleanerPattern}
             brightness={cleanerBrightness}
