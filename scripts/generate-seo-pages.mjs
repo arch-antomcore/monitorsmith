@@ -383,12 +383,413 @@ const pages = [
   }
 ];
 
-function generateHTML(page) {
+const pagesEn = [
+  {
+    slug: "dead-pixel-test",
+    toolId: "dead-pixel",
+    title: "Free Dead Pixel Test Online",
+    description: "Check if your monitor has dead pixels or stuck pixels. Free, fast and easy online test, no download required.",
+    h1: "Free Dead Pixel Test Online",
+    intro: "A dead pixel is a point on your screen that fails to light up or stays stuck on a single color. Our dead pixel test helps you quickly identify any imperfections on your monitor, smartphone or tablet display through various full-screen solid colors.",
+    comoUsar: [
+      "Click the button below to launch the testing tool.",
+      "The screen will cycle through different solid colors (white, black, red, green, blue).",
+      "Carefully inspect the screen on each color looking for dots that do not change.",
+      "Use keyboard arrows or tap the screen to switch colors."
+    ],
+    quandoUsar: [
+      "When buying a new monitor or smartphone to ensure there are no factory defects.",
+      "Before your warranty or return window expires.",
+      "When you notice a 'dirt' spot on your screen that cannot be cleaned off."
+    ],
+    limitacoes: "The tool helps with visual identification but does not fix defective pixels. Precision depends on your careful inspection.",
+    faq: [
+      {
+        q: "What is a dead pixel?",
+        a: "It's a pixel on an LCD/OLED panel that has stopped working and no longer emits light, appearing as a small black dot."
+      },
+      {
+        q: "What is the difference between a dead pixel and a stuck pixel?",
+        a: "A dead pixel is 'dead' and emits no light (it stays black). A stuck pixel is locked onto a single color (usually red, green, or blue)."
+      },
+      {
+        q: "Can a dead pixel be fixed?",
+        a: "In most dead pixel cases, the damage is permanent. Stuck pixels, on the other hand, can sometimes be 'unstuck' with tools that flash colors rapidly, though there is no guarantee."
+      }
+    ],
+    related: ["monitor-test", "black-screen", "screen-cleaner"]
+  },
+  {
+    slug: "black-screen",
+    toolId: "black",
+    title: "OLED Black Screen Fullscreen",
+    description: "Display a 100% black screen in fullscreen. Ideal for backlight bleed tests, checking bright dead pixels, or as a dark second screen.",
+    h1: "OLED Black Screen Fullscreen",
+    intro: "A completely black screen is essential for checking the black uniformity on IPS monitors, testing perfect pixel shutdown on OLEDs, or simply using it as a screen saver without turning off your secondary monitor.",
+    comoUsar: [
+      "Access the tool by clicking the button below.",
+      "The screen will turn entirely black in fullscreen mode.",
+      "Dim the room lights for better inspection or just let the monitor rest.",
+      "Press ESC or tap the screen to exit."
+    ],
+    quandoUsar: [
+      "To evaluate backlight bleed and IPS glow in dark environments.",
+      "To hide distractions on a second monitor while focusing on the main one.",
+      "To check for pixels that are stuck on white (hot pixels)."
+    ],
+    limitacoes: "On traditional LCD monitors, the color black still emits backlight. True panel darkness depends on monitor technology (like OLED, which fully turns off the pixel).",
+    faq: [
+      {
+        q: "Does this save battery on laptops?",
+        a: "If your screen is OLED, yes. OLED displays turn off black pixels, saving energy. On traditional LCD screens, the backlight remains on, so savings are minimal."
+      },
+      {
+        q: "Does it help test for backlight bleed?",
+        a: "Yes! A black screen in a dark room is the best way to notice brighter corners or light patches on the screen (backlight bleeding)."
+      }
+    ],
+    related: ["backlight-bleed-test", "dead-pixel-test", "screen-cleaner"]
+  },
+  {
+    slug: "monitor-test",
+    toolId: "color",
+    title: "Complete Monitor Test Online",
+    description: "Run an online monitor test to check color reproduction, contrast, and screen uniformity. Simple and no installation required.",
+    h1: "Complete Monitor Test Online",
+    intro: "Evaluating your display's performance is crucial for photo/video editing or getting the best quality in games. With this color test, you can identify color banding, poor calibration, and screen uniformity issues.",
+    comoUsar: [
+      "Start the test by clicking the button at the bottom of the page.",
+      "View different patterns and color gradients in fullscreen.",
+      "Check for smooth transitions in the gradient to spot color banding.",
+      "Go through the test screens to observe overall contrast."
+    ],
+    quandoUsar: [
+      "When buying a new monitor to verify color accuracy and uniformity.",
+      "After performing hardware or software calibration, to validate the results.",
+      "When you notice colors look washed out or unrealistic in videos or images."
+    ],
+    limitacoes: "The test provides a visual evaluation that relies on your eyes and ambient lighting. It doesn't replace a professional colorimeter (calibration hardware).",
+    faq: [
+      {
+        q: "What is color banding?",
+        a: "It's a visual artifact where color transitions in a gradient are not smooth, showing distinct lines or bands between shades of color."
+      },
+      {
+        q: "Do I need any installed software?",
+        a: "No. The entire monitor test runs through your browser, whether on PC, Mac, smartphone, or tablet."
+      }
+    ],
+    related: ["display-calibration", "dead-pixel-test", "backlight-bleed-test"]
+  },
+  {
+    slug: "backlight-bleed-test",
+    toolId: "black",
+    title: "Backlight Bleed Test",
+    description: "Test your monitor for backlight bleed and IPS glow. Free online tool to test screens in dark environments.",
+    h1: "Backlight Bleed and IPS Glow Test",
+    intro: "Backlight bleed and IPS glow are phenomena where the backlight leaks through the edges or corners of a dark screen, affecting immersion in movies and games. Our tool helps you identify the severity of this effect.",
+    comoUsar: [
+      "For an accurate result, turn off all room lights (100% dark environment).",
+      "Adjust the monitor brightness to the level you normally use in the dark.",
+      "Click to open the full black screen.",
+      "Inspect the edges and corners of the screen for light clouds."
+    ],
+    quandoUsar: [
+      "When purchasing a new IPS, VA, or TN monitor to check for panel issues.",
+      "If you notice bright spots in corners during dark scenes in games or movies.",
+      "To compare the black uniformity between two monitors."
+    ],
+    limitacoes: "It is normal for IPS monitors to have some glow at viewing angles (IPS glow). Smartphone cameras often exaggerate the effect in photos, so always trust what your eyes see.",
+    faq: [
+      {
+        q: "What is the difference between backlight bleed and IPS glow?",
+        a: "Backlight bleed consists of irregular light leaks, often at the edges, caused by panel assembly. IPS glow is a characteristic of IPS panels that changes brightness in corners depending on your viewing angle."
+      },
+      {
+        q: "Can backlight bleed be fixed?",
+        a: "Usually no, as it is structural to the panel assembly. If it's very intense and recent, the best option is to use the warranty or request a return."
+      }
+    ],
+    related: ["black-screen", "monitor-test", "dead-pixel-test"]
+  },
+  {
+    slug: "screen-cleaner",
+    toolId: "cleaner",
+    title: "Screen Cleaning Inspection Tool",
+    description: "Use this screen to inspect for smudges, dust, and fingerprints on your monitor. Make cleaning your display easier with our online tool.",
+    h1: "Screen Cleaning and Inspection Guide",
+    intro: "To properly clean your monitor, you must be able to see all the dirt, smudges, and fingerprints. Our cleaning assist screen provides an optimal background to highlight any grime that needs removing.",
+    comoUsar: [
+      "Dim your monitor or activate our dark inspection screen.",
+      "Identify smudges and areas with accumulated dust.",
+      "Use a clean, dry microfiber cloth to remove light dust.",
+      "For smudges, slightly dampen the cloth with distilled water (never spray directly on the screen) and wipe gently."
+    ],
+    quandoUsar: [
+      "Whenever performing maintenance and cleaning on your setup.",
+      "To highlight persistent smudges that aren't visible when there's too much information on screen.",
+      "Before applying screen protectors on tablets or laptops."
+    ],
+    limitacoes: "The tool is a visual aid. You will still need proper materials (microfiber cloth and water or specific cleaner) to physically clean without damaging the display.",
+    faq: [
+      {
+        q: "Can I use alcohol or glass cleaner on my monitor?",
+        a: "It's not recommended. Harsh chemicals, rubbing alcohol, or ammonia-based glass cleaners can strip anti-reflective coatings and permanently damage the panel."
+      },
+      {
+        q: "What is the best cloth for cleaning screens?",
+        a: "It's best to use soft, lint-free microfiber cloths, similar to those used for cleaning eyeglasses."
+      }
+    ],
+    related: ["black-screen", "dead-pixel-test", "display-calibration"]
+  },
+  {
+    slug: "webcam-light",
+    toolId: "white",
+    title: "Monitor Light for Video Calls",
+    description: "Use your monitor as makeshift lighting (virtual ring light) for video calls on Zoom, Meet, and Teams.",
+    h1: "Monitor Light for Video Calls",
+    intro: "Need more light on your face during an important meeting? Use your own monitor's brightness as a fill light source (screen ring light) to instantly improve your webcam quality.",
+    comoUsar: [
+      "If you're in low light, click the button to activate the white screen.",
+      "Place the tab in split-screen alongside your video call, or on a second monitor behind the webcam.",
+      "Increase your monitor's brightness to intensify the light on your face.",
+      "Adjust the screen color, if desired, for warmer (yellowish) or cooler lighting."
+    ],
+    quandoUsar: [
+      "During meetings on Zoom, Google Meet, or Teams in poorly lit rooms.",
+      "To remove dark shadows from your face caused by background windows.",
+      "To record webcam videos when you don't have a professional ring light."
+    ],
+    limitacoes: "The range and intensity depend on your monitor's peak brightness (nits) and size. Larger monitors will provide softer, more diffused lighting.",
+    faq: [
+      {
+        q: "Does this replace a real ring light?",
+        a: "Not entirely. It's a quick and effective workaround to fill your face with light, but dedicated lighting equipment offers much more power and control."
+      },
+      {
+        q: "How can I make the light less harsh on the eyes?",
+        a: "You can change the background color of our tool from pure white to a warm/peach tone, simulating the color temperature of a warm bulb."
+      }
+    ],
+    related: ["fullscreen-message", "online-teleprompter", "fullscreen-clock"]
+  },
+  {
+    slug: "green-screen",
+    toolId: "color",
+    title: "Green Screen Chroma Key Online",
+    description: "Create a green screen background (chroma key) on your monitor, phone, or tablet for visual effects, videos, or fullscreen photos.",
+    h1: "Fullscreen Green Screen (Chroma Key)",
+    intro: "Chroma keying allows for easy background removal in video editing or live streaming. With our online green screen tool, you can instantly turn your monitor, tablet, or smartphone into a chroma key panel.",
+    comoUsar: [
+      "Access the tool and select the green screen option.",
+      "Turn your device's screen brightness to maximum and avoid lights that cause glare on the screen.",
+      "Place the tablet or monitor behind the objects you wish to record.",
+      "In your editing software (Premiere, OBS Studio, DaVinci), apply the Chroma Key effect to key out the green."
+    ],
+    quandoUsar: [
+      "For visual effects on small objects using an iPad or phone screen.",
+      "To photograph products with an easily removable background.",
+      "To create creative transitions using a laptop screen."
+    ],
+    limitacoes: "Since screens emit light, the green can spill onto the photographed object, making editing harder. Also, room reflections on the monitor glass might ruin the effect.",
+    faq: [
+      {
+        q: "Can I use other colors, like a blue screen?",
+        a: "Yes, the tool allows you to select solid colors (like blue or magenta), which is ideal if the object being recorded contains greenish elements."
+      },
+      {
+        q: "How do I avoid screen reflections?",
+        a: "Record in a dark room where the only light is from the screen, or use polarizing filters on your camera lens."
+      }
+    ],
+    related: ["webcam-light", "black-screen", "online-teleprompter"]
+  },
+  {
+    slug: "focus-timer",
+    toolId: "focus-timer",
+    title: "Focus Timer with Brown Noise",
+    description: "Improve your concentration with our minimalist focus timer. Includes brown and white noise to drown out distractions while working or studying.",
+    h1: "Focus Timer with Brown Noise",
+    intro: "Stay focused on difficult tasks with our minimalist timer. Based on uninterrupted focus cycles and supplemented by soundscapes like brown and white noise, it's ideal for blocking background sounds and aiding people on the ADHD spectrum.",
+    comoUsar: [
+      "Set the time you want to stay focused for (e.g., 25, 45, or 60 minutes).",
+      "Select a background sound (Brown, White, or Pink Noise) to muffle ambient noise.",
+      "Click Start and leave it in fullscreen on a secondary monitor.",
+      "When the time runs out, take a short break."
+    ],
+    quandoUsar: [
+      "During intense study sessions (Pomodoro technique).",
+      "In noisy offices where it's hard to focus on programming, reading, or writing tasks.",
+      "When trying to meditate or perform repetitive tasks that require mindfulness."
+    ],
+    limitacoes: "Effectiveness relies on your discipline to not switch tabs. It's recommended to use headphones to fully benefit from the sound blocking.",
+    faq: [
+      {
+        q: "What is Brown Noise?",
+        a: "Brown noise emphasizes lower frequencies (like the sound of a distant waterfall or ocean). Many find it less harsh than white noise and excellent for deep concentration."
+      },
+      {
+        q: "Why do background sounds help?",
+        a: "Continuous sounds like pink and brown noise create a 'sound curtain' that masks sudden noise variations (like chatter or doors slamming), reducing distractions and allowing the brain to relax."
+      }
+    ],
+    related: ["fullscreen-clock", "fullscreen-message", "online-teleprompter"]
+  },
+  {
+    slug: "fullscreen-clock",
+    toolId: "clock",
+    title: "Fullscreen Clock Display",
+    description: "Large and minimalist digital clock in fullscreen. Use it on secondary monitors, dashboards, exams, or as a screensaver for your setup.",
+    h1: "Minimalist Fullscreen Digital Clock",
+    intro: "A large, aesthetically pleasing digital clock free of distractions, perfect for filling the screen of secondary monitors, information dashboards, or keeping track of time during events and lectures.",
+    comoUsar: [
+      "Open the tool page to view the clock with the current time.",
+      "Press the fullscreen button to hide the browser bars.",
+      "Adjust the background color and number style to match your room or setup.",
+      "Keep the tab open on your chosen device."
+    ],
+    quandoUsar: [
+      "As a useful screensaver for your computer.",
+      "On monitors facing the stage during lectures or exams, to help speakers manage their time.",
+      "To display time on digital signage in stores, receptions, or classrooms."
+    ],
+    limitacoes: "Relies on your device's operating system clock. Very old devices that go into deep sleep may cause visual delays until the tab is reactivated.",
+    faq: [
+      {
+        q: "Does the clock work offline?",
+        a: "No. The tool is not an installed app, so it requires the tab to remain open. Once loaded, it doesn't consume data, but the page needs an internet connection to load."
+      },
+      {
+        q: "Is there a dark mode?",
+        a: "Yes! By default, the tool uses a dark, minimalist theme to avoid straining your eyes in low-light environments."
+      }
+    ],
+    related: ["focus-timer", "fullscreen-message", "black-screen"]
+  },
+  {
+    slug: "fullscreen-message",
+    toolId: "message",
+    title: "Fullscreen Message Display",
+    description: "Display a large text sign in fullscreen. Use it to communicate information, quick warnings, or messages from a distance.",
+    h1: "Fullscreen Message and Signboard",
+    intro: "Need to relay information to someone across the room but can't speak? Display texts in giant letters filling the entire screen of your phone, tablet, or monitor with our digital signboard tool.",
+    comoUsar: [
+      "Access the tool and type your desired text in the field.",
+      "The text will scale automatically to fill as much screen space as possible.",
+      "Select bold colors for high contrast (like yellow on black).",
+      "Show the screen to the person or audience."
+    ],
+    quandoUsar: [
+      "To pick someone up at the airport with a tablet.",
+      "To pass a quick message to a colleague in a meeting room or studio where silence is required.",
+      "As a 'be right back' sign at workstations or booths."
+    ],
+    limitacoes: "Very long sentences will cause the font size to shrink, reducing readability at a distance. Keep texts short and to the point.",
+    faq: [
+      {
+        q: "Does the text adjust on phones and TVs?",
+        a: "Yes, our tool is responsive. The text automatically resizes to fit any screen format, whether vertically on a smartphone or on a 4K TV."
+      },
+      {
+        q: "Can I save the message?",
+        a: "Messages are temporary and work only in the active browser tab for quick, immediate communication."
+      }
+    ],
+    related: ["online-teleprompter", "fullscreen-clock", "webcam-light"]
+  },
+  {
+    slug: "online-teleprompter",
+    toolId: "message",
+    title: "Free Online Teleprompter",
+    description: "Read your scripts easily with our free online teleprompter. Features speed control, font adjustment, and text mirroring.",
+    h1: "Free Online Teleprompter",
+    intro: "Record videos more professionally without having to memorize long texts. Our online teleprompter tool automatically scrolls your script on the screen, allowing you to maintain eye contact and convey credibility.",
+    comoUsar: [
+      "Paste or type your text or script in the main area.",
+      "Adjust the text size for comfortable reading.",
+      "Set your desired scrolling speed.",
+      "Enable screen mirroring if using a teleprompter reflector glass in front of your camera."
+    ],
+    quandoUsar: [
+      "During video recordings for YouTube, online courses, or social media.",
+      "When hosting webinars or live presentations where speech fluency is crucial.",
+      "Recording speeches using a tablet positioned near the camera lens."
+    ],
+    limitacoes: "On very wide monitors without teleprompter equipment, eyes may noticeably dart from side to side.",
+    faq: [
+      {
+        q: "Do I need to download any software?",
+        a: "No, our teleprompter runs 100% online in your web browser, quickly and securely."
+      },
+      {
+        q: "How do I avoid looking like I'm reading?",
+        a: "Increase the side margins of the text. The narrower the text column (and the closer it is to the camera lens), the less your eyes will move side to side."
+      }
+    ],
+    related: ["fullscreen-message", "webcam-light", "fullscreen-clock"]
+  },
+  {
+    slug: "display-calibration",
+    toolId: "calibration",
+    title: "Display Calibration Patterns",
+    description: "Visual tools and patterns to help with the basic calibration of your monitor, ensuring better contrast, brightness, and fidelity.",
+    h1: "Visual Verification and Calibration",
+    intro: "Poorly configured monitors can cause eye strain or ruin image editing work. Our calibration patterns help you manually adjust brightness, contrast, and gray levels using your monitor's built-in menus.",
+    comoUsar: [
+      "Access the visual patterns by clicking below.",
+      "For brightness adjustment (Black Level): tweak until only the darkest black squares blend into the background.",
+      "For contrast adjustment (White Level): tweak until you can just distinguish the lightest white squares from the 100% white background.",
+      "For Gamma: verify if the grayscale gradient bars show a linear transition without spurious colors (green or magenta) in the middle."
+    ],
+    quandoUsar: [
+      "When setting up a brand-new monitor straight out of the box.",
+      "Before starting photo retouching or video editing.",
+      "When you notice dark areas in movies are completely crushed (lacking detail)."
+    ],
+    limitacoes: "Visual calibration is very helpful, but it does not replace the precision of a professional hardware colorimeter, which creates an absolute ICC profile for your panel.",
+    faq: [
+      {
+        q: "What is the difference between brightness and contrast on a monitor?",
+        a: "Generally, the brightness control adjusts the level of black tones (how deep they are). Contrast adjusts the white levels (the upper limit of luminosity before losing detail)."
+      },
+      {
+        q: "Should I use factory default settings?",
+        a: "Many monitors come factory-configured for store displays: intense brightness and oversaturated colors. For home or office use, manual calibration provides a more comfortable and accurate experience."
+      }
+    ],
+    related: ["monitor-test", "backlight-bleed-test", "screen-cleaner"]
+  }
+];
+
+const ptToEnSlugs = {
+  "teste-de-dead-pixel": "dead-pixel-test",
+  "tela-preta-oled": "black-screen",
+  "teste-de-monitor": "monitor-test",
+  "teste-de-vazamento-de-luz": "backlight-bleed-test",
+  "limpeza-de-monitor": "screen-cleaner",
+  "luz-para-videochamada": "webcam-light",
+  "tela-verde-chroma": "green-screen",
+  "timer-de-foco": "focus-timer",
+  "relogio-em-tela-cheia": "fullscreen-clock",
+  "mensagem-em-tela": "fullscreen-message",
+  "teleprompter-online": "online-teleprompter",
+  "verificacao-visual": "display-calibration"
+};
+
+const enToPtSlugs = Object.fromEntries(Object.entries(ptToEnSlugs).map(([k, v]) => [v, k]));
+
+function generateHTML(page, lang = "pt-BR", allPagesList = pages) {
+  const isEn = lang === "en";
+  const ptSlug = isEn ? enToPtSlugs[page.slug] : page.slug;
+  const enSlug = isEn ? page.slug : ptToEnSlugs[page.slug];
+  const pageUrl = isEn ? `${BASE_URL}/en/${page.slug}/` : `${BASE_URL}/${page.slug}/`;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": page.title,
-    "url": `${BASE_URL}/${page.slug}/`,
+    "url": pageUrl,
     "description": page.description,
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "All",
@@ -404,27 +805,40 @@ function generateHTML(page) {
     "@type": "WebPage",
     "name": page.title,
     "description": page.description,
-    "url": `${BASE_URL}/${page.slug}/`
+    "url": pageUrl
   };
 
   const relatedLinksHtml = page.related.map(rel => {
-    const p = pages.find(pg => pg.slug === rel);
-    return p ? `<li><a href="/${p.slug}/">${p.title}</a></li>` : "";
+    const p = allPagesList.find(pg => pg.slug === rel);
+    const href = isEn ? `/en/${p.slug}/` : `/${p.slug}/`;
+    return p ? `<li><a href="${href}">${p.title}</a></li>` : "";
   }).join("\n        ");
+  
+  const backAllText = isEn ? "← All tools" : "← Todas as ferramentas";
+  const ctaText = isEn ? "🚀 Open Free Tool in Fullscreen" : "🚀 Abrir Ferramenta Online em Tela Cheia";
+  const footerText = isEn ? "Back to all MonitorSmith tools" : "Voltar para todas as ferramentas do MonitorSmith";
+  const copyrightText = isEn ? "© EXVORN.TECH — Free Web Tool Suite for Displays & Monitors" : "© EXVORN.TECH — Suíte Gratuita de Ferramentas Web para Display & Monitores";
+  const howToUseTitle = isEn ? "How to use" : "Como usar";
+  const whenToUseTitle = isEn ? "When to use" : "Quando usar";
+  const limitationsTitle = isEn ? "Limitations" : "Limitações";
+  const faqTitle = isEn ? "Frequently Asked Questions (FAQ)" : "Perguntas Frequentes (FAQ)";
+  const relatedTitle = isEn ? "Related Tools" : "Ferramentas Relacionadas";
 
   return `<!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="${lang}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${page.title}</title>
   <meta name="description" content="${page.description}">
-  <link rel="canonical" href="${BASE_URL}/${page.slug}/">
+  <link rel="canonical" href="${pageUrl}">
+  <link rel="alternate" hreflang="pt-BR" href="${BASE_URL}/${ptSlug}/" />
+  <link rel="alternate" hreflang="en" href="${BASE_URL}/en/${enSlug}/" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   
   <meta property="og:title" content="${page.title}">
   <meta property="og:description" content="${page.description}">
-  <meta property="og:url" content="${BASE_URL}/${page.slug}/">
+  <meta property="og:url" content="${pageUrl}">
   <meta property="og:type" content="website">
   
   <meta name="twitter:card" content="summary_large_image">
@@ -580,36 +994,36 @@ function generateHTML(page) {
       <span>MonitorSmith</span>
       <span class="brand-badge">EXVORN.TECH</span>
     </a>
-    <a href="/" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem;">← Todas as ferramentas</a>
+    <a href="/" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem;">${backAllText}</a>
   </header>
   
   <main>
     <h1>${page.h1}</h1>
     <p class="intro">${page.intro}</p>
     
-    <a href="/?tool=${page.toolId}" class="cta-btn">🚀 Abrir Ferramenta Online em Tela Cheia</a>
+    <a href="/?tool=${page.toolId}" class="cta-btn">${ctaText}</a>
     
     <div class="section">
-      <h2>Como usar</h2>
+      <h2>${howToUseTitle}</h2>
       <ol>
         ${page.comoUsar.map(step => `<li>${step}</li>`).join("\n        ")}
       </ol>
     </div>
     
     <div class="section">
-      <h2>Quando usar</h2>
+      <h2>${whenToUseTitle}</h2>
       <ul>
         ${page.quandoUsar.map(item => `<li>${item}</li>`).join("\n        ")}
       </ul>
     </div>
     
     <div class="section">
-      <h2>Limitações</h2>
+      <h2>${limitationsTitle}</h2>
       <p>${page.limitacoes}</p>
     </div>
     
     <div class="section">
-      <h2>Perguntas Frequentes (FAQ)</h2>
+      <h2>${faqTitle}</h2>
       ${page.faq.map(f => `
       <div class="faq-item">
         <div class="faq-q">${f.q}</div>
@@ -618,15 +1032,15 @@ function generateHTML(page) {
     </div>
     
     <div class="section">
-      <h2>Ferramentas Relacionadas</h2>
+      <h2>${relatedTitle}</h2>
       <ul>
         ${relatedLinksHtml}
       </ul>
     </div>
     
     <footer>
-      <p><a href="/">Voltar para todas as ferramentas do MonitorSmith</a></p>
-      <p style="font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 12px;">© EXVORN.TECH — Suíte Gratuita de Ferramentas Web para Display & Monitores</p>
+      <p><a href="/">${footerText}</a></p>
+      <p style="font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 12px;">${copyrightText}</p>
     </footer>
   </main>
 </body>
@@ -638,7 +1052,8 @@ async function generateSitemap() {
   
   const urls = [
     { loc: `${BASE_URL}/`, priority: "1.0" },
-    ...pages.map(p => ({ loc: `${BASE_URL}/${p.slug}/`, priority: "0.8" }))
+    ...pages.map(p => ({ loc: `${BASE_URL}/${p.slug}/`, priority: "0.8" })),
+    ...pagesEn.map(p => ({ loc: `${BASE_URL}/en/${p.slug}/`, priority: "0.7" }))
   ];
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
@@ -659,9 +1074,18 @@ async function main() {
       const pageDir = path.join(DIST_DIR, page.slug);
       await fs.mkdir(pageDir, { recursive: true });
       
-      const html = generateHTML(page);
+      const html = generateHTML(page, "pt-BR", pages);
       await fs.writeFile(path.join(pageDir, "index.html"), html, "utf-8");
       console.log(`Generated page: ${page.slug}`);
+    }
+    
+    for (const page of pagesEn) {
+      const pageDir = path.join(DIST_DIR, "en", page.slug);
+      await fs.mkdir(pageDir, { recursive: true });
+      
+      const html = generateHTML(page, "en", pagesEn);
+      await fs.writeFile(path.join(pageDir, "index.html"), html, "utf-8");
+      console.log(`Generated page: en/${page.slug}`);
     }
     
     const sitemapXml = await generateSitemap();

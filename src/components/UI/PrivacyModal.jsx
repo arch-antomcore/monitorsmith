@@ -1,12 +1,28 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { X, ShieldCheck } from '@phosphor-icons/react';
 
 export default function PrivacyModal() {
   const [isOpen, setIsOpen] = useState(false);
+  const triggerRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+        triggerRef.current?.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
 
   return (
     <>
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setIsOpen(true)}
         style={{
@@ -24,6 +40,9 @@ export default function PrivacyModal() {
 
       {isOpen ? (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="privacy-dialog-title"
           style={{
             position: 'fixed',
             inset: 0,
@@ -54,6 +73,7 @@ export default function PrivacyModal() {
           >
             <button
               type="button"
+              aria-label="Fechar política de privacidade"
               onClick={() => setIsOpen(false)}
               style={{
                 position: 'absolute',
@@ -75,7 +95,7 @@ export default function PrivacyModal() {
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
               <ShieldCheck size={28} color="#34d399" weight="bold" />
-              <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>Política de Privacidade & Termos</h2>
+              <h2 id="privacy-dialog-title" style={{ margin: 0, fontSize: '1.2rem', fontWeight: 600 }}>Política de Privacidade & Termos</h2>
             </div>
 
             <div style={{ fontSize: '0.84rem', color: 'rgba(255,255,255,0.78)', lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: '14px' }}>

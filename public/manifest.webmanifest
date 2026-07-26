@@ -1,17 +1,61 @@
 {
-  "name": "MonitorSmith — Ferramentas para Monitor",
+  "id": "/",
+  "name": "MonitorSmith — Monitor Testing Tools",
   "short_name": "MonitorSmith",
-  "description": "Suíte profissional de ferramentas de precisão para telas, calibração e diagnóstico por EXVORN.TECH.",
+  "description": "Free professional monitor testing suite: dead pixel test, OLED black screen, backlight bleed, calibration patterns, soft light, focus timer, teleprompter and more.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#060709",
-  "theme_color": "#060709",
+  "display_override": ["standalone", "minimal-ui"],
+  "background_color": "#030304",
+  "theme_color": "#030304",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "categories": ["utilities", "productivity"],
   "icons": [
     {
       "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Teste de Dead Pixel",
+      "short_name": "Dead Pixel",
+      "url": "/?tool=dead-pixel",
+      "description": "Inspeção visual de pixels defeituosos com 8 cores sólidas"
+    },
+    {
+      "name": "Tela Preta OLED",
+      "short_name": "Tela Preta",
+      "url": "/?tool=black",
+      "description": "Preto absoluto para OLED e teste de vazamento de luz"
+    },
+    {
+      "name": "Relógio em Tela Cheia",
+      "short_name": "Relógio",
+      "url": "/?tool=clock",
+      "description": "Hora analógica e digital para monitor secundário"
+    },
+    {
+      "name": "Timer de Foco",
+      "short_name": "Foco",
+      "url": "/?tool=focus-timer",
+      "description": "Pomodoro com sintetizador de ruído marrom"
+    },
+    {
+      "name": "Teleprompter",
+      "short_name": "Teleponto",
+      "url": "/?tool=message",
+      "description": "Mensagem em tela cheia com espelhamento"
     }
   ]
 }

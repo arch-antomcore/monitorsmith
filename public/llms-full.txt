@@ -51,3 +51,20 @@
 - Não use como substituto de diagnóstico técnico de hardware
 - Não use para medir taxa de atualização exata (Hz) — use ferramentas específicas de GPU
 - Não use para reparo de hardware — as ferramentas são de diagnóstico visual
+
+## Metodologia Técnica
+- Renderização de padrões via Canvas 2D e CSS puro no navegador.
+- Sincronização de quadros via `window.requestAnimationFrame`.
+- Síntese de áudio via Web Audio API (OscillatorNode → BiquadFilterNode para ruído marrom).
+- Operação 100% client-side sem transmissão de dados ao servidor.
+- Os resultados são observacionais e auxiliam na inspeção visual. Não substituem instrumentos de medição profissional.
+
+## Responsável Editorial
+- Publicado por: EXVORN.TECH
+- Contato: suporte@exvorn.tech
+- Repositório: https://github.com/arch-antomcore/monitorsmith
+- Última atualização: 2026-07-25
+
+## Versões Internacionais
+- Português Brasileiro (pt-BR): https://monitorsmith.app/
+- English (en): https://monitorsmith.app/en/dead-pixel-test/

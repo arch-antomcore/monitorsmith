@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
 import Navbar from './components/Controls/Navbar';
@@ -8,11 +8,13 @@ import ToolLibrary from './components/Home/ToolLibrary';
 import BlackScreenMode from './components/Modes/BlackScreenMode';
 import WhiteLightingMode from './components/Modes/WhiteLightingMode';
 import DeadPixelTestMode from './components/Modes/DeadPixelTestMode';
-import ScreenCleanerMode from './components/Modes/ScreenCleanerMode';
-import CalibrationLabMode from './components/Modes/CalibrationLabMode';
-import FocusTimerMode from './components/Modes/FocusTimerMode';
-import FullScreenClockMode from './components/Modes/FullScreenClockMode';
-import MessageOverlayMode from './components/Modes/MessageOverlayMode';
+
+
+const CalibrationLabMode = lazy(() => import('./components/Modes/CalibrationLabMode'));
+const FocusTimerMode = lazy(() => import('./components/Modes/FocusTimerMode'));
+const FullScreenClockMode = lazy(() => import('./components/Modes/FullScreenClockMode'));
+const MessageOverlayMode = lazy(() => import('./components/Modes/MessageOverlayMode'));
+const ScreenCleanerMode = lazy(() => import('./components/Modes/ScreenCleanerMode'));
 import RadialMenu from './components/UI/RadialMenu';
 import ShortcutToast from './components/UI/ShortcutToast';
 import ToolTransitionOverlay from './components/UI/ToolTransitionOverlay';
@@ -108,6 +110,22 @@ function DisplaySuite() {
       : PRODUCT_DOCUMENT_TITLE;
   }, [activeMode]);
 
+const HASH_ALIASES = {
+  pixel: 'dead-pixel',
+  'dead_pixel': 'dead-pixel',
+  'deadpixel': 'dead-pixel',
+  'green-screen': 'color',
+  'greenscreen': 'color',
+  'chroma': 'color',
+  focus: 'focus-timer',
+  timer: 'focus-timer',
+  pomodoro: 'focus-timer',
+  'brown-noise': 'focus-timer',
+  teleprompter: 'message',
+  softbox: 'white',
+  light: 'white',
+};
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const handleUrlState = () => {
@@ -119,6 +137,12 @@ function DisplaySuite() {
           activateMode(modeByHash);
           return;
         }
+        
+        const aliased = HASH_ALIASES[hash];
+        if (aliased) {
+          activateMode(aliased);
+          return;
+        }
       }
       // 2. Check Query Parameter (?tool=black, ?tool=dead-pixel, etc.)
       const params = new URLSearchParams(window.location.search);
@@ -127,6 +151,12 @@ function DisplaySuite() {
         const modeByParam = Object.values(MODES).find((m) => m.toLowerCase() === toolParam);
         if (modeByParam) {
           activateMode(modeByParam);
+          return;
+        }
+        
+        const aliasedTool = HASH_ALIASES[toolParam];
+        if (aliasedTool) {
+          activateMode(aliasedTool);
         }
       }
     };
@@ -283,7 +313,7 @@ function DisplaySuite() {
         );
       case MODES.CLEANER:
         return (
-          <ScreenCleanerMode
+          <ScreenCleanerModeLazy
             {...commonModeProps}
             pattern={cleanerPattern}
             brightness={cleanerBrightness}
@@ -408,7 +438,9 @@ function DisplaySuite() {
           {activeMode !== MODES.HOME ? (
             <h1 className="sr-only">{MODE_PAGE_TITLES[activeMode] || 'MonitorSmith'}</h1>
           ) : null}
-          {renderActiveMode()}
+          <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: '#030304' }} />}>
+            {renderActiveMode()}
+          </Suspense>
         </motion.div>
       </AnimatePresence>
 
