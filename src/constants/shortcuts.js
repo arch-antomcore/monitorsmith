@@ -127,18 +127,9 @@ export function isDisplayMode(mode) {
   return DISPLAY_MODE_IDS.includes(mode);
 }
 
-export const MODE_PRESENTATION = {
-  home: { label: 'Ferramentas', icon: 'home' },
-  black: { label: 'Tela preta', icon: 'void' },
-  white: { label: 'Luz suave', icon: 'sun' },
-  cleaner: { label: 'Inspeção', icon: 'cleaner' },
-  'dead-pixel': { label: 'Pixels', icon: 'pixels' },
-  calibration: { label: 'Verificação', icon: 'calibration' },
-  'focus-timer': { label: 'Foco', icon: 'timer' },
-  clock: { label: 'Relógio', icon: 'clock' },
-  message: { label: 'Mensagem', icon: 'message' },
-  color: { label: 'Estúdio de cor', icon: 'color' },
-};
+import { DOCK_TOOLS, TOOLS_MODE_PRESENTATION } from './tools';
+
+export const MODE_PRESENTATION = TOOLS_MODE_PRESENTATION;
 
 export function getModePresentation(mode) {
   if (mode && typeof mode === 'object') {
@@ -159,14 +150,4 @@ export function getModePresentation(mode) {
   };
 }
 
-export const DEFAULT_DOCK_MODES = [
-  'black',
-  'white',
-  'cleaner',
-  'dead-pixel',
-  'calibration',
-  'focus-timer',
-  'clock',
-  'message',
-  'color',
-];
+export const DEFAULT_DOCK_MODES = DOCK_TOOLS;

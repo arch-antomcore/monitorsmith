@@ -8,112 +8,10 @@ import FlowButton from '../UI/FlowButton';
 import AdSenseUnit from '../UI/AdSenseUnit';
 import PrivacyModal from '../UI/PrivacyModal';
 import { ControlIcon } from '../Controls/Navbar';
+import { HERO_GRID_TOOLS, TOOL_LIBRARY } from '../../constants/tools';
 
-const TOOL_LIBRARY = [
-  {
-    id: 'black',
-    category: 'Ver e cuidar',
-    title: 'Tela preta',
-    description: 'Preencha a tela com preto absoluto.',
-    when: 'Para reduzir luz e remover distrações.',
-    icon: 'void',
-    shortcut: 'B',
-    tone: 'void',
-  },
-  {
-    id: 'dead-pixel',
-    category: 'Ver e cuidar',
-    title: 'Teste visual de pixels',
-    description: 'Percorra cores sólidas e encontre pontos suspeitos no painel.',
-    when: 'Para uma inspeção visual rápida.',
-    icon: 'pixels',
-    shortcut: '—',
-    tone: 'pixel',
-  },
-  {
-    id: 'cleaner',
-    category: 'Ver e cuidar',
-    title: 'Inspeção para limpeza',
-    description: 'Alto contraste para revelar poeira, marcas e manchas.',
-    when: 'Para preparar o painel antes da limpeza física.',
-    icon: 'cleaner',
-    shortcut: 'C',
-    tone: 'clean',
-  },
-  {
-    id: 'calibration',
-    category: 'Ver e cuidar',
-    title: 'Verificação visual',
-    description: 'Padrões de escala, cor, nitidez e gama para inspecionar a imagem.',
-    when: 'Para conferir o comportamento do display.',
-    icon: 'calibration',
-    shortcut: 'G',
-    tone: 'calibration',
-  },
-  {
-    id: 'white',
-    category: 'Cor e iluminação',
-    title: 'Luz suave',
-    description: 'Uma tela clara com temperatura visual e intensidade ajustáveis.',
-    when: 'Para chamadas, gravações e luz de apoio.',
-    icon: 'sun',
-    shortcut: 'W',
-    tone: 'light',
-  },
-  {
-    id: 'color',
-    category: 'Cor e iluminação',
-    title: 'Estúdio de cor',
-    description: 'Preencha a tela com uma cor livre ou um preset.',
-    when: 'Para ambientação, prévia visual e cenários.',
-    icon: 'color',
-    shortcut: 'S',
-    tone: 'color',
-  },
-  {
-    id: 'green-screen',
-    launchMode: 'color',
-    color: '#00B140',
-    brightness: 100,
-    category: 'Atalho de cor',
-    title: 'Tela verde',
-    description: 'Verde sólido para chroma.',
-    when: 'Para composição de vídeo em um painel uniforme.',
-    icon: 'color',
-    shortcut: '—',
-    tone: 'green',
-  },
-  {
-    id: 'focus-timer',
-    category: 'Tempo e presença',
-    title: 'Foco',
-    description: 'Um timer discreto para ciclos de concentração.',
-    when: 'Para trabalho profundo e pausas.',
-    icon: 'timer',
-    shortcut: 'P',
-    tone: 'focus',
-  },
-  {
-    id: 'clock',
-    category: 'Tempo e presença',
-    title: 'Relógio',
-    description: 'Hora e data legíveis para uma tela secundária.',
-    when: 'Para mesas, estúdios e salas.',
-    icon: 'clock',
-    shortcut: 'T',
-    tone: 'clock',
-  },
-  {
-    id: 'message',
-    category: 'Tempo e presença',
-    title: 'Mensagem em tela',
-    description: 'Exiba um recado em escala de sala.',
-    when: 'Para status, recepção e comunicação visual.',
-    icon: 'message',
-    shortcut: 'M',
-    tone: 'message',
-  },
-];
+export { HERO_GRID_TOOLS, TOOL_LIBRARY };
+
 
 function ToolPreview({ tool }) {
   return <ControlIcon name={tool.icon} size={24} />;
@@ -146,52 +44,6 @@ function ToolCard({ tool, index, onLaunch }) {
     </motion.button>
   );
 }
-
-export const HERO_GRID_TOOLS = [
-  {
-    id: 'black',
-    title: 'Tela Preta',
-    icon: 'void',
-    shortcut: 'B',
-    desc: 'Preencha a tela com preto absoluto — reduza luz, oculte distrações e proteja painéis OLED.',
-  },
-  {
-    id: 'dead-pixel',
-    title: 'Teste de Pixels',
-    icon: 'pixels',
-    shortcut: 'G',
-    desc: 'Percorra 8 cores sólidas e identifique subpixels mortos, presos ou com vazamento no painel.',
-  },
-  {
-    id: 'cleaner',
-    title: 'Inspeção para Limpeza',
-    icon: 'cleaner',
-    shortcut: 'C',
-    desc: 'Alto contraste para revelar poeira, marcas de dedo e variações de superfície antes da limpeza.',
-  },
-  {
-    id: 'white',
-    title: 'Luz Suave',
-    icon: 'sun',
-    shortcut: 'W',
-    desc: 'Iluminação neutra com temperatura e intensidade ajustáveis para chamadas e gravações.',
-  },
-  {
-    id: 'focus-timer',
-    title: 'Timer de Foco',
-    icon: 'timer',
-    shortcut: 'P',
-    desc: 'Cronômetro discreto com ciclos de concentração, presets e alarme sonoro nativo.',
-  },
-  {
-    id: 'clock',
-    title: 'Relógio de Tela',
-    icon: 'clock',
-    shortcut: 'T',
-    badge: 'Analógico',
-    desc: 'Hora e data legíveis em tempo real para monitor secundário, mesas e estúdios.',
-  },
-];
 
 function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
