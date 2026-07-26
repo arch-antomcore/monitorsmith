@@ -8,7 +8,8 @@ export default {
         ink: '#090A0F',
       },
       fontFamily: {
-        sans: ['Inter', 'Geist', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['Outfit', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Consolas', 'monospace'],
       },
     },
   },
