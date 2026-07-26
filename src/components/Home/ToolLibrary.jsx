@@ -24,14 +24,14 @@ function ToolPreview({ tool }) {
  * to child motion elements. The reference ServiceCard only uses variants + whileHover.
  */
 
-// Decorative floating icon: scale + rotate + translate (identical to reference imageAnimation)
+// Decorative floating icon: scale + rotate + translate (enhanced for clear visibility)
 const imageAnimation = {
-  animate: { scale: 1, rotate: 0, x: 0, transition: { duration: 0.4, ease: 'easeInOut' } },
+  animate: { scale: 1, rotate: 0, x: 0, transition: { duration: 0.35, ease: 'easeInOut' } },
   hover: {
-    scale: 1.1,
-    rotate: 3,
-    x: 10,
-    transition: { duration: 0.4, ease: 'easeInOut' },
+    scale: 1.15,
+    rotate: 6,
+    x: 12,
+    transition: { duration: 0.35, ease: 'easeOut' },
   },
 };
 
@@ -64,8 +64,8 @@ function ToolCard({ tool, index, onLaunch }) {
       },
     },
     hover: {
-      scale: 1.02,
-      transition: { duration: 0.3 },
+      scale: 1.03,
+      transition: { duration: 0.28, ease: [0.16, 1, 0.3, 1] },
     },
   };
 
@@ -79,7 +79,7 @@ function ToolCard({ tool, index, onLaunch }) {
       variants={variants}
       initial="initial"
       animate="animate"
-      whileHover={shouldReduceMotion ? undefined : 'hover'}
+      whileHover="hover"
       whileTap={{ scale: 0.97 }}
     >
       {/* Content layer — above the decorative icon */}
@@ -142,8 +142,8 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
       },
     },
     hover: {
-      scale: 1.02,
-      transition: { duration: 0.3 },
+      scale: 1.03,
+      transition: { duration: 0.28, ease: [0.16, 1, 0.3, 1] },
     },
   };
 
@@ -156,7 +156,7 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
       variants={variants}
       initial="initial"
       animate="animate"
-      whileHover={shouldReduceMotion ? undefined : 'hover'}
+      whileHover="hover"
       whileTap={{ scale: 0.97 }}
     >
       {/* Content layer */}
