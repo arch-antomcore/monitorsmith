@@ -2854,7 +2854,7 @@ button.wbp-navbar__mode:hover {
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap: 14px;
+  min-height: 180px;
   overflow: hidden;
   padding: 24px;
   border: 1px solid rgba(255, 255, 255, 0.10);
@@ -2989,39 +2989,84 @@ button.wbp-navbar__mode:hover {
   color: var(--text-muted);
 }
 
-/* Body row: description + arrow */
-.ms-card__body {
+/* Content layer — sits above the decorative floating icon */
+.ms-card__content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  height: 100%;
   gap: 12px;
 }
 
 /* Description text */
 .ms-card__desc {
-  flex: 1;
   font-size: 0.92rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.72);
-  /* NOTE: opacity + slide handled by Framer Motion descMotionVariants */
+  color: rgba(255, 255, 255, 0.68);
 }
 
-/* Bouncing arrow indicator */
-.ms-card__arrow {
-  display: inline-flex;
+/* CTA link — "ABRIR" + bouncing arrow (like "LEARN MORE" in reference) */
+.ms-card__cta {
+  display: flex;
   align-items: center;
-  flex-shrink: 0;
-  font-size: 1.1rem;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 8px;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.72rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.65);
-  /* NOTE: opacity + bounce handled by Framer Motion arrowMotionVariants */
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  transition: color 200ms ease;
 }
 
-.ms-tool-card:hover .ms-card__arrow,
-.ms-hero-grid-card:hover .ms-card__arrow {
+.ms-tool-card:hover .ms-card__cta,
+.ms-hero-grid-card:hover .ms-card__cta {
   color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
+
+.ms-card__cta-arrow {
+  display: inline-flex;
+  margin-left: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Decorative floating icon — large, bottom-right corner (like reference imgSrc) */
+.ms-card__decor {
+  position: absolute;
+  right: -10px;
+  bottom: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  opacity: 0.08;
+  color: currentColor;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+}
+
+.ms-tool-card:hover .ms-card__decor,
+.ms-hero-grid-card:hover .ms-card__decor {
+  opacity: 0.18;
+}
+
+/* Per-tone decorative icon colors */
+.ms-tool-card--void .ms-card__decor { color: #F59E0B; }
+.ms-tool-card--light .ms-card__decor { color: #FEF3C7; }
+.ms-tool-card--pixel .ms-card__decor { color: #10B981; }
+.ms-tool-card--clean .ms-card__decor { color: #E4E4E7; }
+.ms-tool-card--calibration .ms-card__decor { color: #F97316; }
+.ms-tool-card--color .ms-card__decor { color: #FBBF24; }
+.ms-tool-card--green .ms-card__decor { color: #10B981; }
+.ms-tool-card--focus .ms-card__decor { color: #F59E0B; }
+.ms-tool-card--clock .ms-card__decor { color: #38BDF8; }
+.ms-tool-card--message .ms-card__decor { color: #F59E0B; }
 
 /* ── Legacy compatibility — keep old title/desc classes ── */
 
@@ -3795,7 +3840,7 @@ button.wbp-navbar__mode:hover {
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap: 14px;
+  min-height: 180px;
   overflow: hidden;
   padding: 24px;
   border: 1px solid rgba(255, 255, 255, 0.10);

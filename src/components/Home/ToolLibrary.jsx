@@ -17,61 +17,31 @@ function ToolPreview({ tool }) {
   return <ControlIcon name={tool.icon} size={24} />;
 }
 
-/* ── Shared Framer Motion Variant Factories ── */
+/* ── Framer Motion Variants — EXACT values from ServiceCard reference ── */
 
-function makeCardVariants(index, shouldReduceMotion) {
-  return {
-    initial: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
-    animate: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: 'spring',
-        stiffness: 280,
-        damping: 26,
-        delay: shouldReduceMotion ? 0 : Math.min(index, 10) * 0.055,
-      },
-    },
-    hover: {
-      scale: 1.025,
-      transition: { duration: 0.32, ease: [0.16, 1, 0.3, 1] },
-    },
-  };
-}
-
-const iconMotionVariants = {
-  animate: { scale: 1, rotate: 0, x: 0 },
+// Card: subtle scale on hover (identical to reference)
+const cardAnimation = {
   hover: {
-    scale: 1.18,
-    rotate: 8,
-    x: 4,
-    transition: { duration: 0.42, ease: 'easeInOut' },
+    scale: 1.02,
+    transition: { duration: 0.3 },
   },
 };
 
-const descMotionVariants = {
-  animate: { opacity: 0.72, y: 0 },
+// Decorative floating icon: scale + rotate + translate (identical to reference imageAnimation)
+const imageAnimation = {
   hover: {
-    opacity: 1,
-    y: -2,
-    transition: { duration: 0.3, delay: 0.06 },
+    scale: 1.1,
+    rotate: 3,
+    x: 10,
+    transition: { duration: 0.4, ease: 'easeInOut' },
   },
 };
 
-const arrowMotionVariants = {
-  animate: { opacity: 0, x: -6 },
+// Arrow bounce: infinite reverse (identical to reference arrowAnimation)
+const arrowAnimation = {
   hover: {
-    opacity: 1,
-    x: [0, 5, 0],
-    transition: { opacity: { duration: 0.2 }, x: { duration: 0.9, ease: 'easeInOut', repeat: Infinity } },
-  },
-};
-
-const ledMotionVariants = {
-  animate: { scale: 1 },
-  hover: {
-    scale: [1, 1.5, 1],
-    transition: { duration: 1.2, repeat: Infinity, ease: 'easeInOut' },
+    x: 5,
+    transition: { duration: 0.3, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' },
   },
 };
 
@@ -79,7 +49,6 @@ const ledMotionVariants = {
 
 function ToolCard({ tool, index, onLaunch }) {
   const shouldReduceMotion = useReducedMotion();
-  const cardVariants = makeCardVariants(index, shouldReduceMotion);
 
   return (
     <motion.button
@@ -88,38 +57,57 @@ function ToolCard({ tool, index, onLaunch }) {
       id={`monitor-tool-${tool.id}`}
       onClick={() => onLaunch(tool, `monitor-tool-${tool.id}`)}
       aria-label={`Abrir ${tool.title}. ${tool.description}`}
-      variants={cardVariants}
-      initial="initial"
-      animate="animate"
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        type: 'spring',
+        stiffness: 280,
+        damping: 26,
+        delay: shouldReduceMotion ? 0 : Math.min(index, 10) * 0.055,
+      }}
+      variants={cardAnimation}
       whileHover={shouldReduceMotion ? undefined : 'hover'}
-      whileTap={{ scale: 0.985 }}
+      whileTap={{ scale: 0.97 }}
     >
-      {/* Header — icon · title · LED · kbd */}
-      <span className="ms-card__head">
-        <motion.span className="ms-card__icon-area" variants={iconMotionVariants}>
-          <ToolPreview tool={tool} />
-        </motion.span>
-        <span className="ms-card__titles">
-          <strong>{tool.title}</strong>
-          {tool.badge ? (
-            <span className="ms-hero-grid-card__badge">{tool.badge}</span>
-          ) : null}
+      {/* Content layer — above the decorative icon */}
+      <div className="ms-card__content">
+        {/* Header — small icon · title · LED · kbd */}
+        <span className="ms-card__head">
+          <span className="ms-card__icon-area">
+            <ToolPreview tool={tool} />
+          </span>
+          <span className="ms-card__titles">
+            <strong>{tool.title}</strong>
+            {tool.badge ? (
+              <span className="ms-hero-grid-card__badge">{tool.badge}</span>
+            ) : null}
+          </span>
+          <span className="ms-card__meta">
+            <span className="ms-card__led" title="Hardware Ready" />
+            <kbd className="ms-card__kbd">{tool.shortcut || '—'}</kbd>
+          </span>
         </span>
-        <span className="ms-card__meta">
-          <motion.span className="ms-card__led" variants={ledMotionVariants} title="Hardware Ready" />
-          <kbd className="ms-card__kbd">{tool.shortcut || '—'}</kbd>
-        </span>
-      </span>
 
-      {/* Body — description + bouncing arrow */}
-      <span className="ms-card__body">
-        <motion.span className="ms-card__desc" variants={descMotionVariants}>
-          {tool.description}
-        </motion.span>
-        <motion.span className="ms-card__arrow" variants={arrowMotionVariants} aria-hidden="true">
-          →
-        </motion.span>
-      </span>
+        {/* Description */}
+        <span className="ms-card__desc">{tool.description}</span>
+
+        {/* CTA link — "ABRIR" + bouncing arrow (like "LEARN MORE" in reference) */}
+        <span className="ms-card__cta">
+          ABRIR
+          <motion.span className="ms-card__cta-arrow" variants={arrowAnimation}>
+            →
+          </motion.span>
+        </span>
+      </div>
+
+      {/* Decorative floating icon — large, positioned bottom-right like reference imgSrc */}
+      <motion.span
+        className="ms-card__decor"
+        variants={imageAnimation}
+        aria-hidden="true"
+      >
+        <ControlIcon name={tool.icon} size={72} />
+      </motion.span>
     </motion.button>
   );
 }
@@ -127,46 +115,60 @@ function ToolCard({ tool, index, onLaunch }) {
 /* ── HeroGridCard (Hero Section — top 6 featured) ── */
 
 function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
-  const cardVariants = makeCardVariants(index, shouldReduceMotion);
-
   return (
     <motion.button
       type="button"
       className="ms-hero-grid-card"
       onClick={() => onLaunch(tool.id, `monitor-tool-${tool.id}`)}
       aria-label={`Abrir ${tool.title}`}
-      variants={cardVariants}
-      initial="initial"
-      animate="animate"
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        type: 'spring',
+        stiffness: 280,
+        damping: 26,
+        delay: shouldReduceMotion ? 0 : 0.12 + index * 0.055,
+      }}
+      variants={cardAnimation}
       whileHover={shouldReduceMotion ? undefined : 'hover'}
-      whileTap={{ scale: 0.985 }}
+      whileTap={{ scale: 0.97 }}
     >
-      {/* Header */}
-      <span className="ms-card__head">
-        <motion.span className="ms-card__icon-area" variants={iconMotionVariants}>
-          <ControlIcon name={tool.icon} size={24} />
-        </motion.span>
-        <span className="ms-card__titles">
-          <strong>{tool.title}</strong>
-          {tool.badge ? (
-            <span className="ms-hero-grid-card__badge">{tool.badge}</span>
-          ) : null}
+      {/* Content layer */}
+      <div className="ms-card__content">
+        <span className="ms-card__head">
+          <span className="ms-card__icon-area">
+            <ControlIcon name={tool.icon} size={24} />
+          </span>
+          <span className="ms-card__titles">
+            <strong>{tool.title}</strong>
+            {tool.badge ? (
+              <span className="ms-hero-grid-card__badge">{tool.badge}</span>
+            ) : null}
+          </span>
+          <span className="ms-card__meta">
+            <span className="ms-card__led" title="Hardware Ready" />
+            <kbd className="ms-card__kbd">{tool.shortcut}</kbd>
+          </span>
         </span>
-        <span className="ms-card__meta">
-          <motion.span className="ms-card__led" variants={ledMotionVariants} title="Hardware Ready" />
-          <kbd className="ms-card__kbd">{tool.shortcut}</kbd>
-        </span>
-      </span>
 
-      {/* Body */}
-      <span className="ms-card__body">
-        <motion.span className="ms-card__desc" variants={descMotionVariants}>
-          {tool.desc}
-        </motion.span>
-        <motion.span className="ms-card__arrow" variants={arrowMotionVariants} aria-hidden="true">
-          →
-        </motion.span>
-      </span>
+        <span className="ms-card__desc">{tool.desc}</span>
+
+        <span className="ms-card__cta">
+          ABRIR
+          <motion.span className="ms-card__cta-arrow" variants={arrowAnimation}>
+            →
+          </motion.span>
+        </span>
+      </div>
+
+      {/* Decorative floating icon */}
+      <motion.span
+        className="ms-card__decor"
+        variants={imageAnimation}
+        aria-hidden="true"
+      >
+        <ControlIcon name={tool.icon} size={72} />
+      </motion.span>
     </motion.button>
   );
 }

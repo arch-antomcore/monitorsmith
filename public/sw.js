@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'monitorsmith-v9-motion-cards';
+const CACHE_VERSION = 'monitorsmith-v10-servicecard';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
