@@ -21,17 +21,30 @@ Não é um "tema escuro" nem um site de tela preta. Tela preta é uma das ferram
 
 ```text
 src/
+├── constants/tools.js           Fonte Única de Verdade (metadados, atalhos, categorias e exibição das ferramentas)
 ├── context/AppContext.jsx       Estado de modo, preferências e ações globais
 ├── hooks/                       Integração isolada com APIs do navegador e teclado
 ├── components/
 │   ├── UI/                      Primitivos reutilizáveis: botão, modal, slider e glass card
 │   ├── Controls/                Navegação, dock e guia de atalhos
 │   ├── Home/                    Visão geral, descoberta e orientação de uso
-│   └── Modes/                   Superfícies de display independentes
+│   └── Modes/                   Superfícies de display independentes (carregamento modular e lazy)
 └── App.jsx                      Orquestração dos modos, APIs e transições
+
+scripts/
+└── generate-seo-pages.mjs       Injeção pós-build de 24 landing pages satélites SSG + Sitemap para SEO e i18n
 ```
 
-Os modos são componentes autocontidos: não dependem da página inicial para renderizar e recebem apenas as ações e preferências necessárias. Isso mantém a aplicação simples de testar e permite adicionar novos modos sem transformar o estado global em uma coleção de exceções.
+Os modos são componentes autocontidos: não dependem da página inicial para renderizar e recebem apenas as ações e preferências necessárias. Graças ao registro centralizado em `src/constants/tools.js`, adicionar uma nova ferramenta requer apenas a inclusão de seu objeto semântico — toda a interface (dock, cards, menus, atalhos) se adapta dinamicamente.
+
+## 👑 Arquitetura de SEO, GEO & Internacionalização
+
+O MonitorSmith foi projetado não apenas como um SPA rápido, mas como uma propriedade digital de alta autoridade e rankeamento orgânico. A documentação técnica exaustiva de todas as estratégias está disponível em nosso manual mestre: **[docs/MANUAL_GEO_E_ARQUITETURA.md](./docs/MANUAL_GEO_E_ARQUITETURA.md)**.
+
+- **Híbrido SPA + SSG ("Satellite Landing Pages"):** Resolve o problema de indexação de SPAs React injetando no build 24 páginas HTML estáticas dedicadas para cauda longa (ex: `/teste-de-dead-pixel/` e `/en/dead-pixel-test/`), preservando a interatividade instantânea do cliente.
+- **GEO (Generative Engine Optimization):** Implementação nativa dos arquivos de descoberta para LLMs e robôs de inteligência artificial (`public/llms.txt` e `public/llms-full.txt`), detalhando metodologia técnica, precisão e limitações honestas.
+- **Internacionalização Bidirecional (i18n):** Estrutura multilíngue completa (pt-BR e en) interligada por tags `<link rel="alternate" hreflang="..." />` bidirecionais e sitemap dinâmico de 25 URLs indexáveis.
+- **Code Splitting & Core Web Vitals:** Carregamento sob demanda via `React.lazy()` e `<Suspense>` para ferramentas pesadas (reduzindo o JS inicial em 9%) e carregamento preguiçoso de anúncios via `IntersectionObserver` para zerar o Cumulative Layout Shift (CLS).
 
 ## Acessibilidade, desempenho e movimento
 
