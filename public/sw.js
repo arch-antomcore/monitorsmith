@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'monitorsmith-v3-tactile';
+const CACHE_VERSION = 'monitorsmith-v4-osd-kbd';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function DisplayToolShell({
@@ -13,6 +13,22 @@ export function DisplayToolShell({
   customOptionsLabel,
 }) {
   const [isPanelClosed, setIsPanelClosed] = useState(false);
+  const [screenSpecs, setScreenSpecs] = useState({ width: 1920, height: 1080, dpr: 1, depth: 24 });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const updateSpecs = () => {
+      setScreenSpecs({
+        width: window.screen?.width || window.innerWidth,
+        height: window.screen?.height || window.innerHeight,
+        dpr: window.devicePixelRatio || 1,
+        depth: window.screen?.colorDepth || 24,
+      });
+    };
+    updateSpecs();
+    window.addEventListener('resize', updateSpecs);
+    return () => window.removeEventListener('resize', updateSpecs);
+  }, []);
 
   return (
     <div className={`display-mode display-mode--${id || 'tool'} ${className}`}>
@@ -28,9 +44,10 @@ export function DisplayToolShell({
           zIndex: 25,
           display: 'inline-flex',
           alignItems: 'center',
+          flexWrap: 'wrap',
           gap: '12px',
-          padding: '6px 12px',
-          background: 'rgba(5, 5, 6, 0.85)',
+          padding: '6px 14px',
+          background: 'rgba(5, 5, 6, 0.88)',
           border: '1px solid rgba(245, 158, 11, 0.35)',
           borderRadius: '6px',
           fontFamily: "'JetBrains Mono', Consolas, monospace",
@@ -46,7 +63,11 @@ export function DisplayToolShell({
         <span style={{ opacity: 0.4 }}>|</span>
         <span>MODO: <strong>{title || id || 'DIAGNÓSTICO'}</strong></span>
         <span style={{ opacity: 0.4 }}>|</span>
+        <span style={{ color: '#60A5FA' }}>RES: <strong>{Math.round(screenSpecs.width * screenSpecs.dpr)}x{Math.round(screenSpecs.height * screenSpecs.dpr)}px</strong> ({screenSpecs.depth}-BIT)</span>
+        <span style={{ opacity: 0.4 }}>|</span>
         <span style={{ color: '#10B981' }}>● RAW_OUTPUT</span>
+        <span style={{ opacity: 0.4 }}>|</span>
+        <span style={{ opacity: 0.65 }}>ATALHOS: [ K / ? ]</span>
       </div>
 
       <AnimatePresence mode="wait">

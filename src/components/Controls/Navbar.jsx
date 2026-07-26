@@ -232,16 +232,18 @@ export default function Navbar({
           />
         ) : null}
         <Button
-          className="wbp-navbar__action"
+          className="wbp-navbar__action wbp-navbar__action--shortcuts"
           variant="ghost"
           size="sm"
           icon={<ControlIcon name="help" size={16} />}
           aria-label="Abrir atalhos de teclado"
-          title="Atalhos de teclado (?)"
+          title="Atalhos de teclado (? / K)"
           onClick={onOpenHelp}
           disabled={!onOpenHelp}
           tabIndex={hiddenTabIndex}
-        />
+        >
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, marginLeft: '6px', letterSpacing: '0.08em', color: '#F59E0B' }}>ATALHOS [K]</span>
+        </Button>
       </nav>
     </motion.header>
   );

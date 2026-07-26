@@ -114,6 +114,22 @@ export const SHORTCUTS = Object.freeze([
     label: '?',
     description: 'Ver atalhos de teclado',
   }),
+  Object.freeze({
+    id: 'keyboard-help-k',
+    action: 'toggleHelp',
+    key: 'k',
+    code: 'KeyK',
+    label: 'K',
+    description: 'Ver atalhos de teclado',
+  }),
+  Object.freeze({
+    id: 'keyboard-help-slash',
+    action: 'toggleHelp',
+    key: '/',
+    code: 'Slash',
+    label: '/',
+    description: 'Ver atalhos de teclado',
+  }),
 ]);
 
 export const SHORTCUTS_BY_ACTION = Object.freeze(
