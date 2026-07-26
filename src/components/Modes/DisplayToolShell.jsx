@@ -18,6 +18,37 @@ export function DisplayToolShell({
     <div className={`display-mode display-mode--${id || 'tool'} ${className}`}>
       {children}
 
+      {/* Studio OSD Status Bar (Hardware Diagnostic HUD) */}
+      <div
+        className="display-mode__osd-hud"
+        style={{
+          position: 'absolute',
+          top: '20px',
+          left: '20px',
+          zIndex: 25,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '12px',
+          padding: '6px 12px',
+          background: 'rgba(5, 5, 6, 0.85)',
+          border: '1px solid rgba(245, 158, 11, 0.35)',
+          borderRadius: '6px',
+          fontFamily: "'JetBrains Mono', Consolas, monospace",
+          fontSize: '0.68rem',
+          letterSpacing: '0.08em',
+          color: 'rgba(255, 255, 255, 0.85)',
+          pointerEvents: 'none',
+          textTransform: 'uppercase',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.6)'
+        }}
+      >
+        <span style={{ color: '#F59E0B', fontWeight: 700 }}>[ OSD // EXVORN.TECH ]</span>
+        <span style={{ opacity: 0.4 }}>|</span>
+        <span>MODO: <strong>{title || id || 'DIAGNÓSTICO'}</strong></span>
+        <span style={{ opacity: 0.4 }}>|</span>
+        <span style={{ color: '#10B981' }}>● RAW_OUTPUT</span>
+      </div>
+
       <AnimatePresence mode="wait">
         {!isPanelClosed ? (
           <motion.div

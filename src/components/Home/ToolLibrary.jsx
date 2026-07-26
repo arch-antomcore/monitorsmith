@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 import Button from '../UI/Button';
@@ -46,15 +46,6 @@ function ToolCard({ tool, index, onLaunch }) {
 }
 
 function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setMousePos({ x, y });
-  };
-
   return (
     <motion.div
       initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
@@ -70,16 +61,8 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
         type="button"
         className="ms-hero-grid-card"
         onClick={() => onLaunch(tool.id, `monitor-tool-${tool.id}`)}
-        onMouseMove={handleMouseMove}
         aria-label={`Abrir ${tool.title}`}
-        style={{
-          '--mouse-x': `${mousePos.x}%`,
-          '--mouse-y': `${mousePos.y}%`,
-        }}
       >
-        {/* Spotlight light that follows cursor */}
-        <span className="ms-hero-grid-card__spotlight" aria-hidden="true" />
-
         <span className="ms-hero-grid-card__head">
           <span className="ms-hero-grid-card__icon">
             <ControlIcon name={tool.icon} size={24} />

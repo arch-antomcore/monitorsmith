@@ -2844,9 +2844,10 @@ button.wbp-navbar__mode:hover {
 }
 
 .ms-tool-card:hover {
-  transform: scale(1.01) translateY(-2px);
-  border-color: rgba(245, 158, 11, 0.35);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(245, 158, 11, 0.08);
+  transform: translateY(-2px);
+  border-color: #F59E0B;
+  background: rgba(22, 24, 34, 0.9);
+  box-shadow: inset 0 1px 0 rgba(245, 158, 11, 0.15), 0 16px 36px rgba(0, 0, 0, 0.5);
 }
 
 .ms-tool-card:focus-visible {
@@ -3667,33 +3668,14 @@ button.wbp-navbar__mode:hover {
 }
 
 .ms-hero-grid-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(245, 158, 11, 0.35);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 22px 48px -8px rgba(0, 0, 0, 0.55), 0 0 24px rgba(245, 158, 11, 0.06);
+  transform: translateY(-3px);
+  border-color: #F59E0B;
+  background: linear-gradient(180deg, rgba(22, 24, 34, 0.95) 0%, rgba(12, 14, 20, 0.9) 100%);
+  box-shadow: inset 0 1px 0 rgba(245, 158, 11, 0.2), 0 16px 36px rgba(0, 0, 0, 0.6);
 }
 
 .ms-hero-grid-card:active {
-  transform: translateY(-2px) scale(0.985);
-}
-
-/* Cursor Spotlight Effect — smooth radial glow that follows mouse */
-.ms-hero-grid-card__spotlight {
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
-  background: radial-gradient(
-    400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(245, 158, 11, 0.12),
-    transparent 60%
-  );
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 240ms ease;
-  z-index: 0;
-}
-
-.ms-hero-grid-card:hover .ms-hero-grid-card__spotlight {
-  opacity: 1;
+  transform: translateY(-1px) scale(0.99);
 }
 
 /* Card Head — icon + title + kbd */
