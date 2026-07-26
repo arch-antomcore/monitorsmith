@@ -242,7 +242,7 @@ export default function Navbar({
           disabled={!onOpenHelp}
           tabIndex={hiddenTabIndex}
         >
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, marginLeft: '6px', letterSpacing: '0.08em', color: '#F59E0B' }}>ATALHOS [K]</span>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em' }}>ATALHOS [K]</span>
         </Button>
       </nav>
     </motion.header>
