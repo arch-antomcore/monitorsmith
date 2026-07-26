@@ -1,4 +1,4 @@
-const CACHE_NAME = 'monitorsmith-v1';
+const CACHE_VERSION = 'monitorsmith-v2-studio';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -8,8 +8,9 @@ const ASSETS_TO_CACHE = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
+    caches.open(CACHE_VERSION).then((cache) => cache.addAll(ASSETS_TO_CACHE))
   );
+  // Force the waiting service worker to become the active service worker immediately
   self.skipWaiting();
 });
 
@@ -18,27 +19,54 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((keys) =>
       Promise.all(
         keys.map((key) => {
-          if (key !== CACHE_NAME) return caches.delete(key);
+          if (key !== CACHE_VERSION) {
+            return caches.delete(key); // Clean up all stale v1 or old caches immediately!
+          }
         })
       )
     )
   );
+  // Take control of all open client tabs immediately without waiting for page reload
   self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
-  const url = event.request.url;
+  const url = new URL(event.request.url);
+
+  // Ignore ad networks and third-party tracking scripts
   if (
-    url.includes('ads.txt') ||
-    url.includes('googlesyndication.com') ||
-    url.includes('doubleclick.net') ||
-    url.includes('googleadservices.com')
+    url.hostname.includes('googlesyndication.com') ||
+    url.hostname.includes('doubleclick.net') ||
+    url.hostname.includes('googleadservices.com') ||
+    url.hostname.includes('google.com')
   ) {
     return;
   }
 
+  // 1. Navigation requests & HTML files: NETWORK-FIRST (prevents stale index.html pointing to deleted JS hashes)
+  if (event.request.mode === 'navigate' || event.request.headers.get('accept')?.includes('text/html')) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_VERSION).then((cache) => cache.put(event.request, responseClone));
+          }
+          return networkResponse;
+        })
+        .catch(() => {
+          // Only fall back to cache if network fails (offline mode)
+          return caches.match(event.request).then((cachedResponse) => {
+            return cachedResponse || caches.match('/index.html');
+          });
+        })
+    );
+    return;
+  }
+
+  // 2. Static Assets (JS, CSS, images, fonts): STALE-WHILE-REVALIDATE / CACHE FIRST
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) return cachedResponse;
@@ -46,11 +74,11 @@ self.addEventListener('fetch', (event) => {
         .then((networkResponse) => {
           if (networkResponse && networkResponse.status === 200) {
             const responseClone = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
+            caches.open(CACHE_VERSION).then((cache) => cache.put(event.request, responseClone));
           }
           return networkResponse;
-        })
-        .catch(() => caches.match('/index.html'));
+        });
+        // IMPORTANT: Never return /index.html fallback for asset requests (.js / .css / .woff2) that 404!
     })
   );
 });

@@ -438,7 +438,15 @@ const HASH_ALIASES = {
           {activeMode !== MODES.HOME ? (
             <h1 className="sr-only">{MODE_PAGE_TITLES[activeMode] || 'MonitorSmith'}</h1>
           ) : null}
-          <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: '#030304' }} />}>
+          <Suspense fallback={
+            <div style={{ position: 'fixed', inset: 0, background: '#050506', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px', zIndex: 99999 }}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid rgba(245, 158, 11, 0.2)', borderTopColor: '#F59E0B', animation: 'spin 0.8s linear infinite' }} />
+              <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem', letterSpacing: '0.08em' }}>
+                CARREGANDO MÓDULO...
+              </div>
+              <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+            </div>
+          }>
             {renderActiveMode()}
           </Suspense>
         </motion.div>
