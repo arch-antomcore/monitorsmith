@@ -2857,27 +2857,24 @@ button.wbp-navbar__mode:hover {
   gap: 14px;
   overflow: hidden;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 16px;
   background: linear-gradient(180deg, rgba(18, 20, 28, 0.85) 0%, rgba(10, 11, 16, 0.75) 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 10px 30px rgba(0, 0, 0, 0.4);
   color: var(--text);
   text-align: left;
   cursor: pointer;
-  transform: translateZ(0);
-  will-change: transform, border-color, box-shadow;
-  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), border-color 200ms ease, box-shadow 260ms ease;
+  transform-origin: center center;
+  will-change: transform;
+  /* NOTE: hover transform & scale handled by Framer Motion variants */
+  transition: border-color 260ms ease, box-shadow 320ms ease, background 260ms ease;
 }
 
+/* Framer Motion handles scale — CSS handles border/shadow glow on hover */
 .ms-tool-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.35);
-  background: linear-gradient(180deg, rgba(26, 28, 40, 0.95) 0%, rgba(14, 16, 24, 0.9) 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 20px 48px rgba(0, 0, 0, 0.75);
-}
-
-.ms-tool-card:active {
-  transform: translateY(-1px) scale(0.99);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 24px 56px rgba(0, 0, 0, 0.7);
+  background: linear-gradient(180deg, rgba(24, 26, 38, 0.95) 0%, rgba(12, 14, 22, 0.9) 100%);
 }
 
 .ms-tool-card:focus-visible {
@@ -2886,31 +2883,147 @@ button.wbp-navbar__mode:hover {
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* Icon Container — Bouncy Icon Hover Animation Matching Hero */
-.ms-tool-card__icon {
+/* ── Unified Card Internals (.ms-card__*) — shared by both grids ── */
+
+/* Head row: icon · titles · meta */
+.ms-card__head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+/* Icon area — the colored icon container */
+.ms-card__icon-area {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1), color 200ms ease;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--accent);
+  /* NOTE: transform handled by Framer Motion iconMotionVariants */
+  transition: background 260ms ease, border-color 260ms ease;
 }
 
-.ms-tool-card:hover .ms-tool-card__icon,
-.ms-tool-card:hover .ms-hero-grid-card__icon {
-  transform: scale(1.15) translateY(-2px);
+.ms-tool-card:hover .ms-card__icon-area,
+.ms-hero-grid-card:hover .ms-card__icon-area {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
-/* Per-tone pure icon color accents */
-.ms-tool-card--void .ms-hero-grid-card__icon, .ms-tool-card--void .ms-tool-card__icon { color: #F59E0B; }
-.ms-tool-card--light .ms-hero-grid-card__icon, .ms-tool-card--light .ms-tool-card__icon { color: #FEF3C7; }
-.ms-tool-card--pixel .ms-hero-grid-card__icon, .ms-tool-card--pixel .ms-tool-card__icon { color: #10B981; }
-.ms-tool-card--clean .ms-hero-grid-card__icon, .ms-tool-card--clean .ms-tool-card__icon { color: #E4E4E7; }
-.ms-tool-card--calibration .ms-hero-grid-card__icon, .ms-tool-card--calibration .ms-tool-card__icon { color: #F97316; }
-.ms-tool-card--color .ms-hero-grid-card__icon, .ms-tool-card--color .ms-tool-card__icon { color: #FBBF24; }
-.ms-tool-card--green .ms-hero-grid-card__icon, .ms-tool-card--green .ms-tool-card__icon { color: #10B981; }
-.ms-tool-card--focus .ms-hero-grid-card__icon, .ms-tool-card--focus .ms-tool-card__icon { color: #F59E0B; }
-.ms-tool-card--clock .ms-hero-grid-card__icon, .ms-tool-card--clock .ms-tool-card__icon { color: #38BDF8; }
-.ms-tool-card--message .ms-hero-grid-card__icon, .ms-tool-card--message .ms-tool-card__icon { color: #F59E0B; }
+/* Per-tone icon colors */
+.ms-tool-card--void .ms-card__icon-area { color: #F59E0B; }
+.ms-tool-card--light .ms-card__icon-area { color: #FEF3C7; }
+.ms-tool-card--pixel .ms-card__icon-area { color: #10B981; }
+.ms-tool-card--clean .ms-card__icon-area { color: #E4E4E7; }
+.ms-tool-card--calibration .ms-card__icon-area { color: #F97316; }
+.ms-tool-card--color .ms-card__icon-area { color: #FBBF24; }
+.ms-tool-card--green .ms-card__icon-area { color: #10B981; }
+.ms-tool-card--focus .ms-card__icon-area { color: #F59E0B; }
+.ms-tool-card--clock .ms-card__icon-area { color: #38BDF8; }
+.ms-tool-card--message .ms-card__icon-area { color: #F59E0B; }
+
+/* Titles container */
+.ms-card__titles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ms-card__titles strong {
+  font-size: 1.15rem;
+  font-weight: 720;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Meta area: LED + kbd */
+.ms-card__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Hardware-ready LED indicator */
+.ms-card__led {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px #10B981;
+  /* NOTE: pulse animation handled by Framer Motion ledMotionVariants */
+}
+
+/* Keyboard shortcut badge */
+.ms-card__kbd {
+  display: inline-grid;
+  min-width: 24px;
+  height: 24px;
+  place-items: center;
+  padding: 0 6px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 6px;
+  color: var(--text-faint);
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.72rem;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+
+.ms-tool-card:hover .ms-card__kbd,
+.ms-hero-grid-card:hover .ms-card__kbd {
+  border-color: rgba(255, 255, 255, 0.22);
+  color: var(--text-muted);
+}
+
+/* Body row: description + arrow */
+.ms-card__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+/* Description text */
+.ms-card__desc {
+  flex: 1;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+  /* NOTE: opacity + slide handled by Framer Motion descMotionVariants */
+}
+
+/* Bouncing arrow indicator */
+.ms-card__arrow {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  /* NOTE: opacity + bounce handled by Framer Motion arrowMotionVariants */
+}
+
+.ms-tool-card:hover .ms-card__arrow,
+.ms-hero-grid-card:hover .ms-card__arrow {
+  color: #ffffff;
+}
+
+/* ── Legacy compatibility — keep old title/desc classes ── */
 
 /* Title */
 .ms-tool-card__title {
@@ -3685,35 +3798,32 @@ button.wbp-navbar__mode:hover {
   gap: 14px;
   overflow: hidden;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 16px;
   background: linear-gradient(180deg, rgba(18, 20, 28, 0.85) 0%, rgba(10, 11, 16, 0.75) 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 10px 30px rgba(0, 0, 0, 0.4);
   color: var(--text);
   text-align: left;
   cursor: pointer;
-  transform: translateZ(0);
-  will-change: transform, border-color, box-shadow;
-  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), border-color 200ms ease, box-shadow 260ms ease;
+  transform-origin: center center;
+  will-change: transform;
+  /* NOTE: hover scale handled by Framer Motion cardVariants */
+  transition: border-color 260ms ease, box-shadow 320ms ease, background 260ms ease;
 }
 
+/* Framer Motion handles scale — CSS handles glow on hover */
 .ms-hero-grid-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.35);
-  background: linear-gradient(180deg, rgba(26, 28, 40, 0.95) 0%, rgba(14, 16, 24, 0.9) 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 20px 48px rgba(0, 0, 0, 0.75);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 24px 56px rgba(0, 0, 0, 0.7);
+  background: linear-gradient(180deg, rgba(24, 26, 38, 0.95) 0%, rgba(12, 14, 22, 0.9) 100%);
 }
 
-.ms-hero-grid-card:active {
-  transform: translateY(-1px) scale(0.99);
-}
-
-/* Card Head — icon + title + kbd */
+/* Legacy head/icon/titles/kbd — kept for any external references */
 .ms-hero-grid-card__head {
   position: relative;
   z-index: 1;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
 }
 
@@ -3723,15 +3833,6 @@ button.wbp-navbar__mode:hover {
   justify-content: center;
   flex-shrink: 0;
   color: var(--accent);
-  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1), color 200ms ease;
-}
-
-.ms-hero-grid-card:hover .ms-hero-grid-card__icon {
-  transform: scale(1.15) translateY(-2px);
-}
-
-.ms-hero-grid-card:hover .ms-hero-grid-card__icon {
-  transform: scale(1.1);
 }
 
 .ms-hero-grid-card__titles {
@@ -3740,12 +3841,11 @@ button.wbp-navbar__mode:hover {
   gap: 8px;
   flex: 1;
   min-width: 0;
-  padding-top: 2px;
 }
 
 .ms-hero-grid-card__titles strong {
-  font-size: 1.25rem;
-  font-weight: 750;
+  font-size: 1.15rem;
+  font-weight: 720;
   color: var(--text);
   letter-spacing: -0.02em;
 }
@@ -3765,7 +3865,7 @@ button.wbp-navbar__mode:hover {
   height: 24px;
   place-items: center;
   padding: 0 6px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 6px;
   color: var(--text-faint);
   font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
@@ -3774,12 +3874,12 @@ button.wbp-navbar__mode:hover {
   flex-shrink: 0;
 }
 
-/* Card Description */
+/* Card Description (legacy) */
 .ms-hero-grid-card__desc {
   position: relative;
   z-index: 1;
   color: rgba(255, 255, 255, 0.72);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.6;
 }
 

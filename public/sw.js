@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'monitorsmith-v8-hero-parity';
+const CACHE_VERSION = 'monitorsmith-v9-motion-cards';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
