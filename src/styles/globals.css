@@ -883,16 +883,11 @@ input:disabled {
 
 .wbp-navbar__brand-tag {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: #F59E0B;
-  background: rgba(245, 158, 11, 0.12);
-  padding: 2px 7px;
-  border-radius: 5px;
-  border: 1px solid rgba(245, 158, 11, 0.3);
   text-transform: uppercase;
-  box-shadow: inset 0 0 8px rgba(245, 158, 11, 0.15);
 }
 
 .wbp-dock__arrow-btn {
@@ -3597,13 +3592,9 @@ button.wbp-navbar__mode:hover {
 }
 
 .ms-hero__brand-tag {
-  padding: 3px 10px;
-  border-radius: 6px;
-  background: rgba(245, 158, 11, 0.12);
   color: #F59E0B;
   font-weight: 700;
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+  letter-spacing: 0.12em;
 }
 
 .ms-hero__dot {
