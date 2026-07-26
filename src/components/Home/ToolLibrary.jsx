@@ -17,18 +17,16 @@ function ToolPreview({ tool }) {
   return <ControlIcon name={tool.icon} size={24} />;
 }
 
-/* ── Framer Motion Variants — EXACT values from ServiceCard reference ── */
-
-// Card: subtle scale on hover (identical to reference)
-const cardAnimation = {
-  hover: {
-    scale: 1.02,
-    transition: { duration: 0.3 },
-  },
-};
+/* ── Framer Motion Variants — EXACT values from ServiceCard reference ──
+ *
+ * CRITICAL: We must use variant LABELS ("initial"/"animate"/"hover") exclusively.
+ * Mixing direct initial/animate props with variants BREAKS whileHover propagation
+ * to child motion elements. The reference ServiceCard only uses variants + whileHover.
+ */
 
 // Decorative floating icon: scale + rotate + translate (identical to reference imageAnimation)
 const imageAnimation = {
+  animate: { scale: 1, rotate: 0, x: 0, transition: { duration: 0.4, ease: 'easeInOut' } },
   hover: {
     scale: 1.1,
     rotate: 3,
@@ -39,6 +37,7 @@ const imageAnimation = {
 
 // Arrow bounce: infinite reverse (identical to reference arrowAnimation)
 const arrowAnimation = {
+  animate: { x: 0 },
   hover: {
     x: 5,
     transition: { duration: 0.3, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' },
@@ -50,6 +49,26 @@ const arrowAnimation = {
 function ToolCard({ tool, index, onLaunch }) {
   const shouldReduceMotion = useReducedMotion();
 
+  // Card variants with entrance + hover — ALL through the variant system
+  const variants = {
+    initial: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 280,
+        damping: 26,
+        delay: shouldReduceMotion ? 0 : Math.min(index, 10) * 0.055,
+      },
+    },
+    hover: {
+      scale: 1.02,
+      transition: { duration: 0.3 },
+    },
+  };
+
   return (
     <motion.button
       type="button"
@@ -57,15 +76,9 @@ function ToolCard({ tool, index, onLaunch }) {
       id={`monitor-tool-${tool.id}`}
       onClick={() => onLaunch(tool, `monitor-tool-${tool.id}`)}
       aria-label={`Abrir ${tool.title}. ${tool.description}`}
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        type: 'spring',
-        stiffness: 280,
-        damping: 26,
-        delay: shouldReduceMotion ? 0 : Math.min(index, 10) * 0.055,
-      }}
-      variants={cardAnimation}
+      variants={variants}
+      initial="initial"
+      animate="animate"
       whileHover={shouldReduceMotion ? undefined : 'hover'}
       whileTap={{ scale: 0.97 }}
     >
@@ -115,21 +128,34 @@ function ToolCard({ tool, index, onLaunch }) {
 /* ── HeroGridCard (Hero Section — top 6 featured) ── */
 
 function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
+  const variants = {
+    initial: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 280,
+        damping: 26,
+        delay: shouldReduceMotion ? 0 : 0.12 + index * 0.055,
+      },
+    },
+    hover: {
+      scale: 1.02,
+      transition: { duration: 0.3 },
+    },
+  };
+
   return (
     <motion.button
       type="button"
       className="ms-hero-grid-card"
       onClick={() => onLaunch(tool.id, `monitor-tool-${tool.id}`)}
       aria-label={`Abrir ${tool.title}`}
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        type: 'spring',
-        stiffness: 280,
-        damping: 26,
-        delay: shouldReduceMotion ? 0 : 0.12 + index * 0.055,
-      }}
-      variants={cardAnimation}
+      variants={variants}
+      initial="initial"
+      animate="animate"
       whileHover={shouldReduceMotion ? undefined : 'hover'}
       whileTap={{ scale: 0.97 }}
     >
