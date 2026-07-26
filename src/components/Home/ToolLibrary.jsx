@@ -39,7 +39,10 @@ function ToolCard({ tool, index, onLaunch }) {
       <span className="ms-tool-card__icon-wrap">
         <ToolPreview tool={tool} />
       </span>
-      <strong className="ms-tool-card__title">{tool.title}</strong>
+      <strong className="ms-tool-card__title">
+        <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#10B981', marginRight: '8px', boxShadow: '0 0 8px #10B981', verticalAlign: 'middle' }} title="Hardware Ready" />
+        {tool.title}
+      </strong>
       <span className="ms-tool-card__desc">{tool.description}</span>
     </motion.button>
   );
@@ -68,6 +71,7 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
             <ControlIcon name={tool.icon} size={24} />
           </span>
           <span className="ms-hero-grid-card__titles">
+            <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#10B981', marginRight: '6px', boxShadow: '0 0 8px #10B981', flexShrink: 0 }} title="Hardware Ready" />
             <strong>{tool.title}</strong>
             {tool.badge ? (
               <span className="ms-hero-grid-card__badge">{tool.badge}</span>
