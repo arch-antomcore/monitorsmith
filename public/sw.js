@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'monitorsmith-v4-osd-kbd';
+const CACHE_VERSION = 'monitorsmith-v5-precision';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

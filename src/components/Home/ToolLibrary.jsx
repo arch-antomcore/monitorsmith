@@ -36,13 +36,11 @@ function ToolCard({ tool, index, onLaunch }) {
         delay: shouldReduceMotion ? 0 : Math.min(index, 8) * 0.04,
       }}
     >
-      <span className="ms-tool-card__icon-wrap">
+      <span className="ms-tool-card__icon-wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
         <ToolPreview tool={tool} />
+        <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#10B981', boxShadow: '0 0 8px #10B981' }} title="Hardware Ready" />
       </span>
-      <strong className="ms-tool-card__title">
-        <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#10B981', marginRight: '8px', boxShadow: '0 0 8px #10B981', verticalAlign: 'middle' }} title="Hardware Ready" />
-        {tool.title}
-      </strong>
+      <strong className="ms-tool-card__title">{tool.title}</strong>
       <span className="ms-tool-card__desc">{tool.description}</span>
     </motion.button>
   );
@@ -66,18 +64,20 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
         onClick={() => onLaunch(tool.id, `monitor-tool-${tool.id}`)}
         aria-label={`Abrir ${tool.title}`}
       >
-        <span className="ms-hero-grid-card__head">
-          <span className="ms-hero-grid-card__icon">
+        <span className="ms-hero-grid-card__head" style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+          <span className="ms-hero-grid-card__icon" style={{ marginRight: '12px' }}>
             <ControlIcon name={tool.icon} size={24} />
           </span>
           <span className="ms-hero-grid-card__titles">
-            <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#10B981', marginRight: '6px', boxShadow: '0 0 8px #10B981', flexShrink: 0 }} title="Hardware Ready" />
             <strong>{tool.title}</strong>
             {tool.badge ? (
               <span className="ms-hero-grid-card__badge">{tool.badge}</span>
             ) : null}
           </span>
-          <kbd className="ms-hero-grid-card__kbd">{tool.shortcut}</kbd>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginLeft: 'auto' }}>
+            <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#10B981', boxShadow: '0 0 8px #10B981' }} title="Hardware Ready" />
+            <kbd className="ms-hero-grid-card__kbd">{tool.shortcut}</kbd>
+          </span>
         </span>
 
         <span className="ms-hero-grid-card__desc">{tool.desc}</span>
