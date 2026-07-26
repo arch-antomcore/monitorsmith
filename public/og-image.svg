@@ -1,27 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
-  <!-- Dark Studio Background -->
-  <rect width="1200" height="630" fill="#060709"/>
+  <!-- Studio Obsidian Black Background -->
+  <rect width="1200" height="630" fill="#050506"/>
   
-  <!-- Subtle Emerald Ambient Glow -->
-  <circle cx="600" cy="315" r="450" fill="#059669" fill-opacity="0.15" filter="blur(120px)"/>
-  <circle cx="950" cy="150" r="300" fill="#10b981" fill-opacity="0.1" filter="blur(100px)"/>
+  <!-- Optical Diagnostic Micro-Dot Matrix -->
+  <pattern id="dot-matrix" width="24" height="24" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.12"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dot-matrix)"/>
 
-  <!-- Subtle Grid Pattern -->
-  <path d="M0 100H1200M0 200H1200M0 300H1200M0 400H1200M0 500H1200M100 0V630M200 0V630M300 0V630M400 0V630M500 0V630M600 0V630M700 0V630M800 0V630M900 0V630M1000 0V630M1100 0V630" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+  <!-- Precision Calibration Frame / Border -->
+  <rect x="40" y="40" width="1120" height="550" fill="none" stroke="#F59E0B" stroke-opacity="0.3" stroke-width="1.5"/>
+  <rect x="48" y="48" width="1104" height="534" fill="#0a0a0e" fill-opacity="0.9" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
 
-  <!-- Brand Eyebrow Tag -->
-  <rect x="80" y="140" width="140" height="34" rx="17" fill="#059669" fill-opacity="0.25" stroke="#34d399" stroke-opacity="0.4"/>
-  <text x="150" y="162" fill="#34d399" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">EXVORN.TECH</text>
+  <!-- Technical Crosshairs & Corner Coordinates -->
+  <path d="M30 40H50M40 30V50" stroke="#F59E0B" stroke-width="2"/>
+  <path d="M1150 40H1170M1160 30V50" stroke="#F59E0B" stroke-width="2"/>
+  <path d="M30 590H50M40 570V590" stroke="#F59E0B" stroke-width="2"/>
+  <path d="M1150 590H1170M1160 570V590" stroke="#F59E0B" stroke-width="2"/>
+  <text x="70" y="85" fill="#F59E0B" font-family="'JetBrains Mono', Consolas, monospace" font-size="14" font-weight="600" letter-spacing="3">REF_DISPLAY // DIAGNOSTIC_SUITE // EXVORN.TECH</text>
+  <text x="1130" y="85" fill="#ffffff" fill-opacity="0.4" font-family="'JetBrains Mono', Consolas, monospace" font-size="14" font-weight="500" text-anchor="end">SYS_VER: 2.0_PRO</text>
 
-  <!-- Main Headline Title -->
-  <text x="80" y="260" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="800" letter-spacing="-1.5">MONITORSMITH</text>
-  <text x="80" y="325" fill="#34d399" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="600">O Canivete Suíço em Ferramentas para Monitor</text>
+  <!-- Clean Studio Typography (No Cards, No Pill Badges) -->
+  <text x="70" y="270" fill="#ffffff" font-family="'Outfit', system-ui, -apple-system, sans-serif" font-size="78" font-weight="800" letter-spacing="-2">MONITOR<tspan fill="#F59E0B">SMITH</tspan></text>
+  <text x="70" y="340" fill="#FDE68A" font-family="'Outfit', system-ui, -apple-system, sans-serif" font-size="34" font-weight="600" letter-spacing="-0.5">O Canivete Suíço de Diagnóstico e Calibração de Displays</text>
 
-  <!-- Subtitle Feature List -->
-  <text x="80" y="390" fill="#a1a1aa" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="400">Tela Preta OLED • Teste de Pixels • Limpeza • Calibração Visual</text>
-  <text x="80" y="425" fill="#a1a1aa" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="400">Luz Suave de Apoio • Timer Ruído Marrom • Teleprompter • Chroma Key</text>
+  <!-- Technical Specs Table / Feature List (Direct Text, No Fantasy Containers) -->
+  <path d="M70 410H1130" stroke="#ffffff" stroke-opacity="0.15" stroke-width="1"/>
+  
+  <text x="70" y="465" fill="#ffffff" fill-opacity="0.9" font-family="'JetBrains Mono', Consolas, monospace" font-size="20" font-weight="500">[01] TELA PRETA OLED ABSOLUTA</text>
+  <text x="450" y="465" fill="#ffffff" fill-opacity="0.9" font-family="'JetBrains Mono', Consolas, monospace" font-size="20" font-weight="500">[02] TESTE DE DEAD PIXELS</text>
+  <text x="820" y="465" fill="#ffffff" fill-opacity="0.9" font-family="'JetBrains Mono', Consolas, monospace" font-size="20" font-weight="500">[03] INSPEÇÃO E LIMPEZA</text>
 
-  <!-- Website URL Badge -->
-  <rect x="80" y="480" width="280" height="54" rx="27" fill="#10b981"/>
-  <text x="220" y="514" fill="#030304" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" text-anchor="middle">https://monitorsmith.app</text>
+  <text x="70" y="520" fill="#ffffff" fill-opacity="0.9" font-family="'JetBrains Mono', Consolas, monospace" font-size="20" font-weight="500">[04] CALIBRAÇÃO DE GAMA</text>
+  <text x="450" y="520" fill="#ffffff" fill-opacity="0.9" font-family="'JetBrains Mono', Consolas, monospace" font-size="20" font-weight="500">[05] LUZ SUAVE SOFTBOX</text>
+  <text x="820" y="520" fill="#ffffff" fill-opacity="0.9" font-family="'JetBrains Mono', Consolas, monospace" font-size="20" font-weight="500">[06] TIMER RUÍDO MARROM</text>
+
+  <!-- Bottom Hardware Bar -->
+  <path d="M70 560H1130" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+  <text x="70" y="565" fill="#F59E0B" font-family="'JetBrains Mono', Consolas, monospace" font-size="14" font-weight="700">HTTPS://MONITORSMITH.APP</text>
+  <text x="1130" y="565" fill="#ffffff" fill-opacity="0.4" font-family="'JetBrains Mono', Consolas, monospace" font-size="14" font-weight="500" text-anchor="end">FREE &amp; OPEN HARDWARE TOOLKIT</text>
 </svg>
