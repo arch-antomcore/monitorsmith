@@ -5145,18 +5145,6 @@ button.wbp-navbar__mode:hover {
   }
 }
 
-/* Dynamic DotPattern Background (White dots ported to both Dark and Light modes) */
-.ms-dot-pattern circle,
-circle#pattern-circle {
-  fill: rgba(255, 255, 255, 0.2) !important;
-  transition: fill 0.3s ease;
-}
-
-html.ms-studio-light .ms-dot-pattern circle,
-html.ms-studio-light circle#pattern-circle {
-  fill: rgba(255, 255, 255, 0.4) !important;
-}
-
 /* ==========================================================================
    STUDIO LIGHT MODE (Tema Claro — Off White Acetinado / Warm Studio Fine Art)
    ========================================================================== */

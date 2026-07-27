@@ -1,4 +1,5 @@
 import { useId } from "react";
+import { cn } from "../../lib/utils";
 
 export function DotPattern({
   width = 24,
@@ -6,10 +7,9 @@ export function DotPattern({
   x = 0,
   y = 0,
   cx = 1,
-  cy = 1,
-  cr = 1,
-  className = "",
-  style,
+  cy = 0.5,
+  cr = 0.5,
+  className,
   ...props
 }) {
   const id = useId();
@@ -17,18 +17,10 @@ export function DotPattern({
   return (
     <svg
       aria-hidden="true"
-      className={`ms-dot-pattern ${className}`}
-      style={{
-        position: 'absolute',
-        inset: 0,
-        width: '100%',
-        height: '100%',
-        pointerEvents: 'none',
-        zIndex: 0,
-        maskImage: 'radial-gradient(700px circle at 50% 40%, white 20%, transparent 85%)',
-        WebkitMaskImage: 'radial-gradient(700px circle at 50% 40%, white 20%, transparent 85%)',
-        ...style,
-      }}
+      className={cn(
+        "pointer-events-none absolute inset-0 h-full w-full fill-slate-500/50 md:fill-slate-500/70",
+        className,
+      )}
       {...props}
     >
       <defs>

@@ -262,7 +262,12 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
 
       <section className="ms-hero" aria-describedby="library-description">
         {/* SVG Dot Pattern Background */}
-        <DotPattern cx={1} cy={1} cr={1} />
+        <DotPattern
+          cy={1}
+          cr={1}
+          cx={1}
+          className="[mask-image:radial-gradient(700px_circle_at_50%_40%,white_20%,transparent_85%)]"
+        />
 
         <motion.div
           className="ms-hero__content"
