@@ -146,7 +146,7 @@ export default function TermsModal({ label = "Termos de Uso (Terms)", className 
                   <Gavel size={18} color="#60a5fa" weight="fill" /> 4. Propriedade Intelectual
                 </h3>
                 <p style={{ margin: 0, fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>
-                  A marca MonitorSmith, seu design system estrutural (Studio Hardware UI) e arquitetura são de titularidade de <strong>Matheus Peres da Silva</strong> / <strong>EXVORN.TECH</strong>. O uso contínuo da plataforma implica na aceitação integral e irrestrita destes termos.
+                  A marca MonitorSmith, seu design system estrutural (Studio Hardware UI) e arquitetura são de titularidade da <strong>EXVORN.TECH</strong>. O uso contínuo da plataforma implica na aceitação integral e irrestrita destes termos.
                 </p>
               </div>
 

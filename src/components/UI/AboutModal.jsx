@@ -116,7 +116,7 @@ export default function AboutModal({ label = "Sobre (About)", className }) {
 
             <div style={{ fontSize: '0.92rem', lineHeight: 1.7, color: 'rgba(255,255,255,0.82)' }}>
               <p style={{ marginTop: 0, marginBottom: '16px' }}>
-                O <strong>MonitorSmith</strong> é uma iniciativa de engenharia visual e diagnóstico de displays desenvolvida por <strong>Matheus Peres da Silva</strong> sob a marca <strong>EXVORN.TECH</strong>. Nossa missão é oferecer ferramentas de grau de estúdio, totalmente gratuitas e sem barreiras para testar, calibrar e inspecionar telas de qualquer tipo.
+                O <strong>MonitorSmith</strong> é uma iniciativa de engenharia visual e diagnóstico de displays desenvolvida pela <strong>EXVORN.TECH</strong>. Nossa missão é oferecer ferramentas de grau de estúdio, totalmente gratuitas e sem barreiras para testar, calibrar e inspecionar telas de qualquer tipo.
               </p>
 
               <div style={{ padding: '18px', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', marginBottom: '20px' }}>
@@ -129,10 +129,10 @@ export default function AboutModal({ label = "Sobre (About)", className }) {
               </div>
 
               <h3 style={{ fontSize: '1rem', color: '#ffffff', marginBottom: '12px', marginTop: '24px' }}>
-                Conecte-se com o Criador
+                Conecte-se com a Engenharia EXVORN.TECH
               </h3>
               <p style={{ marginBottom: '16px', fontSize: '0.88rem', color: 'rgba(255,255,255,0.7)' }}>
-                Desenvolvido por <strong>Matheus Peres da Silva</strong>. Para feedback, parcerias, dúvidas de engenharia ou networking profissional, conecte-se diretamente através do LinkedIn:
+                Desenvolvido pela <strong>EXVORN.TECH</strong>. Para feedback, parcerias, dúvidas de engenharia ou networking profissional, conecte-se diretamente através do LinkedIn:
               </p>
 
               <a
@@ -156,7 +156,7 @@ export default function AboutModal({ label = "Sobre (About)", className }) {
                 }}
               >
                 <IconBrandLinkedin size={20} />
-                <span>Matheus Peres da Silva (LinkedIn)</span>
+                <span>LinkedIn EXVORN.TECH</span>
               </a>
 
               <div style={{ marginTop: '28px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.08)', fontSize: '0.78rem', color: 'rgba(255,255,255,0.5)', textAlign: 'center', fontFamily: 'monospace' }}>

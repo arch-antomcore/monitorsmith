@@ -371,7 +371,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
         </div>
       </section>
 
-      <FooterSection />
+      <FooterSection onLaunch={onLaunch} />
     </main>
   );
 }
