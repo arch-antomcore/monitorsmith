@@ -13,6 +13,7 @@ import {
   Moon,
   Palette,
   Question,
+  Slideshow,
   Sparkle,
   SunDim,
   Timer,
@@ -100,6 +101,10 @@ export function ControlIcon({ name, size = 18, title }) {
       break;
     case 'spark':
       IconComponent = Sparkle;
+      weight = 'duotone';
+      break;
+    case 'sponsor':
+      IconComponent = Slideshow;
       weight = 'duotone';
       break;
     default:

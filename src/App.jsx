@@ -15,6 +15,7 @@ const FocusTimerMode = lazy(() => import('./components/Modes/FocusTimerMode'));
 const FullScreenClockMode = lazy(() => import('./components/Modes/FullScreenClockMode'));
 const MessageOverlayMode = lazy(() => import('./components/Modes/MessageOverlayMode'));
 const ScreenCleanerMode = lazy(() => import('./components/Modes/ScreenCleanerMode'));
+const SponsorLoopMode = lazy(() => import('./components/Modes/SponsorLoopMode'));
 import RadialMenu from './components/UI/RadialMenu';
 import ShortcutToast from './components/UI/ShortcutToast';
 import ToolTransitionOverlay from './components/UI/ToolTransitionOverlay';
@@ -43,6 +44,7 @@ const MODE_STATUS = {
   [MODES.CLOCK]: 'Relógio em tela',
   [MODES.MESSAGE]: 'Mensagem em tela',
   [MODES.COLOR]: 'Estúdio de cor',
+  [MODES.SPONSOR_LOOP]: 'Loop de marcas',
 };
 
 const MODE_PAGE_TITLES = {
@@ -55,6 +57,7 @@ const MODE_PAGE_TITLES = {
   [MODES.CLOCK]: 'Relógio em tela',
   [MODES.MESSAGE]: 'Mensagem em tela',
   [MODES.COLOR]: 'Estúdio de cor',
+  [MODES.SPONSOR_LOOP]: 'Loop de marcas',
 };
 
 const PRODUCT_DOCUMENT_TITLE = 'MonitorSmith — Ferramentas para Monitor | EXVORN.TECH';
@@ -124,6 +127,11 @@ const HASH_ALIASES = {
   teleprompter: 'message',
   softbox: 'white',
   light: 'white',
+  sponsor: 'sponsor-loop',
+  'logo-loop': 'sponsor-loop',
+  signage: 'sponsor-loop',
+  patrocinador: 'sponsor-loop',
+  marcas: 'sponsor-loop',
 };
 
   useEffect(() => {
@@ -408,6 +416,8 @@ const HASH_ALIASES = {
             }}
           />
         );
+      case MODES.SPONSOR_LOOP:
+        return <SponsorLoopMode {...commonModeProps} />;
       case MODES.BLACK:
       default:
         return <BlackScreenMode {...commonModeProps} showHint={false} />;

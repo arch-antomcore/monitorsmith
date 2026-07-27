@@ -380,6 +380,37 @@ const pages = [
       }
     ],
     related: ["teste-de-monitor", "teste-de-vazamento-de-luz", "limpeza-de-monitor"]
+  },
+  {
+    slug: "loop-de-marcas",
+    toolId: "sponsor-loop",
+    title: "Loop de Marcas e Patrocinadores em Tela Cheia",
+    description: "Rotacione logos de patrocinadores e marcas automaticamente em fullscreen. Com transições suaves, chroma key e proteção anti burn-in para OLED.",
+    h1: "Loop de Marcas e Patrocinadores",
+    intro: "Ideal para lives, eventos, estãndes e vitrines digitais. Faça upload de logos em PNG ou SVG, defina o tempo de exibição, escolha a transição entre elas e deixe o monitor rodando em rotação automática.",
+    comoUsar: [
+      "Abra a ferramenta e arraste as logos para a área de upload (ou clique para importar).",
+      "Defina o tempo por slide e o tipo de transição (fade, zoom, slide ou corte direto).",
+      "Escolha a cor de fundo: preto OLED, branco, verde chroma key ou cor personalizada.",
+      "Pressione Iniciar e coloque em tela cheia (tecla F)."
+    ],
+    quandoUsar: [
+      "Para exibir logos de patrocinadores em torneios de e-sports e eventos ao vivo.",
+      "Em vitrines de lojas de informática, showrooms e estãndes de feiras.",
+      "Como cenário em gravações de YouTube, podcasts e transmissões ao vivo."
+    ],
+    limitacoes: "As imagens são processadas apenas localmente no navegador. Não armazenamos nenhum arquivo enviado. Recomendamos logos em PNG ou SVG com fundo transparente para melhor resultado.",
+    faq: [
+      {
+        q: "Posso usar com fundo verde para chroma key no OBS?",
+        a: "Sim. Selecione o fundo 'Chroma Key' na ferramenta e capture a janela no OBS com filtro de chroma key para sobrepor os logos na transmissão."
+      },
+      {
+        q: "A proteção anti burn-in funciona em TVs OLED?",
+        a: "Sim. Quando ativada, a ferramenta faz micro-deslocamentos de poucos pixels a cada ciclo, evitando a retenção permanente de imagem estática no painel."
+      }
+    ],
+    related: ["mensagem-em-tela", "tela-verde-chroma", "luz-para-videochamada"]
   }
 ];
 
@@ -759,6 +790,37 @@ const pagesEn = [
       }
     ],
     related: ["monitor-test", "backlight-bleed-test", "screen-cleaner"]
+  },
+  {
+    slug: "sponsor-loop",
+    toolId: "sponsor-loop",
+    title: "Sponsor Logo Loop & Digital Signage",
+    description: "Automatically rotate sponsor logos and brand images fullscreen. Smooth transitions, chroma key backgrounds and OLED burn-in protection.",
+    h1: "Sponsor Logo Loop & Signage Studio",
+    intro: "Designed for live events, esports, trade shows and digital displays. Upload PNG or SVG logos, set display duration and transition style, then let your monitor cycle through them automatically.",
+    comoUsar: [
+      "Open the tool and drag your logos into the upload area (or click to browse).",
+      "Set the duration per slide and choose a transition type (fade, zoom, slide or cut).",
+      "Pick a background color: OLED black, white, chroma key green, or a custom color.",
+      "Press Start and enter fullscreen mode (press F)."
+    ],
+    quandoUsar: [
+      "To display sponsor logos at esports tournaments and live events.",
+      "In store displays, showrooms and trade show booths.",
+      "As a background display for YouTube recordings, podcasts and live streams."
+    ],
+    limitacoes: "All images are processed locally in your browser. We do not store any uploaded files. We recommend PNG or SVG logos with transparent backgrounds for best results.",
+    faq: [
+      {
+        q: "Can I use this with green screen for chroma keying in OBS?",
+        a: "Yes. Select the 'Chroma Key' background in the tool and capture the window in OBS with a chroma key filter to overlay the logos on your stream."
+      },
+      {
+        q: "Does the anti burn-in protection work on OLED TVs?",
+        a: "Yes. When enabled, the tool shifts the image by a few pixels each cycle, preventing permanent image retention on static OLED panels."
+      }
+    ],
+    related: ["fullscreen-message", "green-screen", "webcam-light"]
   }
 ];
 
@@ -774,7 +836,8 @@ const ptToEnSlugs = {
   "relogio-em-tela-cheia": "fullscreen-clock",
   "mensagem-em-tela": "fullscreen-message",
   "teleprompter-online": "online-teleprompter",
-  "verificacao-visual": "display-calibration"
+  "verificacao-visual": "display-calibration",
+  "loop-de-marcas": "sponsor-loop"
 };
 
 const enToPtSlugs = Object.fromEntries(Object.entries(ptToEnSlugs).map(([k, v]) => [v, k]));

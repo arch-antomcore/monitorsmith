@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'monitorsmith-v15-about-terms-linkedin';
+const CACHE_VERSION = 'monitorsmith-v16-sponsor-loop';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

@@ -118,6 +118,7 @@ export function AppProvider({ children }) {
       openFocusTimer: () => { activateMode(MODE_IDS.FOCUS_TIMER); showToast('P', 'Temporizador de Foco'); },
       openClock: () => { activateMode(MODE_IDS.CLOCK); showToast('T', 'Relógio em Tela'); },
       openMessageOverlay: () => { activateMode(MODE_IDS.MESSAGE); showToast('M', 'Mensagem em Tela'); },
+      openSponsorLoop: () => { activateMode(MODE_IDS.SPONSOR_LOOP); showToast('L', 'Loop de Marcas'); },
       restoreInterface,
       toggleHelp: () => { setIsHelpOpen((prev) => !prev); showToast('?', 'Atalhos de Teclado'); },
     },

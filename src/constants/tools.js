@@ -161,6 +161,21 @@ export const TOOLS_REGISTRY = Object.freeze([
     inDock: true,
     inHeroGrid: false,
   },
+  {
+    id: 'sponsor-loop',
+    category: 'Tempo e presença',
+    title: 'Loop de marcas',
+    dockLabel: 'Loop',
+    heroTitle: 'Loop de Marcas',
+    description: 'Logos de patrocinadores em rotação automática.',
+    heroDesc: 'Rotação de logos e marcas com transições suaves, chroma key e proteção anti burn-in OLED.',
+    when: 'Para lives, estandes, vitrines e cenários.',
+    icon: 'sponsor',
+    shortcut: 'L',
+    tone: 'sponsor',
+    inDock: true,
+    inHeroGrid: true,
+  },
 ]);
 
 export const TOOL_LIBRARY = Object.freeze(

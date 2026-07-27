@@ -9,6 +9,7 @@ export const MODE_IDS = Object.freeze({
   CLOCK: 'clock',
   MESSAGE: 'message',
   COLOR: 'color',
+  SPONSOR_LOOP: 'sponsor-loop',
 });
 
 export const DISPLAY_MODE_IDS = Object.freeze(Object.values(MODE_IDS));
@@ -95,6 +96,14 @@ export const SHORTCUTS = Object.freeze([
     code: 'KeyM',
     label: 'M',
     description: 'Abrir mensagem em tela',
+  }),
+  Object.freeze({
+    id: 'sponsor-loop',
+    action: 'openSponsorLoop',
+    key: 'l',
+    code: 'KeyL',
+    label: 'L',
+    description: 'Abrir loop de marcas',
   }),
   Object.freeze({
     id: 'restore-interface',
