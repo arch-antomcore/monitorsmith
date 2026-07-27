@@ -5146,9 +5146,8 @@ button.wbp-navbar__mode:hover {
 }
 
 /* Dynamic DotPattern Background */
-.ms-dot-pattern,
 .ms-dot-pattern circle,
-.ms-dot-pattern rect {
+circle#pattern-circle {
   fill: rgba(255, 255, 255, 0.16);
   transition: fill 0.3s ease;
 }
@@ -5195,12 +5194,10 @@ html.ms-studio-light .ms-hero::after {
   display: none !important; /* Deixa o componente interativo <DotPattern /> brilhar dinamicamente em todo o site */
 }
 
-/* Dots dinâmicos perfeitos para modo claro */
-html.ms-studio-light .ms-dot-pattern,
+/* Dots dinâmicos perfeitos para modo claro (Antônimos nítidos e visíveis) */
 html.ms-studio-light .ms-dot-pattern circle,
-html.ms-studio-light .ms-dot-pattern rect,
-html.ms-studio-light svg[class*="dot-pattern"] {
-  fill: rgba(87, 83, 78, 0.25) !important;
+html.ms-studio-light circle#pattern-circle {
+  fill: rgba(87, 83, 78, 0.32) !important;
 }
 
 /* Tipografia Universal e Títulos no Modo Claro (Removendo sombras escuras e gradiente invisível) */
