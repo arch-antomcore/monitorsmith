@@ -345,7 +345,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
             <h2 id="about-title">O que é o MonitorSmith?</h2>
           </div>
         </div>
-        <div className="ms-seo-text" style={{ maxWidth: '780px', margin: '0 auto', padding: '0 20px', lineHeight: 1.7, color: 'rgba(229,231,235,0.8)', fontSize: '0.95rem' }}>
+        <div className="ms-seo-text text-white/80" style={{ maxWidth: '780px', margin: '0 auto', padding: '0 20px', lineHeight: 1.7, fontSize: '0.95rem' }}>
           <p>
             O <strong>MonitorSmith</strong> é uma suíte web 100% gratuita de ferramentas para testar monitores, diagnosticar dead pixels, tela preta OLED, vazamento de luz (backlight bleed), burn-in e mais. Desenvolvido pela <strong>EXVORN.TECH</strong>, funciona diretamente no navegador — sem download, sem cadastro e sem instalação.
           </p>

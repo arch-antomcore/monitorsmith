@@ -5146,7 +5146,7 @@ button.wbp-navbar__mode:hover {
 }
 
 /* ==========================================================================
-   STUDIO LIGHT MODE (Tema Claro — Semi Hot Off White / Warm Studio Fine Art)
+   STUDIO LIGHT MODE (Tema Claro — Off White Acetinado / Warm Studio Fine Art)
    ========================================================================== */
 html.ms-studio-light,
 html.ms-studio-light body,
@@ -5154,56 +5154,97 @@ html.ms-studio-light #root,
 html.ms-studio-light .app-shell,
 html.ms-studio-light .app-mode-layer,
 html.ms-studio-light .app-mode-layer--library,
-html.ms-studio-light .ms-library {
+html.ms-studio-light .ms-library,
+html.ms-studio-light #main-content {
   --void: #F7F5F0 !important;       /* Semi hot off white principal (Warm Cream / Marfim Acetinado) */
   --void-soft: #EFECE6 !important;  /* Casca de ovo quente suave para rodapé e transições */
   --surface: rgba(255, 255, 255, 0.88) !important;
   --surface-solid: #FAF9F6 !important;
   --surface-raised: #F5F3EE !important;
-  --line: rgba(87, 83, 78, 0.12) !important;       /* Stone 500 com 12% - bordas quentes */
-  --line-strong: rgba(87, 83, 78, 0.22) !important;
-  --line-bright: rgba(87, 83, 78, 0.32) !important;
+  --line: rgba(87, 83, 78, 0.15) !important;       /* Stone 500 com 15% - bordas quentes nítidas */
+  --line-strong: rgba(87, 83, 78, 0.25) !important;
+  --line-bright: rgba(87, 83, 78, 0.35) !important;
   --text: #1C1917 !important;       /* Stone 900 - Marrom chumbo escuro refinado */
   color-scheme: light !important;
   background-color: var(--void) !important;
   color: var(--text) !important;
 }
 
-/* Fundo geral da biblioteca (Home), shell e camadas no modo claro */
+/* Fundo da biblioteca e Hero (Erradicando blocos pretos no modo claro) */
 html.ms-studio-light .ms-library,
 html.ms-studio-light .app-shell,
-html.ms-studio-light #main-content {
+html.ms-studio-light #main-content,
+html.ms-studio-light .ms-hero {
   background-color: #F7F5F0 !important;
   background-image: radial-gradient(circle at 14% 8%, rgba(245, 158, 11, 0.05), transparent 27rem),
                     radial-gradient(circle at 83% 80%, rgba(217, 119, 6, 0.03), transparent 30rem) !important;
   color: #1C1917 !important;
 }
+html.ms-studio-light .ms-hero::before {
+  background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.04) 50%, transparent 75%) !important;
+}
+html.ms-studio-light .ms-hero::after {
+  background-image: radial-gradient(rgba(87, 83, 78, 0.12) 1px, transparent 1px) !important;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, rgba(0, 0, 0, 0.6) 10%, transparent 85%) !important;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, rgba(0, 0, 0, 0.6) 10%, transparent 85%) !important;
+}
 
-/* Hero e textos de título no modo claro */
-html.ms-studio-light .ms-hero__title,
+/* Tipografia Universal e Títulos no Modo Claro (Contraste Máximo) */
 html.ms-studio-light h1,
 html.ms-studio-light h2,
-html.ms-studio-light h3 {
+html.ms-studio-light h3,
+html.ms-studio-light h4,
+html.ms-studio-light .ms-hero__title,
+html.ms-studio-light .ms-library__section-heading h2,
+html.ms-studio-light .ms-seo-about h2,
+html.ms-studio-light .ms-seo-faq h2 {
   color: #1C1917 !important;
 }
+html.ms-studio-light p,
+html.ms-studio-light span,
+html.ms-studio-light li,
 html.ms-studio-light .ms-hero__subtitle,
-html.ms-studio-light .ms-hero__brand-tag,
-html.ms-studio-light .ms-library__eyebrow {
-  color: #57534E !important; /* Stone 600 */
+html.ms-studio-light .ms-library__section-heading p,
+html.ms-studio-light .ms-seo-about p,
+html.ms-studio-light .ms-seo-text,
+html.ms-studio-light .ms-seo-text p,
+html.ms-studio-light [class*="text-white"] {
+  color: #44403C !important;
 }
-html.ms-studio-light .ms-hero__eyebrow {
-  border-color: rgba(87, 83, 78, 0.15) !important;
-  background: rgba(250, 249, 246, 0.85) !important;
-  color: #44403C !important; /* Stone 700 */
+html.ms-studio-light [class*="text-white/40"],
+html.ms-studio-light [class*="text-white/50"],
+html.ms-studio-light [class*="text-white/60"] {
+  color: #57534E !important;
+}
+html.ms-studio-light strong,
+html.ms-studio-light b,
+html.ms-studio-light .font-semibold,
+html.ms-studio-light .font-bold {
+  color: #1C1917 !important;
 }
 
-/* Navbar superior (.wbp-navbar / .display-mode__controls / header) em modo claro */
+/* Badges e Eyebrows (Pílulas Superiores) */
+html.ms-studio-light .ms-hero__eyebrow,
+html.ms-studio-light .ms-hero-direct__eyebrow {
+  border-color: rgba(87, 83, 78, 0.18) !important;
+  background: #FFFFFF !important;
+  color: #44403C !important;
+  box-shadow: 0 2px 8px rgba(87, 83, 78, 0.05) !important;
+}
+html.ms-studio-light .ms-hero__brand-tag,
+html.ms-studio-light .ms-hero-direct__badge,
+html.ms-studio-light .ms-library__eyebrow {
+  color: #D97706 !important;
+  font-weight: 700 !important;
+}
+
+/* Navbar superior (.wbp-navbar / .display-mode__controls / header) */
 html.ms-studio-light .wbp-navbar,
 html.ms-studio-light .display-mode__controls,
 html.ms-studio-light header.wbp-navbar,
 html.ms-studio-light nav {
-  background: rgba(247, 245, 240, 0.88) !important;
-  border-color: rgba(87, 83, 78, 0.12) !important;
+  background: rgba(247, 245, 240, 0.92) !important;
+  border-color: rgba(87, 83, 78, 0.14) !important;
   box-shadow: 0 4px 20px rgba(87, 83, 78, 0.06) !important;
   color: #1C1917 !important;
 }
@@ -5213,44 +5254,108 @@ html.ms-studio-light .display-mode__brand {
   color: #1C1917 !important;
 }
 html.ms-studio-light .wbp-navbar__brand-tag {
-  color: #D97706 !important; /* Amber 600 - destaque quente */
+  color: #D97706 !important;
 }
 html.ms-studio-light .wbp-navbar__action,
 html.ms-studio-light .display-mode__control-btn:hover {
   background: rgba(87, 83, 78, 0.08) !important;
   color: #000000 !important;
-  border-color: rgba(87, 83, 78, 0.15) !important;
+  border-color: rgba(87, 83, 78, 0.18) !important;
 }
 
-/* Cartões da grade (HeroGridCard e ToolCard) em modo claro quente */
+/* Cartões da Grade Principal (HeroGridCard, ToolCard e QuickLaunch) */
 html.ms-studio-light .ms-tool-card,
-html.ms-studio-light .hero-grid-card {
+html.ms-studio-light .ms-hero-grid-card,
+html.ms-studio-light .ms-hero-quick-pill {
   background: #FFFFFF !important;
-  border-color: rgba(87, 83, 78, 0.12) !important;
-  box-shadow: 0 4px 20px rgba(87, 83, 78, 0.04) !important;
-  color: #292524 !important; /* Stone 800 */
+  border: 1px solid rgba(87, 83, 78, 0.16) !important;
+  box-shadow: 0 4px 16px rgba(87, 83, 78, 0.05) !important;
+  color: #1C1917 !important;
 }
 html.ms-studio-light .ms-tool-card:hover,
-html.ms-studio-light .hero-grid-card:hover {
-  border-color: rgba(245, 158, 11, 0.6) !important; /* Amber borda ao passar o mouse */
-  box-shadow: 0 12px 30px rgba(87, 83, 78, 0.08), 0 0 0 1px rgba(245, 158, 11, 0.3) !important;
+html.ms-studio-light .ms-hero-grid-card:hover,
+html.ms-studio-light .ms-hero-quick-pill:hover {
+  border-color: #D97706 !important;
+  box-shadow: 0 12px 30px rgba(217, 119, 6, 0.12), 0 0 0 1px rgba(217, 119, 6, 0.2) !important;
   transform: translateY(-3px);
   background: #FAF9F6 !important;
 }
-html.ms-studio-light .ms-tool-card__title,
-html.ms-studio-light .hero-grid-card__title {
+
+/* Textos e Ícones internos dos cartões em modo claro (Contraste 100% legível) */
+html.ms-studio-light .ms-card__titles,
+html.ms-studio-light .ms-card__titles strong,
+html.ms-studio-light .ms-hero-grid-card__titles strong,
+html.ms-studio-light .ms-hero-quick-pill__text strong {
   color: #1C1917 !important;
+  font-weight: 700 !important;
 }
-html.ms-studio-light .ms-tool-card__desc,
-html.ms-studio-light .hero-grid-card__desc,
-html.ms-studio-light .ms-tool-card__meta,
-html.ms-studio-light .hero-grid-card__badge {
+html.ms-studio-light .ms-card__desc,
+html.ms-studio-light .ms-hero-grid-card__desc,
+html.ms-studio-light .ms-hero-quick-pill__text small {
+  color: #44403C !important;
+}
+html.ms-studio-light .ms-card__meta,
+html.ms-studio-light .ms-hero-grid-card__badge {
   color: #57534E !important;
 }
-html.ms-studio-light .hero-grid-card__icon-wrapper,
-html.ms-studio-light .ms-tool-card__icon-wrap {
+html.ms-studio-light .ms-card__icon-area,
+html.ms-studio-light .ms-hero-grid-card__icon,
+html.ms-studio-light .ms-hero-quick-pill__icon {
   background: #F5F3EE !important;
-  border-color: rgba(87, 83, 78, 0.1) !important;
+  border-color: rgba(87, 83, 78, 0.12) !important;
+}
+html.ms-studio-light .ms-card__kbd,
+html.ms-studio-light .ms-hero-grid-card__kbd,
+html.ms-studio-light .ms-hero-quick-pill__kbd {
+  background: #E7E5E4 !important;
+  border-color: #D6D3D1 !important;
+  color: #1C1917 !important;
+}
+
+/* FAQ / Dúvidas Comuns (Accordions — Alta legibilidade e contraste) */
+html.ms-studio-light .ms-seo-faq [data-state],
+html.ms-studio-light .ms-seo-faq button[aria-expanded],
+html.ms-studio-light [role="region"],
+html.ms-studio-light .ms-seo-faq .group {
+  background: #FFFFFF !important;
+  border-color: rgba(87, 83, 78, 0.16) !important;
+  color: #1C1917 !important;
+  box-shadow: 0 2px 8px rgba(87, 83, 78, 0.04) !important;
+}
+html.ms-studio-light .ms-seo-faq button[aria-expanded="true"],
+html.ms-studio-light .ms-seo-faq button[aria-expanded="true"]:hover {
+  background: #FAF9F6 !important;
+  border-color: #D97706 !important;
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.08) !important;
+}
+html.ms-studio-light .ms-seo-faq button[aria-expanded] span {
+  color: #1C1917 !important;
+}
+/* Resposta do FAQ (Container interno) */
+html.ms-studio-light .ms-seo-faq [role="region"] > div > div > div,
+html.ms-studio-light .ms-seo-faq .overflow-hidden div[class*="rounded-2xl"],
+html.ms-studio-light .ms-seo-faq div[class*="bg-gradient"] {
+  background: #F5F3EE !important;
+  border: 1px solid rgba(87, 83, 78, 0.15) !important;
+  color: #44403C !important;
+  box-shadow: none !important;
+}
+html.ms-studio-light .ms-seo-faq div[class*="bg-gradient"] * {
+  color: #44403C !important;
+}
+
+/* Botões de Ação, CTA e FlowButton em modo claro */
+html.ms-studio-light .ms-hero__scroll-btn,
+html.ms-studio-light .ms-flow-btn,
+html.ms-studio-light button[class*="scroll-btn"] {
+  background: #FFFFFF !important;
+  border-color: rgba(87, 83, 78, 0.2) !important;
+  color: #1C1917 !important;
+  box-shadow: 0 4px 12px rgba(87, 83, 78, 0.08) !important;
+}
+html.ms-studio-light .ms-hero__scroll-btn:hover {
+  border-color: #D97706 !important;
+  background: #FAF9F6 !important;
 }
 
 /* Footer no modo claro (Sobrescrevendo o bg-[#050506] com alta especificidade) */
@@ -5258,29 +5363,22 @@ html.ms-studio-light footer,
 html.ms-studio-light .FooterSection,
 html.ms-studio-light [class*="FooterSection"] {
   background-color: #EFECE6 !important; /* Semi hot off white secundário */
-  border-top-color: rgba(87, 83, 78, 0.12) !important;
+  border-top-color: rgba(87, 83, 78, 0.15) !important;
   color: #44403C !important;
 }
 html.ms-studio-light footer h2,
-html.ms-studio-light footer h3,
-html.ms-studio-light footer .text-white {
+html.ms-studio-light footer h3 {
   color: #1C1917 !important;
 }
 html.ms-studio-light footer p,
 html.ms-studio-light footer a,
 html.ms-studio-light footer span,
-html.ms-studio-light footer address,
-html.ms-studio-light footer .text-white\/70,
-html.ms-studio-light footer .text-white\/80,
-html.ms-studio-light footer .text-white\/65,
-html.ms-studio-light footer .text-white\/60,
-html.ms-studio-light footer .text-white\/50,
-html.ms-studio-light footer .text-white\/40 {
+html.ms-studio-light footer address {
   color: #57534E !important;
 }
 html.ms-studio-light footer a:hover,
 html.ms-studio-light footer button:hover {
-  color: #D97706 !important; /* amber-600 */
+  color: #D97706 !important;
 }
 html.ms-studio-light footer input {
   background-color: #FFFFFF !important;
@@ -5293,38 +5391,23 @@ html.ms-studio-light footer input::placeholder {
 html.ms-studio-light footer button[aria-label="Alternar tema claro e escuro"],
 html.ms-studio-light footer a[aria-label^="LinkedIn"],
 html.ms-studio-light footer a[aria-label^="GitHub"] {
-  background: rgba(87, 83, 78, 0.08) !important;
-  border-color: rgba(87, 83, 78, 0.15) !important;
+  background: #FFFFFF !important;
+  border-color: rgba(87, 83, 78, 0.18) !important;
   color: #292524 !important;
 }
 html.ms-studio-light footer button[aria-label="Alternar tema claro e escuro"]:hover,
 html.ms-studio-light footer a[aria-label^="LinkedIn"]:hover,
 html.ms-studio-light footer a[aria-label^="GitHub"]:hover {
-  background: rgba(87, 83, 78, 0.15) !important;
+  background: #F5F3EE !important;
   color: #000000 !important;
-}
-
-/* Seção SEO "O que é o MonitorSmith" e textos no modo claro */
-html.ms-studio-light .ms-seo-about,
-html.ms-studio-light .ms-library__section {
-  background-color: transparent !important;
-  color: #44403C !important;
-}
-html.ms-studio-light .ms-seo-about h2,
-html.ms-studio-light .ms-seo-about h3,
-html.ms-studio-light .ms-library__section h2 {
-  color: #1C1917 !important;
-}
-html.ms-studio-light .ms-seo-about p,
-html.ms-studio-light .ms-seo-about li {
-  color: #57534E !important;
+  border-color: #D97706 !important;
 }
 
 /* Dock menu inferior em modo claro */
 html.ms-studio-light .wbp-dock {
-  background: rgba(250, 249, 246, 0.92) !important;
-  border-color: rgba(87, 83, 78, 0.15) !important;
-  box-shadow: 0 12px 36px rgba(87, 83, 78, 0.12), 0 0 0 1px rgba(87, 83, 78, 0.05) !important;
+  background: rgba(250, 249, 246, 0.94) !important;
+  border-color: rgba(87, 83, 78, 0.18) !important;
+  box-shadow: 0 12px 36px rgba(87, 83, 78, 0.14), 0 0 0 1px rgba(87, 83, 78, 0.05) !important;
 }
 html.ms-studio-light .wbp-dock__item {
   color: #57534E !important;
@@ -5340,17 +5423,17 @@ html.ms-studio-light .wbp-dock__divider {
 
 /* AdSense Containers no Modo Claro Quente */
 html.ms-studio-light .ms-ad-container {
-  background: rgba(255, 255, 255, 0.75) !important;
-  border-color: rgba(245, 158, 11, 0.3) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(217, 119, 6, 0.25) !important;
   box-shadow: 0 4px 16px rgba(87, 83, 78, 0.05) !important;
 }
 
-/* Modais de Ajuda, Sobre, Privacidade e Termos em modo claro quente */
+/* Modais de Ajuda, Sobre, Privacidade, Termos e PWA em modo claro quente */
 html.ms-studio-light [role="dialog"] > div[style*="background: #090A0F"],
 html.ms-studio-light [role="dialog"] > div[style*="background: #0c0f16"],
 html.ms-studio-light [role="dialog"] > div[style*="background"] {
-  background: #FAF9F6 !important;
-  border-color: rgba(87, 83, 78, 0.18) !important;
+  background: #FFFFFF !important;
+  border: 1px solid rgba(87, 83, 78, 0.2) !important;
   color: #292524 !important;
   box-shadow: 0 24px 60px rgba(87, 83, 78, 0.18), 0 0 30px rgba(87, 83, 78, 0.06) !important;
 }
@@ -5361,7 +5444,7 @@ html.ms-studio-light [role="dialog"] h3 {
 html.ms-studio-light [role="dialog"] p,
 html.ms-studio-light [role="dialog"] li,
 html.ms-studio-light [role="dialog"] div[style*="color: rgba(255"] {
-  color: #57534E !important;
+  color: #44403C !important;
 }
 html.ms-studio-light [role="dialog"] button[aria-label^="Fechar"] {
   background: rgba(87, 83, 78, 0.08) !important;
@@ -5372,5 +5455,6 @@ html.ms-studio-light [role="dialog"] button[aria-label^="Fechar"]:hover {
   background: rgba(87, 83, 78, 0.15) !important;
   color: #1C1917 !important;
 }
+
 
 
