@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'monitorsmith-v12-hover-fix';
+const CACHE_VERSION = 'monitorsmith-v13-faq-accordion';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

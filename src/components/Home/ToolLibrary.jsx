@@ -7,8 +7,47 @@ import DotPattern from '../UI/DotPattern';
 import FlowButton from '../UI/FlowButton';
 import AdSenseUnit from '../UI/AdSenseUnit';
 import PrivacyModal from '../UI/PrivacyModal';
+import { FaqAccordion } from '../UI/FaqAccordion';
 import { ControlIcon } from '../Controls/Navbar';
 import { HERO_GRID_TOOLS, TOOL_LIBRARY } from '../../constants/tools';
+
+const FAQ_DATA = [
+  {
+    id: 1,
+    question: "Como testar se o monitor tem dead pixel ou pixel preso?",
+    answer: "Abra o teste de pixels em tela cheia e alterne entre preto, branco, vermelho, verde e azul. Pixels que não mudam de cor ou permanecem apagados podem estar defeituosos. O MonitorSmith oferece 8 cores sólidas para inspeção completa.",
+    icon: "🎯",
+    iconPosition: "right",
+  },
+  {
+    id: 2,
+    question: "Este teste funciona em OLED e LCD?",
+    answer: "Sim. Em monitores OLED, ajuda a identificar burn-in e retenção de imagem. Em LCD (IPS, VA, TN), detecta pixels presos, vazamento de luz (backlight bleed) e uniformidade do painel.",
+    icon: "🖥️",
+    iconPosition: "left",
+  },
+  {
+    id: 3,
+    question: "O teste funciona no celular ou tablet?",
+    answer: "Sim, desde que o navegador entre em tela cheia corretamente. Funciona em Android e iOS com Chrome, Safari e outros navegadores modernos.",
+    icon: "📱",
+    iconPosition: "right",
+  },
+  {
+    id: 4,
+    question: "O MonitorSmith é gratuito e funciona offline?",
+    answer: "100% gratuito, sem cadastro e sem download. Possui suporte a PWA (Progressive Web App) — instale no Windows, macOS, Linux, Android ou iOS para usar totalmente offline.",
+    icon: "⚡",
+    iconPosition: "left",
+  },
+  {
+    id: 5,
+    question: "Como verificar vazamento de luz (backlight bleed)?",
+    answer: "Em um ambiente escuro, abra o modo de tela preta absoluta em tela cheia (tecla F). Observe as bordas e os cantos da tela em busca de áreas esbranquiçadas, amareladas ou vazamento excessivo da iluminação traseira.",
+    icon: "💡",
+    iconPosition: "right",
+  },
+];
 
 export { HERO_GRID_TOOLS, TOOL_LIBRARY };
 
@@ -316,7 +355,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
         </div>
       </section>
 
-      {/* SEO: FAQ visível — corresponde às intenções de busca e ajuda LLMs a extrair respostas */}
+      {/* SEO: FAQ interativo e animado — corresponde às intenções de busca e ajuda LLMs a extrair respostas */}
       <section className="ms-library__section ms-seo-faq" aria-labelledby="faq-title">
         <div className="ms-library__section-heading">
           <div>
@@ -324,23 +363,11 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
             <h2 id="faq-title">Dúvidas comuns sobre teste de monitor</h2>
           </div>
         </div>
-        <div className="ms-seo-faq-list" style={{ maxWidth: '780px', margin: '0 auto', padding: '0 20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div>
-            <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#e5e7eb', marginBottom: '6px' }}>Como testar se o monitor tem dead pixel ou pixel preso?</h3>
-            <p style={{ color: 'rgba(229,231,235,0.75)', lineHeight: 1.6, fontSize: '0.9rem' }}>Abra o teste de pixels em tela cheia e alterne entre preto, branco, vermelho, verde e azul. Pixels que não mudam de cor ou permanecem apagados podem estar defeituosos. O MonitorSmith oferece 8 cores sólidas para inspeção completa.</p>
-          </div>
-          <div>
-            <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#e5e7eb', marginBottom: '6px' }}>Este teste funciona em OLED e LCD?</h3>
-            <p style={{ color: 'rgba(229,231,235,0.75)', lineHeight: 1.6, fontSize: '0.9rem' }}>Sim. Em monitores OLED, ajuda a identificar burn-in e retenção de imagem. Em LCD (IPS, VA, TN), detecta pixels presos, vazamento de luz (backlight bleed) e uniformidade do painel.</p>
-          </div>
-          <div>
-            <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#e5e7eb', marginBottom: '6px' }}>O teste funciona no celular?</h3>
-            <p style={{ color: 'rgba(229,231,235,0.75)', lineHeight: 1.6, fontSize: '0.9rem' }}>Sim, desde que o navegador entre em tela cheia corretamente. Funciona em Android e iOS com Chrome, Safari e outros navegadores modernos.</p>
-          </div>
-          <div>
-            <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#e5e7eb', marginBottom: '6px' }}>O MonitorSmith é gratuito e funciona offline?</h3>
-            <p style={{ color: 'rgba(229,231,235,0.75)', lineHeight: 1.6, fontSize: '0.9rem' }}>100% gratuito, sem cadastro e sem download. Possui suporte a PWA (Progressive Web App) — instale no Windows, macOS, Linux, Android ou iOS para usar totalmente offline.</p>
-          </div>
+        <div style={{ maxWidth: '780px', margin: '0 auto', padding: '0 12px' }}>
+          <FaqAccordion
+            data={FAQ_DATA}
+            timestamp="Disponível 24/7 online e offline (PWA)"
+          />
         </div>
       </section>
 
