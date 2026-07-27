@@ -3746,18 +3746,6 @@ button.wbp-navbar__mode:hover {
   z-index: 0;
 }
 
-/* Technical Precision Micro-Dot Matrix Overlay */
-.ms-hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
-  background-size: 24px 24px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, rgba(0, 0, 0, 0.85) 10%, transparent 85%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, rgba(0, 0, 0, 0.85) 10%, transparent 85%);
-  pointer-events: none;
-  z-index: 0;
-}
 
 .ms-hero__content {
   position: relative;
@@ -5186,9 +5174,6 @@ html.ms-studio-light .ms-seo-faq {
 }
 html.ms-studio-light .ms-hero::before {
   background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.04) 50%, transparent 75%) !important;
-}
-html.ms-studio-light .ms-hero::after {
-  display: none !important;
 }
 
 /* Tipografia Universal e Títulos no Modo Claro */
