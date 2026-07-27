@@ -5145,6 +5145,14 @@ button.wbp-navbar__mode:hover {
   }
 }
 
+/* Dynamic DotPattern Background */
+.ms-dot-pattern,
+.ms-dot-pattern circle,
+.ms-dot-pattern rect {
+  fill: rgba(255, 255, 255, 0.16);
+  transition: fill 0.3s ease;
+}
+
 /* ==========================================================================
    STUDIO LIGHT MODE (Tema Claro — Off White Acetinado / Warm Studio Fine Art)
    ========================================================================== */
@@ -5170,7 +5178,7 @@ html.ms-studio-light #main-content {
   color: var(--text) !important;
 }
 
-/* Fundo da biblioteca e Hero (Erradicando blocos pretos no modo claro) */
+/* Fundo da biblioteca e Hero (Erradicando blocos pretos no modo claro e mantendo DotPattern dinâmico) */
 html.ms-studio-light .ms-library,
 html.ms-studio-light .app-shell,
 html.ms-studio-light #main-content,
@@ -5184,21 +5192,41 @@ html.ms-studio-light .ms-hero::before {
   background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.04) 50%, transparent 75%) !important;
 }
 html.ms-studio-light .ms-hero::after {
-  background-image: radial-gradient(rgba(87, 83, 78, 0.12) 1px, transparent 1px) !important;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, rgba(0, 0, 0, 0.6) 10%, transparent 85%) !important;
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, rgba(0, 0, 0, 0.6) 10%, transparent 85%) !important;
+  display: none !important; /* Deixa o componente interativo <DotPattern /> brilhar dinamicamente em todo o site */
 }
 
-/* Tipografia Universal e Títulos no Modo Claro (Contraste Máximo) */
+/* Dots dinâmicos perfeitos para modo claro */
+html.ms-studio-light .ms-dot-pattern,
+html.ms-studio-light .ms-dot-pattern circle,
+html.ms-studio-light .ms-dot-pattern rect,
+html.ms-studio-light svg[class*="dot-pattern"] {
+  fill: rgba(87, 83, 78, 0.25) !important;
+}
+
+/* Tipografia Universal e Títulos no Modo Claro (Removendo sombras escuras e gradiente invisível) */
 html.ms-studio-light h1,
 html.ms-studio-light h2,
 html.ms-studio-light h3,
 html.ms-studio-light h4,
-html.ms-studio-light .ms-hero__title,
 html.ms-studio-light .ms-library__section-heading h2,
 html.ms-studio-light .ms-seo-about h2,
 html.ms-studio-light .ms-seo-faq h2 {
   color: #1C1917 !important;
+}
+html.ms-studio-light .ms-hero__title {
+  color: #1C1917 !important;
+  text-shadow: none !important;
+  drop-shadow: none !important;
+  filter: none !important;
+}
+html.ms-studio-light .ms-hero__title-gradient {
+  background: linear-gradient(135deg, #B45309 0%, #D97706 50%, #78350F 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  text-shadow: none !important;
+  filter: none !important;
 }
 html.ms-studio-light p,
 html.ms-studio-light span,

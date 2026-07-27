@@ -25,7 +25,6 @@ export function DotPattern({
         height: '100%',
         pointerEvents: 'none',
         zIndex: 0,
-        fill: 'rgba(255, 255, 255, 0.16)',
         maskImage: 'radial-gradient(700px circle at 50% 40%, white 20%, transparent 85%)',
         WebkitMaskImage: 'radial-gradient(700px circle at 50% 40%, white 20%, transparent 85%)',
         ...style,
