@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { X, ShieldCheck } from '@phosphor-icons/react';
 
-export default function PrivacyModal() {
+export default function PrivacyModal({ label = "Política de Privacidade (Privacy)", className }) {
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef(null);
 
@@ -25,7 +25,8 @@ export default function PrivacyModal() {
         ref={triggerRef}
         type="button"
         onClick={() => setIsOpen(true)}
-        style={{
+        className={className}
+        style={!className ? {
           background: 'none',
           border: 'none',
           color: 'rgba(255, 255, 255, 0.45)',
@@ -33,9 +34,13 @@ export default function PrivacyModal() {
           cursor: 'pointer',
           textDecoration: 'underline',
           textUnderlineOffset: '3px',
+        } : {
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
         }}
       >
-        Política de Privacidade & Termos
+        {label}
       </button>
 
       {isOpen ? (

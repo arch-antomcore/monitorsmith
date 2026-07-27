@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'monitorsmith-v14-footer-section';
+const CACHE_VERSION = 'monitorsmith-v15-about-terms-linkedin';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

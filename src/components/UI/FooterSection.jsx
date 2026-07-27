@@ -2,9 +2,11 @@
 
 import * as React from "react";
 import { Send, Sun, Moon } from "lucide-react";
-import { IconBrandGithub, IconBrandTwitter, IconBrandInstagram, IconBrandLinkedin } from "@tabler/icons-react";
+import { IconBrandGithub, IconBrandLinkedin } from "@tabler/icons-react";
 import { Input, Switch, Label, Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "./primitives";
 import PrivacyModal from "./PrivacyModal";
+import AboutModal from "./AboutModal";
+import TermsModal from "./TermsModal";
 
 export function FooterSection() {
   const [isDarkMode, setIsDarkMode] = React.useState(true);
@@ -113,7 +115,27 @@ export function FooterSection() {
           {/* Column 4: Follow Us & Mode Toggle */}
           <div className="relative">
             <h3 className="mb-4 text-sm font-semibold tracking-wider text-white uppercase font-mono">Conecte-se</h3>
-            <div className="mb-6 flex space-x-3">
+            <div className="mb-6 flex flex-wrap items-center gap-3">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a
+                      href="https://www.linkedin.com/in/matheus-peres-da-silva/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn de Matheus Peres da Silva"
+                      className="flex items-center gap-2 rounded-full border border-blue-500/35 bg-blue-500/10 hover:bg-blue-500/20 hover:border-blue-500/60 px-3.5 py-1.5 text-xs font-medium text-blue-400 hover:text-blue-300 transition-all shadow-[0_0_15px_rgba(59,130,246,0.15)] group"
+                    >
+                      <IconBrandLinkedin className="h-4 w-4 text-blue-400 group-hover:scale-110 transition-transform" />
+                      <span>Matheus Peres da Silva</span>
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Conecte-se com o criador no LinkedIn</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -122,72 +144,18 @@ export function FooterSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="GitHub"
-                      className="rounded-full border border-white/15 bg-white/[0.03] hover:bg-white/[0.1] hover:border-white/30 text-white/80 hover:text-white transition-all w-9 h-9 flex items-center justify-center shadow-sm"
+                      className="rounded-full border border-white/15 bg-white/[0.03] hover:bg-white/[0.1] hover:border-white/30 text-white/80 hover:text-white transition-all w-8 h-8 flex items-center justify-center shadow-sm"
                     >
                       <IconBrandGithub className="h-4 w-4" />
                     </a>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Explore nosso GitHub</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <a
-                      href="https://twitter.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Twitter / X"
-                      className="rounded-full border border-white/15 bg-white/[0.03] hover:bg-white/[0.1] hover:border-white/30 text-white/80 hover:text-white transition-all w-9 h-9 flex items-center justify-center shadow-sm"
-                    >
-                      <IconBrandTwitter className="h-4 w-4" />
-                    </a>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Siga-nos no X / Twitter</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <a
-                      href="https://instagram.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Instagram"
-                      className="rounded-full border border-white/15 bg-white/[0.03] hover:bg-white/[0.1] hover:border-white/30 text-white/80 hover:text-white transition-all w-9 h-9 flex items-center justify-center shadow-sm"
-                    >
-                      <IconBrandInstagram className="h-4 w-4" />
-                    </a>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Siga-nos no Instagram</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <a
-                      href="https://linkedin.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LinkedIn"
-                      className="rounded-full border border-white/15 bg-white/[0.03] hover:bg-white/[0.1] hover:border-white/30 text-white/80 hover:text-white transition-all w-9 h-9 flex items-center justify-center shadow-sm"
-                    >
-                      <IconBrandLinkedin className="h-4 w-4" />
-                    </a>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Conecte-se no LinkedIn</p>
+                    <p>Explore o repositório no GitHub</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <div className="flex items-center space-x-3 pt-2">
+            <div className="flex items-center space-x-3 pt-1">
               <Sun className="h-4 w-4 text-amber-400 shrink-0" />
               <Switch
                 id="dark-mode"
@@ -208,12 +176,11 @@ export function FooterSection() {
           <p className="text-xs text-white/60 font-mono">
             © 2026 EXVORN.TECH — MonitorSmith. Todos os direitos reservados.
           </p>
-          <div className="flex items-center gap-6 text-xs text-white/70">
-            <PrivacyModal />
-            <a href="#monitor-tools-home" className="transition-colors hover:text-amber-400">
-              Termos de Uso
-            </a>
-            <a href="#monitor-tools-home" className="transition-colors hover:text-amber-400">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-white/70">
+            <AboutModal label="Sobre (About)" className="transition-colors hover:text-amber-400 cursor-pointer text-left bg-transparent border-none p-0 font-sans text-xs text-white/70 hover:underline" />
+            <PrivacyModal label="Política de Privacidade" className="transition-colors hover:text-amber-400 cursor-pointer text-left bg-transparent border-none p-0 font-sans text-xs text-white/70 hover:underline" />
+            <TermsModal label="Termos de Serviço" className="transition-colors hover:text-amber-400 cursor-pointer text-left bg-transparent border-none p-0 font-sans text-xs text-white/70 hover:underline" />
+            <a href="#monitor-tools-home" className="transition-colors hover:text-amber-400 hover:underline">
               Configurações PWA
             </a>
           </div>
