@@ -6,7 +6,7 @@ import GlassCard from '../UI/GlassCard';
 import DotPattern from '../UI/DotPattern';
 import FlowButton from '../UI/FlowButton';
 import AdSenseUnit from '../UI/AdSenseUnit';
-import PrivacyModal from '../UI/PrivacyModal';
+import { FooterSection } from '../UI/FooterSection';
 import { FaqAccordion } from '../UI/FaqAccordion';
 import { ControlIcon } from '../Controls/Navbar';
 import { HERO_GRID_TOOLS, TOOL_LIBRARY } from '../../constants/tools';
@@ -371,11 +371,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
         </div>
       </section>
 
-      <footer className="ms-library__footer">
-        <span>MONITORSMITH</span>
-        <PrivacyModal />
-        <span>EXVORN.TECH</span>
-      </footer>
+      <FooterSection />
     </main>
   );
 }

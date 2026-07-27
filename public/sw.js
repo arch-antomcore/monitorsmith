@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'monitorsmith-v13-faq-accordion';
+const CACHE_VERSION = 'monitorsmith-v14-footer-section';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
