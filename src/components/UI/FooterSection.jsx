@@ -1,13 +1,10 @@
 import React from "react";
 import { 
   Sparkle, 
-  ShieldCheck, 
   TerminalWindow, 
   Sun, 
   Moon, 
-  Heart, 
   Cpu, 
-  EnvelopeSimple,
   GithubLogo,
   LinkedinLogo
 } from "@phosphor-icons/react";
@@ -22,11 +19,8 @@ export function FooterSection({ onLaunch }) {
       const saved = localStorage.getItem("ms_studio_theme");
       if (saved) return saved === "dark";
     }
-    return true; // "à princípio deve iniciar já em modo escuro"
+    return true; // "á princípio deve iniciar já em modo escuro"
   });
-
-  const [email, setEmail] = React.useState("");
-  const [subscribed, setSubscribed] = React.useState(false);
 
   React.useEffect(() => {
     if (typeof document !== "undefined") {
@@ -42,15 +36,6 @@ export function FooterSection({ onLaunch }) {
       }
     }
   }, [isDarkMode]);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email && email.includes("@")) {
-      setSubscribed(true);
-      setEmail("");
-      setTimeout(() => setSubscribed(false), 5000);
-    }
-  };
 
   const handleToolClick = (e, modeId, fallbackUrl) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) {
@@ -76,19 +61,16 @@ export function FooterSection({ onLaunch }) {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-gradient-to-b from-amber-500/[0.03] to-transparent blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 py-16 lg:py-20 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 mb-16">
           
-          {/* Coluna 1: Marca & Missão */}
-          <div className="lg:col-span-2 space-y-5">
+          {/* Coluna 1: Marca & Descrição */}
+          <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 text-black font-bold">
-                <Cpu size={22} weight="bold" />
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 text-black font-bold">
+                <Cpu size={20} weight="bold" />
               </div>
-              <span className="text-xl font-extrabold tracking-tight text-white font-mono">
+              <span className="text-lg font-extrabold tracking-tight text-white font-mono">
                 MONITOR<span className="text-amber-400">SMITH</span>
-              </span>
-              <span className="text-[10px] uppercase tracking-widest px-2 py-0.5 rounded bg-white/[0.08] text-white/70 font-mono border border-white/[0.05]">
-                v16 Studio
               </span>
             </div>
             
@@ -96,224 +78,140 @@ export function FooterSection({ onLaunch }) {
               Suíte profissional de calibração, diagnóstico e inspeção de telas. 
               Engenharia visual client-side com processamento zero-latency em GPU.
             </p>
+          </div>
 
-            <div className="flex items-center gap-3 pt-2">
+          {/* Coluna 2: Ferramentas Rápidas */}
+          <div>
+            <h3 className="mb-4 text-xs font-semibold tracking-wider text-white uppercase font-mono flex items-center gap-2">
+              <TerminalWindow size={16} className="text-amber-400" />
+              <span>Ferramentas Rápidas</span>
+            </h3>
+            <nav className="space-y-2.5 text-sm text-white/70">
               <a 
-                href="https://github.com" 
-                target="_blank" 
-                rel="noreferrer"
-                aria-label="GitHub EXVORN.TECH"
-                className="w-9 h-9 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] flex items-center justify-center text-white/80 hover:text-white transition-all hover:scale-105"
+                href="#monitor-tools-home" 
+                onClick={(e) => handleToolClick(e, 'home', '#monitor-tools-home')} 
+                className="block transition-colors hover:text-amber-400"
               >
-                <GithubLogo size={18} />
+                Todas as Ferramentas
               </a>
               <a 
-                href="https://www.linkedin.com/in/matheus-peres-da-silva/" 
-                target="_blank" 
-                rel="noreferrer"
-                aria-label="LinkedIn EXVORN.TECH"
-                className="w-9 h-9 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] flex items-center justify-center text-white/80 hover:text-white transition-all hover:scale-105"
+                href="/teste-de-dead-pixel/" 
+                onClick={(e) => handleToolClick(e, 'dead-pixel', '/teste-de-dead-pixel/')} 
+                className="block transition-colors hover:text-amber-400"
               >
-                <LinkedinLogo size={18} />
+                Teste de Dead Pixels
               </a>
-              <div className="h-4 w-[1px] bg-white/[0.1] mx-1" />
+              <a 
+                href="/tela-preta-oled/" 
+                onClick={(e) => handleToolClick(e, 'black', '/tela-preta-oled/')} 
+                className="block transition-colors hover:text-amber-400"
+              >
+                Tela Preta OLED & Burn-In
+              </a>
+              <a 
+                href="/limpeza-de-monitor/" 
+                onClick={(e) => handleToolClick(e, 'cleaner', '/limpeza-de-monitor/')} 
+                className="block transition-colors hover:text-amber-400"
+              >
+                Inspeção para Limpeza
+              </a>
+              <a 
+                href="/luz-para-videochamada/" 
+                onClick={(e) => handleToolClick(e, 'white', '/luz-para-videochamada/')} 
+                className="block transition-colors hover:text-amber-400"
+              >
+                Luz para Videochamadas
+              </a>
+              <a 
+                href="/relogio-em-tela-cheia/" 
+                onClick={(e) => handleToolClick(e, 'clock', '/relogio-em-tela-cheia/')} 
+                className="block transition-colors hover:text-amber-400"
+              >
+                Relógio em Tela Cheia
+              </a>
+            </nav>
+          </div>
+
+          {/* Coluna 3: EXVORN.TECH */}
+          <div>
+            <h3 className="mb-4 text-xs font-semibold tracking-wider text-white uppercase font-mono flex items-center gap-2">
+              <Sparkle size={16} className="text-amber-400" />
+              <span>EXVORN.TECH</span>
+            </h3>
+            <address className="space-y-2.5 text-sm text-white/70 not-italic leading-relaxed">
+              <p className="font-medium text-white/90">MonitorSmith — Hardware Studio</p>
+              <p>Suíte web 100% gratuita para teste, calibração e inspeção de displays.</p>
+              <p>Funciona nativamente offline em Windows, iOS, Android, macOS e Linux (PWA).</p>
+              <p className="pt-2">
+                <a href="mailto:contato@exvorn.tech" className="font-mono text-xs text-amber-400 hover:underline">
+                  contato@exvorn.tech
+                </a>
+              </p>
+            </address>
+          </div>
+
+          {/* Coluna 4: Conecte-se & Tema */}
+          <div className="space-y-5">
+            <h3 className="text-xs font-semibold tracking-wider text-white uppercase font-mono">Conecte-se</h3>
+            
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href="https://www.linkedin.com/in/matheus-peres-da-silva/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Perfil do LinkedIn EXVORN.TECH"
+                className="flex items-center gap-2 rounded-full border border-blue-500/35 bg-blue-500/10 hover:bg-blue-500/20 hover:border-blue-500/60 px-3.5 py-1.5 text-xs font-medium text-blue-400 hover:text-blue-300 transition-all shadow-[0_0_15px_rgba(59,130,246,0.15)] group"
+              >
+                <LinkedinLogo size={16} className="text-blue-400 group-hover:scale-110 transition-transform" />
+                <span>EXVORN.TECH</span>
+              </a>
+
+              <a
+                href="https://github.com/arch-antomcore/monitorsmith"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Repositório no GitHub"
+                className="rounded-full border border-white/15 bg-white/[0.03] hover:bg-white/[0.1] hover:border-white/30 text-white/80 hover:text-white transition-all w-8 h-8 flex items-center justify-center shadow-sm"
+              >
+                <GithubLogo size={16} />
+              </a>
+            </div>
+
+            <div className="pt-2">
               <button
                 onClick={() => setIsDarkMode(!isDarkMode)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] text-xs font-medium text-white/80 hover:text-white transition-all"
-                aria-label="Alternar tema claro e escuro"
+                className="flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.1] text-xs font-medium text-white/80 hover:text-white transition-all shadow-sm group cursor-pointer"
               >
                 {isDarkMode ? (
                   <>
-                    <Moon size={15} className="text-amber-400" />
-                    <span>Modo Escuro</span>
+                    <Sun size={16} className="text-amber-400 group-hover:rotate-45 transition-transform" />
+                    <span>Mudar para Modo Studio Claro</span>
                   </>
                 ) : (
                   <>
-                    <Sun size={15} className="text-amber-500" />
-                    <span>Modo Claro</span>
+                    <Moon size={16} className="text-amber-500 group-hover:-rotate-12 transition-transform" />
+                    <span>Mudar para Modo Studio Escuro</span>
                   </>
                 )}
               </button>
             </div>
           </div>
 
-          {/* Coluna 2: Ferramentas Rápidas */}
-          <div className="space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-2">
-              <TerminalWindow size={16} className="text-amber-400" />
-              <span>Ferramentas Rápidas</span>
-            </h3>
-            <ul className="space-y-2.5 text-sm text-white/70">
-              <li>
-                <a 
-                  href="#monitor-tools-home" 
-                  onClick={(e) => handleToolClick(e, 'home', '#monitor-tools-home')} 
-                  className="block transition-colors hover:text-amber-400"
-                >
-                  Todas as Ferramentas
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/loop-de-marcas/" 
-                  onClick={(e) => handleToolClick(e, 'sponsor-loop', '/loop-de-marcas/')} 
-                  className="block transition-colors hover:text-amber-400 flex items-center gap-1.5"
-                >
-                  <span>Loop de Marcas</span>
-                  <span className="text-[10px] px-1.5 py-0.2 bg-amber-500/20 text-amber-300 rounded font-mono">Novo</span>
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/teste-de-dead-pixel/" 
-                  onClick={(e) => handleToolClick(e, 'dead-pixel', '/teste-de-dead-pixel/')} 
-                  className="block transition-colors hover:text-amber-400"
-                >
-                  Teste de Dead Pixels
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/tela-preta-oled/" 
-                  onClick={(e) => handleToolClick(e, 'black', '/tela-preta-oled/')} 
-                  className="block transition-colors hover:text-amber-400"
-                >
-                  Tela Preta OLED & Burn-in
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/limpeza-de-monitor/" 
-                  onClick={(e) => handleToolClick(e, 'cleaner', '/limpeza-de-monitor/')} 
-                  className="block transition-colors hover:text-amber-400"
-                >
-                  Inspeção para Limpeza
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/luz-para-videochamada/" 
-                  onClick={(e) => handleToolClick(e, 'white', '/luz-para-videochamada/')} 
-                  className="block transition-colors hover:text-amber-400"
-                >
-                  Luz para Videochamadas
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/relogio-em-tela-cheia/" 
-                  onClick={(e) => handleToolClick(e, 'clock', '/relogio-em-tela-cheia/')} 
-                  className="block transition-colors hover:text-amber-400"
-                >
-                  Relógio em Tela Cheia
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Coluna 3: Estúdio & Hardware */}
-          <div className="space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-2">
-              <Sparkle size={16} className="text-amber-400" />
-              <span>Estúdio & Hardware</span>
-            </h3>
-            <ul className="space-y-2.5 text-sm text-white/70">
-              <li>
-                <a href="/teste-de-monitor/" onClick={(e) => handleToolClick(e, 'calibration', '/teste-de-monitor/')} className="block transition-colors hover:text-amber-400">
-                  Calibração & Gama de Cor
-                </a>
-              </li>
-              <li>
-                <a href="/tela-verde-chroma/" onClick={(e) => handleToolClick(e, 'color', '/tela-verde-chroma/')} className="block transition-colors hover:text-amber-400">
-                  Chroma Key Verde & Azul
-                </a>
-              </li>
-              <li>
-                <a href="/timer-de-foco/" onClick={(e) => handleToolClick(e, 'focus-timer', '/timer-de-foco/')} className="block transition-colors hover:text-amber-400">
-                  Timer Pomodoro de Estúdio
-                </a>
-              </li>
-              <li>
-                <a href="/teleprompter-online/" onClick={(e) => handleToolClick(e, 'message', '/teleprompter-online/')} className="block transition-colors hover:text-amber-400">
-                  Teleprompter & Mensagens
-                </a>
-              </li>
-              <li className="pt-1">
-                <span className="text-xs font-mono text-amber-400/80 uppercase tracking-wider block mb-1">Tecnologia</span>
-                <span className="text-xs text-white/50 block">WebGL 2.0 • GPU Accelerated</span>
-                <span className="text-xs text-white/50 block">Zero-Data Exfiltration Engine</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Coluna 4: Newsletter & Atualizações */}
-          <div className="space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-2">
-              <EnvelopeSimple size={16} className="text-amber-400" />
-              <span>Notas de Lançamento</span>
-            </h3>
-            <p className="text-xs text-white/70 leading-relaxed">
-              Receba notificações sobre novos perfis de calibração, ferramentas de áudio e updates PWA da suíte EXVORN.TECH.
-            </p>
-            
-            {subscribed ? (
-              <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center gap-2">
-                <ShieldCheck size={16} className="shrink-0" />
-                <span>Inscrito com sucesso! Obrigado por acompanhar.</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="space-y-2">
-                <div className="relative">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="seu@email.pro"
-                    required
-                    className="w-full bg-white/[0.04] border border-white/[0.1] rounded-lg px-3 py-2 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-amber-400/50 transition-colors"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full py-2 px-3 rounded-lg bg-white/[0.08] hover:bg-amber-500 hover:text-black border border-white/[0.08] hover:border-transparent text-xs font-semibold transition-all duration-200"
-                >
-                  Assinar Boletim Técnico
-                </button>
-              </form>
-            )}
-            <span className="text-[10px] text-white/40 block">
-              Sem spam. Apenas atualizações de engenharia da EXVORN.TECH.
-            </span>
-          </div>
-
         </div>
 
-        {/* Linha Divisória Inferior */}
-        <div className="pt-8 border-t border-white/[0.08] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/60 font-mono">
-          <div className="flex items-center gap-1.5">
-            <span>Desenvolvido com precisão pela</span>
-            <a 
-              href="https://www.linkedin.com/in/matheus-peres-da-silva/" 
-              target="_blank" 
-              rel="noreferrer"
-              title="Perfil Profissional no LinkedIn"
-              className="text-white hover:text-amber-400 transition-colors font-semibold underline underline-offset-4 decoration-amber-500/40"
-            >
-              EXVORN.TECH
-            </a>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            <AboutModal label="Sobre (About)" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />
-            <PrivacyModal label="Política de Privacidade" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />
-            <TermsModal label="Termos de Serviço" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />
-            <PwaModal label="Instalar App & Offline" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />
-          </div>
-
-          <div className="text-white/50">
-            © {new Date().getFullYear()} MonitorSmith. Todos os direitos reservados.
+        {/* Linha Inferior (Bottom Bar Original Limpa) */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/[0.08] pt-8 text-center md:flex-row">
+          <p className="text-xs text-white/60 font-mono">
+            © {new Date().getFullYear()} EXVORN.TECH — MonitorSmith. Todos os direitos reservados.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-white/70">
+            <AboutModal label="Sobre (About)" className="transition-colors hover:text-amber-400 cursor-pointer bg-transparent border-none p-0 font-sans text-xs text-white/70 hover:underline" />
+            <PrivacyModal label="Política de Privacidade" className="transition-colors hover:text-amber-400 cursor-pointer bg-transparent border-none p-0 font-sans text-xs text-white/70 hover:underline" />
+            <TermsModal label="Termos de Serviço" className="transition-colors hover:text-amber-400 cursor-pointer bg-transparent border-none p-0 font-sans text-xs text-white/70 hover:underline" />
+            <PwaModal label="Instalar App & Offline" className="transition-colors hover:text-amber-400 cursor-pointer bg-transparent border-none p-0 font-sans text-xs text-white/70 hover:underline" />
           </div>
         </div>
+
       </div>
     </footer>
   );
