@@ -5145,227 +5145,76 @@ button.wbp-navbar__mode:hover {
   }
 }
 
-/* Dynamic DotPattern Background */
+/* Dynamic DotPattern Background (White dots ported to both Dark and Light modes) */
 .ms-dot-pattern circle,
 circle#pattern-circle {
-  fill: rgba(255, 255, 255, 0.16);
+  fill: rgba(255, 255, 255, 0.2) !important;
   transition: fill 0.3s ease;
 }
 
-/* ==========================================================================
-   STUDIO LIGHT MODE (Tema Claro — Off White Acetinado / Warm Studio Fine Art)
-   ========================================================================== */
-html.ms-studio-light,
-html.ms-studio-light body,
-html.ms-studio-light #root,
-html.ms-studio-light .app-shell,
-html.ms-studio-light .app-mode-layer,
-html.ms-studio-light .app-mode-layer--library,
-html.ms-studio-light .ms-library,
-html.ms-studio-light #main-content {
-  --void: #F7F5F0 !important;       /* Semi hot off white principal (Warm Cream / Marfim Acetinado) */
-  --void-soft: #EFECE6 !important;  /* Casca de ovo quente suave para rodapé e transições */
-  --surface: rgba(255, 255, 255, 0.88) !important;
-  --surface-solid: #FAF9F6 !important;
-  --surface-raised: #F5F3EE !important;
-  --line: rgba(87, 83, 78, 0.15) !important;       /* Stone 500 com 15% - bordas quentes nítidas */
-  --line-strong: rgba(87, 83, 78, 0.25) !important;
-  --line-bright: rgba(87, 83, 78, 0.35) !important;
-  --text: #1C1917 !important;       /* Stone 900 - Marrom chumbo escuro refinado */
-  color-scheme: light !important;
-  background-color: var(--void) !important;
-  color: var(--text) !important;
-}
-
-/* Fundo da biblioteca e Hero (Erradicando blocos pretos no modo claro e mantendo DotPattern dinâmico) */
-html.ms-studio-light .ms-library,
-html.ms-studio-light .app-shell,
-html.ms-studio-light #main-content,
-html.ms-studio-light .ms-hero {
-  background-color: #F7F5F0 !important;
-  background-image: radial-gradient(circle at 14% 8%, rgba(245, 158, 11, 0.05), transparent 27rem),
-                    radial-gradient(circle at 83% 80%, rgba(217, 119, 6, 0.03), transparent 30rem) !important;
-  color: #1C1917 !important;
-}
-html.ms-studio-light .ms-hero::before {
-  background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.04) 50%, transparent 75%) !important;
-}
-html.ms-studio-light .ms-hero::after {
-  display: none !important; /* Deixa o componente interativo <DotPattern /> brilhar dinamicamente em todo o site */
-}
-
-/* Dots dinâmicos perfeitos para modo claro (Antônimos nítidos e visíveis) */
 html.ms-studio-light .ms-dot-pattern circle,
 html.ms-studio-light circle#pattern-circle {
-  fill: rgba(87, 83, 78, 0.32) !important;
+  fill: rgba(255, 255, 255, 0.4) !important;
 }
 
-/* Tipografia Universal e Títulos no Modo Claro (Removendo sombras escuras e gradiente invisível) */
-html.ms-studio-light h1,
-html.ms-studio-light h2,
-html.ms-studio-light h3,
-html.ms-studio-light h4,
-html.ms-studio-light .ms-library__section-heading h2,
-html.ms-studio-light .ms-seo-about h2,
-html.ms-studio-light .ms-seo-faq h2 {
-  color: #1C1917 !important;
-}
-html.ms-studio-light .ms-hero__title {
-  color: #1C1917 !important;
-  text-shadow: none !important;
-  drop-shadow: none !important;
-  filter: none !important;
-}
-html.ms-studio-light .ms-hero__title-gradient {
-  background: linear-gradient(135deg, #B45309 0%, #D97706 50%, #78350F 100%) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  color: transparent !important;
-  text-shadow: none !important;
-  filter: none !important;
-}
-html.ms-studio-light p,
-html.ms-studio-light span,
-html.ms-studio-light li,
-html.ms-studio-light .ms-hero__subtitle,
-html.ms-studio-light .ms-library__section-heading p,
-html.ms-studio-light .ms-seo-about p,
-html.ms-studio-light .ms-seo-text,
-html.ms-studio-light .ms-seo-text p,
-html.ms-studio-light [class*="text-white"] {
-  color: #44403C !important;
-}
-html.ms-studio-light [class*="text-white/40"],
-html.ms-studio-light [class*="text-white/50"],
-html.ms-studio-light [class*="text-white/60"] {
-  color: #57534E !important;
-}
-html.ms-studio-light strong,
-html.ms-studio-light b,
-html.ms-studio-light .font-semibold,
-html.ms-studio-light .font-bold {
-  color: #1C1917 !important;
-}
-
-/* Badges e Eyebrows (Pílulas Superiores) */
-html.ms-studio-light .ms-hero__eyebrow,
-html.ms-studio-light .ms-hero-direct__eyebrow {
-  border-color: rgba(87, 83, 78, 0.18) !important;
-  background: #FFFFFF !important;
-  color: #44403C !important;
-  box-shadow: 0 2px 8px rgba(87, 83, 78, 0.05) !important;
-}
-html.ms-studio-light .ms-hero__brand-tag,
-html.ms-studio-light .ms-hero-direct__badge,
-html.ms-studio-light .ms-library__eyebrow {
-  color: #D97706 !important;
-  font-weight: 700 !important;
-}
-
-/* Navbar superior (.wbp-navbar / .display-mode__controls / header) */
-html.ms-studio-light .wbp-navbar,
-html.ms-studio-light .display-mode__controls,
-html.ms-studio-light header.wbp-navbar,
-html.ms-studio-light nav {
-  background: rgba(247, 245, 240, 0.92) !important;
-  border-color: rgba(87, 83, 78, 0.14) !important;
-  box-shadow: 0 4px 20px rgba(87, 83, 78, 0.06) !important;
-  color: #1C1917 !important;
-}
-html.ms-studio-light .wbp-navbar__brand-name,
-html.ms-studio-light .display-mode__control-btn,
-html.ms-studio-light .display-mode__brand {
-  color: #1C1917 !important;
-}
-html.ms-studio-light .wbp-navbar__brand-tag {
-  color: #D97706 !important;
-}
-html.ms-studio-light .wbp-navbar__action,
-html.ms-studio-light .display-mode__control-btn:hover {
-  background: rgba(87, 83, 78, 0.08) !important;
-  color: #000000 !important;
-  border-color: rgba(87, 83, 78, 0.18) !important;
-}
-
-/* Cartões da Grade Principal (HeroGridCard, ToolCard e QuickLaunch) */
-html.ms-studio-light .ms-tool-card,
-html.ms-studio-light .ms-hero-grid-card,
-html.ms-studio-light .ms-hero-quick-pill {
-  background: #FFFFFF !important;
-  border: 1px solid rgba(87, 83, 78, 0.16) !important;
-  box-shadow: 0 4px 16px rgba(87, 83, 78, 0.05) !important;
-  color: #1C1917 !important;
-}
-html.ms-studio-light .ms-tool-card:hover,
-html.ms-studio-light .ms-hero-grid-card:hover,
-html.ms-studio-light .ms-hero-quick-pill:hover {
-  border-color: #D97706 !important;
-  box-shadow: 0 12px 30px rgba(217, 119, 6, 0.12), 0 0 0 1px rgba(217, 119, 6, 0.2) !important;
-  transform: translateY(-3px);
-  background: #FAF9F6 !important;
-}
-
-/* Textos e Ícones internos dos cartões em modo claro (Contraste 100% legível) */
-html.ms-studio-light .ms-card__titles,
-html.ms-studio-light .ms-card__titles strong,
-html.ms-studio-light .ms-hero-grid-card__titles strong,
-html.ms-studio-light .ms-hero-quick-pill__text strong {
-  color: #1C1917 !important;
-  font-weight: 700 !important;
-}
-html.ms-studio-light .ms-card__desc,
-html.ms-studio-light .ms-hero-grid-card__desc,
-html.ms-studio-light .ms-hero-quick-pill__text small {
-  color: #44403C !important;
-}
-html.ms-studio-light .ms-card__meta,
-html.ms-studio-light .ms-hero-grid-card__badge {
-  color: #57534E !important;
-}
-html.ms-studio-light .ms-card__icon-area,
-html.ms-studio-light .ms-hero-grid-card__icon,
-html.ms-studio-light .ms-hero-quick-pill__icon {
-  background: #F5F3EE !important;
-  border-color: rgba(87, 83, 78, 0.12) !important;
-}
-html.ms-studio-light .ms-card__kbd,
-html.ms-studio-light .ms-hero-grid-card__kbd,
-html.ms-studio-light .ms-hero-quick-pill__kbd {
-  background: #E7E5E4 !important;
-  border-color: #D6D3D1 !important;
-  color: #1C1917 !important;
-}
-
-/* FAQ / Dúvidas Comuns (Accordions — Alta legibilidade e contraste) */
+/* FAQ / Dúvidas Comuns (Accordions — Cantos arredondados 100% idênticos ao modo escuro) */
 html.ms-studio-light .ms-seo-faq [data-state],
 html.ms-studio-light .ms-seo-faq button[aria-expanded],
-html.ms-studio-light [role="region"],
 html.ms-studio-light .ms-seo-faq .group {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Caixa da Pergunta (Pílula com rounded-2xl idêntica ao modo escuro) */
+html.ms-studio-light .ms-seo-faq button > div[class*="space-x-3"],
+html.ms-studio-light .ms-seo-faq button div[class*="rounded-2xl"] {
   background: #FFFFFF !important;
-  border-color: rgba(87, 83, 78, 0.16) !important;
+  border: 1px solid rgba(87, 83, 78, 0.16) !important;
+  border-radius: 1rem !important;
   color: #1C1917 !important;
   box-shadow: 0 2px 8px rgba(87, 83, 78, 0.04) !important;
 }
-html.ms-studio-light .ms-seo-faq button[aria-expanded="true"],
-html.ms-studio-light .ms-seo-faq button[aria-expanded="true"]:hover {
-  background: #FAF9F6 !important;
+
+html.ms-studio-light .ms-seo-faq button[aria-expanded="true"] > div[class*="space-x-3"],
+html.ms-studio-light .ms-seo-faq button:hover > div[class*="space-x-3"] {
+  background: #FFFFFF !important;
   border-color: #D97706 !important;
-  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.08) !important;
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.1) !important;
 }
-html.ms-studio-light .ms-seo-faq button[aria-expanded] span {
+
+html.ms-studio-light .ms-seo-faq button span {
   color: #1C1917 !important;
 }
-/* Resposta do FAQ (Container interno) */
-html.ms-studio-light .ms-seo-faq [role="region"] > div > div > div,
-html.ms-studio-light .ms-seo-faq .overflow-hidden div[class*="rounded-2xl"],
-html.ms-studio-light .ms-seo-faq div[class*="bg-gradient"] {
-  background: #F5F3EE !important;
-  border: 1px solid rgba(87, 83, 78, 0.15) !important;
-  color: #44403C !important;
-  box-shadow: none !important;
+
+/* Botão de Ícone + / - (Caixa com rounded-xl idêntica ao modo escuro) */
+html.ms-studio-light .ms-seo-faq button > span.shrink-0,
+html.ms-studio-light .ms-seo-faq button span[class*="rounded-xl"] {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(87, 83, 78, 0.16) !important;
+  border-radius: 0.75rem !important;
+  color: #1C1917 !important;
+  box-shadow: 0 2px 8px rgba(87, 83, 78, 0.04) !important;
 }
-html.ms-studio-light .ms-seo-faq div[class*="bg-gradient"] * {
+
+html.ms-studio-light .ms-seo-faq button[aria-expanded="true"] > span.shrink-0,
+html.ms-studio-light .ms-seo-faq button:hover > span.shrink-0 {
+  border-color: #D97706 !important;
+  background: #FAF9F6 !important;
+  color: #D97706 !important;
+}
+
+/* Resposta do FAQ (Container interno com rounded-2xl idêntico ao modo escuro) */
+html.ms-studio-light .ms-seo-faq [role="region"] > div > div > div,
+html.ms-studio-light .ms-seo-faq .overflow-hidden div[class*="rounded-2xl"] {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(87, 83, 78, 0.16) !important;
+  border-radius: 1rem !important;
+  color: #44403C !important;
+  box-shadow: 0 4px 16px rgba(87, 83, 78, 0.06) !important;
+}
+
+html.ms-studio-light .ms-seo-faq [role="region"] * {
   color: #44403C !important;
 }
 
