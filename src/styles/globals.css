@@ -5253,8 +5253,14 @@ html.ms-studio-light nav {
   color: #1C1917 !important;
 }
 html.ms-studio-light .wbp-navbar__brand-name,
-html.ms-studio-light .display-mode__control-btn,
 html.ms-studio-light .display-mode__brand {
+  background: none !important;
+  -webkit-background-clip: border-box !important;
+  -webkit-text-fill-color: #1C1917 !important;
+  color: #1C1917 !important;
+  text-shadow: none !important;
+}
+html.ms-studio-light .display-mode__control-btn {
   color: #1C1917 !important;
 }
 html.ms-studio-light .wbp-navbar__brand-tag {
