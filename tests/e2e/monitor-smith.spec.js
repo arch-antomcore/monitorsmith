@@ -386,13 +386,17 @@ test.describe('quando o sistema força uma paleta de alto contraste', () => {
   })
 })
 
-test('layout não cria rolagem horizontal no viewport corrente', async ({ page }) => {
+test('landing não reserva a largura da scrollbar como rolagem horizontal', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 568 })
   await page.goto('/')
   const dimensions = await page.evaluate(() => ({
-    viewport: window.innerWidth,
+    viewport: document.documentElement.clientWidth,
     content: document.documentElement.scrollWidth,
+    bodyViewport: document.body.clientWidth,
+    bodyContent: document.body.scrollWidth,
   }))
   expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport + 1)
+  expect(dimensions.bodyContent).toBeLessThanOrEqual(dimensions.bodyViewport + 1)
 })
 
 test('shell permanece contido nos viewports mínimos portrait e landscape', async ({ page }, testInfo) => {
