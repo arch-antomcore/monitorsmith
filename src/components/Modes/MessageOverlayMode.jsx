@@ -142,23 +142,29 @@ export default function MessageOverlayMode({
         );
       };
 
-      let fittedSize = preferredSize;
-      if (!fits(preferredSize)) {
-        let lowerBound = MIN_FITTED_FONT_SIZE;
-        let upperBound = preferredSize;
+      let fittedSize;
+      let lowerBound = MIN_FITTED_FONT_SIZE;
+      let upperBound = preferredSize;
 
-        if (fits(lowerBound)) {
-          for (let iteration = 0; iteration < 12; iteration += 1) {
-            const candidate = (lowerBound + upperBound) / 2;
-            if (fits(candidate)) {
-              lowerBound = candidate;
-            } else {
-              upperBound = candidate;
-            }
-          }
-          fittedSize = lowerBound;
+      if (isTeleprompter) {
+        fittedSize = upperBound;
+      } else {
+        if (fits(upperBound)) {
+          fittedSize = upperBound;
         } else {
-          fittedSize = MIN_FITTED_FONT_SIZE;
+          if (fits(lowerBound)) {
+            for (let iteration = 0; iteration < 12; iteration += 1) {
+              const candidate = (lowerBound + upperBound) / 2;
+              if (fits(candidate)) {
+                lowerBound = candidate;
+              } else {
+                upperBound = candidate;
+              }
+            }
+            fittedSize = lowerBound;
+          } else {
+            fittedSize = MIN_FITTED_FONT_SIZE;
+          }
         }
       }
 
@@ -195,7 +201,7 @@ export default function MessageOverlayMode({
       window.visualViewport?.removeEventListener("resize", scheduleFit);
       document.fonts?.removeEventListener?.("loadingdone", scheduleFit);
     };
-  }, [normalizedQrContent, resolvedFontScale, showQrCode, visibleMessage]);
+  }, [normalizedQrContent, resolvedFontScale, showQrCode, visibleMessage, isTeleprompter]);
 
   useEffect(() => {
     if (!pendingFocusTarget.current) return;
@@ -218,7 +224,7 @@ export default function MessageOverlayMode({
   };
 
   const updateMessage = (nextValue) => {
-    const next = nextValue.slice(0, 220);
+    const next = nextValue.slice(0, 10000);
     if (!messageIsControlled) setInternalMessage(next);
     onMessageChange?.(next);
   };
@@ -291,6 +297,9 @@ export default function MessageOverlayMode({
           style={{
             transform: isTeleprompter ? 'scaleX(-1)' : 'none',
             transition: 'transform 200ms ease',
+            overflowY: isTeleprompter ? 'auto' : 'hidden',
+            height: '100%',
+            width: '100%',
           }}
         >
           <p className="message-overlay__label">MonitorSmith</p>
@@ -299,7 +308,10 @@ export default function MessageOverlayMode({
               ref={messageTextRef}
               className="message-overlay__message"
               data-fit-font-size={fittedFontSize.toFixed(1)}
-              style={{ fontSize: `${fittedFontSize}px` }}
+              style={{ 
+                fontSize: `${fittedFontSize}px`,
+                whiteSpace: "pre-wrap"
+              }}
             >
               {visibleMessage}
             </p>
@@ -357,14 +369,14 @@ export default function MessageOverlayMode({
 
           <label className="display-mode__field" htmlFor="message-content">
             <span className="display-mode__field-label">
-              Mensagem <output>{resolvedMessage.length}/220</output>
+              Mensagem <output>{resolvedMessage.length}/10000</output>
             </span>
             <textarea
               id="message-content"
-              maxLength="220"
+              maxLength="10000"
               onChange={(event) => updateMessage(event.target.value)}
               placeholder="Ex.: Em reunião. Retorno às 14h."
-              rows="3"
+              rows="5"
               value={resolvedMessage}
             />
           </label>

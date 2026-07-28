@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { getSponsorImageDimensionError } from '../../lib/sponsorLoopValidation';
+import { loadSponsorImages, saveSponsorImages, clearSponsorImages } from '../../lib/sponsorDB';
 
 const join = (...c) => c.filter(Boolean).join(' ');
 
@@ -24,9 +25,9 @@ const FIT_MODES = [
   { id: 'cover', label: 'Preencher' },
 ];
 
-const MAX_IMAGES = 20;
+const MAX_IMAGES = 15;
 const MAX_FILE_BYTES = 5 * 1024 * 1024;
-const MAX_TOTAL_BYTES = 40 * 1024 * 1024;
+const MAX_TOTAL_BYTES = 5 * 1024 * 1024;
 const ACCEPTED_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp']);
 const ACCEPTED = Array.from(ACCEPTED_TYPES).join(',');
 
@@ -91,7 +92,7 @@ export default function SponsorLoopMode({
 
   const [transitionClass, setTransitionClass] = useState('');
   const [isDragOver, setIsDragOver] = useState(false);
-  const [uploadMessage, setUploadMessage] = useState('PNG, JPEG ou WebP; até 5 MB por arquivo e 40 MB no total.');
+  const [uploadMessage, setUploadMessage] = useState('PNG, JPEG ou WebP; até 5 MB por arquivo e 5 MB no total.');
 
   const resolvedBg = BACKGROUNDS.find(b => b.color === bgColor) ? bgColor : customBg;
   const hasImages = images.length > 0;
@@ -250,7 +251,7 @@ export default function SponsorLoopMode({
         continue;
       }
       if (totalBytes + file.size > MAX_TOTAL_BYTES) {
-        rejected.push(`${file.name}: excede o limite total de 40 MB`);
+        rejected.push(`${file.name}: excede o limite total de 5 MB`);
         continue;
       }
 
@@ -282,6 +283,7 @@ export default function SponsorLoopMode({
         width: decoded.width,
         height: decoded.height,
         id: `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+        file,
       });
       totalBytes += file.size;
       availableSlots -= 1;
@@ -296,6 +298,7 @@ export default function SponsorLoopMode({
       const next = [...imagesRef.current, ...accepted];
       imagesRef.current = next;
       setImages(next);
+      saveSponsorImages(next);
     }
 
     const acceptedMessage = accepted.length
@@ -314,6 +317,19 @@ export default function SponsorLoopMode({
       .then(() => processFiles(files));
     return importQueueRef.current;
   };
+
+  useEffect(() => {
+    let active = true;
+    loadSponsorImages().then((saved) => {
+      if (!active || !saved.length) return;
+      const files = saved.map((s) => s.file).filter(Boolean);
+      if (files.length) {
+        void enqueueFiles(files);
+      }
+    });
+    return () => { active = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleFileSelect = (e) => {
     void enqueueFiles(e.target.files);
@@ -369,6 +385,7 @@ export default function SponsorLoopMode({
     const next = images.filter((image) => image.id !== id);
     imagesRef.current = next;
     setImages(next);
+    saveSponsorImages(next);
     setActiveIndex((current) => {
       if (!next.length) return 0;
       const adjusted = removedIndex < current ? current - 1 : current;
@@ -384,6 +401,7 @@ export default function SponsorLoopMode({
     images.forEach((image) => URL.revokeObjectURL(image.src));
     setImages([]);
     imagesRef.current = [];
+    clearSponsorImages();
     setActiveIndex(0);
     setIsPlaying(false);
     playbackDeadlineRef.current = 0;

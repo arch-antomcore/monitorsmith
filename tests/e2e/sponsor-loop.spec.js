@@ -93,9 +93,9 @@ test('fila de importação serializa drops concorrentes e mantém o limite globa
   await stage.dispatchEvent('dragenter', { dataTransfer: secondTransfer })
   await stage.dispatchEvent('drop', { dataTransfer: secondTransfer })
 
-  await expect(page.locator('.sponsor-loop__thumb')).toHaveCount(20)
+  await expect(page.locator('.sponsor-loop__thumb')).toHaveCount(15)
   await expect(page.locator('.display-mode__hint[role="status"]')).toContainText(
-    '4 arquivos recusados',
+    '9 arquivos recusados',
   )
 
   await firstTransfer.dispose()
