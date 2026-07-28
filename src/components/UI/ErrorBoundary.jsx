@@ -4,6 +4,7 @@ export class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false, error: null };
+    this.resetButtonRef = React.createRef();
   }
 
   static getDerivedStateFromError(error) {
@@ -14,13 +15,30 @@ export class ErrorBoundary extends React.Component {
     console.error("MonitorSmith ErrorBoundary capturou um erro:", error, errorInfo);
   }
 
+  componentDidUpdate(_previousProps, previousState) {
+    if (!previousState.hasError && this.state.hasError) {
+      this.resetButtonRef.current?.focus();
+    }
+  }
+
   handleReset = () => {
     this.setState({ hasError: false, error: null });
     if (typeof window !== 'undefined') {
+      const removeMonitorSmithKeys = (storage) => {
+        const keysToRemove = [];
+        for (let index = 0; index < storage.length; index += 1) {
+          const key = storage.key(index);
+          if (key?.startsWith('ms_')) keysToRemove.push(key);
+        }
+        keysToRemove.forEach((key) => storage.removeItem(key));
+      };
+
       try {
-        localStorage.clear();
-        sessionStorage.clear();
-      } catch (e) {}
+        removeMonitorSmithKeys(window.localStorage);
+        removeMonitorSmithKeys(window.sessionStorage);
+      } catch {
+        // O armazenamento pode estar indisponível em modos privados restritivos.
+      }
       window.location.href = window.location.origin + window.location.pathname;
     }
   };
@@ -28,7 +46,8 @@ export class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div
+        <main
+          aria-labelledby="recovery-title"
           style={{
             minHeight: '100vh',
             width: '100vw',
@@ -71,9 +90,9 @@ export class ErrorBoundary extends React.Component {
             >
               ⚠️
             </div>
-            <h2 style={{ margin: '0 0 8px', fontSize: '1.25rem', fontWeight: 650 }}>
+            <h1 id="recovery-title" style={{ margin: '0 0 8px', fontSize: '1.25rem', fontWeight: 650 }}>
               Recuperação do MonitorSmith
-            </h2>
+            </h1>
             <p style={{ margin: '0 0 12px', fontSize: '0.88rem', color: 'rgba(255, 255, 255, 0.68)', lineHeight: 1.5 }}>
               Identificamos uma oscilação na renderização. Clique abaixo para restaurar a suíte com segurança.
             </p>
@@ -84,6 +103,7 @@ export class ErrorBoundary extends React.Component {
               </pre>
             ) : null}
             <button
+              ref={this.resetButtonRef}
               type="button"
               onClick={this.handleReset}
               style={{
@@ -101,7 +121,7 @@ export class ErrorBoundary extends React.Component {
               Restaurar Ferramentas
             </button>
           </div>
-        </div>
+        </main>
       );
     }
 

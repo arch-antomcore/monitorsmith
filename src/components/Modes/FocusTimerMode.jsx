@@ -29,6 +29,9 @@ function playCompletionChime() {
 
     osc.connect(gain);
     gain.connect(ctx.destination);
+    osc.addEventListener('ended', () => {
+      ctx.close().catch(() => {});
+    }, { once: true });
 
     osc.start();
     osc.stop(ctx.currentTime + 1.2);
@@ -75,10 +78,10 @@ function createAmbientNoiseSynth() {
 
     return {
       stop: () => {
-        try { whiteNoise.stop(); ctx.close(); } catch {}
+        try { whiteNoise.stop(); ctx.close(); } catch { /* Audio can already be closed by the browser. */ }
       },
       setVolume: (vol) => {
-        try { gainNode.gain.setValueAtTime(Math.max(0, Math.min(1, vol)), ctx.currentTime); } catch {}
+        try { gainNode.gain.setValueAtTime(Math.max(0, Math.min(1, vol)), ctx.currentTime); } catch { /* Ignore a closed audio context. */ }
       }
     };
   } catch {
@@ -116,6 +119,9 @@ export default function FocusTimerMode({
   totalDuration,
 }) {
   const containerRef = useRef(null);
+  const closePanelButtonRef = useRef(null);
+  const reopenPanelButtonRef = useRef(null);
+  const pendingFocusTarget = useRef(null);
   const normalizedInitialDuration = clampSeconds(initialDuration) || 25 * 60;
   const [internalSeconds, setInternalSeconds] = useState(
     normalizedInitialDuration,
@@ -129,14 +135,35 @@ export default function FocusTimerMode({
   const [isAmbientNoiseActive, setIsAmbientNoiseActive] = useState(false);
   const ambientNoiseRef = useRef(null);
 
+  useEffect(() => {
+    if (!pendingFocusTarget.current) return;
+    const target = pendingFocusTarget.current === "reopen"
+      ? reopenPanelButtonRef.current
+      : closePanelButtonRef.current;
+    if (!target) return;
+    target.focus({ preventScroll: true });
+    pendingFocusTarget.current = null;
+  }, [isPanelClosed]);
+
+  const closePanel = () => {
+    pendingFocusTarget.current = "reopen";
+    setIsPanelClosed(true);
+  };
+
+  const openPanel = () => {
+    pendingFocusTarget.current = "close";
+    setIsPanelClosed(false);
+  };
+
   const toggleAmbientNoise = () => {
     if (isAmbientNoiseActive) {
       ambientNoiseRef.current?.stop();
       ambientNoiseRef.current = null;
       setIsAmbientNoiseActive(false);
     } else {
-      ambientNoiseRef.current = createAmbientNoiseSynth();
-      setIsAmbientNoiseActive(true);
+      const synth = createAmbientNoiseSynth();
+      ambientNoiseRef.current = synth;
+      setIsAmbientNoiseActive(Boolean(synth));
     }
   };
 
@@ -342,7 +369,7 @@ export default function FocusTimerMode({
     >
       <div aria-hidden="true" className="display-mode__canvas display-mode__canvas--focus" />
 
-      <main className="focus-timer" role="timer">
+      <div className="focus-timer" role="timer">
         <p className="focus-timer__eyebrow">Sessão de concentração</p>
         <div
           aria-label={`${formatFocusTime(resolvedSeconds)} restantes`}
@@ -358,7 +385,7 @@ export default function FocusTimerMode({
           </span>
         </div>
         <span className="sr-only" aria-live="polite">
-          {resolvedSeconds === 0 && hasStartedRef.current ? 'Sessão de foco concluída.' : ''}
+          {resolvedSeconds === 0 ? 'Sessão de foco concluída.' : ''}
         </span>
         <h2 className="focus-timer__title">{title}</h2>
         <p className="focus-timer__caption">
@@ -366,7 +393,7 @@ export default function FocusTimerMode({
             ? "Proteja este intervalo. O resto pode esperar alguns minutos."
             : "Comece quando estiver pronto para uma única tarefa importante."}
         </p>
-      </main>
+      </div>
 
       {showControls && !isPanelClosed ? (
         <aside
@@ -379,9 +406,10 @@ export default function FocusTimerMode({
               <h2 className="display-mode__title">Cronômetro</h2>
             </div>
             <button
+              ref={closePanelButtonRef}
               aria-label="Ocultar painel do cronômetro"
               className="display-mode__icon-button"
-              onClick={() => setIsPanelClosed(true)}
+              onClick={closePanel}
               type="button"
               title="Ocultar painel"
             >
@@ -411,8 +439,9 @@ export default function FocusTimerMode({
             className={classNames("wbp-button", isAmbientNoiseActive ? "wbp-button--active" : "wbp-button--ghost")}
             style={{ width: "100%", marginTop: "8px", fontSize: "0.75rem" }}
             onClick={() => toggleAmbientNoise()}
+            aria-pressed={isAmbientNoiseActive}
           >
-            {isAmbientNoiseActive ? "🔊 Ruído Marrom Ativo (Sintetizador)" : "🔈 Som Ambiente de Foco (Ruído)"}
+            {isAmbientNoiseActive ? "Pausar ruído ambiente sintetizado" : "Ativar ruído ambiente sintetizado"}
           </button>
 
           <div
@@ -464,9 +493,10 @@ export default function FocusTimerMode({
         </aside>
       ) : showControls && isPanelClosed ? (
         <button
+          ref={reopenPanelButtonRef}
           type="button"
           className="display-mode__reopen-panel-btn"
-          onClick={() => setIsPanelClosed(false)}
+          onClick={openPanel}
           title="Abrir painel do cronômetro"
           aria-label="Abrir painel do cronômetro"
         >

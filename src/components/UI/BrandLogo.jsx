@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * BrandLogo — O Ícone Oficial do Projeto MonitorSmith.
  * Extraído para ser reutilizado na navbar, footer e modais da aplicação.

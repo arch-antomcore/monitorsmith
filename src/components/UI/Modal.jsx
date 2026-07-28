@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Button, { joinClasses } from './Button';
@@ -38,21 +38,22 @@ export default function Modal({
   ariaLabel,
   showCloseButton = true,
 }) {
-  const [mounted, setMounted] = useState(false);
   const dialogRef = useRef(null);
   const previouslyFocusedElement = useRef(null);
+  const onCloseRef = useRef(onClose);
   const titleId = useId();
   const descriptionId = useId();
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     if (!open || typeof document === 'undefined') return undefined;
 
     previouslyFocusedElement.current = document.activeElement;
+    dialogRef.current?.focus({ preventScroll: true });
 
     if (openModalCount === 0) {
       previousBodyOverflow = document.body.style.overflow;
@@ -77,7 +78,8 @@ export default function Modal({
     const handleKeyDown = (event) => {
       if (event.key === 'Escape' && closeOnEscape) {
         event.preventDefault();
-        onClose?.();
+        event.stopPropagation();
+        onCloseRef.current?.();
         return;
       }
 
@@ -92,6 +94,12 @@ export default function Modal({
 
       const firstElement = focusableElements[0];
       const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (!dialogRef.current?.contains(document.activeElement)) {
+        event.preventDefault();
+        firstElement.focus();
+        return;
+      }
 
       if (event.shiftKey && document.activeElement === firstElement) {
         event.preventDefault();
@@ -130,9 +138,9 @@ export default function Modal({
         previouslyFocusedElement.current.focus({ preventScroll: true });
       }
     };
-  }, [closeOnEscape, initialFocusRef, onClose, open]);
+  }, [closeOnEscape, initialFocusRef, open]);
 
-  if (!mounted || typeof document === 'undefined') return null;
+  if (typeof document === 'undefined') return null;
 
   const hasTitle = Boolean(title);
   const hasDescription = Boolean(description);
@@ -147,9 +155,9 @@ export default function Modal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.18 }}
-          onMouseDown={(event) => {
+          onPointerDown={(event) => {
             if (closeOnOverlayClick && event.target === event.currentTarget) {
-              onClose?.();
+              onCloseRef.current?.();
             }
           }}
         >
@@ -166,7 +174,7 @@ export default function Modal({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.99 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            onMouseDown={(event) => event.stopPropagation()}
+            onPointerDown={(event) => event.stopPropagation()}
           >
             {hasTitle || hasDescription || showCloseButton ? (
               <header className="wbp-modal__header">
@@ -181,7 +189,7 @@ export default function Modal({
                     size="sm"
                     aria-label={closeLabel}
                     title={closeLabel}
-                    onClick={() => onClose?.()}
+                    onClick={() => onCloseRef.current?.()}
                   >
                     <span className="wbp-modal__close-mark" aria-hidden="true">
                       ×

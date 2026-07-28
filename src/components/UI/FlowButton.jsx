@@ -1,28 +1,33 @@
-import { useEffect, useState } from 'react';
-import { ArrowRight, Desktop, CheckCircle, X, Shield } from '@phosphor-icons/react';
+import { useEffect, useMemo, useState } from 'react';
+import { ArrowRight } from '@phosphor-icons/react';
 import BrandLogo from './BrandLogo';
+import Modal from './Modal';
 
-export default function FlowButton({ text = "Instalar MonitorSmith no Windows", onClick }) {
+const detectInstallContext = () => {
+  if (typeof navigator === 'undefined') return 'browser';
+  const userAgent = navigator.userAgent.toLowerCase();
+  if (/iphone|ipad|ipod/.test(userAgent)) return 'ios';
+  if (userAgent.includes('android')) return 'android';
+  if (userAgent.includes('edg/')) return 'edge';
+  if (userAgent.includes('chrome') || userAgent.includes('crios')) return 'chrome';
+  if (userAgent.includes('safari')) return 'safari';
+  if (userAgent.includes('firefox')) return 'firefox';
+  return 'browser';
+};
+
+export default function FlowButton({ text = 'Instalar MonitorSmith', onClick }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [isInstalled, setIsInstalled] = useState(false);
+  const [isInstalled, setIsInstalled] = useState(() =>
+    typeof window !== 'undefined' &&
+    (window.matchMedia('(display-mode: standalone)').matches || Boolean(navigator.standalone)),
+  );
   const [showModal, setShowModal] = useState(false);
-  const [browserType, setBrowserType] = useState('browser');
+  const [installContext] = useState(detectInstallContext);
 
   useEffect(() => {
-    const ua = navigator.userAgent.toLowerCase();
-    if (navigator.brave && typeof navigator.brave.isBrave === 'function') {
-      setBrowserType('brave');
-    } else if (ua.includes('edg/')) {
-      setBrowserType('edge');
-    } else if (ua.includes('chrome')) {
-      setBrowserType('chrome');
-    } else if (ua.includes('safari')) {
-      setBrowserType('safari');
-    }
-
-    const handleBeforeInstall = (e) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
+    const handleBeforeInstall = (event) => {
+      event.preventDefault();
+      setDeferredPrompt(event);
     };
 
     const handleAppInstalled = () => {
@@ -30,10 +35,6 @@ export default function FlowButton({ text = "Instalar MonitorSmith no Windows", 
       setDeferredPrompt(null);
       setShowModal(false);
     };
-
-    if (typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches) {
-      setIsInstalled(true);
-    }
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstall);
     window.addEventListener('appinstalled', handleAppInstalled);
@@ -44,22 +45,57 @@ export default function FlowButton({ text = "Instalar MonitorSmith no Windows", 
     };
   }, []);
 
-  const handleInstall = async (e) => {
+  const instructions = useMemo(() => {
+    if (installContext === 'ios') {
+      return [
+        'Abra o MonitorSmith no Safari.',
+        'Toque no botão Compartilhar.',
+        'Escolha “Adicionar à Tela de Início” e confirme.',
+      ];
+    }
+    if (installContext === 'android') {
+      return [
+        'Abra o menu do navegador.',
+        'Escolha “Instalar aplicativo” ou “Adicionar à tela inicial”.',
+        'Confirme o nome e o atalho.',
+      ];
+    }
+    if (installContext === 'safari') {
+      return [
+        'No Safari compatível, abra Arquivo e procure “Adicionar ao Dock”.',
+        'Se essa opção não existir, mantenha um favorito para acesso rápido.',
+      ];
+    }
+    if (installContext === 'firefox') {
+      return [
+        'O Firefox desktop pode não oferecer instalação PWA nativa.',
+        'Crie um favorito ou abra o site em um navegador com suporte à instalação, como Edge ou Chrome.',
+      ];
+    }
+    return [
+      'Procure o ícone de instalação no lado direito da barra de endereços.',
+      'Se ele não aparecer, abra o menu do navegador e procure “Instalar aplicativo”.',
+      'Confirme para criar uma janela e um atalho dedicados.',
+    ];
+  }, [installContext]);
+
+  const handleInstall = async (event) => {
     if (onClick) {
-      onClick(e);
+      onClick(event);
       return;
     }
 
-    if (deferredPrompt) {
-      try {
-        await deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') setIsInstalled(true);
-        setDeferredPrompt(null);
-      } catch {
-        setShowModal(true);
-      }
-    } else {
+    if (!deferredPrompt) {
+      setShowModal(true);
+      return;
+    }
+
+    try {
+      await deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      setDeferredPrompt(null);
+      if (outcome === 'accepted') setIsInstalled(true);
+    } catch {
       setShowModal(true);
     }
   };
@@ -73,117 +109,45 @@ export default function FlowButton({ text = "Instalar MonitorSmith no Windows", 
         className="ms-flow-btn"
         onClick={handleInstall}
         aria-label={text}
+        aria-haspopup={deferredPrompt ? undefined : 'dialog'}
       >
-        <span className="ms-flow-btn__arr-2">
+        <span className="ms-flow-btn__arr-2" aria-hidden="true">
           <ArrowRight size={15} weight="bold" />
         </span>
-
-        <span className="ms-flow-btn__text">
-          {text}
-        </span>
-
+        <span className="ms-flow-btn__text">{text}</span>
         <span className="ms-flow-btn__circle" aria-hidden="true" />
         <span className="ms-flow-btn__shimmer" aria-hidden="true" />
-
-        <span className="ms-flow-btn__arr-1">
+        <span className="ms-flow-btn__arr-1" aria-hidden="true">
           <ArrowRight size={15} weight="bold" />
         </span>
       </button>
 
-      {showModal ? (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 99999,
-            background: 'rgba(0, 0, 0, 0.78)',
-            backdropFilter: 'blur(12px)',
-            display: 'grid',
-            placeItems: 'center',
-            padding: '20px',
-          }}
-          onClick={() => setShowModal(false)}
-        >
-          <div
-            style={{
-              maxWidth: '500px',
-              width: '100%',
-              background: '#090A0F',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              borderRadius: '24px',
-              padding: '30px',
-              boxShadow: '0 24px 60px rgba(0,0,0,0.8), 0 0 30px rgba(245, 158, 11, 0.08)',
-              position: 'relative',
-              color: '#ffffff',
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={() => setShowModal(false)}
-              style={{
-                position: 'absolute',
-                top: '18px',
-                right: '18px',
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '50%',
-                width: '32px',
-                height: '32px',
-                display: 'grid',
-                placeItems: 'center',
-                color: 'rgba(255,255,255,0.6)',
-                cursor: 'pointer',
-              }}
-            >
-              <X size={18} />
-            </button>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '18px' }}>
-              <BrandLogo size={36} />
-              <div>
-                <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 600 }}>Instalar no Windows / Desktop</h3>
-                <span style={{ fontSize: '0.74rem', color: '#f59e0b', opacity: 0.9 }}>Brave, Chrome, Edge e Opera</span>
-              </div>
-            </div>
-
-            <p style={{ fontSize: '0.86rem', color: 'rgba(255,255,255,0.76)', lineHeight: 1.55, marginBottom: '20px' }}>
-              Caso você já tenha instalado no Windows ou se o pop-up nativo do {browserType === 'brave' ? 'Brave' : 'navegador'} não abriu automaticamente:
-            </p>
-
-            <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '14px', padding: '16px', marginBottom: '20px' }}>
-              <ol style={{ paddingLeft: '18px', fontSize: '0.84rem', color: 'rgba(255,255,255,0.88)', lineHeight: 1.8, margin: 0 }}>
-                <li>No Brave / Chrome: Clique nos <strong>3 pontos (⋮)</strong> no canto superior direito.</li>
-                <li>Passe o mouse em <strong>"Salvar e compartilhar"</strong>.</li>
-                <li>Clique em <strong>"Abrir no app MonitorSmith"</strong> (se já instalado) ou <strong>"Instalar MonitorSmith"</strong>.</li>
-              </ol>
-            </div>
-
-            <p style={{ fontSize: '0.78rem', color: '#f59e0b', margin: '0 0 20px', lineHeight: 1.4, fontWeight: 500 }}>
-              ✨ Como você já instalou o app no seu Windows, o Brave permite abrir direto pelo menu "Salvar e compartilhar"!
-            </p>
-
-            <button
-              type="button"
-              onClick={() => setShowModal(false)}
-              className="wbp-button"
-              style={{
-                width: '100%',
-                padding: '12px',
-                fontSize: '0.86rem',
-                borderRadius: '12px',
-                background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.18)',
-                color: '#ffffff',
-                fontWeight: 600,
-                cursor: 'pointer',
-              }}
-            >
-              Entendido!
-            </button>
+      <Modal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        title="Como instalar o MonitorSmith"
+        description="O navegador não disponibilizou o prompt automático; siga a opção correspondente ao seu dispositivo."
+        size="sm"
+        closeLabel="Fechar instruções de instalação"
+      >
+        <div style={{ display: 'grid', gap: '18px', color: 'rgba(255,255,255,0.8)', fontSize: '0.86rem', lineHeight: 1.6 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <BrandLogo size={34} />
+            <span style={{ color: '#f59e0b', fontFamily: 'monospace', fontSize: '0.74rem', textTransform: 'uppercase' }}>
+              {installContext === 'browser' ? 'Instalação manual' : installContext}
+            </span>
           </div>
+
+          <ol style={{ margin: 0, paddingLeft: '20px' }}>
+            {instructions.map((instruction) => <li key={instruction}>{instruction}</li>)}
+          </ol>
+
+          <p style={{ margin: 0, color: 'rgba(255,255,255,0.58)', fontSize: '0.78rem' }}>
+            A instalação depende do navegador e do sistema. Se nenhuma opção aparecer, o
+            MonitorSmith continua funcionando normalmente como site.
+          </p>
         </div>
-      ) : null}
+      </Modal>
     </>
   );
 }

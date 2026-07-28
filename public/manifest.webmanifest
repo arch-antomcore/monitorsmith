@@ -1,61 +1,103 @@
 {
   "id": "/",
-  "name": "MonitorSmith — Monitor Testing Tools",
+  "name": "MonitorSmith — Ferramentas para Monitores",
   "short_name": "MonitorSmith",
-  "description": "Free professional monitor testing suite: dead pixel test, OLED black screen, backlight bleed, calibration patterns, soft light, focus timer, teleprompter and more.",
+  "description": "11 ferramentas visuais para inspecionar monitores, iluminar cenas e organizar telas secundárias.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
   "background_color": "#030304",
   "theme_color": "#030304",
   "lang": "pt-BR",
   "dir": "ltr",
-  "categories": ["utilities", "productivity"],
+  "categories": [
+    "utilities",
+    "productivity"
+  ],
   "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
       "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
-    },
-    {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "maskable"
     }
   ],
   "shortcuts": [
     {
-      "name": "Teste de Dead Pixel",
-      "short_name": "Dead Pixel",
-      "url": "/?tool=dead-pixel",
-      "description": "Inspeção visual de pixels defeituosos com 8 cores sólidas"
-    },
-    {
-      "name": "Tela Preta OLED",
-      "short_name": "Tela Preta",
+      "name": "Tela Preta",
+      "short_name": "Preto",
+      "description": "Preencha a tela com preto absoluto.",
       "url": "/?tool=black",
-      "description": "Preto absoluto para OLED e teste de vazamento de luz"
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     },
     {
-      "name": "Relógio em Tela Cheia",
-      "short_name": "Relógio",
-      "url": "/?tool=clock",
-      "description": "Hora analógica e digital para monitor secundário"
+      "name": "Teste de Pixels",
+      "short_name": "Pixels",
+      "description": "Percorra cores sólidas e encontre pontos suspeitos no painel.",
+      "url": "/?tool=dead-pixel",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Tela Verde",
+      "short_name": "Chroma",
+      "description": "Verde sólido #00B140 para composições por chroma key.",
+      "url": "/?tool=green-screen",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "Timer de Foco",
       "short_name": "Foco",
+      "description": "Um timer discreto para ciclos de concentração.",
       "url": "/?tool=focus-timer",
-      "description": "Pomodoro com sintetizador de ruído marrom"
-    },
-    {
-      "name": "Teleprompter",
-      "short_name": "Teleponto",
-      "url": "/?tool=message",
-      "description": "Mensagem em tela cheia com espelhamento"
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }

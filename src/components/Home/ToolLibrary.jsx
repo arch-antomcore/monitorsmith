@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
-import Button from '../UI/Button';
-import GlassCard from '../UI/GlassCard';
 import DotPattern from '../UI/DotPattern';
 import FlowButton from '../UI/FlowButton';
 import AdSenseUnit from '../UI/AdSenseUnit';
@@ -22,21 +20,21 @@ const FAQ_DATA = [
   {
     id: 2,
     question: "Este teste funciona em OLED e LCD?",
-    answer: "Sim. Em monitores OLED, ajuda a identificar burn-in e retenção de imagem. Em LCD (IPS, VA, TN), detecta pixels presos, vazamento de luz (backlight bleed) e uniformidade do painel.",
+    answer: "Sim. Em OLED, os padrões ajudam a observar sinais visuais compatíveis com retenção de imagem. Em LCD (IPS, VA, TN), auxiliam a inspeção de pixels, vazamento de luz e uniformidade. O resultado é visual e não substitui medição técnica.",
     icon: "🖥️",
     iconPosition: "left",
   },
   {
     id: 3,
     question: "O teste funciona no celular ou tablet?",
-    answer: "Sim, desde que o navegador entre em tela cheia corretamente. Funciona em Android e iOS com Chrome, Safari e outros navegadores modernos.",
+    answer: "Sim. O conjunto principal funciona em navegadores modernos de Android e iOS; tela cheia, Wake Lock e instalação podem variar conforme o navegador e o sistema.",
     icon: "📱",
     iconPosition: "right",
   },
   {
     id: 4,
     question: "O MonitorSmith é gratuito e funciona offline?",
-    answer: "100% gratuito, sem cadastro e sem download. Possui suporte a PWA (Progressive Web App) — instale no Windows, macOS, Linux, Android ou iOS para usar totalmente offline.",
+    answer: "É gratuito e não exige cadastro. Como PWA, pode manter os recursos preparados pelo aplicativo disponíveis após o primeiro carregamento; instalação e disponibilidade offline variam conforme o navegador.",
     icon: "⚡",
     iconPosition: "left",
   },
@@ -135,7 +133,7 @@ function ToolCard({ tool, index, onLaunch }) {
             ) : null}
           </span>
           <span className="ms-card__meta">
-            <span className="ms-card__led" title="Hardware Ready" />
+            <span className="ms-card__led" title="Disponível no navegador" />
             <kbd className="ms-card__kbd">{tool.shortcut || '—'}</kbd>
           </span>
         </span>
@@ -211,7 +209,7 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
             ) : null}
           </span>
           <span className="ms-card__meta">
-            <span className="ms-card__led" title="Hardware Ready" />
+            <span className="ms-card__led" title="Disponível no navegador" />
             <kbd className="ms-card__kbd">{tool.shortcut}</kbd>
           </span>
         </span>
@@ -255,10 +253,10 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
   };
 
   return (
-    <main id="monitor-tools-home" className="ms-library" tabIndex={-1} aria-labelledby="library-title">
+    <div id="monitor-tools-home" className="ms-library" tabIndex={-1}>
       {/* Desktop Side Skyscraper Ads */}
-      <AdSenseUnit format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--left" style={{ width: '160px', minHeight: '600px' }} />
-      <AdSenseUnit format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--right" style={{ width: '160px', minHeight: '600px' }} />
+      <AdSenseUnit placement="sidebar" format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--left" style={{ width: '160px', minHeight: '600px' }} />
+      <AdSenseUnit placement="sidebar" format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--right" style={{ width: '160px', minHeight: '600px' }} />
 
       <section className="ms-hero" aria-describedby="library-description">
         {/* SVG Dot Pattern Background */}
@@ -278,15 +276,15 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
           <div className="ms-hero__eyebrow">
             <span className="ms-hero__brand-tag">EXVORN.TECH</span>
             <span className="ms-hero__dot" aria-hidden="true" />
-            <span>O CANIVETE SUÍÇO DEFINITIVO PARA DISPLAYS</span>
+            <span>INSPEÇÃO · ILUMINAÇÃO · FOCO · TELA</span>
           </div>
 
           <h1 id="library-title" className="ms-hero__title">
-            Ferramentas para Testar <span className="ms-hero__title-gradient">Monitor, Pixels e Tela OLED</span>
+            Ferramentas para testar e usar melhor <span className="ms-hero__title-gradient">seu monitor.</span>
           </h1>
 
           <p id="library-description" className="ms-hero__subtitle">
-            O canivete suíço em ferramentas para o seu monitor. Alterne para tela preta OLED, diagnostique pixels presos, certifique painéis, use iluminação para chamadas, espelhe teleprompter, gere ruído marrom de foco, entre outras ferramentas.
+            Inspecione pixels e uniformidade, ilumine chamadas, exiba mensagens e organize o foco — direto no navegador, sem cadastro.
           </p>
         </motion.div>
 
@@ -303,10 +301,10 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
         </div>
 
         <div className="ms-flow-btn-wrapper">
-          <FlowButton text="Instalar Aplicativo no Windows" />
+          <FlowButton text="Instalar MonitorSmith" />
         </div>
 
-        <AdSenseUnit format="auto" className="ms-ad-slot--hero" style={{ maxWidth: '780px', marginTop: '32px' }} />
+        <AdSenseUnit placement="hero" format="auto" className="ms-ad-slot--hero" style={{ maxWidth: '780px', marginTop: '32px' }} />
 
         <motion.div
           className="ms-hero__cta"
@@ -315,7 +313,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
           transition={{ delay: shouldReduceMotion ? 0 : 0.5, duration: 0.4 }}
         >
           <button className="ms-hero__scroll-btn" type="button" onClick={scrollToTools}>
-            Ver todas as 10 ferramentas <span aria-hidden="true">↓</span>
+            Ver todas as {TOOL_LIBRARY.length} ferramentas <span aria-hidden="true">↓</span>
           </button>
         </motion.div>
       </section>
@@ -331,7 +329,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
           </p>
         </div>
 
-        <AdSenseUnit format="auto" className="ms-ad-slot--leaderboard" style={{ maxWidth: '840px' }} />
+        <AdSenseUnit placement="library" format="auto" className="ms-ad-slot--leaderboard" style={{ maxWidth: '840px' }} />
 
         <div className="ms-tool-grid">
           {TOOL_LIBRARY.map((tool, index) => (
@@ -340,7 +338,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
         </div>
       </section>
 
-      <AdSenseUnit format="auto" className="ms-ad-slot--footer" style={{ maxWidth: '970px', marginBottom: '32px' }} />
+      <AdSenseUnit placement="footer" format="auto" className="ms-ad-slot--footer" style={{ maxWidth: '970px', marginBottom: '32px' }} />
 
       {/* SEO: Seção "O que é" — texto semântico para Google e LLMs */}
       <section className="ms-library__section ms-seo-about" aria-labelledby="about-title">
@@ -352,7 +350,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
         </div>
         <div className="ms-seo-text text-white/80" style={{ maxWidth: '780px', margin: '0 auto', padding: '0 20px', lineHeight: 1.7, fontSize: '0.95rem' }}>
           <p>
-            O <strong>MonitorSmith</strong> é uma suíte web 100% gratuita de ferramentas para testar monitores, diagnosticar dead pixels, tela preta OLED, vazamento de luz (backlight bleed), burn-in e mais. Desenvolvido pela <strong>EXVORN.TECH</strong>, funciona diretamente no navegador — sem download, sem cadastro e sem instalação.
+            O <strong>MonitorSmith</strong> é uma suíte web gratuita de padrões e utilitários para inspecionar monitores, observar pixels, uniformidade e vazamento de luz, além de preencher a tela com cores e conteúdos úteis. Desenvolvido pela <strong>EXVORN.TECH</strong>, funciona diretamente no navegador, sem cadastro obrigatório.
           </p>
           <p style={{ marginTop: '12px' }}>
             Ideal para quem comprou um monitor novo, quer testar um usado antes de fechar negócio, precisa de uma luz suave para videochamadas, um teleprompter para gravações, ou simplesmente quer um relógio elegante na tela secundária.
@@ -371,12 +369,12 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
         <div style={{ maxWidth: '780px', margin: '0 auto', padding: '0 12px' }}>
           <FaqAccordion
             data={FAQ_DATA}
-            timestamp="Disponível 24/7 online e offline (PWA)"
+            timestamp="Disponível no navegador e instalável como PWA"
           />
         </div>
       </section>
 
       <FooterSection onLaunch={onLaunch} />
-    </main>
+    </div>
   );
 }

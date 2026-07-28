@@ -53,6 +53,7 @@ export default function DockMenu({
   label = 'Ferramentas do monitor',
 }) {
   const modesRef = useRef(null);
+  const modeButtonRefs = useRef([]);
   const shouldReduceMotion = useReducedMotion();
   const selectedMode = currentMode ?? activeMode;
   const selectedModeId =
@@ -82,9 +83,26 @@ export default function DockMenu({
       const elLeft = activeEl.offsetLeft;
       const elWidth = activeEl.clientWidth;
       const targetScrollLeft = elLeft - (containerWidth / 2) + (elWidth / 2);
-      container.scrollTo({ left: Math.max(0, targetScrollLeft), behavior: 'smooth' });
+      container.scrollTo({
+        left: Math.max(0, targetScrollLeft),
+        behavior: shouldReduceMotion ? 'auto' : 'smooth',
+      });
     }
-  }, [selectedModeId]);
+  }, [selectedModeId, shouldReduceMotion]);
+
+  const handleModeKeyDown = (event, index) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+
+    const nextIndex = event.key === 'Home'
+      ? 0
+      : event.key === 'End'
+        ? modes.length - 1
+        : event.key === 'ArrowRight'
+          ? (index + 1) % modes.length
+          : (index - 1 + modes.length) % modes.length;
+    modeButtonRefs.current[nextIndex]?.focus();
+  };
 
   return (
     <AnimatePresence initial={false}>
@@ -109,21 +127,24 @@ export default function DockMenu({
           </button>
 
           <div ref={modesRef} className="wbp-dock__modes" role="toolbar" aria-label="Modos de exibição">
-            {modes.map((mode) => {
+            {modes.map((mode, index) => {
               const isActive = selectedModeId === mode.id;
               const itemLabel = mode.detail ? `${mode.label}. ${mode.detail}` : mode.label;
 
               return (
                 <motion.button
+                  ref={(element) => { modeButtonRefs.current[index] = element; }}
                   key={mode.id}
                   className={joinClasses('wbp-dock__mode', isActive && 'is-active')}
                   type="button"
                   aria-label={itemLabel}
                   aria-pressed={isActive}
                   aria-current={isActive ? 'true' : undefined}
+                  tabIndex={isActive || (currentIndex === -1 && index === 0) ? 0 : -1}
                   disabled={mode.disabled || !onSelectMode}
                   title={mode.shortcut ? `${itemLabel} (${mode.shortcut})` : itemLabel}
                   onClick={() => onSelectMode?.(mode.id)}
+                  onKeyDown={(event) => handleModeKeyDown(event, index)}
                   whileHover={!mode.disabled && !shouldReduceMotion ? { y: -2 } : undefined}
                   whileTap={!mode.disabled && !shouldReduceMotion ? { scale: 0.97 } : undefined}
                   transition={{ type: 'spring', stiffness: 380, damping: 28 }}
@@ -159,6 +180,14 @@ export default function DockMenu({
               label={isFullscreen ? 'Sair da tela cheia (Esc ou F)' : 'Ocupar 100% da tela (F)'}
               onClick={onToggleFullscreen}
             />
+            {onToggleWakeLock ? (
+              <DockAction
+                icon="wake"
+                label={isWakeLockActive ? 'Permitir que a tela apague' : 'Manter a tela ativa'}
+                active={isWakeLockActive}
+                onClick={onToggleWakeLock}
+              />
+            ) : null}
             {onHideUi ? (
               <DockAction
                 icon="hideUi"

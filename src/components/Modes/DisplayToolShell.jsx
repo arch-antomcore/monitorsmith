@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 export function DisplayToolShell({
   id,
@@ -14,6 +14,32 @@ export function DisplayToolShell({
 }) {
   const [isPanelClosed, setIsPanelClosed] = useState(false);
   const [screenSpecs, setScreenSpecs] = useState({ width: 1920, height: 1080, dpr: 1, depth: 24 });
+  const closeButtonRef = useRef(null);
+  const reopenButtonRef = useRef(null);
+  const pendingFocusTarget = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (!pendingFocusTarget.current) return;
+
+    const target = pendingFocusTarget.current === 'reopen'
+      ? reopenButtonRef.current
+      : closeButtonRef.current;
+
+    if (!target) return;
+    target.focus({ preventScroll: true });
+    pendingFocusTarget.current = null;
+  }, [isPanelClosed]);
+
+  const closePanel = () => {
+    pendingFocusTarget.current = 'reopen';
+    setIsPanelClosed(true);
+  };
+
+  const openPanel = () => {
+    pendingFocusTarget.current = 'close';
+    setIsPanelClosed(false);
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -36,6 +62,7 @@ export function DisplayToolShell({
 
       {/* Studio OSD Status Bar (Hardware Diagnostic HUD) */}
       <div
+        aria-hidden="true"
         className="display-mode__osd-hud"
         style={{
           position: 'absolute',
@@ -63,11 +90,11 @@ export function DisplayToolShell({
         <span style={{ opacity: 0.4 }}>|</span>
         <span>MODO: <strong>{title || id || 'DIAGNÓSTICO'}</strong></span>
         <span style={{ opacity: 0.4 }}>|</span>
-        <span style={{ color: '#60A5FA' }}>RES: <strong>{Math.round(screenSpecs.width * screenSpecs.dpr)}x{Math.round(screenSpecs.height * screenSpecs.dpr)}px</strong> ({screenSpecs.depth}-BIT)</span>
+        <span style={{ color: '#60A5FA' }}>TELA CSS: <strong>{screenSpecs.width}×{screenSpecs.height}</strong> · DPR {screenSpecs.dpr.toFixed(2)} · {screenSpecs.depth}-BIT REPORTADO</span>
         <span style={{ opacity: 0.4 }}>|</span>
-        <span style={{ color: '#10B981' }}>● RAW_OUTPUT</span>
+        <span style={{ color: '#10B981' }}>● RENDERIZAÇÃO NO NAVEGADOR</span>
         <span style={{ opacity: 0.4 }}>|</span>
-        <span style={{ opacity: 0.65 }}>ATALHOS: [ K / ? ]</span>
+        <span style={{ opacity: 0.65 }}>ATALHOS: [ ESC / ? ]</span>
       </div>
 
       <AnimatePresence mode="wait">
@@ -75,10 +102,10 @@ export function DisplayToolShell({
           <motion.div
             key="tool-panel"
             className="display-mode__controls"
-            initial={{ opacity: 0, scale: 0.96, y: 10 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 10 }}
-            transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 10 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 350, damping: 28 }}
           >
             <div className="display-mode__controls-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
               <div>
@@ -86,9 +113,10 @@ export function DisplayToolShell({
                 {subtitle ? <p className="display-mode__subtitle" style={{ margin: '2px 0 0', fontSize: '0.8rem', opacity: 0.7 }}>{subtitle}</p> : null}
               </div>
               <button
+                ref={closeButtonRef}
                 type="button"
                 className="display-mode__icon-button"
-                onClick={() => setIsPanelClosed(true)}
+                onClick={closePanel}
                 title="Minimizar painel de opções (×)"
                 aria-label="Minimizar painel de opções"
                 style={{
@@ -132,13 +160,15 @@ export function DisplayToolShell({
           </motion.div>
         ) : (
           <motion.button
+            ref={reopenButtonRef}
             key="reopen-btn"
             type="button"
             className="wbp-button wbp-button--ghost"
-            onClick={() => setIsPanelClosed(false)}
-            initial={{ opacity: 0, y: 10 }}
+            onClick={openPanel}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.16 }}
             style={{
               position: 'absolute',
               bottom: '24px',

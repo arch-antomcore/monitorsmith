@@ -17,6 +17,19 @@ function isEditableTarget(target) {
   );
 }
 
+function isShortcutScopeBlocked(target) {
+  if (typeof document === 'undefined') return false;
+
+  if (document.querySelector('[role="dialog"][aria-modal="true"], [data-ms-shortcuts-disabled="true"]')) {
+    return true;
+  }
+
+  return Boolean(
+    target instanceof Element
+    && target.closest('[data-ms-shortcuts-disabled="true"]'),
+  );
+}
+
 function matchesShortcut(event, shortcut) {
   const eventKey = event.key?.toLowerCase();
   const shortcutKey = shortcut.key?.toLowerCase();
@@ -73,6 +86,10 @@ export function useKeyboardShortcuts(configOrShortcuts = {}, legacyHandlers, leg
       }
 
       if (event.ctrlKey || event.metaKey || event.altKey) {
+        return;
+      }
+
+      if (isShortcutScopeBlocked(event.target)) {
         return;
       }
 

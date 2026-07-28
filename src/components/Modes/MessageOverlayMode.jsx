@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
 
@@ -12,6 +13,26 @@ const normalizeHex = (value, fallback) => {
   if (typeof value !== "string") return fallback;
   const compact = value.trim().replace("#", "");
   return /^[\da-f]{6}$/i.test(compact) ? `#${compact}`.toUpperCase() : fallback;
+};
+
+const relativeLuminance = (hex) => {
+  const channels = hex
+    .slice(1)
+    .match(/.{2}/g)
+    .map((channel) => Number.parseInt(channel, 16) / 255)
+    .map((channel) =>
+      channel <= 0.04045
+        ? channel / 12.92
+        : ((channel + 0.055) / 1.055) ** 2.4,
+    );
+
+  return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+};
+
+const contrastRatio = (foreground, background) => {
+  const lighter = Math.max(relativeLuminance(foreground), relativeLuminance(background));
+  const darker = Math.min(relativeLuminance(foreground), relativeLuminance(background));
+  return (lighter + 0.05) / (darker + 0.05);
 };
 
 /** A large, readable status display for a second monitor or a meeting room. */
@@ -43,6 +64,9 @@ export default function MessageOverlayMode({
   textColor,
 }) {
   const containerRef = useRef(null);
+  const closePanelButtonRef = useRef(null);
+  const reopenPanelButtonRef = useRef(null);
+  const pendingFocusTarget = useRef(null);
   const [internalMessage, setInternalMessage] = useState(defaultMessage);
   const [internalTextColor, setInternalTextColor] = useState(() =>
     normalizeHex(defaultTextColor, "#FFFFFF"),
@@ -72,6 +96,31 @@ export default function MessageOverlayMode({
     ? clamp(fontScale, 3, 16)
     : internalFontScale;
   const visibleMessage = resolvedMessage.trim() || "Sua mensagem aparece aqui.";
+  const normalizedQrContent = qrContent.trim().slice(0, 1024);
+  const resolvedContrastRatio = useMemo(
+    () => contrastRatio(resolvedTextColor, resolvedBackgroundColor),
+    [resolvedBackgroundColor, resolvedTextColor],
+  );
+
+  useEffect(() => {
+    if (!pendingFocusTarget.current) return;
+    const target = pendingFocusTarget.current === "reopen"
+      ? reopenPanelButtonRef.current
+      : closePanelButtonRef.current;
+    if (!target) return;
+    target.focus({ preventScroll: true });
+    pendingFocusTarget.current = null;
+  }, [isPanelClosed]);
+
+  const closePanel = () => {
+    pendingFocusTarget.current = "reopen";
+    setIsPanelClosed(true);
+  };
+
+  const openPanel = () => {
+    pendingFocusTarget.current = "close";
+    setIsPanelClosed(false);
+  };
 
   const updateMessage = (nextValue) => {
     const next = nextValue.slice(0, 220);
@@ -136,40 +185,52 @@ export default function MessageOverlayMode({
         style={{ backgroundColor: resolvedBackgroundColor }}
       />
 
-      <main
+      <div
         className="message-overlay"
         style={{
           color: resolvedTextColor,
-          transform: isTeleprompter ? 'scaleX(-1)' : 'none',
-          transition: 'transform 200ms ease',
         }}
       >
-        <p className="message-overlay__label">MonitorSmith</p>
-        <p
-          className="message-overlay__message"
-          style={{ fontSize: `clamp(2.75rem, ${resolvedFontScale}vw, 16rem)` }}
+        <div
+          style={{
+            transform: isTeleprompter ? 'scaleX(-1)' : 'none',
+            transition: 'transform 200ms ease',
+          }}
         >
-          {visibleMessage}
-        </p>
+          <p className="message-overlay__label">MonitorSmith</p>
+          <p
+            className="message-overlay__message"
+            style={{ fontSize: `clamp(2.75rem, ${resolvedFontScale}vw, 16rem)` }}
+          >
+            {visibleMessage}
+          </p>
+        </div>
 
         {showQrCode ? (
           <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-            <div style={{ padding: '12px', background: '#ffffff', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
-              <svg width="120" height="120" viewBox="0 0 100 100">
-                <rect width="100" height="100" fill="#ffffff" />
-                <path d="M10 10h30v30h-30zM15 15v20h20v-20zM20 20h10v10h-10z" fill="#000000" />
-                <path d="M60 10h30v30h-30zM65 15v20h20v-20zM70 20h10v10h-10z" fill="#000000" />
-                <path d="M10 60h30v30h-30zM15 65v20h20v-20zM20 70h10v10h-10z" fill="#000000" />
-                <rect x="50" y="50" width="10" height="10" fill="#000000" />
-                <rect x="70" y="50" width="15" height="10" fill="#000000" />
-                <rect x="50" y="70" width="10" height="20" fill="#000000" />
-                <rect x="70" y="75" width="15" height="15" fill="#000000" />
-              </svg>
-            </div>
-            <span style={{ fontSize: '0.75rem', opacity: 0.8, fontFamily: "'DM Mono', monospace" }}>{qrContent}</span>
+            {normalizedQrContent ? (
+              <div style={{ padding: '12px', background: '#ffffff', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+                <QRCodeSVG
+                  value={normalizedQrContent}
+                  size={160}
+                  level="M"
+                  marginSize={1}
+                  role="img"
+                  aria-label={`QR Code com o conteúdo: ${normalizedQrContent}`}
+                  title="QR Code gerado pelo MonitorSmith"
+                />
+              </div>
+            ) : (
+              <p role="status">Digite um conteúdo no painel para gerar o QR Code.</p>
+            )}
+            {normalizedQrContent ? (
+              <span style={{ maxWidth: 'min(28rem, 80vw)', overflowWrap: 'anywhere', fontSize: '0.75rem', opacity: 0.8, fontFamily: "'DM Mono', monospace" }}>
+                Conteúdo do QR: {normalizedQrContent}
+              </span>
+            ) : null}
           </div>
         ) : null}
-      </main>
+      </div>
 
       {showControls && !isPanelClosed ? (
         <aside
@@ -182,9 +243,10 @@ export default function MessageOverlayMode({
               <h2 className="display-mode__title">Mensagem de status</h2>
             </div>
             <button
+              ref={closePanelButtonRef}
               aria-label="Ocultar painel de edição"
               className="display-mode__icon-button"
-              onClick={() => setIsPanelClosed(true)}
+              onClick={closePanel}
               type="button"
               title="Ocultar painel"
             >
@@ -205,6 +267,21 @@ export default function MessageOverlayMode({
               value={resolvedMessage}
             />
           </label>
+
+          <p
+            role="status"
+            style={{
+              margin: '-4px 0 10px',
+              color: resolvedContrastRatio >= 4.5 ? '#86efac' : '#fbbf24',
+              fontSize: '0.72rem',
+              lineHeight: 1.45,
+            }}
+          >
+            Contraste estimado: {resolvedContrastRatio.toFixed(1)}:1.{' '}
+            {resolvedContrastRatio >= 4.5
+              ? 'Adequado para texto comum.'
+              : 'Aumente o contraste entre texto e fundo para leitura mais confortável.'}
+          </p>
 
           <div
             aria-label="Mensagens rápidas"
@@ -288,23 +365,33 @@ export default function MessageOverlayMode({
           </div>
 
           {showQrCode ? (
-            <input
-              type="text"
-              placeholder="Conteúdo do QR Code (URL ou Wi-Fi)..."
-              value={qrContent}
-              onChange={(e) => setQrContent(e.target.value)}
-              className="wbp-input"
-              style={{
-                width: '100%',
-                marginBottom: '10px',
-                padding: '6px 10px',
-                fontSize: '0.74rem',
-                borderRadius: '8px',
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.14)',
-                color: '#ffffff',
-              }}
-            />
+            <label className="display-mode__field" htmlFor="message-qr-content">
+              <span className="display-mode__field-label">
+                Conteúdo do QR <output>{normalizedQrContent.length}/1024</output>
+              </span>
+              <input
+                id="message-qr-content"
+                type="text"
+                maxLength="1024"
+                placeholder="URL, contato ou texto curto"
+                value={qrContent}
+                onChange={(e) => setQrContent(e.target.value.slice(0, 1024))}
+                className="wbp-input"
+                autoCapitalize="off"
+                autoCorrect="off"
+                spellCheck="false"
+                style={{
+                  width: '100%',
+                  marginBottom: '10px',
+                  padding: '6px 10px',
+                  fontSize: '0.74rem',
+                  borderRadius: '8px',
+                  background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.14)',
+                  color: '#ffffff',
+                }}
+              />
+            </label>
           ) : null}
 
           <p className="display-mode__hint">
@@ -313,9 +400,10 @@ export default function MessageOverlayMode({
         </aside>
       ) : showControls && isPanelClosed ? (
         <button
+          ref={reopenPanelButtonRef}
           type="button"
           className="display-mode__reopen-panel-btn"
-          onClick={() => setIsPanelClosed(false)}
+          onClick={openPanel}
           title="Abrir painel de mensagem"
           aria-label="Abrir painel de mensagem"
         >

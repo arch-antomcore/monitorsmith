@@ -1,49 +1,51 @@
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ControlIcon } from '../Controls/Navbar';
+import { getToolById } from '../../constants/tools';
 
-const MODE_META = {
-  black: { title: 'Tela Preta OLED', icon: 'void', hint: 'Preto absoluto • Reduz emissão de luz', color: '#f59e0b' },
-  'dead-pixel': { title: 'Teste de Pixels', icon: 'pixels', hint: 'Inspeção de subpixels • 8 Cores sólidas', color: '#60a5fa' },
-  cleaner: { title: 'Inspeção para Limpeza', icon: 'cleaner', hint: 'Alto contraste • Revela poeira e marcas', color: '#fbbf24' },
-  calibration: { title: 'Verificação do Display', icon: 'calibration', hint: 'Padrões gráficos • Nitidez, escala e gama', color: '#a78bfa' },
-  white: { title: 'Luz Suave', icon: 'sun', hint: 'Softbox Web • Iluminação para videochamadas', color: '#f97316' },
-  color: { title: 'Estúdio de Cor', icon: 'color', hint: 'Chroma Key • Preenchimento de cor uniforme', color: '#10b981' },
-  'focus-timer': { title: 'Timer de Foco', icon: 'timer', hint: 'Sintetizador de Ruído Marrom • Pomodoro', color: '#ec4899' },
-  clock: { title: 'Relógio em Tela', icon: 'clock', hint: 'Modo secundário • Hora analógica & digital', color: '#38bdf8' },
-  message: { title: 'Mensagem em Tela', icon: 'message', hint: 'Recado em escala • Teleprompter espelhado', color: '#c084fc' },
+const MODE_ACCENT = {
+  black: '#f59e0b',
+  'dead-pixel': '#60a5fa',
+  cleaner: '#fbbf24',
+  calibration: '#a78bfa',
+  white: '#f97316',
+  color: '#10b981',
+  'focus-timer': '#ec4899',
+  clock: '#38bdf8',
+  message: '#c084fc',
+  'sponsor-loop': '#f59e0b',
 };
 
-export default function ToolTransitionOverlay({ activeMode, isTransitioning, onTransitionComplete }) {
-  const [displayedMode, setDisplayedMode] = useState(activeMode);
+export default function ToolTransitionOverlay({ activeMode, toolId = activeMode, isTransitioning, onTransitionComplete }) {
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (isTransitioning && activeMode !== 'home') {
-      setDisplayedMode(activeMode);
       const timer = setTimeout(() => {
         onTransitionComplete?.();
-      }, 350);
+      }, shouldReduceMotion ? 0 : 350);
       return () => clearTimeout(timer);
     }
-  }, [activeMode, isTransitioning, onTransitionComplete]);
+  }, [activeMode, isTransitioning, onTransitionComplete, shouldReduceMotion]);
 
   if (!isTransitioning || activeMode === 'home') return null;
 
-  const meta = MODE_META[activeMode] || {
-    title: 'MonitorSmith',
-    icon: 'void',
-    hint: 'Carregando ferramenta...',
-    color: '#f59e0b',
+  const tool = getToolById(toolId);
+  const meta = {
+    title: tool?.title || 'MonitorSmith',
+    icon: tool?.icon || 'void',
+    hint: tool?.when || tool?.description || 'Preparando ferramenta…',
+    color: MODE_ACCENT[activeMode] || '#f59e0b',
   };
 
   return (
     <AnimatePresence>
       <motion.div
         key={`loader-${activeMode}`}
-        initial={{ opacity: 0 }}
+        initial={shouldReduceMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.18 }}
+        transition={{ duration: shouldReduceMotion ? 0 : 0.18 }}
         style={{
           position: 'fixed',
           inset: 0,
@@ -59,10 +61,10 @@ export default function ToolTransitionOverlay({ activeMode, isTransitioning, onT
         }}
       >
         <motion.div
-          initial={{ scale: 0.88, opacity: 0, y: 10 }}
+          initial={shouldReduceMotion ? false : { scale: 0.88, opacity: 0, y: 10 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 1.05, opacity: 0, y: -8 }}
-          transition={{ type: 'spring', stiffness: 420, damping: 28 }}
+          exit={shouldReduceMotion ? { opacity: 0 } : { scale: 1.05, opacity: 0, y: -8 }}
+          transition={{ type: 'spring', stiffness: 420, damping: 28, duration: shouldReduceMotion ? 0 : undefined }}
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -80,8 +82,8 @@ export default function ToolTransitionOverlay({ activeMode, isTransitioning, onT
           {/* Animated Glowing Ring & Icon */}
           <div style={{ position: 'relative', marginBottom: '18px' }}>
             <motion.div
-              animate={{ scale: [1, 1.25, 1], opacity: [0.4, 0.9, 0.4] }}
-              transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
+              animate={shouldReduceMotion ? { scale: 1, opacity: 0.55 } : { scale: [1, 1.25, 1], opacity: [0.4, 0.9, 0.4] }}
+              transition={shouldReduceMotion ? { duration: 0 } : { repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
               style={{
                 position: 'absolute',
                 inset: '-12px',
@@ -144,9 +146,9 @@ export default function ToolTransitionOverlay({ activeMode, isTransitioning, onT
             }}
           >
             <motion.div
-              initial={{ x: '-100%' }}
-              animate={{ x: '100%' }}
-              transition={{ repeat: Infinity, duration: 0.8, ease: 'easeInOut' }}
+              initial={shouldReduceMotion ? false : { x: '-100%' }}
+              animate={shouldReduceMotion ? { x: 0 } : { x: '100%' }}
+              transition={shouldReduceMotion ? { duration: 0 } : { repeat: Infinity, duration: 0.8, ease: 'easeInOut' }}
               style={{
                 width: '60%',
                 height: '100%',

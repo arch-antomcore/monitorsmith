@@ -21,28 +21,42 @@ export const DEFAULT_MESSAGE = {
 
 const AppContext = createContext(null);
 
+function clampNumber(value, minimum, maximum, fallback) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? Math.min(maximum, Math.max(minimum, parsed)) : fallback;
+}
+
+function normalizeHexColor(value, fallback) {
+  return typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value) ? value.toUpperCase() : fallback;
+}
+
 export function AppProvider({ children }) {
   const [activeMode, setActiveMode] = useState(DEFAULT_MODE);
   const [isDockOpen, setIsDockOpen] = useState(true);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
-  const [whiteLighting, setWhiteLighting] = useState(DEFAULT_WHITE_LIGHTING);
-  const [customColor, setCustomColor] = useState('#15151b');
-  const [message, setMessage] = useState(DEFAULT_MESSAGE);
+  const [whiteLighting, setWhiteLightingState] = useState(DEFAULT_WHITE_LIGHTING);
+  const [customColor, setCustomColorState] = useState('#15151b');
+  const [message, setMessageState] = useState(DEFAULT_MESSAGE);
   const [isManualUiHidden, setIsManualUiHidden] = useState(false);
+  const [hasPersistentUiFocus, setHasPersistentUiFocus] = useState(false);
+  const [toast, setToast] = useState(null);
+  const toastTimerRef = useRef(null);
   const {
     isFullscreen,
     isSupported: fullscreenSupported,
-    enterFullscreen: requestFullscreen,
+    error: fullscreenError,
     exitFullscreen: leaveFullscreen,
     toggleFullscreen: toggleNativeFullscreen,
+    clearError: clearFullscreenError,
   } = useFullscreen();
 
   const manualHideTimestampRef = useRef(0);
-  const isDisplayModeActive = activeMode !== MODE_IDS.HOME || isFullscreen;
+  const isDisplayModeActive = activeMode !== MODE_IDS.HOME;
+  const isImmersiveSession = isDisplayModeActive && isFullscreen;
 
   const { isIdle: isUiIdle, resetIdleTimer: rawResetIdleTimer } = useIdleTimer({
-    enabled: isDisplayModeActive,
-    timeout: 2000,
+    enabled: isImmersiveSession && !hasPersistentUiFocus,
+    timeout: 3000,
   });
 
   const {
@@ -51,10 +65,55 @@ export function AppProvider({ children }) {
     requestWakeLock,
     releaseWakeLock,
     toggleWakeLock,
+    error: wakeLockError,
+    clearError: clearWakeLockError,
   } = useWakeLock();
+
+  const showToast = useCallback((key, message) => {
+    if (toastTimerRef.current !== null) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+
+    setToast({ id: Date.now(), key, message });
+    toastTimerRef.current = window.setTimeout(() => {
+      toastTimerRef.current = null;
+      setToast(null);
+    }, 1800);
+  }, []);
+
+  useEffect(() => () => {
+    if (toastTimerRef.current !== null) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return undefined;
+
+    const isPersistentUiTarget = (target) => Boolean(
+      target instanceof Element
+      && target.matches('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+      && !target.closest('[aria-hidden="true"], [inert]'),
+    );
+    const syncFocusState = () => setHasPersistentUiFocus(isPersistentUiTarget(document.activeElement));
+    const handleFocusIn = (event) => setHasPersistentUiFocus(isPersistentUiTarget(event.target));
+    const handleFocusOut = () => window.requestAnimationFrame(syncFocusState);
+
+    document.addEventListener('focusin', handleFocusIn);
+    document.addEventListener('focusout', handleFocusOut);
+    syncFocusState();
+
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+      document.removeEventListener('focusout', handleFocusOut);
+    };
+  }, []);
 
   const hideUiManually = useCallback(() => {
     manualHideTimestampRef.current = Date.now();
+    if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     setIsManualUiHidden(true);
   }, []);
 
@@ -77,6 +136,7 @@ export function AppProvider({ children }) {
 
   const activateMode = useCallback((nextMode) => {
     if (!isDisplayMode(nextMode)) return false;
+    setIsManualUiHidden(false);
     setActiveMode(nextMode);
     setIsDockOpen(true);
     resetIdleTimer();
@@ -84,31 +144,64 @@ export function AppProvider({ children }) {
   }, [resetIdleTimer]);
 
   const toggleFullscreen = useCallback(async () => {
+    const wasFullscreen = isFullscreen;
     const didToggle = await toggleNativeFullscreen();
-    if (didToggle) resetIdleTimer();
+    if (didToggle) {
+      resetIdleTimer();
+      showToast('F', wasFullscreen ? 'Tela cheia encerrada' : 'Tela cheia ativada');
+    } else {
+      showToast('F', 'Não foi possível alternar a tela cheia');
+    }
     return didToggle;
-  }, [resetIdleTimer, toggleNativeFullscreen]);
+  }, [isFullscreen, resetIdleTimer, showToast, toggleNativeFullscreen]);
+
+  const toggleWakeLockWithFeedback = useCallback(async () => {
+    const wasLocked = isWakeLockActive;
+    const didToggle = await toggleWakeLock();
+    if (didToggle) {
+      showToast('Tela', wasLocked ? 'Manter tela ativa desativado' : 'Tela será mantida ativa');
+    } else {
+      showToast('Tela', 'Não foi possível manter a tela ativa');
+    }
+    return didToggle;
+  }, [isWakeLockActive, showToast, toggleWakeLock]);
+
+  const setWhiteLighting = useCallback((patch) => {
+    setWhiteLightingState((current) => ({
+      brightness: clampNumber(patch?.brightness, 0, 100, current.brightness),
+      temperature: clampNumber(patch?.temperature, 1800, 12000, current.temperature),
+    }));
+  }, []);
+
+  const setCustomColor = useCallback((value) => {
+    setCustomColorState((current) => normalizeHexColor(value, current));
+  }, []);
+
+  const setMessage = useCallback((patch) => {
+    setMessageState((current) => ({
+      text: typeof patch?.text === 'string' ? patch.text.slice(0, 220) : current.text,
+      textColor: normalizeHexColor(patch?.textColor, current.textColor),
+      backgroundColor: normalizeHexColor(patch?.backgroundColor, current.backgroundColor),
+      fontScale: clampNumber(patch?.fontScale, 3, 16, current.fontScale),
+    }));
+  }, []);
 
   const restoreInterface = useCallback(async () => {
     setIsHelpOpen(false);
     setIsDockOpen(true);
     resetIdleTimer();
-    await leaveFullscreen();
+    const didLeaveFullscreen = await leaveFullscreen();
     if (activeMode !== MODE_IDS.HOME) setActiveMode(MODE_IDS.HOME);
-    return true;
-  }, [activeMode, leaveFullscreen, resetIdleTimer]);
-
-  const [toast, setToast] = useState(null);
-
-  const showToast = useCallback((key, message) => {
-    setToast({ id: Date.now(), key, message });
-    setTimeout(() => setToast(null), 1800);
-  }, []);
+    if (!didLeaveFullscreen) {
+      showToast('Esc', 'Interface restaurada; tela cheia permaneceu ativa');
+    }
+    return didLeaveFullscreen;
+  }, [activeMode, leaveFullscreen, resetIdleTimer, showToast]);
 
   useKeyboardShortcuts({
     shortcuts: SHORTCUTS,
     handlers: {
-      toggleFullscreen: () => { toggleFullscreen(); showToast('F', 'Tela Cheia Alternada'); },
+      toggleFullscreen: () => { void toggleFullscreen(); },
       openLibrary: () => { activateMode(MODE_IDS.HOME); showToast('Home / Esc', 'Biblioteca de Ferramentas'); },
       activateBlackScreen: () => { activateMode(MODE_IDS.BLACK); showToast('B', 'Tela Preta'); },
       activateWhiteLighting: () => { activateMode(MODE_IDS.WHITE); showToast('W', 'Luz Suave'); },
@@ -130,13 +223,21 @@ export function AppProvider({ children }) {
       activateMode,
       isFullscreen,
       fullscreenSupported,
+      fullscreenError,
+      clearFullscreenError,
       toggleFullscreen,
       wakeLock: {
         isSupported: wakeLockSupported,
         isLocked: isWakeLockActive,
-        toggle: toggleWakeLock,
+        error: wakeLockError,
+        toggle: toggleWakeLockWithFeedback,
+        clearError: clearWakeLockError,
       },
-      shouldHideUi: isDisplayModeActive && (isUiIdle || isManualUiHidden) && !isHelpOpen,
+      shouldHideUi:
+        isDisplayModeActive
+        && (isManualUiHidden || (isImmersiveSession && isUiIdle))
+        && !isHelpOpen
+        && !hasPersistentUiFocus,
       hideUiManually,
       resetIdleTimer,
       isDockOpen,
@@ -148,30 +249,41 @@ export function AppProvider({ children }) {
       toast,
       showToast,
       whiteLighting,
-      setWhiteLighting: (patch) => setWhiteLighting((curr) => ({ ...curr, ...patch })),
+      setWhiteLighting,
       customColor,
       setCustomColor,
       message,
-      setMessage: (patch) => setMessage((curr) => ({ ...curr, ...patch })),
+      setMessage,
     }),
     [
       activeMode,
       activateMode,
       customColor,
+      clearFullscreenError,
+      clearWakeLockError,
+      fullscreenError,
       fullscreenSupported,
+      hasPersistentUiFocus,
       hideUiManually,
       isDisplayModeActive,
       isDockOpen,
       isFullscreen,
       isHelpOpen,
+      isImmersiveSession,
       isManualUiHidden,
       isUiIdle,
       isWakeLockActive,
       message,
       resetIdleTimer,
       restoreInterface,
+      showToast,
+      setCustomColor,
+      setMessage,
+      setWhiteLighting,
+      toast,
       toggleFullscreen,
-      toggleWakeLock,
+      toggleWakeLockWithFeedback,
+      wakeLockError,
       wakeLockSupported,
       whiteLighting,
     ],

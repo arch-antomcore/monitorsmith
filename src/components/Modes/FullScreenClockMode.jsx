@@ -82,6 +82,9 @@ export default function FullScreenClockMode({
   timeZone,
 }) {
   const containerRef = useRef(null);
+  const closePanelButtonRef = useRef(null);
+  const reopenPanelButtonRef = useRef(null);
+  const pendingFocusTarget = useRef(null);
   const [now, setNow] = useState(() => new Date());
   const [clockStyle, setClockStyle] = useState("digital");
   const [internalHourCycle, setInternalHourCycle] = useState(
@@ -114,6 +117,26 @@ export default function FullScreenClockMode({
     () => getTimeZoneLabel(locale, timeZone),
     [locale, timeZone],
   );
+
+  useEffect(() => {
+    if (!pendingFocusTarget.current) return;
+    const target = pendingFocusTarget.current === "reopen"
+      ? reopenPanelButtonRef.current
+      : closePanelButtonRef.current;
+    if (!target) return;
+    target.focus({ preventScroll: true });
+    pendingFocusTarget.current = null;
+  }, [isPanelClosed]);
+
+  const closePanel = () => {
+    pendingFocusTarget.current = "reopen";
+    setIsPanelClosed(true);
+  };
+
+  const openPanel = () => {
+    pendingFocusTarget.current = "close";
+    setIsPanelClosed(false);
+  };
 
   useEffect(() => {
     let timeoutId;
@@ -236,12 +259,12 @@ export default function FullScreenClockMode({
         }}
       />
 
-      <div className="fullscreen-clock" aria-live="polite" aria-atomic="true">
+      <div className="fullscreen-clock">
         <p className="fullscreen-clock__context">Horário local</p>
 
         {clockStyle === "analog" ? (
           <div className="fullscreen-clock__analog-wrap" style={{ margin: "20px 0" }}>
-            <svg width="260" height="260" viewBox="0 0 200 200">
+            <svg aria-hidden="true" focusable="false" width="260" height="260" viewBox="0 0 200 200">
               <circle cx="100" cy="100" r="94" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" strokeWidth="2.5" />
               {Array.from({ length: 12 }).map((_, i) => {
                 const rad = (i * 30 * Math.PI) / 180;
@@ -258,6 +281,9 @@ export default function FullScreenClockMode({
               ) : null}
               <circle cx="100" cy="100" r="4" fill="#afe3d4" />
             </svg>
+            <time className="sr-only" dateTime={now.toISOString()}>
+              {clockParts.spoken}
+            </time>
           </div>
         ) : (
           <time
@@ -296,9 +322,10 @@ export default function FullScreenClockMode({
               <h2 className="display-mode__title">Relógio de tela</h2>
             </div>
             <button
+              ref={closePanelButtonRef}
               aria-label="Ocultar painel do relógio"
               className="display-mode__icon-button"
-              onClick={() => setIsPanelClosed(true)}
+              onClick={closePanel}
               type="button"
               title="Ocultar painel"
             >
@@ -378,9 +405,10 @@ export default function FullScreenClockMode({
         </aside>
       ) : showControls && isPanelClosed ? (
         <button
+          ref={reopenPanelButtonRef}
           type="button"
           className="display-mode__reopen-panel-btn"
-          onClick={() => setIsPanelClosed(false)}
+          onClick={openPanel}
           title="Abrir painel do relógio"
           aria-label="Abrir painel do relógio"
         >

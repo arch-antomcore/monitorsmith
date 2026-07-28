@@ -35,7 +35,7 @@ const dimHex = (hex, brightness) => {
 };
 
 const temperatureToRgb = (kelvin) => {
-  const temperature = clamp(Number(kelvin) || 5000, 1000, 40000) / 100;
+  const temperature = clamp(Number(kelvin) || 5000, 1800, 12000) / 100;
   let red;
   let green;
   let blue;
@@ -112,16 +112,39 @@ export default function WhiteLightingMode({
   variant = "white",
 }) {
   const containerRef = useRef(null);
+  const closePanelButtonRef = useRef(null);
+  const reopenPanelButtonRef = useRef(null);
+  const pendingFocusTarget = useRef(null);
   const [internalBrightness, setInternalBrightness] = useState(() =>
     clamp(Number(defaultBrightness) || 0, 0, 100),
   );
   const [internalTemperature, setInternalTemperature] = useState(() =>
-    clamp(Number(defaultTemperature) || 5000, 1000, 40000),
+    clamp(Number(defaultTemperature) || 5000, 1800, 12000),
   );
   const [internalColor, setInternalColor] = useState(
     () => normalizeHex(defaultColor) || "#FFFFFF",
   );
   const [isPanelClosed, setIsPanelClosed] = useState(false);
+
+  useEffect(() => {
+    if (!pendingFocusTarget.current) return;
+    const target = pendingFocusTarget.current === "reopen"
+      ? reopenPanelButtonRef.current
+      : closePanelButtonRef.current;
+    if (!target) return;
+    target.focus({ preventScroll: true });
+    pendingFocusTarget.current = null;
+  }, [isPanelClosed]);
+
+  const closePanel = () => {
+    pendingFocusTarget.current = "reopen";
+    setIsPanelClosed(true);
+  };
+
+  const openPanel = () => {
+    pendingFocusTarget.current = "close";
+    setIsPanelClosed(false);
+  };
 
   const brightnessIsControlled = isFiniteNumber(brightness);
   const temperatureIsControlled = isFiniteNumber(temperature);
@@ -133,7 +156,7 @@ export default function WhiteLightingMode({
     ? clamp(brightness, 0, 100)
     : internalBrightness;
   const resolvedTemperature = temperatureIsControlled
-    ? clamp(temperature, 1000, 40000)
+    ? clamp(temperature, 1800, 12000)
     : internalTemperature;
   const resolvedColor = normalizeHex(suppliedColor) || internalColor;
   const defaultModeTitle = isColorMode ? "Estúdio de cor" : "Luz suave";
@@ -142,10 +165,6 @@ export default function WhiteLightingMode({
   const controlsLabel = isColorMode
     ? `Controles: ${panelTitle}`
     : "Controles de iluminação";
-  const closeLabel = isColorMode
-    ? `Fechar ${panelTitle}`
-    : "Fechar modo de iluminação";
-
   const baseTemperatureColor = useMemo(
     () => temperatureToRgb(resolvedTemperature),
     [resolvedTemperature],
@@ -161,7 +180,7 @@ export default function WhiteLightingMode({
   };
 
   const updateTemperature = (nextValue) => {
-    const next = clamp(Number(nextValue) || 1000, 1000, 40000);
+    const next = clamp(Number(nextValue) || 1800, 1800, 12000);
     if (!temperatureIsControlled) setInternalTemperature(next);
     onTemperatureChange?.(next);
   };
@@ -226,9 +245,10 @@ export default function WhiteLightingMode({
               <h2 className="display-mode__title">{panelTitle}</h2>
             </div>
             <button
+              ref={closePanelButtonRef}
               aria-label="Ocultar painel de ajuste"
               className="display-mode__icon-button"
-              onClick={() => setIsPanelClosed(true)}
+              onClick={closePanel}
               type="button"
               title="Ocultar painel"
             >
@@ -334,14 +354,15 @@ export default function WhiteLightingMode({
           <p className="display-mode__supporting-text">
             {isColorMode
               ? "Cores sólidas para cenário, chroma e atmosfera. A intensidade altera a cor renderizada; o brilho físico continua configurado no monitor."
-              : "Ajuste visual para chamadas, leitura noturna ou luz ambiente."}
+              : "Referência visual aproximada para chamadas ou luz ambiente. A tela não substitui uma luminária calibrada, e a intensidade não altera o brilho físico configurado no monitor."}
           </p>
         </aside>
       ) : showControls && isPanelClosed ? (
         <button
+          ref={reopenPanelButtonRef}
           type="button"
           className="display-mode__reopen-panel-btn"
-          onClick={() => setIsPanelClosed(false)}
+          onClick={openPanel}
           title="Abrir painel de ajustes"
           aria-label="Abrir painel de ajustes"
         >

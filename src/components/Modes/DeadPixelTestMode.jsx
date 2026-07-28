@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import DisplayToolShell from "./DisplayToolShell";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
@@ -53,8 +54,11 @@ export default function DeadPixelTestMode({
   const colors = useMemo(() => normalizePalette(palette), [palette]);
   const [internalColor, setInternalColor] = useState(defaultColor);
   const [internalAutoCycle, setInternalAutoCycle] = useState(defaultAutoCycle);
-  const [cycleSpeed, setCycleSpeed] = useState(1250);
-  const [isFlashing, setIsFlashing] = useState(false);
+  const [cycleSpeed, setCycleSpeed] = useState(() =>
+    Math.min(Math.max(Number(cycleInterval) || 5000, 2000), 15000),
+  );
+  const [showInspectionGuide, setShowInspectionGuide] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
   const colorIsControlled = typeof selectedColor === "string";
   const autoCycleIsControlled = typeof autoCycle === "boolean";
   const currentColorReference = colorIsControlled ? selectedColor : internalColor;
@@ -94,31 +98,22 @@ export default function DeadPixelTestMode({
 
   const updateAutoCycle = useCallback(
     (nextValue) => {
-      const next = Boolean(nextValue);
+      const next = shouldReduceMotion ? false : Boolean(nextValue);
       if (!autoCycleIsControlled) setInternalAutoCycle(next);
       onAutoCycleChange?.(next);
     },
-    [autoCycleIsControlled, onAutoCycleChange],
+    [autoCycleIsControlled, onAutoCycleChange, shouldReduceMotion],
   );
 
   useEffect(() => {
-    if (isFlashing) {
-      let step = 0;
-      const strobeInterval = window.setInterval(() => {
-        step = (step + 1) % colors.length;
-        selectColor(step);
-      }, 70);
-      return () => window.clearInterval(strobeInterval);
-    }
-
-    if (!resolvedAutoCycle || colors.length < 2) return undefined;
+    if (!resolvedAutoCycle || shouldReduceMotion || colors.length < 2) return undefined;
 
     const intervalId = window.setInterval(() => {
       selectColor(activeIndex + 1);
     }, cycleSpeed);
 
     return () => window.clearInterval(intervalId);
-  }, [activeIndex, colors.length, cycleSpeed, isFlashing, resolvedAutoCycle, selectColor]);
+  }, [activeIndex, colors.length, cycleSpeed, resolvedAutoCycle, selectColor, shouldReduceMotion]);
 
   const handleKeyDown = (event) => {
     if (event.key === "Escape" && onExit) {
@@ -152,11 +147,13 @@ export default function DeadPixelTestMode({
       title="Teste de pixels"
       subtitle={`Cor ativa: ${activeColor.label}`}
       instructions={[
-        "Use as setas (← →) do teclado para alternar entre as 8 cores sólidas.",
-        "Aperte Espaço para ativar ou pausar a alternância automática de cores."
+        "Examine cada cor sólida a uma distância confortável e procure pontos que permaneçam diferentes do fundo.",
+        "Use as setas (← →) para avançar manualmente; Espaço inicia ou pausa o ciclo lento.",
+        "O guia estático divide a tela em áreas sem emitir flashes e ajuda a percorrer todo o painel."
       ]}
+      technicalLimit="Inspeção visual não identifica a causa do defeito nem repara pixels. O antigo estrobo foi removido: flashes rápidos em tela inteira podem causar mal-estar e risco fotossensível."
       controls={
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+        showControls ? <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           <div className="display-mode__color-grid" role="group" aria-label="Escolha uma cor de teste">
             {colors.map((color, index) => (
               <button
@@ -177,14 +174,19 @@ export default function DeadPixelTestMode({
             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem', cursor: 'pointer', marginBottom: '8px' }}>
               <input
                 type="checkbox"
-                checked={resolvedAutoCycle}
+                checked={resolvedAutoCycle && !shouldReduceMotion}
+                disabled={shouldReduceMotion}
                 onChange={(event) => updateAutoCycle(event.target.checked)}
               />
-              <span>Ciclo automático ({(cycleSpeed / 1000).toFixed(1)}s)</span>
+              <span>
+                {shouldReduceMotion
+                  ? "Ciclo automático desativado pela preferência de movimento reduzido"
+                  : `Ciclo lento (${(cycleSpeed / 1000).toFixed(0)}s por cor)`}
+              </span>
             </label>
 
             <div style={{ display: 'flex', gap: '6px' }}>
-              {[500, 1000, 2000, 5000].map((ms) => (
+              {[2000, 5000, 10000, 15000].map((ms) => (
                 <button
                   key={ms}
                   type="button"
@@ -195,7 +197,7 @@ export default function DeadPixelTestMode({
                   style={{ flex: 1, padding: '4px 8px', fontSize: '0.72rem' }}
                   onClick={() => setCycleSpeed(ms)}
                 >
-                  {(ms / 1000).toFixed(1)}s
+                  {(ms / 1000).toFixed(0)}s
                 </button>
               ))}
             </div>
@@ -204,27 +206,42 @@ export default function DeadPixelTestMode({
           <div>
             <button
               type="button"
-              className={`wbp-button ${isFlashing ? 'wbp-button--active' : 'wbp-button--ghost'}`}
-              style={{ width: '100%', background: isFlashing ? '#e53935' : undefined, borderColor: isFlashing ? '#ff5252' : undefined }}
-              onClick={() => {
-                setIsFlashing(!isFlashing);
-                if (resolvedAutoCycle) updateAutoCycle(false);
-              }}
+              className={`wbp-button ${showInspectionGuide ? 'wbp-button--active' : 'wbp-button--ghost'}`}
+              style={{ width: '100%' }}
+              aria-pressed={showInspectionGuide}
+              onClick={() => setShowInspectionGuide((visible) => !visible)}
             >
-              {isFlashing ? '⏹ Parar Desbloqueador' : '⚡ Desbloqueador de Pixels Presos'}
+              {showInspectionGuide ? 'Ocultar guia de varredura' : 'Exibir guia de varredura estática'}
             </button>
           </div>
-        </div>
+        </div> : null
       }
     >
       <div
         ref={containerRef}
         aria-label={ariaLabel}
-        className="display-mode__canvas"
+        className={classNames("display-mode__canvas", className)}
         style={{ position: 'absolute', inset: 0, width: '100vw', height: '100vh', backgroundColor: activeColor.value }}
         onKeyDown={handleKeyDown}
         tabIndex="0"
-      />
+      >
+        {showInspectionGuide ? (
+          <div
+            aria-label="Guia estático de inspeção dividido em nove áreas"
+            role="img"
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundImage:
+                "linear-gradient(90deg, transparent 33.2%, rgba(127,127,127,.72) 33.3% 33.45%, transparent 33.55% 66.45%, rgba(127,127,127,.72) 66.55% 66.7%, transparent 66.8%), linear-gradient(transparent 33.2%, rgba(127,127,127,.72) 33.3% 33.45%, transparent 33.55% 66.45%, rgba(127,127,127,.72) 66.55% 66.7%, transparent 66.8%)",
+              pointerEvents: "none",
+            }}
+          />
+        ) : null}
+        <span className="sr-only" aria-live="polite">
+          Cor de inspeção: {activeColor.label}.
+        </span>
+      </div>
     </DisplayToolShell>
   );
 }

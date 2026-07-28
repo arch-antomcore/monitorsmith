@@ -32,7 +32,7 @@ export function useIdleTimer({
   const timeoutRef = useRef(toSafeTimeout(timeout));
   const callbacksRef = useRef({ onIdle, onActive });
   const mountedRef = useRef(false);
-  const lastActivityRef = useRef(Date.now());
+  const lastActivityRef = useRef(lastActivity);
 
   useEffect(() => {
     mountedRef.current = true;

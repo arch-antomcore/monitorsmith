@@ -22,13 +22,11 @@ import {
 import { motion } from 'framer-motion';
 import Button, { joinClasses } from '../UI/Button';
 import BrandLogo from '../UI/BrandLogo';
-import { MODE_PRESENTATION, getModePresentation } from '../../constants/shortcuts';
+import { getModePresentation } from '../../constants/shortcuts';
 
 export function ControlIcon({ name, size = 18, title }) {
-  const defaultWeight = 'duotone';
-
   let IconComponent;
-  let weight = defaultWeight;
+  let weight;
 
   switch (name) {
     case 'arrowLeft':
@@ -123,7 +121,6 @@ export function ControlIcon({ name, size = 18, title }) {
 export default function Navbar({
   currentMode,
   activeMode,
-  onSelectMode,
   onToggleFullscreen,
   onHideUi,
   isFullscreen = false,
@@ -134,7 +131,6 @@ export default function Navbar({
   visible = true,
   brandName = 'MonitorSmith',
   productName = 'by EXVORN.TECH',
-  brandMark = 'M',
   status,
   className,
 }) {
@@ -155,6 +151,7 @@ export default function Navbar({
       style={{ x: '-50%', pointerEvents: visible ? 'auto' : 'none' }}
     >
       <div className="wbp-navbar__identity">
+        {status ? <span className="sr-only" aria-live="polite">{status}</span> : null}
         {showModeContext && onBrandClick ? (
           <button
             className="wbp-navbar__back-btn"
@@ -206,6 +203,19 @@ export default function Navbar({
           disabled={!onToggleFullscreen}
           tabIndex={hiddenTabIndex}
         />
+        {showModeContext && onToggleWakeLock ? (
+          <Button
+            className="wbp-navbar__action"
+            variant={isWakeLockActive ? 'active' : 'ghost'}
+            size="sm"
+            icon={<ControlIcon name="wake" size={16} />}
+            aria-label={wakeLockLabel}
+            aria-pressed={isWakeLockActive}
+            title={wakeLockLabel}
+            onClick={onToggleWakeLock}
+            tabIndex={hiddenTabIndex}
+          />
+        ) : null}
         {onHideUi && showModeContext ? (
           <Button
             className="wbp-navbar__action wbp-navbar__action--close"

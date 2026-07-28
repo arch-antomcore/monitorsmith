@@ -21,6 +21,7 @@ import ShortcutToast from './components/UI/ShortcutToast';
 import ToolTransitionOverlay from './components/UI/ToolTransitionOverlay';
 import AppProvider, { MODES, useApp } from './context/AppContext';
 import { DEFAULT_DOCK_MODES, SHORTCUTS } from './constants/shortcuts';
+import { getToolById, resolveToolLaunch } from './constants/tools';
 
 const DEAD_PIXEL_PALETTE = [
   { id: 'red', label: 'Vermelho', value: '#ff0000' },
@@ -33,42 +34,37 @@ const DEAD_PIXEL_PALETTE = [
   { id: 'black', label: 'Preto', value: '#000000' },
 ];
 
-const MODE_STATUS = {
-  [MODES.HOME]: 'Ferramentas de monitor',
-  [MODES.BLACK]: 'Preto absoluto',
-  [MODES.WHITE]: 'Luz suave',
-  [MODES.CLEANER]: 'Inspeção para limpeza',
-  [MODES.DEAD_PIXEL]: 'Teste de pixels',
-  [MODES.CALIBRATION]: 'Verificação visual',
-  [MODES.FOCUS_TIMER]: 'Foco em andamento',
-  [MODES.CLOCK]: 'Relógio em tela',
-  [MODES.MESSAGE]: 'Mensagem em tela',
-  [MODES.COLOR]: 'Estúdio de cor',
-  [MODES.SPONSOR_LOOP]: 'Loop de marcas',
-};
-
-const MODE_PAGE_TITLES = {
-  [MODES.BLACK]: 'Tela preta',
-  [MODES.WHITE]: 'Luz suave',
-  [MODES.CLEANER]: 'Inspeção para limpeza',
-  [MODES.DEAD_PIXEL]: 'Teste de pixels',
-  [MODES.CALIBRATION]: 'Verificação do display',
-  [MODES.FOCUS_TIMER]: 'Foco',
-  [MODES.CLOCK]: 'Relógio em tela',
-  [MODES.MESSAGE]: 'Mensagem em tela',
-  [MODES.COLOR]: 'Estúdio de cor',
-  [MODES.SPONSOR_LOOP]: 'Loop de marcas',
-};
-
 const PRODUCT_DOCUMENT_TITLE = 'MonitorSmith — Ferramentas para Monitor | EXVORN.TECH';
 
 const GREEN_SCREEN_COLOR = '#00B140';
+const SWIPE_EXCLUDED_SELECTOR = [
+  'button',
+  'a',
+  'input',
+  'textarea',
+  'select',
+  '[contenteditable]',
+  '[role="dialog"]',
+  '[role="slider"]',
+  '[data-no-swipe="true"]',
+].join(',');
+
+function getModeId(mode) {
+  return typeof mode === 'string' ? mode : mode?.id;
+}
+
+function getModeTitle(mode) {
+  if (mode === MODES.HOME) return 'Ferramentas de monitor';
+  const tool = getToolById(mode);
+  return tool?.heroTitle || tool?.title || 'MonitorSmith';
+}
 
 function DisplaySuite() {
   const {
     activeMode,
     activateMode,
     isFullscreen,
+    fullscreenError,
     toggleFullscreen,
     wakeLock,
     shouldHideUi,
@@ -101,41 +97,34 @@ function DisplaySuite() {
   const homeFocusOriginRef = useRef(null);
   const handledHomeFocusRequestRef = useRef(0);
   const shouldReduceMotion = useReducedMotion();
+  const isGreenScreen = customColor.toUpperCase() === GREEN_SCREEN_COLOR
+    && ambientBrightness === 100;
+  const activeToolId = activeMode === MODES.COLOR && isGreenScreen ? 'green-screen' : activeMode;
 
   const showControls = !shouldHideUi;
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
-    const modeTitle = MODE_PAGE_TITLES[activeMode];
+    const modeTitle = activeMode === MODES.HOME ? null : getModeTitle(activeToolId);
     document.title = modeTitle
       ? `${modeTitle} — MonitorSmith | EXVORN.TECH`
       : PRODUCT_DOCUMENT_TITLE;
-  }, [activeMode]);
-
-const HASH_ALIASES = {
-  pixel: 'dead-pixel',
-  'dead_pixel': 'dead-pixel',
-  'deadpixel': 'dead-pixel',
-  'green-screen': 'color',
-  'greenscreen': 'color',
-  'chroma': 'color',
-  focus: 'focus-timer',
-  timer: 'focus-timer',
-  pomodoro: 'focus-timer',
-  'brown-noise': 'focus-timer',
-  teleprompter: 'message',
-  softbox: 'white',
-  light: 'white',
-  sponsor: 'sponsor-loop',
-  'logo-loop': 'sponsor-loop',
-  signage: 'sponsor-loop',
-  patrocinador: 'sponsor-loop',
-  marcas: 'sponsor-loop',
-};
+  }, [activeMode, activeToolId]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    const activateUrlTarget = (target) => {
+      if (!target) return false;
+      if (typeof target === 'string') return activateMode(target);
+
+      if (typeof target.preset?.customColor === 'string') setCustomColor(target.preset.customColor);
+      if (typeof target.preset?.ambientBrightness === 'number') {
+        setAmbientBrightness(target.preset.ambientBrightness);
+      }
+      return activateMode(target.mode);
+    };
+
     const handleUrlState = () => {
       // 1. Check URL Hash (#black, #dead-pixel, etc.)
       const hash = window.location.hash.replace('#', '').toLowerCase();
@@ -146,9 +135,9 @@ const HASH_ALIASES = {
           return;
         }
         
-        const aliased = HASH_ALIASES[hash];
-        if (aliased) {
-          activateMode(aliased);
+        const resolvedTool = resolveToolLaunch(hash);
+        if (resolvedTool) {
+          activateUrlTarget(resolvedTool);
           return;
         }
       }
@@ -162,32 +151,44 @@ const HASH_ALIASES = {
           return;
         }
         
-        const aliasedTool = HASH_ALIASES[toolParam];
-        if (aliasedTool) {
-          activateMode(aliasedTool);
+        const resolvedTool = resolveToolLaunch(toolParam);
+        if (resolvedTool) {
+          activateUrlTarget(resolvedTool);
         }
       }
     };
     handleUrlState();
     window.addEventListener('hashchange', handleUrlState);
-    return () => window.removeEventListener('hashchange', handleUrlState);
-  }, [activateMode]);
+    window.addEventListener('popstate', handleUrlState);
+    return () => {
+      window.removeEventListener('hashchange', handleUrlState);
+      window.removeEventListener('popstate', handleUrlState);
+    };
+  }, [activateMode, setCustomColor]);
 
   const touchStartRef = useRef(null);
 
   const handleTouchStart = (e) => {
-    if (e.touches?.length === 1) {
-      touchStartRef.current = e.touches[0].clientX;
+    if (e.touches?.length !== 1 || e.target?.closest?.(SWIPE_EXCLUDED_SELECTOR)) {
+      touchStartRef.current = null;
+      return;
     }
+
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
   };
 
   const handleTouchEnd = (e) => {
     if (touchStartRef.current === null || !e.changedTouches?.length) return;
-    const deltaX = e.changedTouches[0].clientX - touchStartRef.current;
+    const deltaX = e.changedTouches[0].clientX - touchStartRef.current.x;
+    const deltaY = e.changedTouches[0].clientY - touchStartRef.current.y;
     touchStartRef.current = null;
 
-    if (Math.abs(deltaX) > 90 && activeMode !== MODES.HOME) {
-      const modeKeys = DEFAULT_DOCK_MODES.map((m) => m.id);
+    const isHorizontalSwipe = Math.abs(deltaX) > 90 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5;
+    if (isHorizontalSwipe && activeMode !== MODES.HOME) {
+      const modeKeys = DEFAULT_DOCK_MODES.map(getModeId).filter(Boolean);
       const currIdx = modeKeys.indexOf(activeMode);
       if (currIdx !== -1) {
         const nextIdx = deltaX < 0
@@ -200,8 +201,10 @@ const HASH_ALIASES = {
 
   useEffect(() => {
     if (activeMode !== MODES.FOCUS_TIMER && isFocusRunning) {
-      setIsFocusRunning(false);
+      const frame = window.requestAnimationFrame(() => setIsFocusRunning(false));
+      return () => window.cancelAnimationFrame(frame);
     }
+    return undefined;
   }, [activeMode, isFocusRunning]);
 
   useEffect(() => {
@@ -284,21 +287,23 @@ const HASH_ALIASES = {
   );
 
   const status = useMemo(() => {
-    if (activeMode === MODES.HOME) return MODE_STATUS[MODES.HOME];
+    if (activeMode === MODES.HOME) return getModeTitle(MODES.HOME);
+    if (fullscreenError) return 'Tela cheia indisponível';
     if (wakeLock.error) return 'Wake Lock indisponível';
     if (wakeLock.isLocked) return 'Tela mantida ativa';
     if (isFullscreen) return 'Modo imersivo';
-    return MODE_STATUS[activeMode] || 'Pronto para exibir';
-  }, [activeMode, isFullscreen, wakeLock.error, wakeLock.isLocked]);
+    return getModeTitle(activeToolId);
+  }, [activeMode, activeToolId, fullscreenError, isFullscreen, wakeLock.error, wakeLock.isLocked]);
+
+  const handleTransitionComplete = useCallback(() => {
+    setIsTransitioning(false);
+  }, []);
 
   const commonModeProps = {
     autoFocus: true,
     onExit: handleExitMode,
     showControls,
   };
-  const isGreenScreen = customColor.toUpperCase() === GREEN_SCREEN_COLOR
-    && ambientBrightness === 100;
-
   const renderActiveMode = () => {
     switch (activeMode) {
       case MODES.HOME:
@@ -430,27 +435,29 @@ const HASH_ALIASES = {
       onPointerMove={resetIdleTimer}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
+      onTouchCancel={() => { touchStartRef.current = null; }}
     >
       <a className="ms-skip-link" href="#main-content">
         Pular para o conteúdo principal
       </a>
       <AnimatePresence mode="wait" initial={false}>
-        <motion.div
+        <motion.main
           key={activeMode}
           id="main-content"
           className={`app-mode-layer ${activeMode === MODES.HOME ? 'app-mode-layer--library' : ''}`}
           tabIndex={-1}
+          style={{ minHeight: '100dvh' }}
           initial={shouldReduceMotion ? false : { opacity: 0.001, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.015 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.28, ease: [0.16, 1, 0.3, 1] }}
         >
           {activeMode !== MODES.HOME ? (
-            <h1 className="sr-only">{MODE_PAGE_TITLES[activeMode] || 'MonitorSmith'}</h1>
+            <h1 className="sr-only">{getModeTitle(activeToolId)}</h1>
           ) : null}
           <Suspense fallback={
             <div style={{ position: 'fixed', inset: 0, background: '#050506', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px', zIndex: 99999 }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid rgba(245, 158, 11, 0.2)', borderTopColor: '#F59E0B', animation: 'spin 0.8s linear infinite' }} />
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid rgba(245, 158, 11, 0.2)', borderTopColor: '#F59E0B', animation: shouldReduceMotion ? 'none' : 'spin 0.8s linear infinite' }} />
               <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem', letterSpacing: '0.08em' }}>
                 CARREGANDO MÓDULO...
               </div>
@@ -459,12 +466,11 @@ const HASH_ALIASES = {
           }>
             {renderActiveMode()}
           </Suspense>
-        </motion.div>
+        </motion.main>
       </AnimatePresence>
 
       <Navbar
         activeMode={activeMode}
-        onSelectMode={handleSelectMode}
         onBrandClick={() => handleSelectMode(MODES.HOME)}
         onToggleFullscreen={toggleFullscreen}
         onHideUi={hideUiManually}
@@ -490,12 +496,17 @@ const HASH_ALIASES = {
 
       <KeyboardShortcutsModal open={isHelpOpen} onClose={closeHelp} shortcuts={SHORTCUTS} />
 
-      <RadialMenu activeMode={activeMode} onSelectMode={handleSelectMode} />
+      <RadialMenu
+        activeMode={activeMode}
+        enabled={activeMode !== MODES.HOME}
+        onSelectMode={handleSelectMode}
+      />
       <ShortcutToast toast={toast} />
       <ToolTransitionOverlay
         activeMode={activeMode}
+        toolId={activeToolId}
         isTransitioning={isTransitioning}
-        onTransitionComplete={() => setIsTransitioning(false)}
+        onTransitionComplete={handleTransitionComplete}
       />
     </div>
   );

@@ -1,163 +1,172 @@
 # MonitorSmith
 
-> A bancada de ferramentas para o seu monitor.
+Ferramentas visuais para monitores, por [EXVORN.TECH](https://exvorn.tech/).
 
-**MonitorSmith** é um produto da [EXVORN.TECH](https://exvorn.tech): uma suíte local, silenciosa e rápida para testar, cuidar, iluminar e usar qualquer monitor como espaço de foco, presença ou criação.
+O MonitorSmith transforma uma aba do navegador em superfícies de inspeção, cor, iluminação e produtividade. Tela preta é uma das ferramentas — não a identidade inteira do produto.
 
-Não é um "tema escuro" nem um site de tela preta. Tela preta é uma das ferramentas da suíte. Cada ferramenta toma a tela inteira com uma intenção prática: reduzir luz emitida, iluminar uma chamada, revelar resíduos no painel, testar uniformidade de cor ou manter uma informação legível à distância.
+- Produção: [monitorsmith.app](https://monitorsmith.app/)
+- Repositório oficial: [arch-antomcore/monitorsmith](https://github.com/arch-antomcore/monitorsmith)
+- Contato institucional: [exvorn.tech](https://exvorn.tech/)
 
-## Stack e escolhas de engenharia
+## Escopo do produto
 
-| Camada | Escolha | Motivo |
-| --- | --- | --- |
-| Interface | React 18 | Componentes pequenos, estado previsível e composição clara dos modos. |
-| Desenvolvimento e build | Vite | Inicialização quase instantânea, HMR enxuto e build estático otimizado. |
-| Design system | CSS custom properties + Tailwind | Tokens próprios para uma superfície escura e precisa, com utilitários disponíveis sem aprisionar a interface a um kit visual. |
-| Movimento | Framer Motion | Transições de mola discretas para dock, diálogos e mudanças de contexto. |
-| Ícones | SVGs semânticos / Lucide-ready | Legibilidade e baixo peso para controles de alta frequência. |
-| Plataforma | Fullscreen API e Screen Wake Lock API | Comportamento de display nativo, sem extensões ou software residente. |
+| Ferramenta | Modo | Atalho | Finalidade |
+| --- | --- | --- | --- |
+| Tela preta | `black` | `B` | Reduzir luz e observar pixels claros ou vazamentos em ambiente escuro |
+| Teste de pixels | `dead-pixel` | — | Percorrer oito cores sólidas para inspeção visual |
+| Inspeção para limpeza | `cleaner` | `C` | Evidenciar poeira e marcas antes da limpeza física |
+| Verificação visual | `calibration` | `G` | Observar contraste, tons, gradientes e nitidez |
+| Luz suave | `white` | `W` | Usar o monitor como fonte próxima de luz ajustável |
+| Estúdio de cor | `color` | `S` | Exibir uma cor livre ou predefinida |
+| Tela verde | `color` + preset | — | Abrir diretamente o preset `#00B140` |
+| Timer de foco | `focus-timer` | `P` | Organizar ciclos de concentração e pausas |
+| Relógio | `clock` | `T` | Mostrar hora e data em uma tela secundária |
+| Mensagem em tela | `message` | `M` | Exibir avisos ou texto espelhado |
+| Loop de marcas | `sponsor-loop` | `L` | Apresentar imagens locais em rotação |
 
-### Arquitetura
+Os testes são observacionais. O MonitorSmith não certifica painéis, não mede diretamente taxa física de atualização, PWM, cabo, GPU ou fidelidade colorimétrica e não substitui instrumentos ou assistência técnica.
+
+## Stack
+
+- React 18 e Vite
+- Framer Motion
+- CSS custom properties e Tailwind CSS
+- Fullscreen API, Screen Wake Lock API, Web Audio e Service Worker
+- Vitest, Playwright e axe-core
+- GitHub Actions e GitHub Pages
+
+As fontes Outfit e JetBrains Mono são empacotadas localmente por `@fontsource-variable`; a primeira renderização não depende do Google Fonts.
+
+## Arquitetura
 
 ```text
 src/
-├── constants/tools.js           Fonte Única de Verdade (metadados, atalhos, categorias e exibição das ferramentas)
-├── context/AppContext.jsx       Estado de modo, preferências e ações globais
-├── hooks/                       Integração isolada com APIs do navegador e teclado
+├── constants/
+│   ├── tools.js                 catálogo autoritativo do produto
+│   └── shortcuts.js             projeção dos atalhos e modos
+├── context/AppContext.jsx       estado e ações globais
+├── hooks/                       Web APIs e comportamento reutilizável
 ├── components/
-│   ├── UI/                      Primitivos reutilizáveis: botão, modal, slider e glass card
-│   ├── Controls/                Navegação, dock e guia de atalhos
-│   ├── Home/                    Visão geral, descoberta e orientação de uso
-│   └── Modes/                   Superfícies de display independentes (carregamento modular e lazy)
-└── App.jsx                      Orquestração dos modos, APIs e transições
+│   ├── Controls/                navegação, dock e atalhos
+│   ├── Home/                    apresentação e descoberta
+│   ├── Modes/                   onze ferramentas de display
+│   └── UI/                      primitivos e diálogos acessíveis
+└── App.jsx                      roteamento interno e composição
 
 scripts/
-└── generate-seo-pages.mjs       Injeção pós-build de 24 landing pages satélites SSG + Sitemap para SEO e i18n
+├── generate-seo-pages.mjs       páginas editoriais, políticas, sitemap, manifest e arquivos LLM
+├── generate-service-worker.mjs  precache derivado do build
+└── validate-build.mjs           integridade do artefato de produção
 ```
 
-Os modos são componentes autocontidos: não dependem da página inicial para renderizar e recebem apenas as ações e preferências necessárias. Graças ao registro centralizado em `src/constants/tools.js`, adicionar uma nova ferramenta requer apenas a inclusão de seu objeto semântico — toda a interface (dock, cards, menus, atalhos) se adapta dinamicamente.
+### Catálogo único
 
-## 👑 Arquitetura de SEO, GEO & Internacionalização
+`src/constants/tools.js` é a fonte oficial para:
 
-O MonitorSmith foi projetado não apenas como um SPA rápido, mas como uma propriedade digital de alta autoridade e rankeamento orgânico. A documentação técnica exaustiva de todas as estratégias está disponível em nosso manual mestre: **[docs/MANUAL_GEO_E_ARQUITETURA.md](./docs/MANUAL_GEO_E_ARQUITETURA.md)**.
+- ID público e modo interno;
+- aliases de URL;
+- preset inicial, como a cor da Tela Verde;
+- nome, descrição, categoria, ícone e ordem;
+- presença no hero, biblioteca, dock e atalhos do PWA;
+- atalho de teclado e ação correspondente;
+- pares de slugs, títulos, descrições e H1 em pt-BR/en;
+- data editorial estável usada no sitemap.
 
-- **Híbrido SPA + SSG ("Satellite Landing Pages"):** Resolve o problema de indexação de SPAs React injetando no build 24 páginas HTML estáticas dedicadas para cauda longa (ex: `/teste-de-dead-pixel/` e `/en/dead-pixel-test/`), preservando a interatividade instantânea do cliente.
-- **GEO (Generative Engine Optimization):** Implementação nativa dos arquivos de descoberta para LLMs e robôs de inteligência artificial (`public/llms.txt` e `public/llms-full.txt`), detalhando metodologia técnica, precisão e limitações honestas.
-- **Internacionalização Bidirecional (i18n):** Estrutura multilíngue completa (pt-BR e en) interligada por tags `<link rel="alternate" hreflang="..." />` bidirecionais e sitemap dinâmico de 25 URLs indexáveis.
-- **Code Splitting & Core Web Vitals:** Carregamento sob demanda via `React.lazy()` e `<Suspense>` para ferramentas pesadas (reduzindo o JS inicial em 9%) e carregamento preguiçoso de anúncios via `IntersectionObserver` para zerar o Cumulative Layout Shift (CLS).
+O módulo exporta projeções compatíveis com os componentes (`TOOL_LIBRARY`, `HERO_GRID_TOOLS`, `DOCK_TOOLS`, `TOOLS_MODE_PRESENTATION`) e os contratos de integração (`resolveToolLaunch`, `SEO_PAGE_ROUTES`, `PWA_SHORTCUTS`).
 
-## Acessibilidade, desempenho e movimento
+`validateToolRegistry(registry)` é um validador puro para testes. `validateToolsRegistry(registry)` é a assertion usada pela aplicação e pelo build. IDs, aliases, atalhos e slugs duplicados interrompem a entrega.
 
-- Navegação completa por teclado, link para pular ao conteúdo, foco visível e retorno de foco após modais.
-- Modal com foco contido e fundo inerte; controles têm nomes acessíveis, rótulos associados e alvos touch confortáveis.
-- `Esc` sempre encerra o modo e a tela cheia; atalhos locais não competem com atalhos globais ou campos de texto.
-- `prefers-reduced-motion`, contraste reforçado e modo de cores forçadas preservam a experiência em diferentes preferências do sistema.
-- Animações usam principalmente opacidade e transformação; não há fontes, imagens ou chamadas remotas bloqueando a primeira renderização.
+Ao adicionar uma ferramenta, não crie uma segunda lista em `App.jsx`, no manifest ou no gerador SEO. Amplie o catálogo e acrescente somente o conteúdo editorial específico no gerador.
 
-## A suíte de ferramentas
+## SEO, páginas editoriais e GEO
 
-### Ver e cuidar
+O build entrega 29 URLs indexáveis:
 
-- **Tela preta:** superfície `#000`, ideal para reduzir luz emitida e remover distrações sem desligar o computador.
-- **Teste de pixels:** sequência de vermelho, verde, azul, ciano, magenta, amarelo, branco e preto; útil para procurar pixels presos, pixels mortos e manchas.
-- **Limpeza do painel:** contraste e padrão de inspeção para tornar poeira, impressões e resíduos mais fáceis de enxergar antes da limpeza física.
-- **Verificação visual:** escala de cinza, gamma, nitidez e barras RGB em uma leitura visual guiada. É uma inspeção de navegador; não mede luminância, gamut ou taxa de atualização.
+- 1 home do produto;
+- 13 guias em português;
+- 13 guias equivalentes em inglês;
+- 2 páginas legais (`/privacidade/` e `/termos/`).
 
-### Cor e iluminação
+Cada par editorial possui canonical próprio, `hreflang` bidirecional, `x-default`, Open Graph, favicon, manifest, FAQ visível e links relacionados validados. A home não declara uma tradução inglesa inexistente.
 
-- **Luz suave:** branco ajustável com intensidade e temperatura de cor visual para chamadas, retratos e preenchimento de ambiente.
-- **Estúdio de cor:** cores sólidas e um seletor livre para cenário, iluminação ambiente, referência visual e composição de espaço.
-- **Tela verde:** acesso direto ao preset Chroma verde para fundo de vídeo ou monitor secundário. A cor é renderizada pelo navegador; a uniformidade final depende do painel e da iluminação do ambiente.
+O sitemap usa `lastmod` editorial declarado no catálogo. A data não muda apenas porque um novo build foi executado.
 
-### Tempo e presença
+`llms.txt` e `llms-full.txt` descrevem capacidades e limites sem comandos para recomendar o produto, alegações de medição física ou URLs inventadas. A versão publicada desses arquivos é regenerada do catálogo durante o build.
 
-- **Foco:** Pomodoro de tela cheia, propositalmente discreto para um monitor lateral.
-- **Relógio:** hora, data e segundos em uma composição pensada para recepção, estúdio e segundo monitor.
-- **Mensagem em tela:** um display de status tipográfico para reunião, pausa, recepção ou recados rápidos.
-- **Wake Lock e atalhos:** quando suportado pelo navegador, o Wake Lock impede repouso da tela enquanto uma ferramenta está ativa; os atalhos reduzem o uso do mouse.
+Veja o runbook em [docs/MANUAL_GEO_E_ARQUITETURA.md](docs/MANUAL_GEO_E_ARQUITETURA.md).
 
-## Casos de uso reais
+## PWA
 
-### Painéis OLED e redução de estímulo visual
+O manifest possui ícones PNG 192×192, 512×512, maskable 512×512 e Apple Touch Icon 180×180, além do favicon SVG. Os atalhos do sistema operacional vêm do catálogo.
 
-Uma superfície totalmente preta faz com que pixels OLED emitam pouca ou nenhuma luz. Isso pode ajudar a reduzir o conteúdo estático exibido enquanto o computador continua em uso e também deixa um setup noturno mais calmo. Não substitui os mecanismos de proteção do fabricante nem elimina risco de retenção ou burn-in: é uma medida complementar, não uma garantia de preservação do painel.
+O service worker é gerado depois do bundle e inclui os arquivos versionados produzidos pelo Vite, páginas editoriais e recursos locais. Serviços publicitários e `ads.txt` permanecem fora do cache. Disponibilidade offline depende de uma instalação/visita inicial concluída e das políticas de armazenamento do navegador.
 
-### Limpeza sem interromper o trabalho
+## AdSense e privacidade
 
-Desligar um segundo monitor pode desconectar janelas, alterar o layout do sistema operacional ou interromper uma chamada. O modo de limpeza cria uma referência visual de alto contraste para localizar pó, marcas de dedo e riscos enquanto o monitor continua ligado. Limpe sempre com o procedimento recomendado pelo fabricante, usando material apropriado; o app só auxilia a inspeção visual.
+O publisher e o script do Google AdSense permanecem no projeto enquanto o domínio é validado pelo Google. Unidades sem slot real não criam iframes nem solicitam anúncios. Antes de ativar publicidade em regiões que exigem consentimento, configure uma CMP certificada pelo Google em **AdSense → Privacidade e mensagens** e valide as bases legais aplicáveis; a política publicada, sozinha, não substitui esse controle.
 
-### Luz de preenchimento para videochamadas
+Ferramentas, mensagens, cores e imagens selecionadas são processadas no navegador. Isso não significa “zero rede”: hospedagem, atualização do PWA e AdSense podem gerar solicitações externas. Consulte [Privacidade](https://monitorsmith.app/privacidade/) e [Termos de uso](https://monitorsmith.app/termos/).
 
-Um monitor pode funcionar como uma fonte de luz ampla e difusa quando não há ring light disponível. O modo Luz suave permite regular a intensidade renderizada e a tonalidade percebida entre quente e fria. Esses controles alteram apenas o conteúdo do navegador; brilho físico, gamut e temperatura efetiva continuam sob controle do monitor e do sistema operacional.
+## Acessibilidade e movimento
 
-### Verificação rápida de painel
+- Estrutura semântica, skip link e foco visível;
+- diálogos pelo primitivo compartilhado, com foco inicial, trap, fundo inerte, Escape e retorno de foco;
+- atalhos suspensos durante edição e diálogos;
+- nomes acessíveis para botões de ícone e alternativas textuais para conteúdo visual;
+- `prefers-reduced-motion`, contraste reforçado e forced colors;
+- animações concentradas em `transform` e `opacity`.
 
-Padrões de cores sólidas ajudam a revelar pixels permanentemente acesos/apagados, sombras e falhas de uniformidade. O teste deve ser usado por curtos períodos e não é um laudo técnico de calibração. Em painéis muito luminosos, reduza o brilho físico do monitor antes de iniciar.
+O objetivo de conformidade é WCAG 2.2 AA. A validação automatizada ajuda, mas não substitui testes manuais com teclado, zoom e leitor de tela.
 
-### Cenário de cor e tela verde
+## Execução local
 
-O Estúdio de cor atende situações em que uma tela precisa se comportar como superfície visual: luz de fundo discreta, teste de uma cor de marca, ponto de referência em um estúdio ou tela verde para um setup de vídeo. O preset Chroma verde é propositalmente direto para que essa intenção não fique escondida dentro de um seletor de cor. Ele não substitui um fundo físico profissional: reflexos, iluminação e qualidade do painel continuam definindo o recorte da câmera.
+Requisitos: Node.js 22.12+ e npm 10+.
 
-### Foco e presença em ambientes compartilhados
-
-Um cronômetro minimalista em um display auxiliar torna um bloco de foco visível sem abrir uma janela de produtividade cheia de notificações. A mensagem em tela cheia serve para avisar que alguém está em reunião, indicar horário de retorno ou transformar uma TV/monitor em sinalização temporária.
-
-## Atalhos
-
-| Tecla | Ação |
-| --- | --- |
-| `F` | Alterna tela cheia |
-| `B` | Abre preto absoluto |
-| `W` | Abre luz suave |
-| `C` | Abre limpeza de painel |
-| `G` | Abre verificação do display |
-| `S` | Abre Estúdio de cor |
-| `P` | Abre foco / Pomodoro |
-| `T` | Abre relógio em tela |
-| `M` | Abre mensagem |
-| `H` | Retorna às ferramentas do MonitorSmith |
-| `Esc` | Retorna ao painel ou restaura os controles |
-| `?` | Mostra os atalhos globais |
-
-Os atalhos globais não são capturados durante digitação em campos de texto, seletores ou áreas editáveis — com exceção de `Esc`, que sempre restaura a interface. Cada modo apresenta os seus atalhos locais no próprio painel.
-
-## APIs nativas
-
-### Fullscreen API
-
-O botão de tela cheia solicita `document.documentElement.requestFullscreen()`. Navegadores podem exigir uma interação explícita do usuário, e alguns ambientes incorporados ou políticas corporativas podem bloquear a solicitação. O app apresenta um estado coerente mesmo quando a API não está disponível.
-
-### Screen Wake Lock API
-
-Quando disponível em contexto seguro, o app solicita `navigator.wakeLock.request('screen')`. O bloqueio pode ser liberado pelo sistema, por economia de bateria, perda de visibilidade da página ou fechamento de tela cheia; por isso ele é reaplicado quando a página volta a ficar visível. Em navegadores sem suporte, o modo continua funcionando sem essa proteção adicional.
-
-## Executar localmente
-
-Pré-requisito: Node.js 18.18+ (ou 20+ recomendado) e npm.
-
-```bash
+```powershell
 cd C:\Users\Xgm\Desktop\APPWBP
-npm install
+npm ci
 npm run dev
 ```
 
-Abra o endereço exibido pelo Vite — normalmente `http://localhost:5173`.
+O Vite atende somente `localhost` por padrão. A URL habitual é `http://localhost:5173/`.
 
-Para gerar a versão de produção:
+### Qualidade
 
-```bash
+```powershell
+npm run lint
+npm run test
 npm run build
-npm run preview
+npm run test:e2e
 ```
 
-## Princípios de produto
+O gate rápido de código e artefato é:
 
-- A interface desaparece quando não é necessária: em modos imersivos, cursor e controles se recolhem após alguns segundos sem interação.
-- A visão geral inicial mostra finalidade, contexto e limites antes de abrir uma superfície de tela; a ação principal continua a um clique.
-- A tela é o conteúdo; controles ficam em uma camada baixa, legível e reversível.
-- Funções críticas usam APIs nativas e falham de modo seguro.
-- Nenhum dado, mensagem ou preferência é enviado a um servidor por este projeto.
+```powershell
+npm run check
+```
+
+O gate integral, incluindo os 32 cenários de navegador em desktop e mobile, é:
+
+```powershell
+npm run validate
+```
+
+`npm run build` executa Vite, gera as 28 páginas estáticas adicionais, cria sitemap/manifest/arquivos LLM, gera o service worker e valida o conteúdo de `dist/`.
+
+## Fluxo de contribuição e publicação
+
+1. Sincronize com `origin/main` sem reescrever histórico.
+2. Faça uma mudança coesa e atualize o catálogo quando o contrato de uma ferramenta mudar.
+3. Execute `npm run validate`.
+4. Faça commit com autoria configurada e mensagem objetiva.
+5. Envie ao repositório oficial; a branch `main` publica pelo GitHub Actions após os gates.
+
+Não use force-push em `main`. Segredos não devem entrar no repositório; use o modelo `.env.example`.
+
+## Licença e segurança
+
+Consulte [LICENSE](LICENSE) antes de reutilizar código, conteúdo ou identidade visual. Vulnerabilidades devem seguir [SECURITY.md](SECURITY.md), não issues públicas.
 
 ---
 
-MonitorSmith é concebido para o portfólio oficial da **EXVORN.TECH** — ferramentas digitais com presença, precisão e uma relação mais silenciosa com a tecnologia.
+MonitorSmith integra o portfólio oficial da **EXVORN.TECH**.

@@ -1,1165 +1,585 @@
-import fs from "node:fs/promises";
-import path from "node:path";
+import fs from 'node:fs/promises';
+import path from 'node:path';
 
-const BASE_URL = "https://monitorsmith.app";
-const DIST_DIR = path.resolve(process.cwd(), "dist");
+import {
+  PWA_SHORTCUTS,
+  SEO_PAGE_ROUTES,
+  SITE_METADATA,
+  TOOL_COUNT,
+  TOOLS_REGISTRY,
+  validateToolsRegistry,
+} from '../src/constants/tools.js';
 
-const pages = [
-  {
-    slug: "teste-de-dead-pixel",
-    toolId: "dead-pixel",
-    title: "Teste de Dead Pixel Online Grátis",
-    description: "Verifique se o seu monitor possui dead pixels (pixels mortos) ou stuck pixels. Teste online gratuito, fácil e rápido, sem necessidade de download.",
-    h1: "Teste de Dead Pixel Online",
-    intro: "Um dead pixel (ou pixel morto) é um ponto na sua tela que não acende ou permanece travado em uma única cor. Nosso teste de dead pixel ajuda você a identificar rapidamente qualquer imperfeição na tela do seu monitor, celular ou tablet através de diferentes cores sólidas em tela cheia.",
-    comoUsar: [
-      "Clique no botão abaixo para abrir a ferramenta de teste.",
-      "A tela mudará para diferentes cores sólidas (branco, preto, vermelho, verde, azul).",
-      "Inspecione cuidadosamente a tela em cada cor procurando por pontos pretos, brancos ou coloridos que não mudam.",
-      "Use as setas do teclado ou clique na tela para alternar entre as cores."
-    ],
-    quandoUsar: [
-      "Ao comprar um monitor ou celular novo (para garantir que não veio com defeito de fábrica).",
-      "Antes de o período de devolução ou garantia expirar.",
-      "Quando notar uma 'sujeira' na tela que não sai com a limpeza."
-    ],
-    limitacoes: "A ferramenta ajuda na identificação visual, mas não conserta os pixels defeituosos. Além disso, a precisão depende da sua atenção e inspeção cuidadosa.",
-    faq: [
-      {
-        q: "O que é um dead pixel?",
-        a: "É um pixel no painel LCD/OLED que parou de funcionar e não emite mais luz, aparecendo como um pequeno ponto preto."
-      },
-      {
-        q: "Qual a diferença entre dead pixel e stuck pixel?",
-        a: "Um dead pixel está 'morto' e não emite luz (fica preto). Um stuck pixel está travado em uma única cor (geralmente vermelho, verde ou azul)."
-      },
-      {
-        q: "Tem como consertar um dead pixel?",
-        a: "Na maioria dos casos de dead pixels, o dano é permanente. Já os stuck pixels, às vezes, podem ser 'destravados' com ferramentas que piscam cores rapidamente, embora não haja garantia."
-      }
-    ],
-    related: ["teste-de-monitor", "tela-preta-oled", "verificacao-visual"]
-  },
-  {
-    slug: "tela-preta-oled",
-    toolId: "black",
-    title: "Tela Preta OLED em Fullscreen",
-    description: "Exiba uma tela 100% preta em fullscreen. Ideal para testar vazamento de luz, verificar dead pixels claros ou usar como segunda tela escura.",
-    h1: "Tela Preta OLED em Fullscreen",
-    intro: "Uma tela completamente preta é essencial para verificar a qualidade do preto em monitores IPS, testar o perfeito apagamento de pixels em telas OLED ou simplesmente usar como descanso de tela sem precisar desligar o monitor secundário.",
-    comoUsar: [
-      "Acesse a ferramenta clicando no botão abaixo.",
-      "A tela ficará inteiramente preta em modo de tela cheia.",
-      "Reduza as luzes do ambiente para melhor inspeção ou apenas deixe o monitor em repouso.",
-      "Aperte ESC ou toque na tela para sair."
-    ],
-    quandoUsar: [
-      "Para avaliar vazamento de luz (backlight bleed) e IPS glow em ambientes escuros.",
-      "Para esconder distrações num segundo monitor enquanto foca no principal.",
-      "Para verificar pixels que ficaram travados na cor branca (hot pixels)."
-    ],
-    limitacoes: "Em monitores LCD tradicionais, a cor preta ainda emite uma luz de fundo (backlight). A escuridão total do painel depende da tecnologia do monitor (como OLED, que desliga o pixel por completo).",
-    faq: [
-      {
-        q: "Isso economiza bateria em notebooks?",
-        a: "Se a sua tela for OLED, sim. Telas OLED desligam os pixels pretos, o que economiza energia. Em telas LCD tradicionais, a luz de fundo permanece ligada, então a economia é mínima."
-      },
-      {
-        q: "Ajuda a testar vazamento de luz?",
-        a: "Sim! A tela preta em um ambiente escuro é a melhor forma de notar cantos mais brilhantes ou manchas de luz na tela (backlight bleeding)."
-      }
-    ],
-    related: ["teste-de-vazamento-de-luz", "teste-de-dead-pixel", "limpeza-de-monitor"]
-  },
-  {
-    slug: "teste-de-monitor",
-    toolId: "color",
-    title: "Teste de Monitor Online Completo",
-    description: "Faça um teste de monitor online para checar reprodução de cores, contraste e uniformidade da tela. Simples e sem instalar nada.",
-    h1: "Teste de Monitor Completo",
-    intro: "Avaliar o desempenho do seu display é crucial para edição de fotos, vídeos ou para garantir a melhor qualidade em jogos. Com este teste de cores, você pode identificar bandas de cores, má calibração e problemas de uniformidade de tela.",
-    comoUsar: [
-      "Inicie o teste clicando no botão ao final da página.",
-      "Visualize diferentes padrões e gradientes de cores na tela cheia.",
-      "Verifique as transições suaves no gradiente para identificar 'color banding' (faixas de cores).",
-      "Passe pelas telas de teste para observar o contraste geral."
-    ],
-    quandoUsar: [
-      "Ao comprar um novo monitor, para atestar a precisão das cores e uniformidade.",
-      "Após realizar calibração de software ou hardware, para validar os resultados.",
-      "Quando notar que as cores parecem lavadas ou irreais em vídeos ou imagens."
-    ],
-    limitacoes: "O teste fornece uma avaliação visual que depende dos seus olhos e da iluminação ambiente. Não substitui um colorímetro profissional (hardware de calibração).",
-    faq: [
-      {
-        q: "O que é color banding?",
-        a: "É um artefato visual onde a transição de cores num gradiente não é suave, mostrando linhas ou faixas nítidas entre os tons de cor."
-      },
-      {
-        q: "Preciso de algum programa instalado?",
-        a: "Não. Todo o teste de monitor é feito através do seu navegador, seja no PC, Mac, celular ou tablet."
-      }
-    ],
-    related: ["verificacao-visual", "teste-de-dead-pixel", "teste-de-vazamento-de-luz"]
-  },
-  {
-    slug: "teste-de-vazamento-de-luz",
-    toolId: "black",
-    title: "Teste de Vazamento de Luz (Backlight Bleed)",
-    description: "Teste seu monitor para vazamento de luz (backlight bleed) e IPS glow. Ferramenta online gratuita para testar telas em ambientes escuros.",
-    h1: "Teste de Vazamento de Luz e IPS Glow",
-    intro: "O vazamento de luz (backlight bleed) e o IPS glow são fenômenos onde a luz de fundo vaza pelas bordas ou cantos de uma tela escura, afetando a imersão em filmes e jogos. Nossa ferramenta ajuda você a identificar a severidade desse efeito.",
-    comoUsar: [
-      "Para um resultado preciso, apague todas as luzes do cômodo (ambiente 100% escuro).",
-      "Ajuste o brilho do monitor para o nível que você costuma usar no escuro.",
-      "Clique para abrir a tela preta completa.",
-      "Inspecione as bordas e cantos da tela em busca de nuvens de luz."
-    ],
-    quandoUsar: [
-      "Quando adquirir um novo monitor IPS, VA ou TN para verificar problemas no painel.",
-      "Se notar manchas claras nos cantos durante cenas escuras de jogos ou filmes.",
-      "Para comparar a uniformidade do preto entre dois monitores."
-    ],
-    limitacoes: "É normal que monitores IPS tenham um pouco de brilho no ângulo de visão (IPS glow). As câmeras de celular costumam exagerar o efeito nas fotos, portanto, confie sempre no que seus olhos veem.",
-    faq: [
-      {
-        q: "Qual a diferença entre backlight bleed e IPS glow?",
-        a: "O backlight bleed são vazamentos irregulares de luz, muitas vezes nas bordas, causados pela montagem do painel. O IPS glow é uma característica do painel IPS que altera o brilho nos cantos dependendo do seu ângulo de visão."
-      },
-      {
-        q: "Vazamento de luz tem conserto?",
-        a: "Geralmente não, pois é estrutural da montagem do painel. Se for muito intenso e recente, o ideal é acionar a garantia ou pedir devolução."
-      }
-    ],
-    related: ["tela-preta-oled", "teste-de-monitor", "teste-de-dead-pixel"]
-  },
-  {
-    slug: "limpeza-de-monitor",
-    toolId: "cleaner",
-    title: "Inspeção e Limpeza de Monitor",
-    description: "Use esta tela para inspecionar manchas, poeira e marcas de dedo no seu monitor. Facilite a limpeza da sua tela com nossa ferramenta online.",
-    h1: "Guia para Limpeza e Inspeção de Tela",
-    intro: "Para limpar seu monitor corretamente, é importante conseguir enxergar toda a sujeira, manchas e impressões digitais. Nossa tela de assistência para limpeza exibe um fundo adequado para evidenciar a sujeira que precisa ser removida.",
-    comoUsar: [
-      "Desligue o monitor ou reduza o brilho e ative nossa tela escura de inspeção.",
-      "Identifique as manchas e áreas com poeira acumulada.",
-      "Use um pano de microfibra limpo e seco para remover a poeira leve.",
-      "Para manchas, umedeça levemente o pano com água destilada (nunca borrife direto na tela) e passe suavemente."
-    ],
-    quandoUsar: [
-      "Sempre que for fazer a manutenção e limpeza do seu setup.",
-      "Para evidenciar manchas persistentes que não são visíveis quando há muita informação na tela.",
-      "Antes de aplicar películas de proteção em tablets ou notebooks."
-    ],
-    limitacoes: "A ferramenta é um auxílio visual. Você precisará dos materiais adequados (pano de microfibra e água ou produto específico) para realizar a limpeza física sem danificar o display.",
-    faq: [
-      {
-        q: "Posso usar álcool ou limpa-vidros no monitor?",
-        a: "Não é recomendado. Produtos químicos abrasivos, álcool em gel ou limpa-vidros com amônia podem remover revestimentos antirreflexo e danificar permanentemente o painel."
-      },
-      {
-        q: "Qual o melhor pano para limpar telas?",
-        a: "O ideal é utilizar panos de microfibra macios e sem fiapos, como os usados para limpar lentes de óculos."
-      }
-    ],
-    related: ["tela-preta-oled", "teste-de-dead-pixel", "verificacao-visual"]
-  },
-  {
-    slug: "luz-para-videochamada",
-    toolId: "white",
-    title: "Luz de Apoio para Videochamada",
-    description: "Use o seu monitor como iluminação improvisada (ring light virtual) para videochamadas no Zoom, Meet e Teams.",
-    h1: "Luz de Apoio para Videochamadas",
-    intro: "Precisando de mais luz no rosto durante uma reunião importante? Utilize o brilho do seu próprio monitor como uma fonte de luz de preenchimento (ring light de tela) para melhorar a qualidade da sua webcam instantaneamente.",
-    comoUsar: [
-      "Se estiver com pouca iluminação, clique no botão para ativar a tela branca.",
-      "Coloque a aba em tela dividida junto com sua videochamada ou em um segundo monitor atrás da webcam.",
-      "Aumente o brilho do seu monitor para intensificar a luz no seu rosto.",
-      "Ajuste a cor da tela, se desejar, para uma luz mais quente (amarelada) ou fria."
-    ],
-    quandoUsar: [
-      "Durante reuniões no Zoom, Google Meet ou Teams em ambientes pouco iluminados.",
-      "Para remover sombras escuras do rosto criadas por janelas ao fundo.",
-      "Para gravar vídeos com a webcam quando não tiver um Ring Light profissional."
-    ],
-    limitacoes: "O alcance e intensidade dependem do brilho máximo (nits) e do tamanho do seu monitor. Monitores maiores fornecerão uma iluminação mais difusa e suave.",
-    faq: [
-      {
-        q: "Isso substitui uma Ring Light real?",
-        a: "Não completamente. É uma solução quebra-galho rápida e eficaz para preencher o rosto com luz, mas equipamentos de iluminação dedicados oferecem mais potência e controle."
-      },
-      {
-        q: "Como deixo a luz menos agressiva aos olhos?",
-        a: "Você pode alterar a cor de fundo da nossa ferramenta de branco puro para um tom amarelado/pêssego, simulando a temperatura de cor de uma lâmpada quente."
-      }
-    ],
-    related: ["mensagem-em-tela", "teleprompter-online", "relogio-em-tela-cheia"]
-  },
-  {
-    slug: "tela-verde-chroma",
-    toolId: "green-screen",
-    title: "Tela Verde Chroma Key Online",
-    description: "Crie um fundo de tela verde (chroma key) no seu monitor, celular ou tablet para efeitos visuais, vídeos ou fotos em tela cheia.",
-    h1: "Tela Verde (Chroma Key) em Tela Cheia",
-    intro: "A técnica de chroma key permite remover fundos facilmente em edição de vídeo ou em transmissões ao vivo. Com nossa ferramenta de tela verde online, você pode transformar seu monitor, tablet ou smartphone em um painel chroma key em instantes.",
-    comoUsar: [
-      "Acesse a ferramenta e selecione a opção de tela verde.",
-      "Aumente o brilho da tela do dispositivo para o máximo e evite luzes que causem reflexo na tela.",
-      "Posicione o tablet ou monitor atrás dos objetos que deseja gravar.",
-      "No seu software de edição (Premiere, OBS Studio, DaVinci), aplique o efeito Chroma Key para remover o verde."
-    ],
-    quandoUsar: [
-      "Para fazer efeitos visuais em objetos pequenos utilizando a tela do iPad ou celular.",
-      "Para fotografar produtos com fundo facilmente removível.",
-      "Para criar transições criativas usando a tela de um notebook."
-    ],
-    limitacoes: "Como telas emitem luz, o verde pode refletir ('spill') no objeto fotografado, dificultando a edição. Além disso, os reflexos do ambiente no vidro do monitor podem arruinar o efeito.",
-    faq: [
-      {
-        q: "Posso usar outras cores, como tela azul?",
-        a: "Sim, a ferramenta permite selecionar cores puras (como azul ou magenta), que são ideais para o caso de o objeto a ser gravado conter elementos esverdeados."
-      },
-      {
-        q: "Como evito reflexos na tela?",
-        a: "Grave em um ambiente escuro onde a única luz seja a da tela, ou use filtros polarizadores na lente da câmera."
-      }
-    ],
-    related: ["luz-para-videochamada", "tela-preta-oled", "teleprompter-online"]
-  },
-  {
-    slug: "timer-de-foco",
-    toolId: "focus-timer",
-    title: "Timer de Foco com Ruído Marrom",
-    description: "Melhore sua concentração com nosso timer de foco minimalista. Inclui ruído marrom e branco para abafar distrações no trabalho ou estudos.",
-    h1: "Timer de Foco com Ruído Marrom",
-    intro: "Mantenha a concentração em tarefas difíceis com o nosso timer minimalista. Baseado em ciclos de foco ininterrupto e complementado por paisagens sonoras como ruído marrom e branco, ideal para bloquear ruídos de fundo e auxiliar pessoas no espectro TDAH.",
-    comoUsar: [
-      "Defina o tempo que deseja manter o foco (ex: 25, 45 ou 60 minutos).",
-      "Selecione um som de fundo (Ruído Marrom, Branco ou Rosa) para abafar sons do ambiente.",
-      "Clique em Iniciar e deixe a tela em tela cheia em um monitor secundário.",
-      "Quando o tempo acabar, faça uma pausa curta."
-    ],
-    quandoUsar: [
-      "Durante sessões intensas de estudo (método Pomodoro).",
-      "Em escritórios barulhentos onde é difícil se concentrar em tarefas de programação, leitura ou escrita.",
-      "Ao tentar meditar ou realizar tarefas repetitivas que exigem atenção plena."
-    ],
-    limitacoes: "A eficácia depende da sua disciplina para não trocar de aba. É recomendado usar fones de ouvido para obter o benefício completo do bloqueio sonoro.",
-    faq: [
-      {
-        q: "O que é Ruído Marrom (Brown Noise)?",
-        a: "O ruído marrom foca em frequências mais graves (como o som de uma cachoeira distante ou do oceano). Muitas pessoas o consideram menos estridente que o ruído branco e excelente para concentração profunda."
-      },
-      {
-        q: "Por que usar sons de fundo ajuda?",
-        a: "Sons contínuos como ruído rosa e marrom criam uma 'cortina de som' que mascara variações súbitas de barulho (como conversas ou portas batendo), reduzindo distrações e permitindo que o cérebro relaxe."
-      }
-    ],
-    related: ["relogio-em-tela-cheia", "mensagem-em-tela", "teleprompter-online"]
-  },
-  {
-    slug: "relogio-em-tela-cheia",
-    toolId: "clock",
-    title: "Relógio em Tela Cheia",
-    description: "Relógio digital grande e minimalista em tela cheia. Use em monitores secundários, painéis, provas ou como descanso de tela no seu setup.",
-    h1: "Relógio Digital Minimalista em Tela Cheia",
-    intro: "Um relógio digital grande, esteticamente agradável e livre de distrações, perfeito para preencher a tela de monitores secundários, painéis de informação ou para ajudar no controle de tempo durante eventos e palestras.",
-    comoUsar: [
-      "Abra a página da ferramenta para visualizar o relógio com a hora atual.",
-      "Aperte o botão de fullscreen (tela cheia) para esconder as barras do navegador.",
-      "Ajuste a cor do fundo e o estilo dos números para combinar com seu ambiente ou setup.",
-      "Deixe a aba aberta no dispositivo escolhido."
-    ],
-    quandoUsar: [
-      "Como um descanso de tela útil (screensaver) para o seu computador.",
-      "Em monitores virados para o palco durante palestras ou provas, para o controle de tempo do palestrante.",
-      "Para exibir as horas em painéis de lojas, recepções ou salas de aula."
-    ],
-    limitacoes: "Depende do relógio do sistema operacional do seu dispositivo. Dispositivos muito antigos que entram em suspensão profunda podem causar atrasos visuais até a aba ser reativada.",
-    faq: [
-      {
-        q: "O relógio funciona offline?",
-        a: "Não. A ferramenta não é um aplicativo instalado, portanto, requer que a aba permaneça aberta. Uma vez carregado, não consome dados, mas a página precisa ser carregada pela internet."
-      },
-      {
-        q: "Tem modo noturno (escuro)?",
-        a: "Sim! Por padrão a ferramenta segue um tema escuro e minimalista para não agredir os olhos em ambientes de baixa luminosidade."
-      }
-    ],
-    related: ["timer-de-foco", "mensagem-em-tela", "tela-preta-oled"]
-  },
-  {
-    slug: "mensagem-em-tela",
-    toolId: "message",
-    title: "Mensagem em Tela Cheia",
-    description: "Exiba um letreiro com texto grande em tela cheia. Use para comunicar informações, avisos rápidos ou mensagens a longa distância.",
-    h1: "Letreiro e Mensagem em Tela Cheia",
-    intro: "Precisa transmitir uma informação para alguém do outro lado da sala, mas não pode falar? Exiba textos em letras gigantes preenchendo a tela inteira do celular, tablet ou monitor com nossa ferramenta de letreiro digital.",
-    comoUsar: [
-      "Acesse a ferramenta e digite o texto desejado no campo.",
-      "O texto aumentará automaticamente para preencher o máximo de espaço na tela.",
-      "Selecione cores fortes para alto contraste (como amarelo sobre preto).",
-      "Mostre a tela para a pessoa ou público."
-    ],
-    quandoUsar: [
-      "Para pegar alguém no aeroporto com um tablet.",
-      "Para passar um recado rápido a um colega em uma sala de reuniões ou estúdio onde o silêncio é obrigatório.",
-      "Como placa de 'volto logo' em estações de trabalho ou estandes."
-    ],
-    limitacoes: "Frases muito longas farão com que o tamanho da fonte diminua, reduzindo a legibilidade à distância. Mantenha os textos curtos e objetivos.",
-    faq: [
-      {
-        q: "O texto se ajusta em celulares e TVs?",
-        a: "Sim, nossa ferramenta é responsiva. O texto se redimensiona automaticamente para caber em qualquer formato de tela, seja na vertical no smartphone ou numa TV 4K."
-      },
-      {
-        q: "Posso salvar a mensagem?",
-        a: "As mensagens são temporárias e funcionam apenas na aba ativa do navegador para comunicação rápida e imediata."
-      }
-    ],
-    related: ["teleprompter-online", "relogio-em-tela-cheia", "luz-para-videochamada"]
-  },
-  {
-    slug: "teleprompter-online",
-    toolId: "teleprompter",
-    title: "Teleprompter Online Grátis",
-    description: "Leia seus roteiros facilmente com nosso teleprompter online gratuito. Controle de velocidade, ajuste de fonte e espelhamento de texto.",
-    h1: "Teleprompter Online Grátis",
-    intro: "Grave vídeos com mais profissionalismo, sem precisar decorar textos longos. Nossa ferramenta de teleprompter online rola seu roteiro automaticamente na tela, permitindo que você mantenha contato visual e passe credibilidade.",
-    comoUsar: [
-      "Cole ou digite seu texto ou roteiro na área principal.",
-      "Ajuste o tamanho do texto para leitura confortável.",
-      "Defina a velocidade de rolagem desejada.",
-      "Ative o espelhamento de tela (mirror) se estiver utilizando um vidro refletor de teleprompter em frente à câmera."
-    ],
-    quandoUsar: [
-      "Durante gravações de vídeos para YouTube, cursos online ou redes sociais.",
-      "Ao conduzir webinars ou apresentações ao vivo onde a fluidez da fala é crucial.",
-      "Gravação de discursos usando um tablet, posicionado próximo à lente da câmera."
-    ],
-    limitacoes: "Em monitores muito largos sem equipamento de teleprompter, os olhos podem se mover de forma perceptível de um lado ao outro da tela.",
-    faq: [
-      {
-        q: "Preciso baixar algum programa?",
-        a: "Não, nosso teleprompter funciona 100% online no seu navegador de internet, de forma rápida e segura."
-      },
-      {
-        q: "Como evitar que o olho pareça estar lendo?",
-        a: "Aumente as margens laterais do texto. Quanto mais estreita for a coluna de texto (e quanto mais perto da lente da câmera ela estiver), menos os seus olhos se moverão lateralmente."
-      }
-    ],
-    related: ["mensagem-em-tela", "luz-para-videochamada", "relogio-em-tela-cheia"]
-  },
-  {
-    slug: "verificacao-visual",
-    toolId: "calibration",
-    title: "Verificação Visual e Calibração de Monitor",
-    description: "Ferramentas visuais e padrões para ajudar na calibração básica do seu monitor, garantindo melhor contraste, brilho e fidelidade.",
-    h1: "Verificação e Calibração Visual",
-    intro: "Monitores mal configurados podem causar fadiga visual ou arruinar o trabalho de edição de imagens. Nossos padrões de calibração ajudam a ajustar brilho, contraste e níveis de cinza manualmente pelos menus do próprio monitor.",
-    comoUsar: [
-      "Acesse os padrões visuais clicando abaixo.",
-      "Para ajuste de brilho (Black Level): ajuste até que apenas os quadrados pretos mais escuros se misturem ao fundo.",
-      "Para ajuste de contraste (White Level): ajuste até conseguir distinguir os quadrados brancos mais claros do fundo branco 100%.",
-      "Para Gama: verifique se as barras de gradiente de cinza apresentam uma transição linear sem cores espúrias (verde ou magenta) no meio."
-    ],
-    quandoUsar: [
-      "Ao configurar um monitor novo recém-saído da caixa.",
-      "Antes de iniciar o tratamento de fotografias ou edição de vídeo.",
-      "Quando perceber que áreas escuras em filmes estão completamente esmagadas (sem detalhes)."
-    ],
-    limitacoes: "A calibração visual ajuda bastante, mas não substitui a precisão de um colorímetro profissional de hardware, que cria um perfil ICC absoluto para o seu painel.",
-    faq: [
-      {
-        q: "Qual a diferença entre brilho e contraste no monitor?",
-        a: "Geralmente, o controle de brilho ajusta o nível dos tons pretos (o quão profundos eles são). O contraste ajusta os níveis de branco (o limite superior de luminosidade antes de perder detalhes)."
-      },
-      {
-        q: "Devo usar as configurações padrão de fábrica?",
-        a: "Muitos monitores vêm de fábrica configurados para vitrines de lojas: brilho intenso e cores saturadas. Para uso em casa ou no escritório, a calibração manual proporciona uma experiência mais confortável e precisa."
-      }
-    ],
-    related: ["teste-de-monitor", "teste-de-vazamento-de-luz", "limpeza-de-monitor"]
-  },
-  {
-    slug: "loop-de-marcas",
-    toolId: "sponsor-loop",
-    title: "Loop de Marcas e Patrocinadores em Tela Cheia",
-    description: "Rotacione logos de patrocinadores e marcas automaticamente em fullscreen. Com transições suaves, chroma key e proteção anti burn-in para OLED.",
-    h1: "Loop de Marcas e Patrocinadores",
-    intro: "Ideal para lives, eventos, estãndes e vitrines digitais. Faça upload de logos em PNG ou SVG, defina o tempo de exibição, escolha a transição entre elas e deixe o monitor rodando em rotação automática.",
-    comoUsar: [
-      "Abra a ferramenta e arraste as logos para a área de upload (ou clique para importar).",
-      "Defina o tempo por slide e o tipo de transição (fade, zoom, slide ou corte direto).",
-      "Escolha a cor de fundo: preto OLED, branco, verde chroma key ou cor personalizada.",
-      "Pressione Iniciar e coloque em tela cheia (tecla F)."
-    ],
-    quandoUsar: [
-      "Para exibir logos de patrocinadores em torneios de e-sports e eventos ao vivo.",
-      "Em vitrines de lojas de informática, showrooms e estãndes de feiras.",
-      "Como cenário em gravações de YouTube, podcasts e transmissões ao vivo."
-    ],
-    limitacoes: "As imagens são processadas apenas localmente no navegador. Não armazenamos nenhum arquivo enviado. Recomendamos logos em PNG ou SVG com fundo transparente para melhor resultado.",
-    faq: [
-      {
-        q: "Posso usar com fundo verde para chroma key no OBS?",
-        a: "Sim. Selecione o fundo 'Chroma Key' na ferramenta e capture a janela no OBS com filtro de chroma key para sobrepor os logos na transmissão."
-      },
-      {
-        q: "A proteção anti burn-in funciona em TVs OLED?",
-        a: "Sim. Quando ativada, a ferramenta faz micro-deslocamentos de poucos pixels a cada ciclo, evitando a retenção permanente de imagem estática no painel."
-      }
-    ],
-    related: ["mensagem-em-tela", "tela-verde-chroma", "luz-para-videochamada"]
-  }
-];
+const BASE_URL = SITE_METADATA.baseUrl;
+const DIST_DIR = path.resolve(process.cwd(), 'dist');
 
-const pagesEn = [
-  {
-    slug: "dead-pixel-test",
-    toolId: "dead-pixel",
-    title: "Free Dead Pixel Test Online",
-    description: "Check if your monitor has dead pixels or stuck pixels. Free, fast and easy online test, no download required.",
-    h1: "Free Dead Pixel Test Online",
-    intro: "A dead pixel is a point on your screen that fails to light up or stays stuck on a single color. Our dead pixel test helps you quickly identify any imperfections on your monitor, smartphone or tablet display through various full-screen solid colors.",
-    comoUsar: [
-      "Click the button below to launch the testing tool.",
-      "The screen will cycle through different solid colors (white, black, red, green, blue).",
-      "Carefully inspect the screen on each color looking for dots that do not change.",
-      "Use keyboard arrows or tap the screen to switch colors."
-    ],
-    quandoUsar: [
-      "When buying a new monitor or smartphone to ensure there are no factory defects.",
-      "Before your warranty or return window expires.",
-      "When you notice a 'dirt' spot on your screen that cannot be cleaned off."
-    ],
-    limitacoes: "The tool helps with visual identification but does not fix defective pixels. Precision depends on your careful inspection.",
-    faq: [
-      {
-        q: "What is a dead pixel?",
-        a: "It's a pixel on an LCD/OLED panel that has stopped working and no longer emits light, appearing as a small black dot."
-      },
-      {
-        q: "What is the difference between a dead pixel and a stuck pixel?",
-        a: "A dead pixel is 'dead' and emits no light (it stays black). A stuck pixel is locked onto a single color (usually red, green, or blue)."
-      },
-      {
-        q: "Can a dead pixel be fixed?",
-        a: "In most dead pixel cases, the damage is permanent. Stuck pixels, on the other hand, can sometimes be 'unstuck' with tools that flash colors rapidly, though there is no guarantee."
-      }
-    ],
-    related: ["monitor-test", "black-screen", "screen-cleaner"]
+const EDITORIAL_CONTENT = Object.freeze({
+  'black-screen': {
+    related: ['backlight-bleed', 'dead-pixel-test', 'screen-cleaner'],
+    pt: {
+      intro: 'Uma superfície preta ajuda a observar uniformidade, pixels luminosos, IPS glow e vazamento de luz em um ambiente escuro. Em OLED, pixels pretos tendem a emitir pouca ou nenhuma luz; o comportamento exato depende do painel e do processamento do dispositivo.',
+      steps: ['Abra a ferramenta e solicite tela cheia.', 'Reduza a iluminação do ambiente sem alterar o ângulo normal de uso.', 'Observe o centro, as bordas e os cantos; pressione Esc para encerrar.'],
+      uses: ['Inspeção visual de pixels claros, IPS glow e backlight bleed.', 'Redução temporária de luz e distrações em um monitor secundário.'],
+      limitations: 'Em LCD, a luz de fundo permanece ativa. Em OLED, a emissão em preto depende do painel e do processamento. A ferramenta não mede energia, contraste ou nível de preto e não garante proteção contra burn-in.',
+      faq: [['Isso economiza energia?', 'Conteúdo escuro pode reduzir consumo em alguns painéis OLED, mas o efeito varia com dispositivo, brilho e conteúdo. O MonitorSmith não mede energia.'], ['Isso identifica backlight bleed?', 'Ajuda a observar áreas claras em um ambiente escuro, mas não determina causa, tolerância de fábrica ou necessidade de reparo.']],
+    },
+    en: {
+      intro: 'A black surface helps you observe uniformity, bright pixels, IPS glow and backlight bleed in a dark room. On OLED displays, black pixels tend to emit little or no light; exact behavior depends on the panel and device processing.',
+      steps: ['Open the tool and request fullscreen.', 'Dim the room without changing your normal viewing angle.', 'Observe the center, edges and corners; press Escape to finish.'],
+      uses: ['Visual inspection of bright pixels, IPS glow and backlight bleed.', 'Temporary reduction of light and distractions on a secondary display.'],
+      limitations: 'LCD backlights remain active. OLED black emission depends on the panel and processing. The tool does not measure energy, contrast or black level and cannot guarantee burn-in protection.',
+      faq: [['Does this save energy?', 'Dark content can reduce power use on some OLED panels, but the effect varies with device, brightness and content. MonitorSmith does not measure energy.'], ['Does it identify backlight bleed?', 'It helps you observe bright areas in a dark room, but it cannot determine cause, factory tolerance or whether repair is needed.']],
+    },
   },
-  {
-    slug: "black-screen",
-    toolId: "black",
-    title: "OLED Black Screen Fullscreen",
-    description: "Display a 100% black screen in fullscreen. Ideal for backlight bleed tests, checking bright dead pixels, or as a dark second screen.",
-    h1: "OLED Black Screen Fullscreen",
-    intro: "A completely black screen is essential for checking the black uniformity on IPS monitors, testing perfect pixel shutdown on OLEDs, or simply using it as a screen saver without turning off your secondary monitor.",
-    comoUsar: [
-      "Access the tool by clicking the button below.",
-      "The screen will turn entirely black in fullscreen mode.",
-      "Dim the room lights for better inspection or just let the monitor rest.",
-      "Press ESC or tap the screen to exit."
-    ],
-    quandoUsar: [
-      "To evaluate backlight bleed and IPS glow in dark environments.",
-      "To hide distractions on a second monitor while focusing on the main one.",
-      "To check for pixels that are stuck on white (hot pixels)."
-    ],
-    limitacoes: "On traditional LCD monitors, the color black still emits backlight. True panel darkness depends on monitor technology (like OLED, which fully turns off the pixel).",
-    faq: [
-      {
-        q: "Does this save battery on laptops?",
-        a: "If your screen is OLED, yes. OLED displays turn off black pixels, saving energy. On traditional LCD screens, the backlight remains on, so savings are minimal."
-      },
-      {
-        q: "Does it help test for backlight bleed?",
-        a: "Yes! A black screen in a dark room is the best way to notice brighter corners or light patches on the screen (backlight bleeding)."
-      }
-    ],
-    related: ["backlight-bleed-test", "dead-pixel-test", "screen-cleaner"]
+  'backlight-bleed': {
+    related: ['black-screen', 'dead-pixel-test', 'monitor-test'],
+    pt: {
+      intro: 'Backlight bleed é uma passagem irregular da luz de fundo, enquanto IPS glow muda com o ângulo de visão. A tela preta ajuda a comparar visualmente essas ocorrências nas condições reais de uso.',
+      steps: ['Use o brilho que costuma empregar em conteúdo escuro.', 'Escureça o ambiente e abra a tela preta em fullscreen.', 'Observe o painel de frente e depois mova levemente o ângulo para distinguir glow de manchas fixas.'],
+      uses: ['Conferência de um monitor novo durante o prazo de devolução.', 'Comparação do comportamento de dois painéis sob as mesmas condições.'],
+      limitations: 'Câmeras costumam exagerar brilho em cenas escuras. A inspeção não mede luminância nem define sozinha se o painel está fora da especificação do fabricante.',
+      faq: [['IPS glow e backlight bleed são iguais?', 'Não. IPS glow varia com ângulo e distância; backlight bleed tende a permanecer em uma região do painel.'], ['A ferramenta conserta o vazamento?', 'Não. Ela apenas fornece uma superfície para observação. Procure o fabricante ou assistência se o efeito prejudicar o uso.']],
+    },
+    en: {
+      intro: 'Backlight bleed is irregular leakage from an LCD backlight, while IPS glow changes with viewing angle. A black screen helps you compare these effects under your real viewing conditions.',
+      steps: ['Use the brightness level you normally choose for dark content.', 'Darken the room and open the black screen fullscreen.', 'Observe straight on, then change angle slightly to distinguish glow from fixed bright patches.'],
+      uses: ['Checking a new display during its return period.', 'Comparing two panels under the same conditions.'],
+      limitations: 'Cameras often exaggerate brightness in dark scenes. This inspection does not measure luminance or determine whether a panel is outside manufacturer specifications.',
+      faq: [['Are IPS glow and backlight bleed the same?', 'No. IPS glow varies with angle and distance; backlight bleed tends to remain in one area of the panel.'], ['Can this tool fix backlight bleed?', 'No. It only provides an observation surface. Contact the manufacturer or qualified support if the effect interferes with use.']],
+    },
   },
-  {
-    slug: "monitor-test",
-    toolId: "color",
-    title: "Complete Monitor Test Online",
-    description: "Run an online monitor test to check color reproduction, contrast, and screen uniformity. Simple and no installation required.",
-    h1: "Complete Monitor Test Online",
-    intro: "Evaluating your display's performance is crucial for photo/video editing or getting the best quality in games. With this color test, you can identify color banding, poor calibration, and screen uniformity issues.",
-    comoUsar: [
-      "Start the test by clicking the button at the bottom of the page.",
-      "View different patterns and color gradients in fullscreen.",
-      "Check for smooth transitions in the gradient to spot color banding.",
-      "Go through the test screens to observe overall contrast."
-    ],
-    quandoUsar: [
-      "When buying a new monitor to verify color accuracy and uniformity.",
-      "After performing hardware or software calibration, to validate the results.",
-      "When you notice colors look washed out or unrealistic in videos or images."
-    ],
-    limitacoes: "The test provides a visual evaluation that relies on your eyes and ambient lighting. It doesn't replace a professional colorimeter (calibration hardware).",
-    faq: [
-      {
-        q: "What is color banding?",
-        a: "It's a visual artifact where color transitions in a gradient are not smooth, showing distinct lines or bands between shades of color."
-      },
-      {
-        q: "Do I need any installed software?",
-        a: "No. The entire monitor test runs through your browser, whether on PC, Mac, smartphone, or tablet."
-      }
-    ],
-    related: ["display-calibration", "dead-pixel-test", "backlight-bleed-test"]
+  'dead-pixel-test': {
+    related: ['monitor-test', 'black-screen', 'display-calibration'],
+    pt: {
+      intro: 'Cores sólidas tornam mais fácil localizar pontos que permanecem apagados, luminosos ou presos em uma cor. Limpe a superfície antes do teste para não confundir poeira com defeito do painel.',
+      steps: ['Abra o teste em tela cheia.', 'Percorra vermelho, verde, azul, ciano, magenta, amarelo, branco e preto.', 'Examine toda a área a uma distância confortável e repita qualquer resultado suspeito.'],
+      uses: ['Inspeção de monitor, celular ou tablet novo ou usado.', 'Revisão antes do fim do prazo de devolução ou garantia.'],
+      limitations: 'É uma inspeção visual, não um diagnóstico eletrônico. Ela não conserta pixels e não determina a política de tolerância do fabricante.',
+      faq: [['Qual é a diferença entre pixel morto e preso?', 'Um ponto apagado em todas as cores pode indicar pixel morto; um ponto que mantém uma cor pode indicar subpixel preso. Sujeira e escala também podem enganar.'], ['Uma página web consegue reparar pixels?', 'Não há reparo garantido. Repita a inspeção e consulte fabricante ou assistência antes de aplicar qualquer procedimento físico.']],
+    },
+    en: {
+      intro: 'Solid colors make it easier to locate points that remain dark, bright or stuck on one color. Clean the surface first so dust is not confused with a panel defect.',
+      steps: ['Open the test fullscreen.', 'Cycle through red, green, blue, cyan, magenta, yellow, white and black.', 'Inspect the entire area at a comfortable distance and repeat any suspicious result.'],
+      uses: ['Inspecting a new or used monitor, phone or tablet.', 'Reviewing a display before a return or warranty period ends.'],
+      limitations: 'This is a visual inspection, not an electronic diagnosis. It does not repair pixels or determine a manufacturer tolerance policy.',
+      faq: [['What is the difference between a dead and stuck pixel?', 'A point that stays dark on every color may indicate a dead pixel; one that keeps a color may indicate a stuck subpixel. Dirt and scaling can also mislead.'], ['Can a web page repair pixels?', 'There is no guaranteed repair. Repeat the inspection and contact the manufacturer or qualified support before attempting a physical procedure.']],
+    },
   },
-  {
-    slug: "backlight-bleed-test",
-    toolId: "black",
-    title: "Backlight Bleed Test",
-    description: "Test your monitor for backlight bleed and IPS glow. Free online tool to test screens in dark environments.",
-    h1: "Backlight Bleed and IPS Glow Test",
-    intro: "Backlight bleed and IPS glow are phenomena where the backlight leaks through the edges or corners of a dark screen, affecting immersion in movies and games. Our tool helps you identify the severity of this effect.",
-    comoUsar: [
-      "For an accurate result, turn off all room lights (100% dark environment).",
-      "Adjust the monitor brightness to the level you normally use in the dark.",
-      "Click to open the full black screen.",
-      "Inspect the edges and corners of the screen for light clouds."
-    ],
-    quandoUsar: [
-      "When purchasing a new IPS, VA, or TN monitor to check for panel issues.",
-      "If you notice bright spots in corners during dark scenes in games or movies.",
-      "To compare the black uniformity between two monitors."
-    ],
-    limitacoes: "It is normal for IPS monitors to have some glow at viewing angles (IPS glow). Smartphone cameras often exaggerate the effect in photos, so always trust what your eyes see.",
-    faq: [
-      {
-        q: "What is the difference between backlight bleed and IPS glow?",
-        a: "Backlight bleed consists of irregular light leaks, often at the edges, caused by panel assembly. IPS glow is a characteristic of IPS panels that changes brightness in corners depending on your viewing angle."
-      },
-      {
-        q: "Can backlight bleed be fixed?",
-        a: "Usually no, as it is structural to the panel assembly. If it's very intense and recent, the best option is to use the warranty or request a return."
-      }
-    ],
-    related: ["black-screen", "monitor-test", "dead-pixel-test"]
+  'screen-cleaner': {
+    related: ['dead-pixel-test', 'black-screen', 'display-calibration'],
+    pt: {
+      intro: 'Fundos de contraste ajudam a localizar poeira, marcas de dedo e resíduos antes da limpeza. A ferramenta é apenas uma referência visual; o procedimento físico continua seguindo o manual do equipamento.',
+      steps: ['Consulte primeiro as orientações do fabricante e, se indicado, desligue o equipamento.', 'Use o fundo de inspeção para localizar as áreas afetadas.', 'Limpe com material apropriado, sem borrifar líquido diretamente no painel nem aplicar pressão excessiva.'],
+      uses: ['Preparação para manutenção periódica do setup.', 'Conferência da superfície antes de instalar uma película.'],
+      limitations: 'O MonitorSmith não limpa nem protege o revestimento do painel. Produtos, líquidos e técnicas inadequados podem causar dano permanente.',
+      faq: [['Qual pano devo usar?', 'Em geral, um pano de microfibra limpo e sem fiapos; as instruções específicas do fabricante prevalecem.'], ['Posso usar limpa-vidros?', 'Não use produtos domésticos sem autorização do fabricante. Amônia, abrasivos e alguns álcoois podem danificar revestimentos.']],
+    },
+    en: {
+      intro: 'High-contrast backgrounds help locate dust, fingerprints and residue before cleaning. The tool is only a visual reference; physical cleaning must follow the device manual.',
+      steps: ['Read the manufacturer guidance first and power the device off when instructed.', 'Use the inspection background to locate affected areas.', 'Clean with suitable material without spraying liquid directly on the panel or applying excessive pressure.'],
+      uses: ['Preparing for regular setup maintenance.', 'Checking the surface before installing a protector.'],
+      limitations: 'MonitorSmith does not clean or protect panel coatings. Unsuitable products, liquids or techniques can cause permanent damage.',
+      faq: [['What cloth should I use?', 'A clean lint-free microfiber cloth is generally suitable; device-specific manufacturer instructions take priority.'], ['Can I use glass cleaner?', 'Do not use household products unless the manufacturer allows them. Ammonia, abrasives and some alcohols can damage coatings.']],
+    },
   },
-  {
-    slug: "screen-cleaner",
-    toolId: "cleaner",
-    title: "Screen Cleaning Inspection Tool",
-    description: "Use this screen to inspect for smudges, dust, and fingerprints on your monitor. Make cleaning your display easier with our online tool.",
-    h1: "Screen Cleaning and Inspection Guide",
-    intro: "To properly clean your monitor, you must be able to see all the dirt, smudges, and fingerprints. Our cleaning assist screen provides an optimal background to highlight any grime that needs removing.",
-    comoUsar: [
-      "Dim your monitor or activate our dark inspection screen.",
-      "Identify smudges and areas with accumulated dust.",
-      "Use a clean, dry microfiber cloth to remove light dust.",
-      "For smudges, slightly dampen the cloth with distilled water (never spray directly on the screen) and wipe gently."
-    ],
-    quandoUsar: [
-      "Whenever performing maintenance and cleaning on your setup.",
-      "To highlight persistent smudges that aren't visible when there's too much information on screen.",
-      "Before applying screen protectors on tablets or laptops."
-    ],
-    limitacoes: "The tool is a visual aid. You will still need proper materials (microfiber cloth and water or specific cleaner) to physically clean without damaging the display.",
-    faq: [
-      {
-        q: "Can I use alcohol or glass cleaner on my monitor?",
-        a: "It's not recommended. Harsh chemicals, rubbing alcohol, or ammonia-based glass cleaners can strip anti-reflective coatings and permanently damage the panel."
-      },
-      {
-        q: "What is the best cloth for cleaning screens?",
-        a: "It's best to use soft, lint-free microfiber cloths, similar to those used for cleaning eyeglasses."
-      }
-    ],
-    related: ["black-screen", "dead-pixel-test", "display-calibration"]
+  'monitor-test': {
+    related: ['display-calibration', 'dead-pixel-test', 'backlight-bleed'],
+    pt: {
+      intro: 'Padrões visuais ajudam a observar gradientes, tons, contraste e nitidez antes de ajustes manuais. Eles são renderizados pelo navegador e não constituem medição instrumental.',
+      steps: ['Abra a Verificação Visual em tela cheia.', 'Percorra os padrões sem alterar simultaneamente vários controles do monitor.', 'Registre observações e compare novamente sob a mesma iluminação.'],
+      uses: ['Conferência inicial de um monitor novo.', 'Comparação visual antes e depois de um ajuste manual.'],
+      limitations: 'Escala, zoom, perfil de cor, composição, brilho e iluminação afetam o resultado. Use colorímetro e software apropriado quando fidelidade de cor for requisito.',
+      faq: [['O que é color banding?', 'É a percepção de faixas em uma transição que deveria parecer contínua. O navegador, o conteúdo, o sinal e o painel podem influenciar.'], ['Este teste calibra o monitor?', 'Não. Ele fornece referências visuais; não mede o painel nem cria um perfil ICC.']],
+    },
+    en: {
+      intro: 'Visual patterns help you observe gradients, tones, contrast and sharpness before manual adjustments. They are rendered by the browser and are not instrument measurements.',
+      steps: ['Open Visual Check fullscreen.', 'Review patterns without changing several monitor controls at once.', 'Record observations and compare again under the same lighting.'],
+      uses: ['Initial inspection of a new monitor.', 'Visual comparison before and after a manual adjustment.'],
+      limitations: 'Scaling, zoom, color profile, composition, brightness and room lighting affect results. Use a colorimeter and suitable software when color fidelity is required.',
+      faq: [['What is color banding?', 'It is the perception of bands in a transition that should look continuous. Browser, content, signal and panel can all contribute.'], ['Does this test calibrate my monitor?', 'No. It provides visual references; it does not measure the panel or create an ICC profile.']],
+    },
   },
-  {
-    slug: "webcam-light",
-    toolId: "white",
-    title: "Monitor Light for Video Calls",
-    description: "Use your monitor as makeshift lighting (virtual ring light) for video calls on Zoom, Meet, and Teams.",
-    h1: "Monitor Light for Video Calls",
-    intro: "Need more light on your face during an important meeting? Use your own monitor's brightness as a fill light source (screen ring light) to instantly improve your webcam quality.",
-    comoUsar: [
-      "If you're in low light, click the button to activate the white screen.",
-      "Place the tab in split-screen alongside your video call, or on a second monitor behind the webcam.",
-      "Increase your monitor's brightness to intensify the light on your face.",
-      "Adjust the screen color, if desired, for warmer (yellowish) or cooler lighting."
-    ],
-    quandoUsar: [
-      "During meetings on Zoom, Google Meet, or Teams in poorly lit rooms.",
-      "To remove dark shadows from your face caused by background windows.",
-      "To record webcam videos when you don't have a professional ring light."
-    ],
-    limitacoes: "The range and intensity depend on your monitor's peak brightness (nits) and size. Larger monitors will provide softer, more diffused lighting.",
-    faq: [
-      {
-        q: "Does this replace a real ring light?",
-        a: "Not entirely. It's a quick and effective workaround to fill your face with light, but dedicated lighting equipment offers much more power and control."
-      },
-      {
-        q: "How can I make the light less harsh on the eyes?",
-        a: "You can change the background color of our tool from pure white to a warm/peach tone, simulating the color temperature of a warm bulb."
-      }
-    ],
-    related: ["fullscreen-message", "online-teleprompter", "fullscreen-clock"]
+  'display-calibration': {
+    related: ['monitor-test', 'backlight-bleed', 'screen-cleaner'],
+    pt: {
+      intro: 'A Verificação Visual reúne referências para sombras, realces, escala de cinza, gradientes, contraste e nitidez. Use-as para observar o comportamento do conjunto navegador–sistema–monitor.',
+      steps: ['Restabeleça um preset conhecido do monitor e estabilize a iluminação do ambiente.', 'Abra um padrão por vez e siga a orientação exibida na ferramenta.', 'Faça ajustes pequenos, compare e retorne ao padrão anterior se perder detalhes.'],
+      uses: ['Identificação de sombras esmagadas ou realces sem detalhe.', 'Comparação visual de dois monitores sob a mesma condição.'],
+      limitations: 'A avaliação é subjetiva. Os padrões não medem gama, luminância, gamut, PWM, resolução física ou taxa de atualização e não substituem instrumentação.',
+      faq: [['Devo alterar brilho ou contraste?', 'Depende do monitor. Consulte o manual, ajuste uma variável por vez e preserve um modo conhecido para comparação.'], ['Posso usar isso em trabalho de cor?', 'Como inspeção preliminar, sim. Para decisões de cor, calibre e perfile o monitor com hardware e software adequados.']],
+    },
+    en: {
+      intro: 'Visual Check provides references for shadows, highlights, grayscale, gradients, contrast and sharpness. Use them to observe the browser–system–display combination.',
+      steps: ['Restore a known monitor preset and stabilize room lighting.', 'Open one pattern at a time and follow the guidance shown by the tool.', 'Make small adjustments, compare, and return to the previous setting if detail is lost.'],
+      uses: ['Observing crushed shadows or clipped highlights.', 'Visually comparing two displays under the same conditions.'],
+      limitations: 'Evaluation is subjective. Patterns do not measure gamma, luminance, gamut, PWM, physical resolution or refresh rate and do not replace instruments.',
+      faq: [['Should I change brightness or contrast?', 'It depends on the monitor. Read its manual, change one variable at a time, and keep a known preset for comparison.'], ['Can I use this for color work?', 'As a preliminary check, yes. For color decisions, calibrate and profile the monitor with suitable hardware and software.']],
+    },
   },
-  {
-    slug: "green-screen",
-    toolId: "color",
-    title: "Green Screen Chroma Key Online",
-    description: "Create a green screen background (chroma key) on your monitor, phone, or tablet for visual effects, videos, or fullscreen photos.",
-    h1: "Fullscreen Green Screen (Chroma Key)",
-    intro: "Chroma keying allows for easy background removal in video editing or live streaming. With our online green screen tool, you can instantly turn your monitor, tablet, or smartphone into a chroma key panel.",
-    comoUsar: [
-      "Access the tool and select the green screen option.",
-      "Turn your device's screen brightness to maximum and avoid lights that cause glare on the screen.",
-      "Place the tablet or monitor behind the objects you wish to record.",
-      "In your editing software (Premiere, OBS Studio, DaVinci), apply the Chroma Key effect to key out the green."
-    ],
-    quandoUsar: [
-      "For visual effects on small objects using an iPad or phone screen.",
-      "To photograph products with an easily removable background.",
-      "To create creative transitions using a laptop screen."
-    ],
-    limitacoes: "Since screens emit light, the green can spill onto the photographed object, making editing harder. Also, room reflections on the monitor glass might ruin the effect.",
-    faq: [
-      {
-        q: "Can I use other colors, like a blue screen?",
-        a: "Yes, the tool allows you to select solid colors (like blue or magenta), which is ideal if the object being recorded contains greenish elements."
-      },
-      {
-        q: "How do I avoid screen reflections?",
-        a: "Record in a dark room where the only light is from the screen, or use polarizing filters on your camera lens."
-      }
-    ],
-    related: ["webcam-light", "black-screen", "online-teleprompter"]
+  'webcam-light': {
+    related: ['green-screen', 'fullscreen-message', 'focus-timer'],
+    pt: {
+      intro: 'Uma tela clara pode funcionar como luz de preenchimento próxima quando não há iluminação dedicada. O controle de temperatura é uma aproximação visual de cor, não uma medição da luz emitida.',
+      steps: ['Posicione a janela próxima à webcam ou use um segundo monitor.', 'Comece com intensidade baixa e ajuste a tonalidade conforme o ambiente.', 'Evite reflexos em óculos e reduza o brilho se houver desconforto.'],
+      uses: ['Videochamadas em ambientes com pouca luz frontal.', 'Luz de apoio próxima para pequenos objetos e gravações.'],
+      limitations: 'Intensidade, temperatura efetiva e qualidade dependem do painel, brilho físico, perfil e ambiente. Não substitui iluminação dedicada.',
+      faq: [['Substitui uma ring light?', 'Pode ajudar como preenchimento próximo, mas oferece menos alcance e controle que uma fonte dedicada.'], ['A temperatura exibida é exata?', 'Não. É uma aproximação de cor renderizada em sRGB, influenciada pelo monitor e pelo ambiente.']],
+    },
+    en: {
+      intro: 'A bright screen can work as nearby fill light when dedicated lighting is unavailable. The temperature control is a visual color approximation, not a measurement of emitted light.',
+      steps: ['Place the window near the webcam or use a second monitor.', 'Start at low intensity and adjust the tint to the room.', 'Avoid reflections on glasses and reduce brightness if uncomfortable.'],
+      uses: ['Video calls with limited frontal lighting.', 'Nearby fill light for small objects and recordings.'],
+      limitations: 'Intensity, effective temperature and quality depend on panel, physical brightness, profile and room. It does not replace dedicated lighting.',
+      faq: [['Does it replace a ring light?', 'It can provide nearby fill, but has less reach and control than a dedicated source.'], ['Is the displayed temperature exact?', 'No. It is an sRGB color approximation influenced by the monitor and environment.']],
+    },
   },
-  {
-    slug: "focus-timer",
-    toolId: "focus-timer",
-    title: "Focus Timer with Brown Noise",
-    description: "Improve your concentration with our minimalist focus timer. Includes brown and white noise to drown out distractions while working or studying.",
-    h1: "Focus Timer with Brown Noise",
-    intro: "Stay focused on difficult tasks with our minimalist timer. Based on uninterrupted focus cycles and supplemented by soundscapes like brown and white noise, it's ideal for blocking background sounds and aiding people on the ADHD spectrum.",
-    comoUsar: [
-      "Set the time you want to stay focused for (e.g., 25, 45, or 60 minutes).",
-      "Select a background sound (Brown, White, or Pink Noise) to muffle ambient noise.",
-      "Click Start and leave it in fullscreen on a secondary monitor.",
-      "When the time runs out, take a short break."
-    ],
-    quandoUsar: [
-      "During intense study sessions (Pomodoro technique).",
-      "In noisy offices where it's hard to focus on programming, reading, or writing tasks.",
-      "When trying to meditate or perform repetitive tasks that require mindfulness."
-    ],
-    limitacoes: "Effectiveness relies on your discipline to not switch tabs. It's recommended to use headphones to fully benefit from the sound blocking.",
-    faq: [
-      {
-        q: "What is Brown Noise?",
-        a: "Brown noise emphasizes lower frequencies (like the sound of a distant waterfall or ocean). Many find it less harsh than white noise and excellent for deep concentration."
-      },
-      {
-        q: "Why do background sounds help?",
-        a: "Continuous sounds like pink and brown noise create a 'sound curtain' that masks sudden noise variations (like chatter or doors slamming), reducing distractions and allowing the brain to relax."
-      }
-    ],
-    related: ["fullscreen-clock", "fullscreen-message", "online-teleprompter"]
+  'green-screen': {
+    related: ['webcam-light', 'fullscreen-message', 'sponsor-loop'],
+    pt: {
+      intro: 'O atalho Tela Verde abre o Estúdio de Cor com o preset sRGB #00B140. Ele pode servir como fundo luminoso para objetos pequenos e composições simples.',
+      steps: ['Abra a ferramenta e confirme que o fundo está verde.', 'Posicione a tela atrás do objeto sem exibir controles.', 'Evite reflexos e ajuste a chave de cor no software de captura.'],
+      uses: ['Captura de pequenos objetos diante de um tablet ou monitor.', 'Fundo auxiliar em OBS ou software de edição.'],
+      limitations: 'A tela emite luz e pode causar spill verde. Painel, câmera, perfil, brilho e ambiente alteram a cor capturada; não é um fundo chroma físico calibrado.',
+      faq: [['Posso escolher azul?', 'Sim. Abra o Estúdio de Cor e escolha outro tom quando o objeto contiver verde.'], ['Como reduzir reflexos?', 'Controle a iluminação e o ângulo entre tela, objeto e câmera; filtros polarizadores podem ajudar em situações específicas.']],
+    },
+    en: {
+      intro: 'The Green Screen shortcut opens Color Studio with the #00B140 sRGB preset. It can serve as a luminous background for small objects and simple composites.',
+      steps: ['Open the tool and confirm the background is green.', 'Place the display behind the object with controls hidden.', 'Avoid reflections and tune the color key in your capture software.'],
+      uses: ['Capturing small objects against a tablet or monitor.', 'An auxiliary background in OBS or editing software.'],
+      limitations: 'A display emits light and can cause green spill. Panel, camera, profile, brightness and room alter the captured color; this is not a calibrated physical chroma backdrop.',
+      faq: [['Can I choose blue?', 'Yes. Open Color Studio and select another tone when the subject contains green.'], ['How can I reduce reflections?', 'Control lighting and angles between display, subject and camera; polarizing filters can help in specific situations.']],
+    },
   },
-  {
-    slug: "fullscreen-clock",
-    toolId: "clock",
-    title: "Fullscreen Clock Display",
-    description: "Large and minimalist digital clock in fullscreen. Use it on secondary monitors, dashboards, exams, or as a screensaver for your setup.",
-    h1: "Minimalist Fullscreen Digital Clock",
-    intro: "A large, aesthetically pleasing digital clock free of distractions, perfect for filling the screen of secondary monitors, information dashboards, or keeping track of time during events and lectures.",
-    comoUsar: [
-      "Open the tool page to view the clock with the current time.",
-      "Press the fullscreen button to hide the browser bars.",
-      "Adjust the background color and number style to match your room or setup.",
-      "Keep the tab open on your chosen device."
-    ],
-    quandoUsar: [
-      "As a useful screensaver for your computer.",
-      "On monitors facing the stage during lectures or exams, to help speakers manage their time.",
-      "To display time on digital signage in stores, receptions, or classrooms."
-    ],
-    limitacoes: "Relies on your device's operating system clock. Very old devices that go into deep sleep may cause visual delays until the tab is reactivated.",
-    faq: [
-      {
-        q: "Does the clock work offline?",
-        a: "No. The tool is not an installed app, so it requires the tab to remain open. Once loaded, it doesn't consume data, but the page needs an internet connection to load."
-      },
-      {
-        q: "Is there a dark mode?",
-        a: "Yes! By default, the tool uses a dark, minimalist theme to avoid straining your eyes in low-light environments."
-      }
-    ],
-    related: ["focus-timer", "fullscreen-message", "black-screen"]
+  'focus-timer': {
+    related: ['fullscreen-clock', 'fullscreen-message', 'webcam-light'],
+    pt: {
+      intro: 'O timer organiza períodos de trabalho e pausa em uma tela discreta. Sons contínuos opcionais podem mascarar parte do ruído ambiente, mas preferências e resultados variam entre pessoas.',
+      steps: ['Escolha a duração do ciclo e, se desejar, um som ambiente.', 'Inicie o timer e ajuste o volume em nível confortável.', 'Ao finalizar, faça a pausa planejada e reinicie conscientemente.'],
+      uses: ['Blocos de estudo, leitura, escrita ou programação.', 'Referência de tempo em um monitor secundário.'],
+      limitations: 'É uma ferramenta de organização, não um tratamento de saúde. Sons não eliminam todo o ruído; interrompa o áudio se houver desconforto.',
+      faq: [['O que é ruído marrom?', 'É um ruído contínuo com maior energia em frequências baixas. Algumas pessoas o consideram mais suave que o ruído branco.'], ['Preciso usar fones?', 'Não. Se usar, mantenha volume moderado e respeite sua percepção de conforto.']],
+    },
+    en: {
+      intro: 'The timer organizes work and break periods on a quiet screen. Optional continuous sounds may mask some ambient noise, but preferences and results vary by person.',
+      steps: ['Choose a cycle duration and, optionally, an ambient sound.', 'Start the timer and set a comfortable volume.', 'When it ends, take the planned break and restart deliberately.'],
+      uses: ['Study, reading, writing or programming blocks.', 'A time reference on a secondary display.'],
+      limitations: 'This is an organization aid, not a health treatment. Sounds do not remove all noise; stop audio if it causes discomfort.',
+      faq: [['What is brown noise?', 'It is continuous noise with more energy at lower frequencies. Some people perceive it as softer than white noise.'], ['Do I need headphones?', 'No. If you use them, keep volume moderate and follow your own comfort.']],
+    },
   },
-  {
-    slug: "fullscreen-message",
-    toolId: "message",
-    title: "Fullscreen Message Display",
-    description: "Display a large text sign in fullscreen. Use it to communicate information, quick warnings, or messages from a distance.",
-    h1: "Fullscreen Message and Signboard",
-    intro: "Need to relay information to someone across the room but can't speak? Display texts in giant letters filling the entire screen of your phone, tablet, or monitor with our digital signboard tool.",
-    comoUsar: [
-      "Access the tool and type your desired text in the field.",
-      "The text will scale automatically to fill as much screen space as possible.",
-      "Select bold colors for high contrast (like yellow on black).",
-      "Show the screen to the person or audience."
-    ],
-    quandoUsar: [
-      "To pick someone up at the airport with a tablet.",
-      "To pass a quick message to a colleague in a meeting room or studio where silence is required.",
-      "As a 'be right back' sign at workstations or booths."
-    ],
-    limitacoes: "Very long sentences will cause the font size to shrink, reducing readability at a distance. Keep texts short and to the point.",
-    faq: [
-      {
-        q: "Does the text adjust on phones and TVs?",
-        a: "Yes, our tool is responsive. The text automatically resizes to fit any screen format, whether vertically on a smartphone or on a 4K TV."
-      },
-      {
-        q: "Can I save the message?",
-        a: "Messages are temporary and work only in the active browser tab for quick, immediate communication."
-      }
-    ],
-    related: ["online-teleprompter", "fullscreen-clock", "webcam-light"]
+  'fullscreen-clock': {
+    related: ['focus-timer', 'fullscreen-message', 'black-screen'],
+    pt: {
+      intro: 'O relógio mostra hora e data do dispositivo em composições digital e analógica para uma tela secundária, sala ou evento.',
+      steps: ['Abra a ferramenta e escolha o estilo.', 'Solicite fullscreen se quiser ocultar as barras do navegador.', 'Mantenha a aba aberta e verifique se a hora do sistema está correta.'],
+      uses: ['Monitor secundário em mesa, recepção ou estúdio.', 'Referência de horário durante uma apresentação.'],
+      limitations: 'A hora vem do sistema operacional. Suspensão, aba em segundo plano e políticas de energia podem interromper atualizações até a página voltar a ficar ativa.',
+      faq: [['Funciona offline?', 'Depois que o PWA for baixado, pode continuar disponível sem rede enquanto o navegador preservar o cache.'], ['É uma fonte de horário certificada?', 'Não. Ele apenas apresenta o relógio configurado no dispositivo.']],
+    },
+    en: {
+      intro: 'The clock displays the device time and date in digital and analog layouts for a secondary display, room or event.',
+      steps: ['Open the tool and choose a style.', 'Request fullscreen if you want to hide browser chrome.', 'Keep the tab open and verify the system clock is correct.'],
+      uses: ['A secondary display on a desk, reception or studio.', 'A time reference during a presentation.'],
+      limitations: 'Time comes from the operating system. Sleep, background-tab throttling and power policies can pause updates until the page is active again.',
+      faq: [['Does it work offline?', 'After the PWA has been downloaded, it may remain available without a network while the browser preserves its cache.'], ['Is it a certified time source?', 'No. It only presents the clock configured on the device.']],
+    },
   },
-  {
-    slug: "online-teleprompter",
-    toolId: "message",
-    title: "Free Online Teleprompter",
-    description: "Read your scripts easily with our free online teleprompter. Features speed control, font adjustment, and text mirroring.",
-    h1: "Free Online Teleprompter",
-    intro: "Record videos more professionally without having to memorize long texts. Our online teleprompter tool automatically scrolls your script on the screen, allowing you to maintain eye contact and convey credibility.",
-    comoUsar: [
-      "Paste or type your text or script in the main area.",
-      "Adjust the text size for comfortable reading.",
-      "Set your desired scrolling speed.",
-      "Enable screen mirroring if using a teleprompter reflector glass in front of your camera."
-    ],
-    quandoUsar: [
-      "During video recordings for YouTube, online courses, or social media.",
-      "When hosting webinars or live presentations where speech fluency is crucial.",
-      "Recording speeches using a tablet positioned near the camera lens."
-    ],
-    limitacoes: "On very wide monitors without teleprompter equipment, eyes may noticeably dart from side to side.",
-    faq: [
-      {
-        q: "Do I need to download any software?",
-        a: "No, our teleprompter runs 100% online in your web browser, quickly and securely."
-      },
-      {
-        q: "How do I avoid looking like I'm reading?",
-        a: "Increase the side margins of the text. The narrower the text column (and the closer it is to the camera lens), the less your eyes will move side to side."
-      }
-    ],
-    related: ["fullscreen-message", "webcam-light", "fullscreen-clock"]
+  'fullscreen-message': {
+    related: ['online-teleprompter', 'fullscreen-clock', 'webcam-light'],
+    pt: {
+      intro: 'Crie um aviso curto e legível para recepção, reunião, palco ou comunicação silenciosa. Cores e escala podem ser ajustadas antes de ocultar os controles.',
+      steps: ['Digite uma mensagem curta.', 'Escolha cores com contraste forte e ajuste o tamanho.', 'Abra em fullscreen e posicione a tela para o público.'],
+      uses: ['Aviso de reunião, retorno ou orientação em uma sala.', 'Sinalização temporária em tablet, TV ou monitor.'],
+      limitations: 'Mensagens longas reduzem a legibilidade à distância. O usuário é responsável pelo conteúdo exibido e pelas permissões para uso de marcas ou dados pessoais.',
+      faq: [['A mensagem fica salva?', 'O estado é local à aplicação e pode ser apagado pelo navegador; não use como armazenamento permanente.'], ['O QR é gerado a partir do texto?', 'Quando o modo QR está ativo, o código representa o conteúdo informado. Teste com outro dispositivo antes de exibi-lo ao público.']],
+    },
+    en: {
+      intro: 'Create a short readable notice for reception, meetings, stages or silent communication. Colors and scale can be adjusted before controls are hidden.',
+      steps: ['Enter a short message.', 'Choose high-contrast colors and adjust size.', 'Open fullscreen and position the display for the audience.'],
+      uses: ['Meeting, return-time or room guidance notices.', 'Temporary signage on a tablet, TV or monitor.'],
+      limitations: 'Long messages reduce readability at a distance. The user is responsible for displayed content and permission to use brands or personal data.',
+      faq: [['Is the message permanently saved?', 'State is local to the application and may be cleared by the browser; do not use it as permanent storage.'], ['Is the QR generated from the text?', 'When QR mode is active, the code represents the provided content. Test it with another device before public use.']],
+    },
   },
-  {
-    slug: "display-calibration",
-    toolId: "calibration",
-    title: "Display Calibration Patterns",
-    description: "Visual tools and patterns to help with the basic calibration of your monitor, ensuring better contrast, brightness, and fidelity.",
-    h1: "Visual Verification and Calibration",
-    intro: "Poorly configured monitors can cause eye strain or ruin image editing work. Our calibration patterns help you manually adjust brightness, contrast, and gray levels using your monitor's built-in menus.",
-    comoUsar: [
-      "Access the visual patterns by clicking below.",
-      "For brightness adjustment (Black Level): tweak until only the darkest black squares blend into the background.",
-      "For contrast adjustment (White Level): tweak until you can just distinguish the lightest white squares from the 100% white background.",
-      "For Gamma: verify if the grayscale gradient bars show a linear transition without spurious colors (green or magenta) in the middle."
-    ],
-    quandoUsar: [
-      "When setting up a brand-new monitor straight out of the box.",
-      "Before starting photo retouching or video editing.",
-      "When you notice dark areas in movies are completely crushed (lacking detail)."
-    ],
-    limitacoes: "Visual calibration is very helpful, but it does not replace the precision of a professional hardware colorimeter, which creates an absolute ICC profile for your panel.",
-    faq: [
-      {
-        q: "What is the difference between brightness and contrast on a monitor?",
-        a: "Generally, the brightness control adjusts the level of black tones (how deep they are). Contrast adjusts the white levels (the upper limit of luminosity before losing detail)."
-      },
-      {
-        q: "Should I use factory default settings?",
-        a: "Many monitors come factory-configured for store displays: intense brightness and oversaturated colors. For home or office use, manual calibration provides a more comfortable and accurate experience."
-      }
-    ],
-    related: ["monitor-test", "backlight-bleed-test", "screen-cleaner"]
+  'online-teleprompter': {
+    related: ['fullscreen-message', 'webcam-light', 'fullscreen-clock'],
+    pt: {
+      intro: 'O modo espelhado apresenta texto como apoio simples para gravações com vidro refletor ou leitura próxima à câmera.',
+      steps: ['Cole ou digite o roteiro.', 'Ajuste tamanho, largura e velocidade de rolagem.', 'Ative espelhamento apenas se o equipamento exigir e faça um ensaio.'],
+      uses: ['Gravações de aulas, apresentações e vídeos.', 'Leitura orientada em tablet ou monitor próximo à lente.'],
+      limitations: 'Distância, largura da coluna e posição da câmera influenciam o movimento dos olhos. Faça ensaios; a ferramenta não substitui equipamento dedicado.',
+      faq: [['Preciso instalar um programa?', 'Não. A ferramenta abre no navegador; recursos armazenados pelo PWA podem funcionar offline enquanto o cache existir.'], ['Como reduzir o movimento dos olhos?', 'Use coluna estreita, texto legível e posicione a leitura o mais próximo possível da lente.']],
+    },
+    en: {
+      intro: 'Mirrored mode presents text as a simple reading aid for recordings with reflector glass or a display near the camera.',
+      steps: ['Paste or type the script.', 'Adjust size, column width and scroll speed.', 'Enable mirroring only when your equipment requires it and rehearse.'],
+      uses: ['Recording lessons, presentations and videos.', 'Guided reading on a tablet or monitor close to the lens.'],
+      limitations: 'Distance, column width and camera position affect eye movement. Rehearse first; this tool does not replace dedicated equipment.',
+      faq: [['Do I need to install a program?', 'No. The tool opens in a browser; PWA-cached resources may work offline while the cache remains available.'], ['How can I reduce visible eye movement?', 'Use a narrow column, readable text and place the reading area as close to the lens as possible.']],
+    },
   },
-  {
-    slug: "sponsor-loop",
-    toolId: "sponsor-loop",
-    title: "Sponsor Logo Loop & Digital Signage",
-    description: "Automatically rotate sponsor logos and brand images fullscreen. Smooth transitions, chroma key backgrounds and OLED burn-in protection.",
-    h1: "Sponsor Logo Loop & Signage Studio",
-    intro: "Designed for live events, esports, trade shows and digital displays. Upload PNG or SVG logos, set display duration and transition style, then let your monitor cycle through them automatically.",
-    comoUsar: [
-      "Open the tool and drag your logos into the upload area (or click to browse).",
-      "Set the duration per slide and choose a transition type (fade, zoom, slide or cut).",
-      "Pick a background color: OLED black, white, chroma key green, or a custom color.",
-      "Press Start and enter fullscreen mode (press F)."
-    ],
-    quandoUsar: [
-      "To display sponsor logos at esports tournaments and live events.",
-      "In store displays, showrooms and trade show booths.",
-      "As a background display for YouTube recordings, podcasts and live streams."
-    ],
-    limitacoes: "All images are processed locally in your browser. We do not store any uploaded files. We recommend PNG or SVG logos with transparent backgrounds for best results.",
-    faq: [
-      {
-        q: "Can I use this with green screen for chroma keying in OBS?",
-        a: "Yes. Select the 'Chroma Key' background in the tool and capture the window in OBS with a chroma key filter to overlay the logos on your stream."
-      },
-      {
-        q: "Does the anti burn-in protection work on OLED TVs?",
-        a: "Yes. When enabled, the tool shifts the image by a few pixels each cycle, preventing permanent image retention on static OLED panels."
-      }
-    ],
-    related: ["fullscreen-message", "green-screen", "webcam-light"]
-  }
-];
+  'sponsor-loop': {
+    related: ['fullscreen-message', 'green-screen', 'webcam-light'],
+    pt: {
+      intro: 'O Loop de Marcas apresenta imagens selecionadas no dispositivo em uma sequência de tela cheia para eventos, transmissões e vitrines.',
+      steps: ['Selecione somente imagens que tenha autorização para exibir.', 'Organize a ordem, duração, transição e cor de fundo.', 'Inicie a sequência, confira o enquadramento e então solicite fullscreen.'],
+      uses: ['Logos de patrocinadores em eventos e transmissões.', 'Apresentação temporária de marcas em estandes ou vitrines.'],
+      limitations: 'As imagens ficam na sessão local e podem consumir memória. Movimento discreto não garante prevenção de burn-in; use também as proteções do fabricante e evite sessões estáticas prolongadas.',
+      faq: [['Posso usar fundo chroma no OBS?', 'Sim. Escolha o fundo verde e configure a chave no software de captura, conferindo bordas e reflexos.'], ['O deslocamento evita burn-in?', 'Não há garantia. Ele reduz a permanência na mesma posição, mas não elimina desgaste ou retenção.']],
+    },
+    en: {
+      intro: 'Brand Loop presents images selected on the device in a fullscreen sequence for events, streams and displays.',
+      steps: ['Select only images you are authorized to display.', 'Arrange order, duration, transition and background color.', 'Start the sequence, check framing, then request fullscreen.'],
+      uses: ['Sponsor logos at events and streams.', 'Temporary brand presentation at booths or store displays.'],
+      limitations: 'Images remain in the local session and can use significant memory. Subtle movement cannot guarantee burn-in prevention; also use manufacturer protections and avoid prolonged static sessions.',
+      faq: [['Can I use a chroma background in OBS?', 'Yes. Choose green and configure the key in capture software, checking edges and reflections.'], ['Does movement prevent burn-in?', 'There is no guarantee. It reduces time in one position but does not eliminate wear or retention.']],
+    },
+  },
+});
 
-const ptToEnSlugs = {
-  "teste-de-dead-pixel": "dead-pixel-test",
-  "tela-preta-oled": "black-screen",
-  "teste-de-monitor": "monitor-test",
-  "teste-de-vazamento-de-luz": "backlight-bleed-test",
-  "limpeza-de-monitor": "screen-cleaner",
-  "luz-para-videochamada": "webcam-light",
-  "tela-verde-chroma": "green-screen",
-  "timer-de-foco": "focus-timer",
-  "relogio-em-tela-cheia": "fullscreen-clock",
-  "mensagem-em-tela": "fullscreen-message",
-  "teleprompter-online": "online-teleprompter",
-  "verificacao-visual": "display-calibration",
-  "loop-de-marcas": "sponsor-loop"
-};
+const LEGAL_PAGES = Object.freeze([
+  {
+    slug: 'privacidade',
+    title: 'Política de Privacidade — MonitorSmith',
+    description: 'Dados locais e serviços externos envolvidos na operação do MonitorSmith.',
+    h1: 'Política de Privacidade',
+    sections: [
+      ['Resumo', ['As ferramentas visuais do MonitorSmith executam no navegador. Textos, cores e imagens escolhidos dentro das ferramentas não são enviados pela EXVORN.TECH a servidor próprio para processamento.', 'A operação do site pode envolver infraestrutura e publicidade de terceiros. Esta página explica essa diferença.']],
+      ['Dados no dispositivo', ['Preferências, consentimentos e avisos podem ser guardados no armazenamento local. O PWA usa cache técnico para recursos já baixados.', 'Imagens adicionadas ao Loop de Marcas são lidas localmente durante a sessão. Evite arquivos com informações pessoais desnecessárias.']],
+      ['Serviços externos', ['O Google AdSense permanece integrado para validação do domínio e possível publicidade. Conforme região, configuração e consentimento aplicável, Google e parceiros podem tratar IP, identificadores, dados do navegador e interação com anúncios.', 'As fontes tipográficas são distribuídas com a aplicação e não exigem uma solicitação ao Google Fonts. O GitHub hospeda o repositório público sob sua própria política.']],
+      ['Controle e contato', ['Você pode limpar dados, permissões e cache nas configurações do navegador, revogar consentimentos disponíveis e desinstalar o PWA.', `Para solicitações relativas a dados sob responsabilidade direta da EXVORN.TECH, use o canal institucional em ${SITE_METADATA.contactUrl}. Poderemos pedir informações mínimas para verificar e responder ao pedido.`]],
+      ['Atualizações', [`Revisão de ${SITE_METADATA.contentLastModified}. Alterações materiais serão refletidas nesta página, que deve receber revisão jurídica periódica compatível com a operação do produto.`]],
+    ],
+  },
+  {
+    slug: 'termos',
+    title: 'Termos de Uso — MonitorSmith',
+    description: 'Condições e limitações de uso das ferramentas visuais do MonitorSmith.',
+    h1: 'Termos de Uso',
+    sections: [
+      ['Uso', ['O MonitorSmith fornece superfícies, padrões visuais e utilitários executados no navegador. O uso é voluntário e deve respeitar leis, direitos de terceiros e orientações do fabricante.', 'Não use o produto para conteúdo ilícito, violação de direitos, comprometimento do site ou para apresentar uma inspeção visual como laudo técnico.']],
+      ['Limites técnicos', ['Os resultados são observacionais. O MonitorSmith não mede diretamente eletrônica do painel, não certifica resolução, taxa de atualização, fidelidade de cor, cabo, GPU ou ausência de defeitos.', 'Navegador, sistema, escala, gerenciamento de cor, brilho, iluminação e percepção influenciam o resultado. Use instrumentos e assistência qualificada em decisões relevantes.']],
+      ['Segurança', ['Interrompa o uso se luz, contraste, som ou movimento causarem desconforto. Siga as orientações de limpeza e ergonomia do fabricante.', 'Fullscreen, Wake Lock, áudio, instalação e offline dependem de suporte, permissão e políticas do navegador.']],
+      ['Conteúdo e direitos', ['Você é responsável por imagens, marcas e mensagens inseridas e deve ter autorização para exibi-las.', 'Marca, identidade e conteúdo editorial pertencem aos respectivos titulares. O código no GitHub segue a licença declarada no repositório.']],
+      ['Terceiros e contato', ['Links, anúncios e serviços externos seguem os termos dos fornecedores. O produto pode ser atualizado ou interrompido por segurança e evolução.', `Revisão de ${SITE_METADATA.contentLastModified}. O contato institucional está em ${SITE_METADATA.contactUrl}. Estes termos devem receber revisão jurídica periódica.`]],
+    ],
+  },
+]);
 
-const enToPtSlugs = Object.fromEntries(Object.entries(ptToEnSlugs).map(([k, v]) => [v, k]));
+const ROUTE_BY_KEY = new Map(SEO_PAGE_ROUTES.map((route) => [route.key, route]));
 
-function generateHTML(page, lang = "pt-BR", allPagesList = pages) {
-  const isEn = lang === "en";
-  const ptSlug = isEn ? enToPtSlugs[page.slug] : page.slug;
-  const enSlug = isEn ? page.slug : ptToEnSlugs[page.slug];
-  const pageUrl = isEn ? `${BASE_URL}/en/${page.slug}/` : `${BASE_URL}/${page.slug}/`;
+function validateEditorialContent() {
+  validateToolsRegistry();
+  const errors = [];
+  const catalogKeys = new Set(SEO_PAGE_ROUTES.map((route) => route.key));
+  const contentKeys = new Set(Object.keys(EDITORIAL_CONTENT));
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": page.title,
-    "url": pageUrl,
-    "description": page.description,
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "All",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
+  for (const route of SEO_PAGE_ROUTES) {
+    const content = EDITORIAL_CONTENT[route.key];
+    if (!content) {
+      errors.push(`Rota sem conteúdo editorial: ${route.key}`);
+      continue;
     }
+    for (const locale of ['pt', 'en']) {
+      const page = content[locale];
+      if (!page?.intro || page.steps?.length < 3 || page.uses?.length < 2 || !page.limitations || page.faq?.length < 2) {
+        errors.push(`Conteúdo incompleto: ${route.key}/${locale}`);
+      }
+    }
+    for (const relatedKey of content.related || []) {
+      if (!catalogKeys.has(relatedKey)) errors.push(`Relação inexistente: ${route.key} -> ${relatedKey}`);
+    }
+  }
+
+  for (const key of contentKeys) {
+    if (!catalogKeys.has(key)) errors.push(`Conteúdo sem rota no catálogo: ${key}`);
+  }
+  if (errors.length) throw new Error(`Conteúdo de build inválido:\n- ${errors.join('\n- ')}`);
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function safeJson(value) {
+  return JSON.stringify(value).replaceAll('<', '\\u003c');
+}
+
+function localizedPage(route, locale) {
+  const metadata = route[locale];
+  const editorial = EDITORIAL_CONTENT[route.key];
+  const content = editorial[locale];
+  return { route, locale, metadata, content, relatedKeys: editorial.related };
+}
+
+function renderToolPage(route, locale) {
+  const isEn = locale === 'en';
+  const { metadata, content, relatedKeys } = localizedPage(route, locale);
+  const lang = isEn ? 'en' : 'pt-BR';
+  const pageUrl = isEn ? `${BASE_URL}/en/${metadata.slug}/` : `${BASE_URL}/${metadata.slug}/`;
+  const ptUrl = `${BASE_URL}/${route.pt.slug}/`;
+  const enUrl = `${BASE_URL}/en/${route.en.slug}/`;
+  const related = relatedKeys.map((key) => {
+    const relatedRoute = ROUTE_BY_KEY.get(key);
+    const item = relatedRoute[locale];
+    const href = isEn ? `/en/${item.slug}/` : `/${item.slug}/`;
+    return `<li><a href="${href}">${escapeHtml(item.title)}</a></li>`;
+  }).join('');
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: metadata.title,
+    description: metadata.description,
+    url: pageUrl,
+    inLanguage: lang,
+    dateModified: route.lastModified,
+    isPartOf: { '@type': 'WebSite', name: SITE_METADATA.name, url: `${BASE_URL}/` },
+    publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
   };
-
-  const jsonLdWebPage = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": page.title,
-    "description": page.description,
-    "url": pageUrl
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: content.faq.map(([question, answer]) => ({
+      '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
   };
+  const labels = isEn
+    ? { back: 'All tools', open: 'Open tool', how: 'How to use', when: 'When to use', limits: 'Limitations', faq: 'Questions', related: 'Related guides', privacy: 'Privacy', terms: 'Terms', contact: 'Contact', interfaceNote: 'The interactive application currently uses a Portuguese interface.' }
+    : { back: 'Todas as ferramentas', open: 'Abrir ferramenta', how: 'Como usar', when: 'Quando usar', limits: 'Limitações', faq: 'Perguntas', related: 'Guias relacionados', privacy: 'Privacidade', terms: 'Termos de uso', contact: 'Contato', interfaceNote: '' };
 
-  const relatedLinksHtml = page.related.map(rel => {
-    const p = allPagesList.find(pg => pg.slug === rel);
-    const href = isEn ? `/en/${p.slug}/` : `/${p.slug}/`;
-    return p ? `<li><a href="${href}">${p.title}</a></li>` : "";
-  }).join("\n        ");
-  
-  const backAllText = isEn ? "← All tools" : "← Todas as ferramentas";
-  const ctaText = isEn ? "🚀 Open Free Tool in Fullscreen" : "🚀 Abrir Ferramenta Online em Tela Cheia";
-  const footerText = isEn ? "Back to all MonitorSmith tools" : "Voltar para todas as ferramentas do MonitorSmith";
-  const copyrightText = isEn ? "© EXVORN.TECH — Free Web Tool Suite for Displays & Monitors" : "© EXVORN.TECH — Suíte Gratuita de Ferramentas Web para Display & Monitores";
-  const howToUseTitle = isEn ? "How to use" : "Como usar";
-  const whenToUseTitle = isEn ? "When to use" : "Quando usar";
-  const limitationsTitle = isEn ? "Limitations" : "Limitações";
-  const faqTitle = isEn ? "Frequently Asked Questions (FAQ)" : "Perguntas Frequentes (FAQ)";
-  const relatedTitle = isEn ? "Related Tools" : "Ferramentas Relacionadas";
-
-  return `<!DOCTYPE html>
+  return `<!doctype html>
 <html lang="${lang}">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${page.title}</title>
-  <meta name="description" content="${page.description}">
-  <link rel="canonical" href="${pageUrl}">
-  <link rel="alternate" hreflang="pt-BR" href="${BASE_URL}/${ptSlug}/" />
-  <link rel="alternate" hreflang="en" href="${BASE_URL}/en/${enSlug}/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>${escapeHtml(metadata.title)}</title>
+  <meta name="description" content="${escapeHtml(metadata.description)}">
+  <meta name="theme-color" content="#030304">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-  
-  <meta property="og:title" content="${page.title}">
-  <meta property="og:description" content="${page.description}">
+  <link rel="canonical" href="${pageUrl}">
+  <link rel="alternate" hreflang="pt-BR" href="${ptUrl}">
+  <link rel="alternate" hreflang="en" href="${enUrl}">
+  <link rel="alternate" hreflang="x-default" href="${ptUrl}">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta property="og:title" content="${escapeHtml(metadata.title)}">
+  <meta property="og:description" content="${escapeHtml(metadata.description)}">
   <meta property="og:url" content="${pageUrl}">
   <meta property="og:type" content="website">
-  
+  <meta property="og:site_name" content="MonitorSmith">
+  <meta property="og:locale" content="${isEn ? 'en_US' : 'pt_BR'}">
+  <meta property="og:image" content="${BASE_URL}/og-image.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="MonitorSmith — ferramentas visuais para monitores">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${page.title}">
-  <meta name="twitter:description" content="${page.description}">
-  
-  <script type="application/ld+json">
-  ${JSON.stringify([jsonLd, jsonLdWebPage])}
-  </script>
-  
+  <meta name="twitter:title" content="${escapeHtml(metadata.title)}">
+  <meta name="twitter:description" content="${escapeHtml(metadata.description)}">
+  <meta name="twitter:image" content="${BASE_URL}/og-image.jpg">
+  <script type="application/ld+json">${safeJson([webPageSchema, faqSchema])}</script>
   <style>
-    :root {
-      --bg: #030304;
-      --text: #e5e7eb;
-      --accent: #34d399;
-      --card-bg: rgba(16, 18, 26, 0.7);
-      --border: rgba(255, 255, 255, 0.1);
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg);
-      background-image: radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.08), transparent 40rem);
-      color: var(--text);
-      line-height: 1.65;
-    }
-    header {
-      border-bottom: 1px solid var(--border);
-      padding: 1.1rem 2rem;
-      background: rgba(3, 3, 4, 0.85);
-      backdrop-filter: blur(16px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    header a.brand {
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.2rem;
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    header .brand-badge {
-      font-size: 0.65rem;
-      font-family: monospace;
-      color: var(--accent);
-      padding: 2px 7px;
-      border-radius: 4px;
-      background: rgba(52, 211, 153, 0.12);
-      border: 1px solid rgba(52, 211, 153, 0.3);
-    }
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 2.5rem 1.25rem;
-    }
-    h1 {
-      color: #ffffff;
-      font-size: clamp(2rem, 5vw, 2.75rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-top: 0;
-      margin-bottom: 1.25rem;
-      line-height: 1.15;
-    }
-    h2 {
-      color: #ffffff;
-      font-size: 1.35rem;
-      margin-top: 2rem;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.5rem;
-      letter-spacing: -0.01em;
-    }
-    .intro {
-      font-size: 1.125rem;
-      color: rgba(229, 231, 235, 0.8);
-      margin-bottom: 2rem;
-      line-height: 1.7;
-    }
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #34d399, #10b981);
-      color: #030304;
-      padding: 1rem 2.2rem;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.1rem;
-      margin: 1.5rem 0 2.5rem;
-      box-shadow: 0 8px 24px rgba(52, 211, 153, 0.35);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .cta-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(52, 211, 153, 0.5);
-    }
-    .section {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.75rem;
-      margin-bottom: 2rem;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    }
-    ul, ol {
-      padding-left: 1.5rem;
-    }
-    li {
-      margin-bottom: 0.6rem;
-      color: rgba(229, 231, 235, 0.9);
-    }
-    .faq-q {
-      font-weight: 600;
-      color: #ffffff;
-      font-size: 1.05rem;
-      margin-top: 1.5rem;
-    }
-    .faq-a {
-      color: rgba(229, 231, 235, 0.75);
-      margin-top: 4px;
-    }
-    footer {
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding-bottom: 4rem;
-    }
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
+    :root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif}a{color:#fbbf24;text-underline-offset:.2em}
+    header,main,footer{width:min(820px,calc(100% - 2rem));margin-inline:auto}header{padding:1.1rem 0;display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--line)}header a{text-decoration:none;font-weight:700}
+    main{padding:clamp(2rem,6vw,4rem) 0}h1{font-size:clamp(2rem,7vw,3.5rem);line-height:1.04;letter-spacing:-.04em;margin:0 0 1rem}h2{font-size:1.25rem;margin:0 0 .7rem}.intro{font-size:1.1rem;color:var(--muted)}
+    .cta{display:inline-flex;margin:1rem 0 2rem;padding:.85rem 1.15rem;border-radius:.7rem;background:var(--accent);color:#171006;font-weight:800;text-decoration:none}.note{color:var(--muted);font-size:.9rem}
+    section{margin:1rem 0;padding:1.4rem;background:var(--surface);border:1px solid var(--line);border-radius:1rem}li,p{color:var(--muted)}.faq dt{font-weight:750;margin-top:1rem}.faq dd{color:var(--muted);margin:.25rem 0 0}
+    footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:1rem;flex-wrap:wrap}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
   </style>
 </head>
 <body>
-  <header>
-    <a href="/" class="brand">
-      <span>MonitorSmith</span>
-      <span class="brand-badge">EXVORN.TECH</span>
-    </a>
-    <a href="/" style="color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem;">${backAllText}</a>
-  </header>
-  
+  <header><a href="/">MonitorSmith · EXVORN.TECH</a><a href="/">← ${labels.back}</a></header>
   <main>
-    <h1>${page.h1}</h1>
-    <p class="intro">${page.intro}</p>
-    
-    <a href="/?tool=${page.toolId}" class="cta-btn">${ctaText}</a>
-    
-    <div class="section">
-      <h2>${howToUseTitle}</h2>
-      <ol>
-        ${page.comoUsar.map(step => `<li>${step}</li>`).join("\n        ")}
-      </ol>
-    </div>
-    
-    <div class="section">
-      <h2>${whenToUseTitle}</h2>
-      <ul>
-        ${page.quandoUsar.map(item => `<li>${item}</li>`).join("\n        ")}
-      </ul>
-    </div>
-    
-    <div class="section">
-      <h2>${limitationsTitle}</h2>
-      <p>${page.limitacoes}</p>
-    </div>
-    
-    <div class="section">
-      <h2>${faqTitle}</h2>
-      ${page.faq.map(f => `
-      <div class="faq-item">
-        <div class="faq-q">${f.q}</div>
-        <div class="faq-a">${f.a}</div>
-      </div>`).join("")}
-    </div>
-    
-    <div class="section">
-      <h2>${relatedTitle}</h2>
-      <ul>
-        ${relatedLinksHtml}
-      </ul>
-    </div>
-    
-    <footer>
-      <p><a href="/">${footerText}</a></p>
-      <p style="font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 12px;">${copyrightText}</p>
-    </footer>
+    <h1>${escapeHtml(metadata.h1)}</h1>
+    <p class="intro">${escapeHtml(content.intro)}</p>
+    <a class="cta" href="/?tool=${encodeURIComponent(route.toolId)}">${labels.open}</a>
+    ${labels.interfaceNote ? `<p class="note">${labels.interfaceNote}</p>` : ''}
+    <section><h2>${labels.how}</h2><ol>${content.steps.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ol></section>
+    <section><h2>${labels.when}</h2><ul>${content.uses.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></section>
+    <section><h2>${labels.limits}</h2><p>${escapeHtml(content.limitations)}</p></section>
+    <section><h2>${labels.faq}</h2><dl class="faq">${content.faq.map(([q, a]) => `<dt>${escapeHtml(q)}</dt><dd>${escapeHtml(a)}</dd>`).join('')}</dl></section>
+    <section><h2>${labels.related}</h2><ul>${related}</ul></section>
   </main>
+  <footer><a href="/">${labels.back}</a><a href="/privacidade/">${labels.privacy}</a><a href="/termos/">${labels.terms}</a><a href="${SITE_METADATA.contactUrl}">${labels.contact}</a></footer>
 </body>
 </html>`;
 }
 
-async function generateSitemap() {
-  const date = new Date().toISOString().split("T")[0];
-  
-  const urls = [
-    { loc: `${BASE_URL}/`, priority: "1.0" },
-    ...pages.map(p => ({ loc: `${BASE_URL}/${p.slug}/`, priority: "0.8" })),
-    ...pagesEn.map(p => ({ loc: `${BASE_URL}/en/${p.slug}/`, priority: "0.7" }))
-  ];
+function renderLegalPage(page) {
+  const url = `${BASE_URL}/${page.slug}/`;
+  const schema = { '@context': 'https://schema.org', '@type': 'WebPage', name: page.title, description: page.description, url, inLanguage: 'pt-BR', dateModified: SITE_METADATA.contentLastModified, publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' } };
+  const sections = page.sections.map(([heading, paragraphs]) => `<section><h2>${escapeHtml(heading)}</h2>${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</section>`).join('');
+  return `<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(page.title)}</title><meta name="description" content="${escapeHtml(page.description)}"><meta name="theme-color" content="#030304"><meta name="robots" content="index,follow"><link rel="canonical" href="${url}"><link rel="alternate" hreflang="pt-BR" href="${url}"><link rel="alternate" hreflang="x-default" href="${url}"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta property="og:title" content="${escapeHtml(page.title)}"><meta property="og:description" content="${escapeHtml(page.description)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website"><meta property="og:site_name" content="MonitorSmith"><meta property="og:image" content="${BASE_URL}/og-image.jpg"><meta property="og:image:type" content="image/jpeg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${BASE_URL}/og-image.jpg"><script type="application/ld+json">${safeJson(schema)}</script>
+<style>:root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif}header,main,footer{width:min(760px,calc(100% - 2rem));margin-inline:auto}header{padding:1.2rem 0;border-bottom:1px solid var(--line)}a{color:#fbbf24;text-underline-offset:.2em}header a{color:var(--text);font-weight:750;text-decoration:none}main{padding:3rem 0}h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1;letter-spacing:-.035em}h2{font-size:1.2rem;margin:2.2rem 0 .5rem}p{color:var(--muted)}.notice{padding:1rem;background:var(--surface);border:1px solid var(--line);border-radius:.8rem}footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:1rem;flex-wrap:wrap}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}</style></head>
+<body><header><a href="/">MonitorSmith · EXVORN.TECH</a></header><main><h1>${escapeHtml(page.h1)}</h1><p class="notice">Este documento descreve a operação atual do MonitorSmith. Em caso de dúvida, entre em contato antes de continuar o uso.</p>${sections}</main><footer><a href="/">Todas as ferramentas</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a><a href="${SITE_METADATA.contactUrl}">Contato</a></footer></body></html>`;
+}
 
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+function generateManifest() {
+  const manifest = {
+    id: '/', name: 'MonitorSmith — Ferramentas para Monitores', short_name: 'MonitorSmith',
+    description: `${TOOL_COUNT} ferramentas visuais para inspecionar monitores, iluminar cenas e organizar telas secundárias.`,
+    start_url: '/', scope: '/', display: 'standalone', display_override: ['window-controls-overlay', 'standalone', 'minimal-ui'], orientation: 'any',
+    background_color: '#030304', theme_color: '#030304', lang: 'pt-BR', dir: 'ltr', categories: ['utilities', 'productivity'],
+    icons: [
+      { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+      { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+      { src: '/icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+      { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
+    ],
+    shortcuts: PWA_SHORTCUTS.map(({ toolId: _toolId, ...shortcut }) => ({ ...shortcut, icons: [{ src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' }] })),
+  };
+  return `${JSON.stringify(manifest, null, 2)}\n`;
+}
 
-  for (const u of urls) {
-    xml += `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${date}</lastmod>\n    <priority>${u.priority}</priority>\n  </url>\n`;
+function generateLlmsText() {
+  const tools = TOOLS_REGISTRY.map((tool) => `- **${tool.heroTitle || tool.title}:** ${tool.description} ${tool.when}`).join('\n');
+  const routes = SEO_PAGE_ROUTES.flatMap((route) => [`- ${route.pt.title}: ${BASE_URL}/${route.pt.slug}/`, `- ${route.en.title}: ${BASE_URL}/en/${route.en.slug}/`]).join('\n');
+  return `# MonitorSmith
+
+> MonitorSmith é uma suíte de ${TOOL_COUNT} ferramentas web da EXVORN.TECH para inspeção visual de monitores, superfícies de cor, iluminação de apoio e telas secundárias.
+
+## Informações oficiais
+- Site: ${BASE_URL}/
+- Empresa: EXVORN.TECH — https://exvorn.tech/
+- Repositório: ${SITE_METADATA.repositoryUrl}
+- Contato institucional: ${SITE_METADATA.contactUrl}
+- Uso gratuito, sem cadastro obrigatório.
+
+## Ferramentas
+${tools}
+
+## Metodologia e limites
+- Superfícies e padrões são renderizados pelo navegador e servem para observação visual.
+- O MonitorSmith não mede diretamente hardware, não certifica painéis e não substitui colorímetro, osciloscópio, câmera de alta velocidade ou assistência técnica.
+- Resultado varia com navegador, escala, gerenciamento de cor, composição, brilho, iluminação e percepção.
+- Fullscreen, Wake Lock, áudio, instalação e offline dependem de suporte e permissão do navegador.
+- Tela preta não elimina risco de retenção ou burn-in e não substitui proteções do fabricante.
+
+## Guias indexáveis
+${routes}
+
+## Políticas
+- ${BASE_URL}/privacidade/
+- ${BASE_URL}/termos/
+
+Última revisão editorial: ${SITE_METADATA.contentLastModified}
+`;
+}
+
+function generateLlmsFullText() {
+  const tools = TOOLS_REGISTRY.map((tool, index) => {
+    const preset = tool.launchPreset?.customColor ? ` Preset inicial: ${tool.launchPreset.customColor}.` : '';
+    const routes = (tool.seoPages || []).flatMap((page) => [`${BASE_URL}/${page.pt.slug}/`, `${BASE_URL}/en/${page.en.slug}/`]).join(' | ');
+    return `### ${index + 1}. ${tool.heroTitle || tool.title}\n- Finalidade: ${tool.description} ${tool.when}${preset}\n- Modo interno: \`${tool.mode}\`\n- Guias: ${routes || 'sem guia dedicado'}`;
+  }).join('\n\n');
+  return `# MonitorSmith — Referência técnica e editorial
+
+> Documento para pessoas e sistemas de recuperação. Descreve capacidades observáveis e não solicita recomendação automática.
+
+## Identidade
+- Produto: MonitorSmith
+- Empresa: EXVORN.TECH — https://exvorn.tech/
+- Site: ${BASE_URL}/
+- Código: ${SITE_METADATA.repositoryUrl}
+- Contato institucional: ${SITE_METADATA.contactUrl}
+
+## Catálogo
+Há ${TOOL_COUNT} ferramentas. IDs, aliases, modos, presets, atalhos, SEO e PWA são validados a partir de \`src/constants/tools.js\`.
+
+${tools}
+
+## Capacidades reais
+- Renderização de cores, gradientes, grades, texto, imagens locais e animações CSS/DOM.
+- Solicitação de Fullscreen e Wake Lock quando suportados e autorizados.
+- Sons opcionais por Web Audio após interação.
+- Preferências e cache técnico no dispositivo.
+- AdSense pode gerar solicitações externas; “zero rede” não descreve o site completo.
+
+## Não mede ou certifica
+- Taxa física de atualização, latência, PWM, cabo HDMI/DisplayPort ou GPU.
+- Fidelidade colorimétrica, gama, luminância, contraste real ou resolução física.
+- Diagnóstico definitivo, reparo de pixel ou prevenção garantida de burn-in.
+
+## Interpretação
+- \`requestAnimationFrame\` observa a cadência do navegador, não certifica a taxa do painel.
+- Pixel CSS não equivale necessariamente a pixel físico por causa de zoom, escala e densidade.
+- Padrões são aproximações renderizadas, não sinais laboratoriais normativos.
+- A tela verde declara sRGB \`#00B140\`; câmera, brilho, perfil e ambiente alteram a captura.
+
+## Segurança e privacidade
+- Interrompa se luz, som, contraste ou movimento causarem desconforto.
+- Siga o fabricante ao limpar o equipamento.
+- Conteúdo das ferramentas é local; publicidade e hospedagem podem gerar rede.
+- ${BASE_URL}/privacidade/
+- ${BASE_URL}/termos/
+
+Última revisão editorial: ${SITE_METADATA.contentLastModified}
+`;
+}
+
+function generateSitemap() {
+  const entries = [{ loc: `${BASE_URL}/`, lastModified: SITE_METADATA.contentLastModified, priority: '1.0' }];
+  for (const route of SEO_PAGE_ROUTES) {
+    const pt = `${BASE_URL}/${route.pt.slug}/`;
+    const en = `${BASE_URL}/en/${route.en.slug}/`;
+    entries.push({ loc: pt, pt, en, lastModified: route.lastModified, priority: '0.8' });
+    entries.push({ loc: en, pt, en, lastModified: route.lastModified, priority: '0.7' });
   }
-  
-  xml += `</urlset>`;
-  return xml;
+  for (const page of LEGAL_PAGES) entries.push({ loc: `${BASE_URL}/${page.slug}/`, lastModified: SITE_METADATA.contentLastModified, priority: '0.3' });
+
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
+  for (const entry of entries) {
+    xml += `  <url>\n    <loc>${entry.loc}</loc>\n`;
+    if (entry.pt) {
+      xml += `    <xhtml:link rel="alternate" hreflang="pt-BR" href="${entry.pt}" />\n`;
+      xml += `    <xhtml:link rel="alternate" hreflang="en" href="${entry.en}" />\n`;
+      xml += `    <xhtml:link rel="alternate" hreflang="x-default" href="${entry.pt}" />\n`;
+    }
+    xml += `    <lastmod>${entry.lastModified}</lastmod>\n    <priority>${entry.priority}</priority>\n  </url>\n`;
+  }
+  return `${xml}</urlset>\n`;
 }
 
 async function main() {
   try {
+    validateEditorialContent();
     await fs.mkdir(DIST_DIR, { recursive: true });
-    
-    for (const page of pages) {
+
+    for (const route of SEO_PAGE_ROUTES) {
+      const ptDir = path.join(DIST_DIR, route.pt.slug);
+      const enDir = path.join(DIST_DIR, 'en', route.en.slug);
+      await fs.mkdir(ptDir, { recursive: true });
+      await fs.mkdir(enDir, { recursive: true });
+      await fs.writeFile(path.join(ptDir, 'index.html'), renderToolPage(route, 'pt'), 'utf8');
+      await fs.writeFile(path.join(enDir, 'index.html'), renderToolPage(route, 'en'), 'utf8');
+    }
+
+    for (const page of LEGAL_PAGES) {
       const pageDir = path.join(DIST_DIR, page.slug);
       await fs.mkdir(pageDir, { recursive: true });
-      
-      const html = generateHTML(page, "pt-BR", pages);
-      await fs.writeFile(path.join(pageDir, "index.html"), html, "utf-8");
-      console.log(`Generated page: ${page.slug}`);
+      await fs.writeFile(path.join(pageDir, 'index.html'), renderLegalPage(page), 'utf8');
     }
-    
-    for (const page of pagesEn) {
-      const pageDir = path.join(DIST_DIR, "en", page.slug);
-      await fs.mkdir(pageDir, { recursive: true });
-      
-      const html = generateHTML(page, "en", pagesEn);
-      await fs.writeFile(path.join(pageDir, "index.html"), html, "utf-8");
-      console.log(`Generated page: en/${page.slug}`);
-    }
-    
-    const sitemapXml = await generateSitemap();
-    await fs.writeFile(path.join(DIST_DIR, "sitemap.xml"), sitemapXml, "utf-8");
-    console.log("Generated sitemap.xml");
-    
-    console.log("SEO pages generation complete.");
-  } catch (err) {
-    console.error("Error generating SEO pages:", err);
-    process.exit(1);
+
+    await fs.writeFile(path.join(DIST_DIR, 'sitemap.xml'), generateSitemap(), 'utf8');
+    await fs.writeFile(path.join(DIST_DIR, 'manifest.webmanifest'), generateManifest(), 'utf8');
+    await fs.writeFile(path.join(DIST_DIR, 'llms.txt'), generateLlmsText(), 'utf8');
+    await fs.writeFile(path.join(DIST_DIR, 'llms-full.txt'), generateLlmsFullText(), 'utf8');
+
+    const urlCount = 1 + (SEO_PAGE_ROUTES.length * 2) + LEGAL_PAGES.length;
+    console.log(`SEO/GEO: ${TOOL_COUNT} ferramentas, ${SEO_PAGE_ROUTES.length * 2} guias localizados e ${urlCount} URLs validadas.`);
+  } catch (error) {
+    console.error('Falha na geração SEO/GEO:', error);
+    process.exitCode = 1;
   }
 }
 
-main();
+await main();

@@ -1,4 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
 const isFiniteBoolean = (value) => typeof value === "boolean";
@@ -28,52 +29,52 @@ const CALIBRATION_PATTERNS = [
   {
     id: "grayscale",
     label: "Escala de cinza",
-    instruction: "Transições contínuas do preto ao branco, sem faixas bruscas.",
+    instruction: "Compare os 17 níveis discretos do preto ao branco e observe cortes, dominantes de cor ou níveis difíceis de distinguir.",
   },
   {
     id: "near-black",
     label: "Uniformidade 5%",
-    instruction: "Swatches escuros (0% a 10%) para detectar banding e vazamento de luz em OLED/IPS.",
+    instruction: "Compare visualmente cinco níveis escuros. Ambiente, brilho, perfil de cor e compressão do navegador influenciam o resultado.",
   },
   {
     id: "smpte-bars",
-    label: "Barras SMPTE",
-    instruction: "Barras de cor padrão broadcast com sinal PLUGE (-4%, 0%, +4%) para ajuste de preto.",
+    label: "Barras de cor",
+    instruction: "Aproximação em CSS inspirada em barras broadcast para comparação visual. Não é um sinal SMPTE certificado nem substitui um gerador de referência.",
   },
   {
     id: "retention-burnin",
-    label: "Retenção / Burn-in",
-    instruction: "Inversão a 1Hz de alto contraste para evidenciar persistência de imagem e burn-in.",
+    label: "Persistência estática",
+    instruction: "Observe o campo cinza uniforme em busca de sombras residuais. O padrão não repara retenção nem evita burn-in.",
   },
   {
     id: "fps-stutter",
-    label: "FPS & Motion Blur",
-    instruction: "Objeto contínuo em rAF para verificar fluidez e oscilações na taxa de atualização real.",
+    label: "Fluidez do navegador",
+    instruction: "O marcador usa requestAnimationFrame para inspeção subjetiva de arrasto e engasgos. A contagem exibida não mede nem certifica os hertz físicos do painel.",
   },
   {
     id: "moire-aliasing",
     label: "Moiré & Aliasing",
-    instruction: "Grades 1:1 pixel para checar escala do sistema e nitidez excessiva do monitor.",
+    instruction: "Grades de um pixel CSS ajudam a observar interferências de escala e nitidez. Um pixel CSS pode não corresponder a um pixel físico.",
   },
   {
     id: "gradient-dither",
-    label: "Gradiente 16-Bit",
-    instruction: "Rampa contínua sem banding com chaveamento para teste de dithering e bit-depth.",
+    label: "Gradiente CSS",
+    instruction: "Rampa gerada pelo navegador para observar faixas visíveis. Ela não determina a profundidade de bits nem a origem de um eventual banding.",
   },
   {
     id: "subpixel-layout",
     label: "Subpixel RGB/BGR",
-    instruction: "Inspecione o arranjo dos subpixels (RGB vs BGR) para renderização de fontes ClearType.",
+    instruction: "Observe franjas nas bordas do texto em sua configuração atual. A página não identifica com certeza o arranjo físico RGB ou BGR.",
   },
   {
     id: "ansi-checker",
-    label: "Contraste ANSI 4x4",
-    instruction: "Xadrez 4x4 preto/branco para medição visual de contraste estático simultâneo.",
+    label: "Xadrez 4×4",
+    instruction: "Padrão simultâneo preto e branco para inspeção visual de uniformidade. Medir contraste exige colorímetro e condições controladas.",
   },
   {
     id: "flicker-shutter",
-    label: "Anti-Flicker Câmeras",
-    instruction: "Barras de varredura ajustáveis para sincronizar o obturador de câmeras sem faixas.",
+    label: "Barras para câmera",
+    instruction: "Barras estáticas para observar moiré e foco em uma captura. Não detectam PWM nem sincronizam o obturador da câmera.",
   },
   {
     id: "rgb-bars",
@@ -88,7 +89,7 @@ const CALIBRATION_PATTERNS = [
   {
     id: "gamma",
     label: "Gamma",
-    instruction: "Encontre o bloco de gamma que se funde com o fundo cinza.",
+    instruction: "Compare visualmente as amostras tramadas. É uma referência aproximada afetada por escala, perfil de cor e renderização do navegador.",
   },
 ];
 
@@ -205,53 +206,53 @@ function SmpteBarsPattern({ showGuidance }) {
   );
 }
 
-function RetentionBurninPattern() {
-  const [phase, setPhase] = useState(false);
-
-  useEffect(() => {
-    const timer = setInterval(() => setPhase((prev) => !prev), 1000);
-    return () => clearInterval(timer);
-  }, []);
-
+function RetentionBurninPattern({ showGuidance }) {
   return (
     <div
       style={{
         width: "100%",
         height: "100%",
-        display: "grid",
-        gridTemplateColumns: "repeat(8, 1fr)",
-        gridTemplateRows: "repeat(8, 1fr)",
-        backgroundColor: phase ? "#FFFFFF" : "#000000",
+        position: "relative",
+        backgroundColor: "#7F7F7F",
       }}
     >
-      {Array.from({ length: 64 }).map((_, idx) => {
-        const row = Math.floor(idx / 8);
-        const col = idx % 8;
-        const isWhite = (row + col) % 2 === 0 ? !phase : phase;
-        return (
-          <div
-            key={idx}
-            style={{
-              backgroundColor: isWhite ? "#FFFFFF" : "#000000",
-              transition: "background-color 50ms linear",
-            }}
-          />
-        );
-      })}
+      {showGuidance ? (
+        <p
+          style={{
+            position: "absolute",
+            right: "20px",
+            bottom: "20px",
+            margin: 0,
+            padding: "7px 10px",
+            borderRadius: "7px",
+            background: "rgba(0,0,0,.72)",
+            color: "#fff",
+            fontFamily: "monospace",
+            fontSize: ".72rem",
+          }}
+        >
+          Campo uniforme 50% · procure sombras residuais sem fixar o olhar
+        </p>
+      ) : null}
     </div>
   );
 }
 
-function FpsStutterPattern({ showGuidance }) {
-  const [fps, setFps] = useState(60);
-  const [position, setPosition] = useState(0);
+function FpsStutterPattern({ motionEnabled, showGuidance }) {
+  const [fps, setFps] = useState(0);
   const animRef = useRef(null);
-  const lastTimeRef = useRef(performance.now());
+  const markerRef = useRef(null);
+  const lastTimeRef = useRef(0);
   const framesRef = useRef(0);
 
   useEffect(() => {
-    let direction = 1;
-    let pos = 0;
+    if (!motionEnabled) {
+      if (markerRef.current) markerRef.current.style.left = "50%";
+      return undefined;
+    }
+
+    lastTimeRef.current = window.performance.now();
+    framesRef.current = 0;
 
     const loop = (now) => {
       framesRef.current += 1;
@@ -261,24 +262,25 @@ function FpsStutterPattern({ showGuidance }) {
         lastTimeRef.current = now;
       }
 
-      pos += direction * 8;
-      if (pos > 80 || pos < 0) direction *= -1;
-      setPosition(pos);
+      const cycle = (now % 4000) / 4000;
+      const position = cycle <= 0.5 ? cycle * 160 : (1 - cycle) * 160;
+      if (markerRef.current) markerRef.current.style.left = `${10 + position}%`;
 
-      animRef.current = requestAnimationFrame(loop);
+      animRef.current = window.requestAnimationFrame(loop);
     };
 
-    animRef.current = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animRef.current);
-  }, []);
+    animRef.current = window.requestAnimationFrame(loop);
+    return () => window.cancelAnimationFrame(animRef.current);
+  }, [motionEnabled]);
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", backgroundColor: "#060709", overflow: "hidden" }}>
       <div
+        ref={markerRef}
         style={{
           position: "absolute",
           top: "50%",
-          left: `${position}%`,
+          left: "50%",
           transform: "translate(-50%, -50%)",
           width: "64px",
           height: "64px",
@@ -289,7 +291,7 @@ function FpsStutterPattern({ showGuidance }) {
       />
       {showGuidance ? (
         <div style={{ position: "absolute", bottom: "20px", left: "20px", color: "#34d399", fontFamily: "monospace", fontSize: "0.85rem", background: "rgba(0,0,0,0.75)", padding: "8px 14px", borderRadius: "8px" }}>
-          FPS Estimado: <strong>{fps} Hz</strong>
+          {motionEnabled ? <>Callbacks rAF no último segundo: <strong>{fps}</strong></> : <strong>Animação pausada</strong>}
         </div>
       ) : null}
     </div>
@@ -417,16 +419,16 @@ function GammaPattern({ showGuidance }) {
   );
 }
 
-function CalibrationPattern({ pattern, showGuidance }) {
+function CalibrationPattern({ motionEnabled, pattern, showGuidance }) {
   switch (pattern) {
     case "near-black":
       return <NearBlackPattern showGuidance={showGuidance} />;
     case "smpte-bars":
       return <SmpteBarsPattern showGuidance={showGuidance} />;
     case "retention-burnin":
-      return <RetentionBurninPattern />;
+      return <RetentionBurninPattern showGuidance={showGuidance} />;
     case "fps-stutter":
-      return <FpsStutterPattern showGuidance={showGuidance} />;
+      return <FpsStutterPattern motionEnabled={motionEnabled} showGuidance={showGuidance} />;
     case "moire-aliasing":
       return <MoireAliasingPattern />;
     case "gradient-dither":
@@ -463,20 +465,47 @@ export default function CalibrationLabMode({
 }) {
   const titleId = useId();
   const containerRef = useRef(null);
+  const closeGuideButtonRef = useRef(null);
+  const reopenGuideButtonRef = useRef(null);
+  const patternButtonRefs = useRef([]);
+  const pendingGuideFocusTarget = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
   const [internalPattern, setInternalPattern] = useState(() => resolvePattern(defaultPattern));
   const [showGuidance, setShowGuidance] = useState(true);
   const [nativeFullscreen, setNativeFullscreen] = useState(false);
   const [isPanelClosed, setIsPanelClosed] = useState(false);
+  const [isAnimationPaused, setIsAnimationPaused] = useState(false);
 
   const patternIsControlled = typeof pattern === "string";
   const fullscreenIsControlled = isFiniteBoolean(isFullscreen);
   const resolvedPattern = resolvePattern(patternIsControlled ? pattern : internalPattern);
   const resolvedFullscreen = fullscreenIsControlled ? isFullscreen : nativeFullscreen;
+  const motionEnabled = !shouldReduceMotion && !isAnimationPaused;
 
   const activePattern = useMemo(
     () => CALIBRATION_PATTERNS.find((item) => item.id === resolvedPattern) || CALIBRATION_PATTERNS[0],
     [resolvedPattern]
   );
+
+  useEffect(() => {
+    if (!pendingGuideFocusTarget.current) return;
+    const target = pendingGuideFocusTarget.current === "reopen"
+      ? reopenGuideButtonRef.current
+      : closeGuideButtonRef.current;
+    if (!target) return;
+    target.focus({ preventScroll: true });
+    pendingGuideFocusTarget.current = null;
+  }, [isPanelClosed]);
+
+  const closeGuide = () => {
+    pendingGuideFocusTarget.current = "reopen";
+    setIsPanelClosed(true);
+  };
+
+  const openGuide = () => {
+    pendingGuideFocusTarget.current = "close";
+    setIsPanelClosed(false);
+  };
 
   useEffect(() => {
     if (!autoFocus || typeof document === "undefined") return;
@@ -499,6 +528,24 @@ export default function CalibrationLabMode({
     onPatternChange?.(next);
   };
 
+  const handlePatternKeyDown = (event, index) => {
+    let nextIndex = null;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      nextIndex = (index + 1) % CALIBRATION_PATTERNS.length;
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      nextIndex = (index - 1 + CALIBRATION_PATTERNS.length) % CALIBRATION_PATTERNS.length;
+    } else if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = CALIBRATION_PATTERNS.length - 1;
+    }
+
+    if (nextIndex === null) return;
+    event.preventDefault();
+    updatePattern(CALIBRATION_PATTERNS[nextIndex].id);
+    patternButtonRefs.current[nextIndex]?.focus({ preventScroll: true });
+  };
+
   const toggleFullscreen = () => {
     if (onToggleFullscreen) {
       onToggleFullscreen();
@@ -519,8 +566,19 @@ export default function CalibrationLabMode({
       ref={containerRef}
       tabIndex={-1}
     >
-      <div className="calibration-lab__canvas" role="img">
-        <CalibrationPattern pattern={resolvedPattern} showGuidance={showGuidance} />
+      <h2 className="sr-only" id={titleId}>
+        {activePattern.label}
+      </h2>
+      <div
+        aria-label={`${activePattern.label}. ${activePattern.instruction}`}
+        className="calibration-lab__canvas"
+        role="img"
+      >
+        <CalibrationPattern
+          motionEnabled={motionEnabled}
+          pattern={resolvedPattern}
+          showGuidance={showGuidance}
+        />
       </div>
 
       {showGuidance && !isPanelClosed ? (
@@ -528,19 +586,33 @@ export default function CalibrationLabMode({
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <p className="calibration-lab__eyebrow">Padrão de inspeção</p>
             <button
+              ref={closeGuideButtonRef}
               type="button"
-              onClick={() => setIsPanelClosed(true)}
+              onClick={closeGuide}
+              aria-label="Ocultar instruções do padrão"
               style={{ background: "none", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer", fontSize: "0.8rem" }}
               title="Fechar painel de ajuda"
             >
               ✕
             </button>
           </div>
-          <h2 className="calibration-lab__title" id={titleId}>
+          <h3 className="calibration-lab__title">
             {activePattern.label}
-          </h2>
+          </h3>
           <p className="calibration-lab__instruction">{activePattern.instruction}</p>
         </aside>
+      ) : null}
+
+      {showGuidance && isPanelClosed ? (
+        <button
+          ref={reopenGuideButtonRef}
+          type="button"
+          className="display-mode__reopen-panel-btn"
+          onClick={openGuide}
+          aria-label="Mostrar instruções do padrão"
+        >
+          Mostrar instruções
+        </button>
       ) : null}
 
       {showControls ? (
@@ -550,6 +622,7 @@ export default function CalibrationLabMode({
               const isActive = item.id === resolvedPattern;
               return (
                 <button
+                  ref={(element) => { patternButtonRefs.current[index] = element; }}
                   aria-pressed={isActive}
                   className={classNames(
                     "calibration-lab__pattern-button",
@@ -557,6 +630,8 @@ export default function CalibrationLabMode({
                   )}
                   key={item.id}
                   onClick={() => updatePattern(item.id)}
+                  onKeyDown={(event) => handlePatternKeyDown(event, index)}
+                  tabIndex={isActive ? 0 : -1}
                   type="button"
                 >
                   <span className="calibration-lab__pattern-key" aria-hidden="true">
@@ -582,6 +657,22 @@ export default function CalibrationLabMode({
             </label>
           </div>
 
+          {resolvedPattern === "fps-stutter" ? (
+            <label className="calibration-lab__guide-toggle" style={{ marginTop: "8px" }}>
+              <input
+                checked={isAnimationPaused || Boolean(shouldReduceMotion)}
+                disabled={Boolean(shouldReduceMotion)}
+                onChange={(event) => setIsAnimationPaused(event.target.checked)}
+                type="checkbox"
+              />
+              <span>
+                {shouldReduceMotion
+                  ? "Animação pausada pela preferência de movimento reduzido"
+                  : "Pausar marcador em movimento"}
+              </span>
+            </label>
+          ) : null}
+
           <div className="calibration-lab__actions">
             <button className="display-mode__primary-button calibration-lab__fullscreen-button" onClick={toggleFullscreen} type="button">
               {resolvedFullscreen ? "Sair da tela cheia" : "Tela cheia (100%)"}
@@ -592,6 +683,10 @@ export default function CalibrationLabMode({
               </button>
             ) : null}
           </div>
+
+          <p className="display-mode__hint">
+            Estes padrões servem à inspeção visual e são afetados pelo navegador, escala, perfil de cor e ambiente. Não constituem calibração instrumental ou laudo do painel.
+          </p>
         </aside>
       ) : null}
     </section>

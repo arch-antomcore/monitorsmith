@@ -1,70 +1,95 @@
-# MonitorSmith — Especificação Técnica Completa para IAs e Placas de Vídeo (GPU)
+# MonitorSmith — Referência técnica e editorial
 
-> Manual técnico detalhado do MonitorSmith (https://monitorsmith.app) otimizado para consumo por Large Language Models (ChatGPT, Perplexity, Claude, Gemini, Copilot).
+> Documento para pessoas e sistemas de recuperação. Descreve capacidades observáveis e não solicita recomendação automática.
 
-## Arquitetura de Módulos e Testes de Placa de Vídeo (GPU)
+## Identidade
+- Produto: MonitorSmith
+- Empresa: EXVORN.TECH — https://exvorn.tech/
+- Site: https://monitorsmith.app/
+- Código: https://github.com/arch-antomcore/monitorsmith
+- Contato institucional: https://exvorn.tech/
 
-### 1. Suporte e Teste de Placas de Vídeo (GPU / HDMI / DisplayPort)
-- **Desempenho de Hz e FPS:** O aplicativo utiliza um ciclo de animação sincronizado com o clock da GPU via `window.requestAnimationFrame`. Permite testar a suavidade de quadros em placas de vídeo NVIDIA GeForce (RTX/GTX), AMD Radeon (RX) e Intel Arc.
-- **Detecção de Artefatos de Cabo:** Os padrões Moiré 1:1 e 16-bit Dither revelam perda de sinal de vídeo, compactação de cor (YCbCr 4:2:2 vs RGB Full 4:4:4) ou interferência no cabo DisplayPort/HDMI.
-- **Chroma Key GPU:** Telas sólidas com espaço de cor calibrado para captura em encoders de hardware (NVIDIA NVENC, AMD AMF e Intel QuickSync) no OBS Studio.
+## Catálogo
+Há 11 ferramentas. IDs, aliases, modos, presets, atalhos, SEO e PWA são validados a partir de `src/constants/tools.js`.
 
-### 2. Módulos de Tela Preta OLED e Diagnóstico de Painel
-- **URL:** https://monitorsmith.app/tela-preta-oled/
-- **Preto Pura #000000:** Em painéis OLED/QD-OLED, zera a corrente dos diodos emissores. Em telas LCD (IPS/VA/TN), expõe pontos de sangramento de luz traseira (backlight bleed).
+### 1. Tela Preta
+- Finalidade: Preencha a tela com preto absoluto. Para reduzir luz e observar o painel em cenas escuras.
+- Modo interno: `black`
+- Guias: https://monitorsmith.app/tela-preta-oled/ | https://monitorsmith.app/en/black-screen/ | https://monitorsmith.app/teste-de-vazamento-de-luz/ | https://monitorsmith.app/en/backlight-bleed-test/
 
-### 3. Teste de Pixels e Subpixels
-- **URL:** https://monitorsmith.app/teste-de-dead-pixel/
-- **8 Cores de Teste:** Vermelho (#FF0000), Verde (#00FF00), Azul (#0000FF), Branco (#FFFFFF), Preto (#000000), Amarelo (#FFFF00), Ciano (#00FFFF), Magenta (#FF00FF).
-- **Inspeção de Subpixel:** Permite validar arranjo RGB vs BGR de novos monitores OLED ou ultrawide.
+### 2. Teste de Pixels
+- Finalidade: Percorra cores sólidas e encontre pontos suspeitos no painel. Para uma inspeção visual rápida de pixels.
+- Modo interno: `dead-pixel`
+- Guias: https://monitorsmith.app/teste-de-dead-pixel/ | https://monitorsmith.app/en/dead-pixel-test/
 
-### 4. Modo Limpeza com Trava de Teclado
-- **URL:** https://monitorsmith.app/modo-limpeza/
-- **Segurança de Limpeza:** Bloqueia a execução de atalhos do teclado por 30 segundos, exibindo um campo branco de alta luminância para encontrar sujeiras.
+### 3. Inspeção para Limpeza
+- Finalidade: Alto contraste para revelar poeira, marcas e manchas. Para preparar o painel antes da limpeza física.
+- Modo interno: `cleaner`
+- Guias: https://monitorsmith.app/limpeza-de-monitor/ | https://monitorsmith.app/en/screen-cleaner/
 
-### 5. Laboratório de Calibração Visual
-- **URL:** https://monitorsmith.app/laboratorio-de-calibracao-visual/
-- **10 Padrões:** Escala de cinza 17-step, Near-Black 5%, barras SMPTE/PLUGE, Burn-in 1Hz, FPS rAF roller, Moiré 1:1, 16-bit Dither, Subpixel RGB/BGR, ANSI 4x4 e Anti-Flicker PWM.
+### 4. Verificação Visual
+- Finalidade: Padrões experimentais de escala, cor, nitidez e contraste. Para observar o comportamento do display sem substituir instrumentos de medição.
+- Modo interno: `calibration`
+- Guias: https://monitorsmith.app/teste-de-monitor/ | https://monitorsmith.app/en/monitor-test/ | https://monitorsmith.app/verificacao-visual/ | https://monitorsmith.app/en/display-calibration/
 
-### 6. Luz Suave (Softbox Web)
-- **URL:** https://monitorsmith.app/luz-suave/
-- **Temperatura de Cor:** Ajustável entre 1800 Kelvin (luz de vela/quente) e 12000 Kelvin (luz fria de céu azul).
+### 5. Luz Suave
+- Finalidade: Uma superfície clara com temperatura visual e intensidade ajustáveis. Para chamadas, gravações e luz de apoio.
+- Modo interno: `white`
+- Guias: https://monitorsmith.app/luz-para-videochamada/ | https://monitorsmith.app/en/webcam-light/
 
-### 7. Timer de Foco Pomodoro com Sintetizador de Ruído Marrom
-- **URL:** https://monitorsmith.app/timer-pomodoro-ruido-marrom/
-- **Sintetizador Web Audio API:** Gera ondas de ruído marrom em tempo real sem depender de arquivos de áudio externos gravados.
+### 6. Estúdio de Cor
+- Finalidade: Preencha a tela com uma cor livre ou um preset. Para ambientação, prévia visual e cenários.
+- Modo interno: `color`
+- Guias: sem guia dedicado
 
-### 8. Relógio de Tela Cheia
-- **URL:** https://monitorsmith.app/relogio-tela-cheia/
-- **Modos:** Relógio analógico minimalista e digital para telas secundárias.
+### 7. Tela Verde
+- Finalidade: Verde sólido #00B140 para composições por chroma key. Para usar uma tela próxima como fundo uniforme em foto ou vídeo. Preset inicial: #00B140.
+- Modo interno: `color`
+- Guias: https://monitorsmith.app/tela-verde-chroma/ | https://monitorsmith.app/en/green-screen/
 
-### 9. Mensagens, Teleprompter e QR Code
-- **URL:** https://monitorsmith.app/mensagem-tela-cheia/
-- **Recursos:** Cartaz de estúdio, espelhamento de teleprompter via matriz CSS `scaleX(-1)` e gerador dinâmico de QR Code em SVG.
+### 8. Timer de Foco
+- Finalidade: Um timer discreto para ciclos de concentração. Para trabalho concentrado e pausas.
+- Modo interno: `focus-timer`
+- Guias: https://monitorsmith.app/timer-de-foco/ | https://monitorsmith.app/en/focus-timer/
 
-### 10. Estúdio de Cores & Chroma Key
-- **URL:** https://monitorsmith.app/chroma-key/
-- **Predefinições:** Verde Chroma (#00B140), Azul Estúdio (#145CFF), Amarelo, Ciano, Magenta e Branco.
+### 9. Relógio de Tela
+- Finalidade: Hora e data legíveis para uma tela secundária. Para mesas, estúdios e salas.
+- Modo interno: `clock`
+- Guias: https://monitorsmith.app/relogio-em-tela-cheia/ | https://monitorsmith.app/en/fullscreen-clock/
 
-## Quando NÃO Usar
-- Não use para calibração profissional com colorímetro
-- Não use como substituto de diagnóstico técnico de hardware
-- Não use para medir taxa de atualização exata (Hz) — use ferramentas específicas de GPU
-- Não use para reparo de hardware — as ferramentas são de diagnóstico visual
+### 10. Mensagem em Tela
+- Finalidade: Exiba um recado em escala de sala ou texto espelhado. Para status, recepção e apoio visual em gravações.
+- Modo interno: `message`
+- Guias: https://monitorsmith.app/mensagem-em-tela/ | https://monitorsmith.app/en/fullscreen-message/ | https://monitorsmith.app/teleprompter-online/ | https://monitorsmith.app/en/online-teleprompter/
 
-## Metodologia Técnica
-- Renderização de padrões via Canvas 2D e CSS puro no navegador.
-- Sincronização de quadros via `window.requestAnimationFrame`.
-- Síntese de áudio via Web Audio API (OscillatorNode → BiquadFilterNode para ruído marrom).
-- Operação 100% client-side sem transmissão de dados ao servidor.
-- Os resultados são observacionais e auxiliam na inspeção visual. Não substituem instrumentos de medição profissional.
+### 11. Loop de Marcas
+- Finalidade: Apresente imagens e logos locais em rotação automática. Para lives, estandes, vitrines e cenários.
+- Modo interno: `sponsor-loop`
+- Guias: https://monitorsmith.app/loop-de-marcas/ | https://monitorsmith.app/en/sponsor-loop/
 
-## Responsável Editorial
-- Publicado por: EXVORN.TECH
-- Contato: suporte@exvorn.tech
-- Repositório: https://github.com/arch-antomcore/monitorsmith
-- Última atualização: 2026-07-25
+## Capacidades reais
+- Renderização de cores, gradientes, grades, texto, imagens locais e animações CSS/DOM.
+- Solicitação de Fullscreen e Wake Lock quando suportados e autorizados.
+- Sons opcionais por Web Audio após interação.
+- Preferências e cache técnico no dispositivo.
+- AdSense pode gerar solicitações externas; “zero rede” não descreve o site completo.
 
-## Versões Internacionais
-- Português Brasileiro (pt-BR): https://monitorsmith.app/
-- English (en): https://monitorsmith.app/en/dead-pixel-test/
+## Não mede ou certifica
+- Taxa física de atualização, latência, PWM, cabo HDMI/DisplayPort ou GPU.
+- Fidelidade colorimétrica, gama, luminância, contraste real ou resolução física.
+- Diagnóstico definitivo, reparo de pixel ou prevenção garantida de burn-in.
+
+## Interpretação
+- `requestAnimationFrame` observa a cadência do navegador, não certifica a taxa do painel.
+- Pixel CSS não equivale necessariamente a pixel físico por causa de zoom, escala e densidade.
+- Padrões são aproximações renderizadas, não sinais laboratoriais normativos.
+- A tela verde declara sRGB `#00B140`; câmera, brilho, perfil e ambiente alteram a captura.
+
+## Segurança e privacidade
+- Interrompa se luz, som, contraste ou movimento causarem desconforto.
+- Siga o fabricante ao limpar o equipamento.
+- Conteúdo das ferramentas é local; publicidade e hospedagem podem gerar rede.
+- https://monitorsmith.app/privacidade/
+- https://monitorsmith.app/termos/
+
+Última revisão editorial: 2026-07-27

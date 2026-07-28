@@ -1,11 +1,9 @@
 import React from "react";
 import { 
   Sparkle, 
-  ShieldCheck, 
   TerminalWindow, 
   Sun, 
   Moon, 
-  Heart, 
   EnvelopeSimple,
   GithubLogo,
   LinkedinLogo
@@ -15,18 +13,20 @@ import AboutModal from "./AboutModal";
 import PrivacyModal from "./PrivacyModal";
 import TermsModal from "./TermsModal";
 import PwaModal from "./PwaModal";
+import { resolveToolLaunch } from "../../constants/tools";
 
 export function FooterSection({ onLaunch }) {
   const [isDarkMode, setIsDarkMode] = React.useState(() => {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("ms_studio_theme");
-      if (saved) return saved === "dark";
+      try {
+        const saved = localStorage.getItem("ms_studio_theme");
+        if (saved) return saved === "dark";
+      } catch {
+        return true;
+      }
     }
-    return true; // "à princípio deve iniciar já em modo escuro"
+    return true;
   });
-
-  const [email, setEmail] = React.useState("");
-  const [subscribed, setSubscribed] = React.useState(false);
 
   React.useEffect(() => {
     if (typeof document !== "undefined") {
@@ -34,23 +34,14 @@ export function FooterSection({ onLaunch }) {
       if (isDarkMode) {
         root.classList.add("dark", "ms-studio-dark");
         root.classList.remove("ms-studio-light", "light-mode");
-        localStorage.setItem("ms_studio_theme", "dark");
+        try { localStorage.setItem("ms_studio_theme", "dark"); } catch { /* Preferência não persistida. */ }
       } else {
         root.classList.remove("dark", "ms-studio-dark");
         root.classList.add("ms-studio-light", "light-mode");
-        localStorage.setItem("ms_studio_theme", "light");
+        try { localStorage.setItem("ms_studio_theme", "light"); } catch { /* Preferência não persistida. */ }
       }
     }
   }, [isDarkMode]);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email && email.includes("@")) {
-      setSubscribed(true);
-      setEmail("");
-      setTimeout(() => setSubscribed(false), 5000);
-    }
-  };
 
   const handleToolClick = (e, modeId, fallbackUrl) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) {
@@ -62,7 +53,13 @@ export function FooterSection({ onLaunch }) {
         onLaunch('home');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        onLaunch(modeId);
+        const resolvedTool = resolveToolLaunch(modeId);
+        onLaunch(resolvedTool ? {
+          id: resolvedTool.toolId,
+          launchMode: resolvedTool.mode,
+          color: resolvedTool.preset.customColor,
+          brightness: resolvedTool.preset.ambientBrightness,
+        } : modeId);
       }
     } else if (fallbackUrl) {
       e.preventDefault();
@@ -86,21 +83,21 @@ export function FooterSection({ onLaunch }) {
                 MONITOR<span className="text-amber-400">SMITH</span>
               </span>
               <span className="text-[10px] uppercase tracking-widest px-2 py-0.5 rounded bg-white/[0.08] text-white/70 font-mono border border-white/[0.05]">
-                v16 Studio
+                WEB SUITE
               </span>
             </div>
             
             <p className="text-sm text-white/70 leading-relaxed max-w-sm">
-              Suíte profissional de calibração, diagnóstico e inspeção de telas. 
-              Engenharia visual client-side com processamento zero-latency em GPU.
+              Suíte de padrões para inspeção visual e utilitários de tela.
+              Processamento local no navegador com APIs nativas da Web.
             </p>
 
             <div className="flex items-center gap-3 pt-2">
               <a 
-                href="https://github.com" 
+                href="https://github.com/arch-antomcore/monitorsmith"
                 target="_blank" 
                 rel="noreferrer"
-                aria-label="GitHub EXVORN.TECH"
+                aria-label="Repositório do MonitorSmith no GitHub"
                 className="w-9 h-9 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] flex items-center justify-center text-white/80 hover:text-white transition-all hover:scale-105"
               >
                 <GithubLogo size={18} />
@@ -176,7 +173,7 @@ export function FooterSection({ onLaunch }) {
                   onClick={(e) => handleToolClick(e, 'black', '/tela-preta-oled/')} 
                   className="block transition-colors hover:text-amber-400"
                 >
-                  Tela Preta OLED & Burn-in
+                  Tela Preta e Inspeção OLED
                 </a>
               </li>
               <li>
@@ -209,26 +206,26 @@ export function FooterSection({ onLaunch }) {
             </ul>
           </div>
 
-          {/* Coluna 3: Estúdio & Hardware */}
+          {/* Coluna 3: Estúdio e display */}
           <div className="space-y-4">
             <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-2">
               <Sparkle size={16} className="text-amber-400" />
-              <span>Estúdio & Hardware</span>
+              <span>Estúdio & Display</span>
             </h3>
             <ul className="space-y-2.5 text-sm text-white/70">
               <li>
                 <a href="/teste-de-monitor/" onClick={(e) => handleToolClick(e, 'calibration', '/teste-de-monitor/')} className="block transition-colors hover:text-amber-400">
-                  Calibração & Gama de Cor
+                  Verificação Visual de Display
                 </a>
               </li>
               <li>
-                <a href="/tela-verde-chroma/" onClick={(e) => handleToolClick(e, 'color', '/tela-verde-chroma/')} className="block transition-colors hover:text-amber-400">
-                  Chroma Key Verde & Azul
+                <a href="/tela-verde-chroma/" onClick={(e) => handleToolClick(e, 'green-screen', '/tela-verde-chroma/')} className="block transition-colors hover:text-amber-400">
+                  Tela Verde para Chroma Key
                 </a>
               </li>
               <li>
                 <a href="/timer-de-foco/" onClick={(e) => handleToolClick(e, 'focus-timer', '/timer-de-foco/')} className="block transition-colors hover:text-amber-400">
-                  Timer Pomodoro de Estúdio
+                  Timer de Foco
                 </a>
               </li>
               <li>
@@ -238,8 +235,8 @@ export function FooterSection({ onLaunch }) {
               </li>
               <li className="pt-1">
                 <span className="text-xs font-mono text-amber-400/80 uppercase tracking-wider block mb-1">Tecnologia</span>
-                <span className="text-xs text-white/50 block">WebGL 2.0 • GPU Accelerated</span>
-                <span className="text-xs text-white/50 block">Zero-Data Exfiltration Engine</span>
+                <span className="text-xs text-white/50 block">React • CSS • APIs Web nativas</span>
+                <span className="text-xs text-white/50 block">Ferramentas executadas localmente</span>
               </li>
             </ul>
           </div>
@@ -251,36 +248,19 @@ export function FooterSection({ onLaunch }) {
               <span>Notas de Lançamento</span>
             </h3>
             <p className="text-xs text-white/70 leading-relaxed">
-              Receba notificações sobre novos perfis de calibração, ferramentas de áudio e updates PWA da suíte EXVORN.TECH.
+              Acompanhe versões, correções e novas ferramentas diretamente no repositório oficial do MonitorSmith.
             </p>
-            
-            {subscribed ? (
-              <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center gap-2">
-                <ShieldCheck size={16} className="shrink-0" />
-                <span>Inscrito com sucesso! Obrigado por acompanhar.</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="space-y-2">
-                <div className="relative">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="seu@email.pro"
-                    required
-                    className="w-full bg-white/[0.04] border border-white/[0.1] rounded-lg px-3 py-2 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-amber-400/50 transition-colors"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full py-2 px-3 rounded-lg bg-white/[0.08] hover:bg-amber-500 hover:text-black border border-white/[0.08] hover:border-transparent text-xs font-semibold transition-all duration-200"
-                >
-                  Assinar Boletim Técnico
-                </button>
-              </form>
-            )}
-            <span className="text-[10px] text-white/40 block">
-              Sem spam. Apenas atualizações de engenharia da EXVORN.TECH.
+            <a
+              href="https://github.com/arch-antomcore/monitorsmith"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-2 px-3 rounded-lg bg-white/[0.08] hover:bg-amber-500 hover:text-black border border-white/[0.08] hover:border-transparent text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center gap-2"
+            >
+              <GithubLogo size={16} aria-hidden="true" />
+              Acompanhar no GitHub
+            </a>
+            <span className="text-[10px] text-white/60 block">
+              Newsletter por e-mail em preparação; nenhuma inscrição é coletada aqui.
             </span>
           </div>
 
@@ -291,10 +271,10 @@ export function FooterSection({ onLaunch }) {
           <div className="flex items-center gap-1.5">
             <span>Desenvolvido com precisão pela</span>
             <a 
-              href="https://www.linkedin.com/in/matheus-peres-da-silva/" 
+              href="https://exvorn.tech/"
               target="_blank" 
               rel="noreferrer"
-              title="Perfil Profissional no LinkedIn"
+              title="Site institucional da EXVORN.TECH"
               className="text-white hover:text-amber-400 transition-colors font-semibold underline underline-offset-4 decoration-amber-500/40"
             >
               EXVORN.TECH

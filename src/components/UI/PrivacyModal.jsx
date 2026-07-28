@@ -1,157 +1,114 @@
-import { useState, useRef, useEffect } from 'react';
-import { X } from '@phosphor-icons/react';
+import { useState } from 'react';
 import BrandLogo from './BrandLogo';
+import Modal from './Modal';
 
-export default function PrivacyModal({ label = "Política de Privacidade (Privacy)", className }) {
+const triggerStyle = (hasClassName) => ({
+  background: 'none',
+  border: 'none',
+  color: hasClassName ? undefined : 'rgba(255, 255, 255, 0.62)',
+  cursor: 'pointer',
+  fontSize: hasClassName ? undefined : '0.72rem',
+  textDecoration: hasClassName ? undefined : 'underline',
+  textUnderlineOffset: hasClassName ? undefined : '3px',
+});
+
+const headingStyle = {
+  margin: '6px 0 4px',
+  color: '#fff',
+  fontSize: '0.95rem',
+};
+
+const linkStyle = { color: '#fbbf24', textDecoration: 'underline', textUnderlineOffset: '2px' };
+
+export default function PrivacyModal({ label = 'Política de Privacidade', className }) {
   const [isOpen, setIsOpen] = useState(false);
-  const triggerRef = useRef(null);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        setIsOpen(false);
-        triggerRef.current?.focus();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen]);
 
   return (
     <>
       <button
-        ref={triggerRef}
         type="button"
         onClick={() => setIsOpen(true)}
         className={className}
-        style={!className ? {
-          background: 'none',
-          border: 'none',
-          color: 'rgba(255, 255, 255, 0.45)',
-          fontSize: '0.72rem',
-          cursor: 'pointer',
-          textDecoration: 'underline',
-          textUnderlineOffset: '3px',
-        } : {
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-        }}
+        style={triggerStyle(Boolean(className))}
+        aria-haspopup="dialog"
       >
         {label}
       </button>
 
-      {isOpen ? (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="privacy-dialog-title"
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 999999,
-            background: 'rgba(0, 0, 0, 0.82)',
-            backdropFilter: 'blur(12px)',
-            display: 'grid',
-            placeItems: 'center',
-            padding: '20px',
-          }}
-          onClick={() => setIsOpen(false)}
-        >
-          <div
-            style={{
-              maxWidth: '600px',
-              width: '100%',
-              maxHeight: '80vh',
-              overflowY: 'auto',
-              background: '#0c0f16',
-              border: '1px solid rgba(52, 211, 153, 0.3)',
-              borderRadius: '24px',
-              padding: '28px',
-              boxShadow: '0 24px 60px rgba(0,0,0,0.8)',
-              position: 'relative',
-              color: '#ffffff',
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              aria-label="Fechar política de privacidade"
-              onClick={() => setIsOpen(false)}
-              style={{
-                position: 'absolute',
-                top: '18px',
-                right: '18px',
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '50%',
-                width: '32px',
-                height: '32px',
-                display: 'grid',
-                placeItems: 'center',
-                color: 'rgba(255,255,255,0.6)',
-                cursor: 'pointer',
-              }}
-            >
-              <X size={18} />
-            </button>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-              <BrandLogo size={32} />
-              <h2 id="privacy-dialog-title" style={{ margin: 0, fontSize: '1.2rem', fontWeight: 600, color: '#ffffff' }}>Política de Privacidade & Termos</h2>
-            </div>
-
-            <div style={{ fontSize: '0.84rem', color: 'rgba(255,255,255,0.78)', lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <p>
-                <strong>MonitorSmith por EXVORN.TECH</strong> respeita a privacidade de todos os visitantes. Esta política descreve como as informações são tratadas em nosso site <code>monitorsmith.app</code>.
-              </p>
-
-              <h3 style={{ margin: '8px 0 4px', fontSize: '0.95rem', color: '#ffffff' }}>1. Coleta de Dados e Cookies</h3>
-              <p>
-                O MonitorSmith funciona como uma aplicação web nativa no navegador. Não armazenamos informações pessoais identificáveis em nossos servidores. Configurações de preferências são armazenadas localmente no seu dispositivo via <code>localStorage</code>.
-              </p>
-
-              <h3 style={{ margin: '8px 0 4px', fontSize: '0.95rem', color: '#ffffff' }}>2. Anúncios de Terceiros e Google AdSense</h3>
-              <p>
-                Utilizamos fornecedores de terceiros, incluindo o Google, que usam cookies para veicular anúncios com base em visitas anteriores dos usuários a este ou a outros sites. O uso de cookies de publicidade pelo Google permite que ele e seus parceiros veiculem anúncios aos usuários com base na visita a seus sites e/ou a outros sites na Internet.
-              </p>
-
-              <h3 style={{ margin: '8px 0 4px', fontSize: '0.95rem', color: '#ffffff' }}>3. Opção de Desativação</h3>
-              <p>
-                Os usuários podem desativar a publicidade personalizada acessando as <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" style={{ color: '#f59e0b', textDecoration: 'underline' }}>Configurações de Anúncios do Google</a>.
-              </p>
-
-              <h3 style={{ margin: '8px 0 4px', fontSize: '0.95rem', color: '#ffffff' }}>4. Contato</h3>
-              <p>
-                Dúvidas ou suporte técnico: <strong>suporte@exvorn.tech</strong>.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="wbp-button"
-              style={{
-                width: '100%',
-                marginTop: '24px',
-                padding: '12px',
-                fontSize: '0.86rem',
-                borderRadius: '12px',
-                background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.18)',
-                color: '#ffffff',
-                fontWeight: 600,
-                cursor: 'pointer',
-              }}
-            >
-              Fechar
-            </button>
+      <Modal
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Política de Privacidade"
+        description="Como o MonitorSmith trata preferências locais e serviços externos."
+        size="lg"
+        closeLabel="Fechar política de privacidade"
+      >
+        <div style={{ display: 'grid', gap: '14px', color: 'rgba(255,255,255,0.78)', fontSize: '0.84rem', lineHeight: 1.65 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <BrandLogo size={32} />
+            <p style={{ margin: 0 }}>
+              <strong>Controlador:</strong> EXVORN.TECH · <code>monitorsmith.app</code>
+            </p>
           </div>
+
+          <p style={{ margin: 0 }}>
+            Esta política explica o funcionamento atual do site. Ela não transforma
+            ferramentas visuais em serviços de coleta: mensagens, cores, temporizadores e
+            imagens importadas são processados no dispositivo e não são enviados à
+            EXVORN.TECH por essas ferramentas.
+          </p>
+
+          <section aria-labelledby="privacy-local-title">
+            <h3 id="privacy-local-title" style={headingStyle}>1. Dados armazenados no dispositivo</h3>
+            <p style={{ margin: 0 }}>
+              O navegador pode usar <code>localStorage</code>, Cache Storage e service worker
+              para guardar tema, preferências de interface, estado de avisos e arquivos
+              necessários ao PWA. Imagens do Loop de Marcas permanecem apenas na memória da
+              aba e são descartadas ao removê-las ou sair da ferramenta. Você pode apagar os
+              dados do site nas configurações do navegador.
+            </p>
+          </section>
+
+          <section aria-labelledby="privacy-third-parties-title">
+            <h3 id="privacy-third-parties-title" style={headingStyle}>2. Fontes locais e Google AdSense</h3>
+            <p style={{ margin: 0 }}>
+              As fontes Outfit e JetBrains Mono são entregues pela própria aplicação. O
+              script de validação e, quando aprovado, os anúncios do Google AdSense podem
+              transmitir dados técnicos, como endereço IP, navegador e identificadores
+              definidos pelo provedor. Anúncios personalizados também podem usar cookies
+              quando permitidos. O tratamento feito pelo Google segue suas próprias políticas
+              e os controles de consentimento aplicáveis à sua região.
+            </p>
+          </section>
+
+          <section aria-labelledby="privacy-controls-title">
+            <h3 id="privacy-controls-title" style={headingStyle}>3. Seus controles</h3>
+            <p style={{ margin: 0 }}>
+              Você pode recusar publicidade personalizada quando essa opção for apresentada,
+              bloquear cookies no navegador e ajustar anúncios nas{' '}
+              <a href="https://myadcenter.google.com/" target="_blank" rel="noopener noreferrer" style={linkStyle}>
+                configurações Minha Central de Anúncios do Google
+              </a>. Bloqueios podem afetar anúncios, mas não devem impedir o uso das
+              ferramentas principais.
+            </p>
+          </section>
+
+          <section aria-labelledby="privacy-rights-title">
+            <h3 id="privacy-rights-title" style={headingStyle}>4. Direitos e contato</h3>
+            <p style={{ margin: 0 }}>
+              Para dúvidas, solicitações de acesso, correção, oposição ou eliminação de dados
+              sob a LGPD, utilize o canal de contato publicado em{' '}
+              <a href="https://exvorn.tech/" target="_blank" rel="noopener noreferrer" style={linkStyle}>exvorn.tech</a>.
+              Como as ferramentas não criam uma conta, talvez seja necessário informar o
+              contexto da solicitação para verificarmos se existe algum dado associado.
+            </p>
+          </section>
+
+          <p style={{ margin: '6px 0 0', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.52)', fontFamily: 'monospace', fontSize: '0.74rem' }}>
+            Última atualização: 27 de julho de 2026.
+          </p>
         </div>
-      ) : null}
+      </Modal>
     </>
   );
 }

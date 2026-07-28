@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useReducedMotion } from 'framer-motion';
 
 const join = (...c) => c.filter(Boolean).join(' ');
-const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
 
 const TRANSITIONS = [
   { id: 'fade', label: 'Fade' },
@@ -24,7 +24,10 @@ const FIT_MODES = [
 ];
 
 const MAX_IMAGES = 20;
-const ACCEPTED = 'image/png,image/jpeg,image/webp,image/svg+xml';
+const MAX_FILE_BYTES = 5 * 1024 * 1024;
+const MAX_TOTAL_BYTES = 40 * 1024 * 1024;
+const ACCEPTED_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp']);
+const ACCEPTED = Array.from(ACCEPTED_TYPES).join(',');
 
 export default function SponsorLoopMode({
   ariaLabel = 'Loop de marcas',
@@ -36,6 +39,12 @@ export default function SponsorLoopMode({
   const fileInputRef = useRef(null);
   const timerRef = useRef(null);
   const progressRef = useRef(null);
+  const transitionTimerRef = useRef(null);
+  const imagesRef = useRef([]);
+  const closePanelButtonRef = useRef(null);
+  const reopenPanelButtonRef = useRef(null);
+  const pendingFocusTarget = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const [images, setImages] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -55,9 +64,40 @@ export default function SponsorLoopMode({
   const [progress, setProgress] = useState(0);
   const [transitionClass, setTransitionClass] = useState('');
   const [isDragOver, setIsDragOver] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState('PNG, JPEG ou WebP; até 5 MB por arquivo e 40 MB no total.');
 
   const resolvedBg = BACKGROUNDS.find(b => b.color === bgColor) ? bgColor : customBg;
   const hasImages = images.length > 0;
+  const resolvedTransition = shouldReduceMotion ? 'none' : transition;
+
+  useEffect(() => {
+    imagesRef.current = images;
+  }, [images]);
+
+  useEffect(() => () => {
+    imagesRef.current.forEach((image) => URL.revokeObjectURL(image.src));
+    window.clearTimeout(transitionTimerRef.current);
+  }, []);
+
+  useEffect(() => {
+    if (!pendingFocusTarget.current) return;
+    const target = pendingFocusTarget.current === 'reopen'
+      ? reopenPanelButtonRef.current
+      : closePanelButtonRef.current;
+    if (!target) return;
+    target.focus({ preventScroll: true });
+    pendingFocusTarget.current = null;
+  }, [isPanelClosed]);
+
+  const closePanel = () => {
+    pendingFocusTarget.current = 'reopen';
+    setIsPanelClosed(true);
+  };
+
+  const openPanel = () => {
+    pendingFocusTarget.current = 'close';
+    setIsPanelClosed(false);
+  };
 
   // --- Autofocus ---
   useEffect(() => {
@@ -70,13 +110,29 @@ export default function SponsorLoopMode({
   // --- Keyboard ---
   const handleKeyDown = (e) => {
     if (e.key === 'Escape' && onExit) { e.preventDefault(); onExit(); return; }
+    if (e.target !== e.currentTarget) return;
     if (e.key === ' ' && hasImages) { e.preventDefault(); setIsPlaying(p => !p); return; }
     if (e.key === 'ArrowRight' && hasImages) { e.preventDefault(); advance(); return; }
     if (e.key === 'ArrowLeft' && hasImages) { e.preventDefault(); goBack(); return; }
   };
 
+  // --- Transition effect ---
+  const applyTransition = useCallback(() => {
+    window.clearTimeout(transitionTimerRef.current);
+    if (resolvedTransition === 'none') {
+      setTransitionClass('');
+      return;
+    }
+    setTransitionClass(`sponsor-loop__slide--enter-${resolvedTransition}`);
+    transitionTimerRef.current = window.setTimeout(
+      () => setTransitionClass(''),
+      transitionSpeed + 50,
+    );
+  }, [resolvedTransition, transitionSpeed]);
+
   // --- Navigation ---
   const advance = useCallback(() => {
+    if (!images.length) return;
     setActiveIndex(i => (i + 1) % images.length);
     setProgress(0);
     applyTransition();
@@ -86,21 +142,14 @@ export default function SponsorLoopMode({
         y: Math.round((Math.random() - 0.5) * 4),
       });
     }
-  }, [images.length, transition, oledShield]);
+  }, [applyTransition, images.length, oledShield]);
 
   const goBack = useCallback(() => {
+    if (!images.length) return;
     setActiveIndex(i => (i - 1 + images.length) % images.length);
     setProgress(0);
     applyTransition();
-  }, [images.length, transition]);
-
-  // --- Transition effect ---
-  const applyTransition = useCallback(() => {
-    if (transition === 'none') return;
-    setTransitionClass(`sponsor-loop__slide--enter-${transition}`);
-    const timer = setTimeout(() => setTransitionClass(''), transitionSpeed + 50);
-    return () => clearTimeout(timer);
-  }, [transition, transitionSpeed]);
+  }, [applyTransition, images.length]);
 
   // --- Playback timer ---
   useEffect(() => {
@@ -109,15 +158,14 @@ export default function SponsorLoopMode({
       return;
     }
 
-    const intervalMs = 50;
-    const totalTicks = (duration * 1000) / intervalMs;
-    let tick = 0;
+    const intervalMs = 250;
+    let startedAt = Date.now();
 
     timerRef.current = setInterval(() => {
-      tick++;
-      setProgress((tick / totalTicks) * 100);
-      if (tick >= totalTicks) {
-        tick = 0;
+      const elapsed = Date.now() - startedAt;
+      setProgress(Math.min(100, (elapsed / (duration * 1000)) * 100));
+      if (elapsed >= duration * 1000) {
+        startedAt = Date.now();
         setProgress(0);
         advance();
       }
@@ -128,23 +176,51 @@ export default function SponsorLoopMode({
 
   // --- File handling ---
   const processFiles = (fileList) => {
-    const incoming = Array.from(fileList)
-      .filter(f => f.type.startsWith('image/'))
-      .slice(0, MAX_IMAGES - images.length);
+    const candidates = Array.from(fileList);
+    const accepted = [];
+    const rejected = [];
+    let totalBytes = images.reduce((sum, image) => sum + image.size, 0);
+    let availableSlots = MAX_IMAGES - images.length;
 
-    if (!incoming.length) return;
+    candidates.forEach((file) => {
+      if (availableSlots <= 0) {
+        rejected.push(`${file.name}: limite de ${MAX_IMAGES} imagens`);
+        return;
+      }
+      if (!ACCEPTED_TYPES.has(file.type)) {
+        rejected.push(`${file.name}: formato não aceito`);
+        return;
+      }
+      if (file.size > MAX_FILE_BYTES) {
+        rejected.push(`${file.name}: excede 5 MB`);
+        return;
+      }
+      if (totalBytes + file.size > MAX_TOTAL_BYTES) {
+        rejected.push(`${file.name}: excede o limite total de 40 MB`);
+        return;
+      }
 
-    const readers = incoming.map(file =>
-      new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve({ name: file.name, src: reader.result, id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}` });
-        reader.readAsDataURL(file);
-      })
-    );
-
-    Promise.all(readers).then(results => {
-      setImages(prev => [...prev, ...results].slice(0, MAX_IMAGES));
+      accepted.push({
+        name: file.name,
+        src: URL.createObjectURL(file),
+        size: file.size,
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+      });
+      totalBytes += file.size;
+      availableSlots -= 1;
     });
+
+    if (accepted.length) {
+      setImages((previous) => [...previous, ...accepted]);
+    }
+
+    const acceptedMessage = accepted.length
+      ? `${accepted.length} ${accepted.length === 1 ? 'imagem importada' : 'imagens importadas'}.`
+      : '';
+    const rejectedMessage = rejected.length
+      ? ` ${rejected.length} ${rejected.length === 1 ? 'arquivo recusado' : 'arquivos recusados'}: ${rejected.join('; ')}.`
+      : '';
+    setUploadMessage(`${acceptedMessage}${rejectedMessage}`.trim() || 'Nenhum arquivo selecionado.');
   };
 
   const handleFileSelect = (e) => {
@@ -159,24 +235,27 @@ export default function SponsorLoopMode({
   };
 
   const removeImage = (id) => {
-    setImages(prev => {
-      const next = prev.filter(img => img.id !== id);
-      if (activeIndex >= next.length && next.length > 0) {
-        setActiveIndex(next.length - 1);
-      }
-      if (!next.length) {
-        setIsPlaying(false);
-        setActiveIndex(0);
-      }
-      return next;
+    const removedIndex = images.findIndex((image) => image.id === id);
+    if (removedIndex < 0) return;
+
+    URL.revokeObjectURL(images[removedIndex].src);
+    const next = images.filter((image) => image.id !== id);
+    setImages(next);
+    setActiveIndex((current) => {
+      if (!next.length) return 0;
+      const adjusted = removedIndex < current ? current - 1 : current;
+      return Math.min(adjusted, next.length - 1);
     });
+    if (!next.length) setIsPlaying(false);
   };
 
   const clearAll = () => {
+    images.forEach((image) => URL.revokeObjectURL(image.src));
     setImages([]);
     setActiveIndex(0);
     setIsPlaying(false);
     setProgress(0);
+    setUploadMessage('Todas as imagens foram removidas da memória local.');
   };
 
   // --- Current slide ---
@@ -199,7 +278,7 @@ export default function SponsorLoopMode({
       />
 
       {/* Slide display */}
-      <main className="sponsor-loop__stage">
+      <div className="sponsor-loop__stage">
         {currentImage ? (
           <div
             className={join('sponsor-loop__slide', transitionClass)}
@@ -208,7 +287,7 @@ export default function SponsorLoopMode({
               transform: oledShield
                 ? `translate(${shiftOffset.x}px, ${shiftOffset.y}px)`
                 : undefined,
-              transition: oledShield ? 'transform 1.2s ease' : undefined,
+              transition: oledShield && !shouldReduceMotion ? 'transform 1.2s ease' : 'none',
             }}
           >
             <img
@@ -247,18 +326,18 @@ export default function SponsorLoopMode({
 
         {/* Slide counter */}
         {hasImages && images.length > 1 && (
-          <div className="sponsor-loop__counter">
+          <div className="sponsor-loop__counter" aria-live="polite" aria-atomic="true">
             {activeIndex + 1} / {images.length}
           </div>
         )}
 
-        {/* OLED Shield indicator */}
+        {/* Optional, subtle position variation for long-running signage. */}
         {oledShield && hasImages && (
-          <div className="sponsor-loop__oled-badge" title="Proteção anti burn-in ativa">
-            🛡️ OLED Safe
+          <div className="sponsor-loop__oled-badge" title="Deslocamento visual sutil ativo">
+            Deslocamento sutil ativo
           </div>
         )}
-      </main>
+      </div>
 
       {/* Drag overlay */}
       {isDragOver && (
@@ -268,7 +347,7 @@ export default function SponsorLoopMode({
           onDragLeave={() => setIsDragOver(false)}
           onDrop={handleDrop}
         >
-          <p>Solte as imagens aqui</p>
+          <p role="status">Solte as imagens aqui</p>
         </div>
       )}
 
@@ -301,9 +380,10 @@ export default function SponsorLoopMode({
               <h2 className="display-mode__title">Loop de Marcas</h2>
             </div>
             <button
+              ref={closePanelButtonRef}
               aria-label="Ocultar painel"
               className="display-mode__icon-button"
-              onClick={() => setIsPanelClosed(true)}
+              onClick={closePanel}
               type="button"
               title="Minimizar painel"
             >
@@ -314,11 +394,20 @@ export default function SponsorLoopMode({
           {/* Upload zone */}
           <div
             className={join('sponsor-loop__upload-zone', isDragOver && 'sponsor-loop__upload-zone--active')}
-            onClick={() => fileInputRef.current?.click()}
+            onClick={() => {
+              if (images.length < MAX_IMAGES) fileInputRef.current?.click();
+            }}
+            onKeyDown={(event) => {
+              if (images.length < MAX_IMAGES && (event.key === 'Enter' || event.key === ' ')) {
+                event.preventDefault();
+                fileInputRef.current?.click();
+              }
+            }}
             onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
             role="button"
-            tabIndex="0"
-            aria-label="Importar imagens"
+            tabIndex={images.length >= MAX_IMAGES ? -1 : 0}
+            aria-label="Importar imagens PNG, JPEG ou WebP"
+            aria-disabled={images.length >= MAX_IMAGES}
           >
             <span className="sponsor-loop__upload-icon">+</span>
             <span className="sponsor-loop__upload-text">
@@ -327,6 +416,9 @@ export default function SponsorLoopMode({
                 : `Importar logos (${images.length}/${MAX_IMAGES})`}
             </span>
           </div>
+          <p className="display-mode__hint" role="status" aria-live="polite">
+            {uploadMessage}
+          </p>
 
           {/* Thumbnails */}
           {hasImages && (
@@ -336,9 +428,16 @@ export default function SponsorLoopMode({
                   key={img.id}
                   role="listitem"
                   className={join('sponsor-loop__thumb', idx === activeIndex && 'sponsor-loop__thumb--active')}
-                  onClick={() => { setActiveIndex(idx); setProgress(0); applyTransition(); }}
                 >
-                  <img src={img.src} alt={img.name} draggable="false" />
+                  <button
+                    type="button"
+                    className="sponsor-loop__thumb-select"
+                    aria-label={`Exibir ${img.name}`}
+                    aria-pressed={idx === activeIndex}
+                    onClick={() => { setActiveIndex(idx); setProgress(0); applyTransition(); }}
+                  >
+                    <img src={img.src} alt="" draggable="false" />
+                  </button>
                   <button
                     type="button"
                     className="sponsor-loop__thumb-remove"
@@ -490,19 +589,21 @@ export default function SponsorLoopMode({
               checked={oledShield}
               onChange={e => setOledShield(e.target.checked)}
             />
-            <span>Proteção OLED (pixel shift)</span>
+            <span>Variar posição em até 2 px</span>
           </label>
 
           <p className="display-mode__hint">
-            Arraste logos PNG/SVG transparentes para melhor resultado.
-            Tecle Espaço para play/pausa e setas para navegar.
+            Os arquivos ficam apenas na memória desta aba e são liberados ao sair. Use PNG, JPEG ou WebP; SVG não é aceito por segurança. Espaço controla a reprodução e as setas navegam quando o palco está focado.
+            O deslocamento sutil reduz conteúdo completamente estático, mas não evita nem repara burn-in.
+            {shouldReduceMotion ? ' As transições foram removidas pela preferência de movimento reduzido.' : ''}
           </p>
         </aside>
       ) : showControls && isPanelClosed ? (
         <button
+          ref={reopenPanelButtonRef}
           type="button"
           className="display-mode__reopen-panel-btn"
-          onClick={() => setIsPanelClosed(false)}
+          onClick={openPanel}
           title="Abrir painel do loop"
           aria-label="Abrir painel de controles"
         >
