@@ -67,7 +67,7 @@ test('home apresenta o catálogo completo sem violações automáticas WCAG A/AA
   await page.goto('/')
 
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-  await expect(page.locator('[id^="monitor-tool-"]')).toHaveCount(TOOL_IDS.length)
+  await expect(page.locator('[id^="monitor-tool-grid-"]')).toHaveCount(TOOL_IDS.length)
   await expect(page.getByRole('button', { name: /11 ferramentas/i })).toBeVisible()
   await expect(page.locator('.ms-ad-container')).toHaveCount(0)
   await expect(page.locator('a[href*="github.com"]')).toHaveCount(0)
@@ -82,7 +82,7 @@ test('home apresenta o catálogo completo sem violações automáticas WCAG A/AA
 for (const toolId of TOOL_IDS) {
   test(`abre e fecha a ferramenta ${toolId} por interação real`, async ({ page }) => {
     await page.goto('/')
-    await page.locator(`#monitor-tool-${toolId}`).click()
+    await page.locator(`#monitor-tool-grid-${toolId}`).click()
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     await expect(page.locator('#monitor-tools-home')).toHaveCount(0)
     await expect(page.locator('.app-mode-layer')).toHaveCSS('opacity', '1')
@@ -223,7 +223,7 @@ test('tema claro da landing não vaza para ferramentas e é restaurado ao voltar
   await page.getByRole('button', { name: 'Alternar tema claro e escuro' }).click()
   await expect(page.locator('html')).toHaveClass(/ms-studio-light/)
 
-  await page.locator('#monitor-tool-dead-pixel').click()
+  await page.locator('#monitor-tool-grid-dead-pixel').click()
   await expect(page.locator('html')).not.toHaveClass(/ms-studio-light/)
   await expect(page.locator('.display-mode__controls--dead-pixel')).toBeVisible()
 
@@ -235,7 +235,7 @@ test('tema claro da landing não vaza para ferramentas e é restaurado ao voltar
 test('URL, histórico e identidade da ferramenta permanecem sincronizados', async ({ page }) => {
   await page.goto('/')
 
-  await page.locator('#monitor-tool-dead-pixel').click()
+  await page.locator('#monitor-tool-grid-dead-pixel').click()
   await expect(page).toHaveURL(/\?tool=dead-pixel$/)
 
   await page.getByRole('button', { name: /^Inspeção\./ }).click()
@@ -357,13 +357,45 @@ test('guia de calibração integra o painel e acompanha o modo imersivo', async 
   await expect(panel).toBeVisible()
 })
 
+test('padrão RGB da calibração usa canais puros sem vazamento', async ({ page }) => {
+  await page.goto('/?tool=calibration')
+  await page.click('button:has-text("Barras RGB")')
+
+  const bars = page.locator('.calibration-lab__rgb-bar')
+  await expect(bars).toHaveCount(3)
+
+  // O estilo inline usa linear-gradient
+  await expect(bars.nth(0)).toHaveCSS('background-image', /rgb\(255, 0, 0\)/)
+  await expect(bars.nth(1)).toHaveCSS('background-image', /rgb\(0, 255, 0\)/)
+  await expect(bars.nth(2)).toHaveCSS('background-image', /rgb\(0, 0, 255\)/)
+})
+
+test('padrão gamma calcula blocos cinzas reais e exibe aviso de zoom', async ({ page }) => {
+  await page.goto('/?tool=calibration')
+  await page.click('button:has-text("Gamma")')
+
+  await page.mouse.move(120, 260)
+  const warning = page.locator('text=/Estimativa visual baseada em mistura espacial/')
+  await expect(warning).toBeVisible()
+
+  // 1.8 -> rgb(174, 174, 174)
+  // 2.2 -> rgb(186, 186, 186)
+  // 2.4 -> rgb(191, 191, 191)
+  const blocks = page.locator('div[aria-hidden="true"]').filter({ has: page.locator('xpath=..//span[contains(text(), "1.8") or contains(text(), "2.2") or contains(text(), "2.4")]') })
+  await expect(blocks).toHaveCount(3)
+  
+  await expect(blocks.nth(0)).toHaveCSS('background-color', 'rgb(174, 174, 174)')
+  await expect(blocks.nth(1)).toHaveCSS('background-color', 'rgb(186, 186, 186)')
+  await expect(blocks.nth(2)).toHaveCSS('background-color', 'rgb(191, 191, 191)')
+})
+
 test.describe('quando movimento é permitido pelo sistema', () => {
   test.use({ reducedMotion: 'no-preference' })
 
   test('entrada pela landing exibe uma transição curta e contextual', async ({ page }) => {
     await page.goto('/')
 
-    await page.locator('#monitor-tool-dead-pixel').click()
+    await page.locator('#monitor-tool-grid-dead-pixel').click()
     const transition = page.locator('.ms-tool-entry')
     await expect(transition).toBeVisible()
     await expect(transition).toContainText('Abrindo ferramenta')

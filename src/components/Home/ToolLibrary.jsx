@@ -110,8 +110,8 @@ function ToolCard({ tool, index, onLaunch }) {
     <motion.button
       type="button"
       className={`ms-tool-card ms-tool-card--${tool.tone}`}
-      id={`monitor-tool-${tool.id}`}
-      onClick={() => onLaunch(tool, `monitor-tool-${tool.id}`)}
+      id={`monitor-tool-grid-${tool.id}`}
+      onClick={() => onLaunch(tool.id, `monitor-tool-grid-${tool.id}`)}
       aria-label={`Abrir ${tool.title}. ${tool.description}`}
       variants={variants}
       initial="initial"
@@ -188,7 +188,8 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
     <motion.button
       type="button"
       className="ms-hero-grid-card"
-      onClick={() => onLaunch(tool.id, `monitor-tool-${tool.id}`)}
+      id={`monitor-tool-hero-${tool.id}`}
+      onClick={() => onLaunch(tool.id, `monitor-tool-hero-${tool.id}`)}
       aria-label={`Abrir ${tool.title}`}
       variants={variants}
       initial="initial"

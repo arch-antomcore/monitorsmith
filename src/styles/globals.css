@@ -2892,15 +2892,83 @@ p.display-mode__instructions {
 
 @media (forced-colors: active) {
   :focus-visible {
-    outline-color: Highlight;
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 
   .wbp-dock,
+  .wbp-navbar,
+  .FooterSection,
+  .ms-tool-card,
   .display-mode__controls,
-  .ms-tool-card {
-    border-color: CanvasText;
-    background: Canvas;
+  .ms-hero-grid-card,
+  .ms-hero-quick-pill {
+    border: 1px solid CanvasText !important;
+    background: Canvas !important;
+    color: CanvasText !important;
+    box-shadow: none !important;
+  }
+
+  .wbp-navbar__action,
+  .wbp-navbar__back-btn,
+  .display-mode__control-btn,
+  .wbp-dock__utility,
+  .wbp-dock__arrow-btn,
+  .wbp-dock__shortcut,
+  .ms-tool-card__btn {
+    border: 1px solid CanvasText !important;
+    background: Canvas !important;
+    color: CanvasText !important;
+  }
+
+  .wbp-navbar__action:hover,
+  .wbp-navbar__back-btn:hover,
+  .display-mode__control-btn:hover,
+  .wbp-dock__utility:hover,
+  .wbp-dock__arrow-btn:hover,
+  .wbp-dock__shortcut:hover,
+  .ms-tool-card:hover .ms-tool-card__btn,
+  button:hover {
+    background: Highlight !important;
+    color: HighlightText !important;
+    border-color: HighlightText !important;
+  }
+
+  .wbp-navbar__brand-name,
+  .wbp-navbar__brand-tag,
+  .wbp-dock__mode,
+  .ms-library__eyebrow,
+  .wbp-dock__label,
+  .ms-hero__title-gradient,
+  .ms-hero__subtitle,
+  .ms-tool-card__title,
+  .ms-tool-card__desc {
+    color: CanvasText !important;
+    -webkit-text-fill-color: CanvasText !important;
+    background: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Active states & indicators */
+  .wbp-navbar__action--active,
+  .wbp-dock__utility--active,
+  .wbp-dock__shortcut--active,
+  .display-mode__control-btn--active {
+    background: Highlight !important;
+    color: HighlightText !important;
+    border: 1px solid HighlightText !important;
+  }
+
+  .ms-hero-quick-pill__icon,
+  .wbp-dock__indicator,
+  .wbp-navbar__status-dot,
+  svg {
+    fill: CanvasText;
     color: CanvasText;
+  }
+
+  .wbp-dock__indicator {
+    background-color: CanvasText !important;
   }
 
   /* A cor é o resultado medido nestas superfícies; permitir a substituição do

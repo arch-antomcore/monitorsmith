@@ -325,7 +325,10 @@ function DisplaySuite() {
       (originId ? document.getElementById(originId) : null) ||
       document.getElementById('monitor-tools-home');
 
-    focusTarget?.focus({ preventScroll: true });
+    if (focusTarget) {
+      focusTarget.focus({ preventScroll: true });
+      focusTarget.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+    }
   }, []);
 
   const handleExitMode = useCallback(async () => {

@@ -14,16 +14,12 @@ const GRAYSCALE_STEPS = Array.from({ length: 17 }, (_, index) => {
 });
 
 const RGB_CHANNELS = [
-  { id: "red", label: "Vermelho", color: "#FF2D2D" },
-  { id: "green", label: "Verde", color: "#26E88E" },
-  { id: "blue", label: "Azul", color: "#3A86FF" },
+  { id: "red", label: "Vermelho", color: "#FF0000" },
+  { id: "green", label: "Verde", color: "#00FF00" },
+  { id: "blue", label: "Azul", color: "#0000FF" },
 ];
 
-const GAMMA_TARGETS = [
-  { value: "1.8", reference: "#A8A8A8" },
-  { value: "2.2", reference: "#808080" },
-  { value: "2.4", reference: "#646464" },
-];
+
 
 const CALIBRATION_PATTERNS = [
   {
@@ -357,7 +353,7 @@ function RgbBarsPattern({ showGuidance }) {
             aria-hidden="true"
             className="calibration-lab__rgb-bar"
             style={{
-              backgroundImage: `linear-gradient(90deg, #000000 0%, ${channel.color} 52%, #FFFFFF 100%)`,
+              backgroundImage: `linear-gradient(90deg, #000000 0%, ${channel.color} 100%)`,
             }}
           />
           {showGuidance ? (
@@ -404,17 +400,95 @@ function SharpnessGridPattern({ showGuidance }) {
 }
 
 function GammaPattern({ showGuidance }) {
+  const canvasRef = useRef(null);
+
+  const targets = useMemo(() => [
+    { gamma: 1.8, color: `rgb(${Math.round(255 * Math.pow(0.5, 1 / 1.8))}, ${Math.round(255 * Math.pow(0.5, 1 / 1.8))}, ${Math.round(255 * Math.pow(0.5, 1 / 1.8))})` },
+    { gamma: 2.2, color: `rgb(${Math.round(255 * Math.pow(0.5, 1 / 2.2))}, ${Math.round(255 * Math.pow(0.5, 1 / 2.2))}, ${Math.round(255 * Math.pow(0.5, 1 / 2.2))})` },
+    { gamma: 2.4, color: `rgb(${Math.round(255 * Math.pow(0.5, 1 / 2.4))}, ${Math.round(255 * Math.pow(0.5, 1 / 2.4))}, ${Math.round(255 * Math.pow(0.5, 1 / 2.4))})` },
+  ], []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    let rafId;
+    const render = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      const width = Math.max(1, Math.round(rect.width * dpr));
+      const height = Math.max(1, Math.round(rect.height * dpr));
+
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        const imgData = ctx.createImageData(width, height);
+        const data = imgData.data;
+
+        for (let y = 0; y < height; y++) {
+          const color = y % 2 === 0 ? 255 : 0;
+          for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4;
+            data[idx] = color;
+            data[idx + 1] = color;
+            data[idx + 2] = color;
+            data[idx + 3] = 255;
+          }
+        }
+        ctx.putImageData(imgData, 0, 0);
+      }
+    };
+
+    const scheduleRender = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(render);
+    };
+
+    scheduleRender();
+    window.addEventListener("resize", scheduleRender);
+    return () => {
+      window.removeEventListener("resize", scheduleRender);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+
   return (
-    <div aria-label="Cartões de referência gamma" className="calibration-lab__gamma" role="img">
-      {GAMMA_TARGETS.map((target) => (
-        <div className="calibration-lab__gamma-card" key={target.value}>
-          <div aria-hidden="true" className="calibration-lab__gamma-reference" style={{ backgroundColor: target.reference }} />
-          <div aria-hidden="true" className="calibration-lab__gamma-sample" style={{ backgroundColor: target.reference, backgroundImage: "repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.45) 0 1px, rgba(0, 0, 0, 0.45) 1px 2px)" }} />
-          {showGuidance ? (
-            <span className="calibration-lab__gamma-label">Gamma {target.value}</span>
-          ) : null}
+    <div aria-label="Cartões de referência gamma" className="calibration-lab__gamma" role="img" style={{ position: "relative", width: "100%", height: "100%" }}>
+      <canvas
+        ref={canvasRef}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", display: "block" }}
+      />
+      
+      <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
+        {targets.map((target) => (
+          <div key={target.gamma} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+            <div
+              aria-hidden="true"
+              style={{
+                width: "80px",
+                height: "80px",
+                backgroundColor: target.color,
+                borderRadius: "50%",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.5)"
+              }}
+            />
+            {showGuidance ? (
+              <span style={{ backgroundColor: "rgba(0,0,0,0.8)", color: "#FFF", padding: "4px 10px", borderRadius: "4px", fontSize: "0.8rem", fontWeight: "bold" }}>
+                {target.gamma}
+              </span>
+            ) : null}
+          </div>
+        ))}
+      </div>
+
+      {showGuidance ? (
+        <div style={{ position: "absolute", bottom: "16px", left: "0", right: "0", textAlign: "center" }}>
+          <span style={{ backgroundColor: "rgba(0,0,0,0.8)", color: "#FFF", padding: "6px 12px", borderRadius: "4px", fontSize: "0.75rem", display: "inline-block", maxWidth: "90%" }}>
+            Estimativa visual baseada em mistura espacial. Ajuste o zoom do navegador para 100% (físico).
+          </span>
         </div>
-      ))}
+      ) : null}
     </div>
   );
 }
