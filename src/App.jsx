@@ -21,7 +21,7 @@ import ShortcutToast from './components/UI/ShortcutToast';
 import ToolTransitionOverlay from './components/UI/ToolTransitionOverlay';
 import AppProvider, { MODES, useApp } from './context/AppContext';
 import { DEFAULT_DOCK_MODES, SHORTCUTS } from './constants/shortcuts';
-import { getToolById, resolveToolLaunch } from './constants/tools';
+import { getToolById, resolveToolLaunch, TOOLS_REGISTRY } from './constants/tools';
 
 const DEAD_PIXEL_PALETTE = [
   { id: 'red', label: 'Vermelho', value: '#ff0000' },
@@ -86,15 +86,15 @@ function resolveLocationLaunch(location) {
   };
 }
 
-function buildNavigationHref(toolId, { preserveHash = false } = {}) {
+function buildNavigationHref(toolId) {
   const url = new URL(window.location.href);
-  if (!preserveHash) url.hash = '';
+  url.searchParams.delete('tool');
   if (!toolId || toolId === MODES.HOME) {
-    url.searchParams.delete('tool');
+    url.hash = '';
   } else {
-    url.searchParams.set('tool', toolId);
+    url.hash = toolId;
   }
-  return `${url.pathname}${url.search}`;
+  return `${url.pathname}${url.search}${url.hash}`;
 }
 
 function DisplaySuite() {
@@ -182,21 +182,49 @@ function DisplaySuite() {
       activateUrlTarget(target);
     };
     handleUrlState();
-    window.addEventListener('hashchange', handleUrlState);
     window.addEventListener('popstate', handleUrlState);
     return () => {
-      window.removeEventListener('hashchange', handleUrlState);
       window.removeEventListener('popstate', handleUrlState);
     };
   }, [activateMode, setCustomColor]);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleGlobalKeyDown = (e) => {
+      const isEditableTarget = e.target instanceof Element && Boolean(e.target.closest('input, textarea, select, [contenteditable="true"]'));
+      
+      if (e.key === 'Escape') {
+        // Only navigate to home if we are not already home
+        // AND not typing in a text field (escape might be used to blur/cancel input)
+        if (activeMode !== MODES.HOME && !isEditableTarget) {
+          e.preventDefault();
+          activateMode(MODES.HOME);
+        }
+        return;
+      }
+
+      if (e.key >= '1' && e.key <= '9' && !isEditableTarget) {
+        const index = parseInt(e.key, 10) - 1;
+        // The dock logic filters out HOME, so dock tools match TOOLS_REGISTRY where dock.visible is true
+        const dockTools = TOOLS_REGISTRY.filter((t) => t.dock?.visible).sort((a, b) => a.dock.order - b.dock.order);
+        const targetTool = dockTools[index];
+        if (targetTool) {
+          e.preventDefault();
+          activateMode(targetTool.mode, targetTool.id);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, [activeMode, activateMode]);
+
+  useEffect(() => {
     if (typeof window === 'undefined' || !hasResolvedInitialLocationRef.current) return;
 
     const pendingLocation = pendingLocationRef.current;
-    const desiredHref = buildNavigationHref(activeToolId, {
-      preserveHash: Boolean(pendingLocation?.preserveHash),
-    });
+    const desiredHref = buildNavigationHref(activeToolId);
     const currentHref = `${window.location.pathname}${window.location.search}${window.location.hash}`;
 
     if (pendingLocation) {
