@@ -287,8 +287,12 @@ export default function FullScreenClockMode({
           </div>
         ) : (
           <time
+            aria-atomic="true"
+            aria-label={clockParts.spoken}
+            aria-live="off"
             className="fullscreen-clock__time"
             dateTime={now.toISOString()}
+            role="timer"
           >
             <span className="fullscreen-clock__hours">{clockParts.hours}</span>
             <span aria-hidden="true" className="fullscreen-clock__separator">:</span>

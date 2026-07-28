@@ -1,6 +1,7 @@
 import { access, readFile, readdir } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { gzipSync } from 'node:zlib'
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = path.join(projectRoot, 'dist')
@@ -37,6 +38,21 @@ async function routeExists(route) {
 const files = await walk(distDir)
 const htmlFiles = files.filter((file) => file.endsWith('.html'))
 const canonicals = new Map()
+const codeAssets = files.filter((file) => /\.(?:css|js)$/.test(file))
+const assetMetrics = await Promise.all(codeAssets.map(async (file) => {
+  const source = await readFile(file)
+  return {
+    type: path.extname(file),
+    gzipBytes: gzipSync(source, { level: 9 }).byteLength,
+  }
+}))
+const totalCodeGzip = assetMetrics.reduce((total, asset) => total + asset.gzipBytes, 0)
+const largestScriptGzip = Math.max(0, ...assetMetrics.filter((asset) => asset.type === '.js').map((asset) => asset.gzipBytes))
+const largestStyleGzip = Math.max(0, ...assetMetrics.filter((asset) => asset.type === '.css').map((asset) => asset.gzipBytes))
+
+if (largestScriptGzip > 180 * 1024) errors.push(`performance: maior bundle JS gzip excede 180 KiB (${Math.ceil(largestScriptGzip / 1024)} KiB)`)
+if (largestStyleGzip > 30 * 1024) errors.push(`performance: maior CSS gzip excede 30 KiB (${Math.ceil(largestStyleGzip / 1024)} KiB)`)
+if (totalCodeGzip > 300 * 1024) errors.push(`performance: JS + CSS gzip excedem 300 KiB (${Math.ceil(totalCodeGzip / 1024)} KiB)`)
 
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8')
@@ -103,5 +119,5 @@ if (errors.length) {
   errors.forEach((error) => console.error(`- ${error}`))
   process.exitCode = 1
 } else {
-  console.log(`Build validado: ${htmlFiles.length} páginas HTML, ${sitemapUrls.length} URLs no sitemap e AdSense preservado.`)
+  console.log(`Build validado: ${htmlFiles.length} páginas HTML, ${sitemapUrls.length} URLs no sitemap, ${Math.ceil(totalCodeGzip / 1024)} KiB de JS/CSS gzip e AdSense preservado.`)
 }

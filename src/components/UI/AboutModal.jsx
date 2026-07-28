@@ -65,8 +65,8 @@ export default function AboutModal({ label = 'Sobre o MonitorSmith', className }
             </h3>
             <p style={{ margin: 0, color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem' }}>
               Os padrões, temporizadores, mensagens e imagens importadas são processados
-              localmente nesta aba. Alguns recursos do site, como fontes e publicidade,
-              podem solicitar conteúdo de serviços externos. A instalação PWA melhora o
+              localmente nesta aba. As fontes são entregues pela própria aplicação; a
+              publicidade pode solicitar conteúdo de serviços externos. A instalação PWA melhora o
               acesso offline, mas a disponibilidade de cada ferramenta depende do que já
               foi armazenado pelo navegador.
             </p>

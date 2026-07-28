@@ -5,7 +5,6 @@
 ## Informações oficiais
 - Site: https://monitorsmith.app/
 - Empresa: EXVORN.TECH — https://exvorn.tech/
-- Repositório: https://github.com/arch-antomcore/monitorsmith
 - Contato institucional: https://exvorn.tech/
 - Uso gratuito, sem cadastro obrigatório.
 
@@ -61,4 +60,4 @@
 - https://monitorsmith.app/privacidade/
 - https://monitorsmith.app/termos/
 
-Última revisão editorial: 2026-07-27
+Última revisão editorial: 2026-07-28

@@ -123,19 +123,20 @@ export default function DeadPixelTestMode({
       return;
     }
 
-    if (event.target !== event.currentTarget) return;
+    const isEditableTarget = event.target instanceof Element
+      && Boolean(event.target.closest('input, textarea, select, [contenteditable="true"]'));
 
-    if (event.key === "ArrowRight") {
+    if (event.key === "ArrowRight" && !isEditableTarget) {
       event.preventDefault();
       selectColor(activeIndex + 1);
     }
 
-    if (event.key === "ArrowLeft") {
+    if (event.key === "ArrowLeft" && !isEditableTarget) {
       event.preventDefault();
       selectColor(activeIndex - 1);
     }
 
-    if (event.key === " " && event.target === event.currentTarget) {
+    if (event.key === " " && event.target === containerRef.current) {
       event.preventDefault();
       updateAutoCycle(!resolvedAutoCycle);
     }
@@ -144,6 +145,8 @@ export default function DeadPixelTestMode({
   return (
     <DisplayToolShell
       id="dead-pixel"
+      onKeyDown={handleKeyDown}
+      visible={showControls}
       title="Teste de pixels"
       subtitle={`Cor ativa: ${activeColor.label}`}
       instructions={[
@@ -153,7 +156,7 @@ export default function DeadPixelTestMode({
       ]}
       technicalLimit="Inspeção visual não identifica a causa do defeito nem repara pixels. O antigo estrobo foi removido: flashes rápidos em tela inteira podem causar mal-estar e risco fotossensível."
       controls={
-        showControls ? <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+        <div className="display-mode__control-stack">
           <div className="display-mode__color-grid" role="group" aria-label="Escolha uma cor de teste">
             {colors.map((color, index) => (
               <button
@@ -161,6 +164,7 @@ export default function DeadPixelTestMode({
                 type="button"
                 className="display-mode__color-button"
                 aria-pressed={index === activeIndex}
+                aria-label={`Usar ${color.label} no teste`}
                 onClick={() => selectColor(index)}
                 style={{ "--test-color": color.value }}
               >
@@ -170,8 +174,8 @@ export default function DeadPixelTestMode({
             ))}
           </div>
 
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '10px' }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem', cursor: 'pointer', marginBottom: '8px' }}>
+          <div className="display-mode__control-section">
+            <label className="display-mode__checkbox-row">
               <input
                 type="checkbox"
                 checked={resolvedAutoCycle && !shouldReduceMotion}
@@ -185,7 +189,7 @@ export default function DeadPixelTestMode({
               </span>
             </label>
 
-            <div style={{ display: 'flex', gap: '6px' }}>
+            <div className="display-mode__speed-grid" role="group" aria-label="Intervalo do ciclo de cores">
               {[2000, 5000, 10000, 15000].map((ms) => (
                 <button
                   key={ms}
@@ -194,7 +198,7 @@ export default function DeadPixelTestMode({
                     "wbp-button",
                     cycleSpeed === ms ? "wbp-button--active" : "wbp-button--ghost"
                   )}
-                  style={{ flex: 1, padding: '4px 8px', fontSize: '0.72rem' }}
+                  aria-pressed={cycleSpeed === ms}
                   onClick={() => setCycleSpeed(ms)}
                 >
                   {(ms / 1000).toFixed(0)}s
@@ -203,26 +207,22 @@ export default function DeadPixelTestMode({
             </div>
           </div>
 
-          <div>
-            <button
-              type="button"
-              className={`wbp-button ${showInspectionGuide ? 'wbp-button--active' : 'wbp-button--ghost'}`}
-              style={{ width: '100%' }}
-              aria-pressed={showInspectionGuide}
-              onClick={() => setShowInspectionGuide((visible) => !visible)}
-            >
-              {showInspectionGuide ? 'Ocultar guia de varredura' : 'Exibir guia de varredura estática'}
-            </button>
-          </div>
-        </div> : null
+          <button
+            type="button"
+            className={`wbp-button display-mode__wide-action ${showInspectionGuide ? 'wbp-button--active' : 'wbp-button--ghost'}`}
+            aria-pressed={showInspectionGuide}
+            onClick={() => setShowInspectionGuide((visible) => !visible)}
+          >
+            {showInspectionGuide ? 'Ocultar guia de varredura' : 'Exibir guia de varredura estática'}
+          </button>
+        </div>
       }
     >
       <div
         ref={containerRef}
         aria-label={ariaLabel}
         className={classNames("display-mode__canvas", className)}
-        style={{ position: 'absolute', inset: 0, width: '100vw', height: '100vh', backgroundColor: activeColor.value }}
-        onKeyDown={handleKeyDown}
+        style={{ backgroundColor: activeColor.value }}
         tabIndex="0"
       >
         {showInspectionGuide ? (

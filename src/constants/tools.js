@@ -11,11 +11,10 @@ export const SITE_METADATA = Object.freeze({
   name: 'MonitorSmith',
   owner: 'EXVORN.TECH',
   baseUrl: 'https://monitorsmith.app',
-  repositoryUrl: 'https://github.com/arch-antomcore/monitorsmith',
   contactUrl: 'https://exvorn.tech/',
   locale: 'pt-BR',
   fallbackLocale: 'pt-BR',
-  contentLastModified: '2026-07-27',
+  contentLastModified: '2026-07-28',
 });
 
 export const TOOL_CATEGORIES = Object.freeze([

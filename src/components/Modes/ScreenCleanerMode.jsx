@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { acquireModalIsolation } from "../../utils/modalIsolation";
 import DisplayToolShell from "./DisplayToolShell";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
@@ -114,6 +116,12 @@ export default function ScreenCleanerMode({
       window.removeEventListener("keydown", handleKey, true);
     };
   }, [isCleanLocked]);
+
+  useEffect(() => {
+    if (!isCleanLocked) return undefined;
+    return acquireModalIsolation();
+  }, [isCleanLocked]);
+
   const patternIsControlled = typeof pattern === "string";
   const brightnessIsControlled = isFiniteNumber(brightness);
   const resolvedPattern = CLEANER_PATTERNS.some(
@@ -171,6 +179,7 @@ export default function ScreenCleanerMode({
   return (
     <DisplayToolShell
       id="cleaner"
+      visible={showControls}
       title="Inspeção para limpeza"
       subtitle="Diagnóstico de painel"
       instructions={[
@@ -182,14 +191,24 @@ export default function ScreenCleanerMode({
       controls={
         showControls ? <div className="display-mode__control-group" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <div>
-            <label className="display-mode__label" style={{ fontSize: '0.76rem', opacity: 0.7, marginBottom: '6px', display: 'block' }}>
+            <span
+              id="cleaner-pattern-label"
+              className="display-mode__label"
+              style={{ fontSize: '0.76rem', opacity: 0.7, marginBottom: '6px', display: 'block' }}
+            >
               Padrão de inspeção
-            </label>
-            <div className="display-mode__preset-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+            </span>
+            <div
+              className="display-mode__preset-row"
+              role="group"
+              aria-labelledby="cleaner-pattern-label"
+              style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}
+            >
               {CLEANER_PATTERNS.map((item) => (
                 <button
                   key={item.id}
                   type="button"
+                  aria-pressed={item.id === resolvedPattern}
                   className={classNames(
                     "wbp-button",
                     item.id === resolvedPattern ? "wbp-button--active" : "wbp-button--ghost"
@@ -234,67 +253,74 @@ export default function ScreenCleanerMode({
         </div> : null
       }
     >
-      {isCleanLocked ? (
-        <div
-          data-ms-shortcuts-disabled="true"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="cleaner-lock-title"
-          aria-describedby="cleaner-lock-description"
-          onContextMenu={(event) => event.preventDefault()}
-          onPointerDown={(event) => {
-            if (event.target !== unlockButtonRef.current) event.preventDefault();
-            event.stopPropagation();
-          }}
-          onTouchMove={(event) => event.preventDefault()}
-          onWheel={(event) => event.preventDefault()}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 99999,
-            backgroundColor: 'rgba(5, 6, 8, 0.96)',
-            backdropFilter: 'blur(24px)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#ffffff',
-            textAlign: 'center',
-            padding: '24px',
-            touchAction: 'none',
-            userSelect: 'none',
-          }}
-        >
-          <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🔒</div>
-          <h2 id="cleaner-lock-title" style={{ fontSize: '1.6rem', fontWeight: 600, letterSpacing: '-0.04em', margin: '0 0 10px' }}>
-            Bloqueio local ativo
-          </h2>
-          <p id="cleaner-lock-description" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '480px', fontSize: '0.88rem', lineHeight: 1.6, margin: '0 0 24px' }}>
-            O MonitorSmith ignorará atalhos e interações por 30 segundos. Isso não bloqueia teclas do sistema operacional. Para limpeza física, desligue o monitor e siga o manual do fabricante.
-          </p>
-          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: '2.5rem', color: '#34d399', margin: '0 0 24px' }}>
-            00:{String(cleanLockTimer).padStart(2, '0')}
-          </div>
-          <button
-            ref={unlockButtonRef}
-            type="button"
-            className="wbp-button wbp-button--ghost"
-            style={{ fontSize: '0.8rem', padding: '8px 16px', borderRadius: '10px' }}
-            onClick={() => setIsCleanLocked(false)}
-          >
-            Encerrar bloqueio agora (Esc)
-          </button>
-        </div>
-      ) : null}
       <div
         ref={containerRef}
         role="region"
         aria-label={ariaLabel}
         className={classNames("display-mode__canvas", "display-mode__canvas--cleaner", className)}
-        style={{ position: 'absolute', inset: 0, width: '100vw', height: '100vh', ...canvasStyle }}
+        style={canvasStyle}
         onKeyDown={handleKeyDown}
         tabIndex="0"
       />
+      {isCleanLocked && typeof document !== "undefined"
+        ? createPortal(
+          <div
+            data-ms-shortcuts-disabled="true"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cleaner-lock-title"
+            aria-describedby="cleaner-lock-description"
+            onContextMenu={(event) => event.preventDefault()}
+            onPointerDown={(event) => {
+              if (event.target !== unlockButtonRef.current) event.preventDefault();
+              event.stopPropagation();
+            }}
+            onTouchMove={(event) => event.preventDefault()}
+            onWheel={(event) => event.preventDefault()}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 99999,
+              backgroundColor: 'rgba(5, 6, 8, 0.96)',
+              backdropFilter: 'blur(24px)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#ffffff',
+              textAlign: 'center',
+              padding: '24px',
+              touchAction: 'none',
+              userSelect: 'none',
+            }}
+          >
+            <div aria-hidden="true" style={{ fontSize: '3rem', marginBottom: '16px' }}>🔒</div>
+            <h2 id="cleaner-lock-title" style={{ fontSize: '1.6rem', fontWeight: 600, letterSpacing: '-0.04em', margin: '0 0 10px' }}>
+              Bloqueio local ativo
+            </h2>
+            <p id="cleaner-lock-description" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '480px', fontSize: '0.88rem', lineHeight: 1.6, margin: '0 0 24px' }}>
+              O MonitorSmith ignorará atalhos e interações por 30 segundos. Isso não bloqueia teclas do sistema operacional. Para limpeza física, desligue o monitor e siga o manual do fabricante.
+            </p>
+            <div
+              aria-label={`${cleanLockTimer} segundos restantes`}
+              role="timer"
+              style={{ fontFamily: "'DM Mono', monospace", fontSize: '2.5rem', color: '#34d399', margin: '0 0 24px' }}
+            >
+              00:{String(cleanLockTimer).padStart(2, '0')}
+            </div>
+            <button
+              ref={unlockButtonRef}
+              type="button"
+              className="wbp-button wbp-button--ghost"
+              style={{ fontSize: '0.8rem', padding: '8px 16px', borderRadius: '10px' }}
+              onClick={() => setIsCleanLocked(false)}
+            >
+              Encerrar bloqueio agora (Esc)
+            </button>
+          </div>,
+          document.body,
+        )
+        : null}
     </DisplayToolShell>
   );
 }

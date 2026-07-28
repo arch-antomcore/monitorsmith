@@ -2,11 +2,7 @@ import { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Button, { joinClasses } from './Button';
-
-let openModalCount = 0;
-let previousBodyOverflow = '';
-let previousRootAriaHidden = null;
-let rootWasInert = false;
+import { acquireModalIsolation } from '../../utils/modalIsolation';
 
 const getFocusableElements = (container) => {
   if (!container) return [];
@@ -55,19 +51,7 @@ export default function Modal({
     previouslyFocusedElement.current = document.activeElement;
     dialogRef.current?.focus({ preventScroll: true });
 
-    if (openModalCount === 0) {
-      previousBodyOverflow = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-
-      const appRoot = document.getElementById('root');
-      if (appRoot) {
-        previousRootAriaHidden = appRoot.getAttribute('aria-hidden');
-        rootWasInert = appRoot.hasAttribute('inert');
-        appRoot.setAttribute('aria-hidden', 'true');
-        appRoot.setAttribute('inert', '');
-      }
-    }
-    openModalCount += 1;
+    const releaseModalIsolation = acquireModalIsolation();
 
     const focusTimer = window.setTimeout(() => {
       const requestedElement = initialFocusRef?.current;
@@ -115,24 +99,7 @@ export default function Modal({
     return () => {
       window.clearTimeout(focusTimer);
       document.removeEventListener('keydown', handleKeyDown);
-      openModalCount = Math.max(0, openModalCount - 1);
-
-      if (openModalCount === 0) {
-        document.body.style.overflow = previousBodyOverflow;
-
-        const appRoot = document.getElementById('root');
-        if (appRoot) {
-          if (previousRootAriaHidden === null) {
-            appRoot.removeAttribute('aria-hidden');
-          } else {
-            appRoot.setAttribute('aria-hidden', previousRootAriaHidden);
-          }
-
-          if (!rootWasInert) {
-            appRoot.removeAttribute('inert');
-          }
-        }
-      }
+      releaseModalIsolation();
 
       if (previouslyFocusedElement.current instanceof HTMLElement) {
         previouslyFocusedElement.current.focus({ preventScroll: true });

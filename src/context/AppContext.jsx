@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { DEFAULT_MODE, MODE_IDS, SHORTCUTS, isDisplayMode } from '../constants/shortcuts';
+import { resolveToolLaunch } from '../constants/tools';
 import { useFullscreen } from '../hooks/useFullscreen';
 import { useIdleTimer } from '../hooks/useIdleTimer';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
@@ -32,6 +33,7 @@ function normalizeHexColor(value, fallback) {
 
 export function AppProvider({ children }) {
   const [activeMode, setActiveMode] = useState(DEFAULT_MODE);
+  const [activeToolId, setActiveToolId] = useState(DEFAULT_MODE);
   const [isDockOpen, setIsDockOpen] = useState(true);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [whiteLighting, setWhiteLightingState] = useState(DEFAULT_WHITE_LIGHTING);
@@ -50,7 +52,6 @@ export function AppProvider({ children }) {
     clearError: clearFullscreenError,
   } = useFullscreen();
 
-  const manualHideTimestampRef = useRef(0);
   const isDisplayModeActive = activeMode !== MODE_IDS.HOME;
   const isImmersiveSession = isDisplayModeActive && isFullscreen;
 
@@ -90,11 +91,25 @@ export function AppProvider({ children }) {
   useEffect(() => {
     if (typeof document === 'undefined') return undefined;
 
-    const isPersistentUiTarget = (target) => Boolean(
-      target instanceof Element
-      && target.matches('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
-      && !target.closest('[aria-hidden="true"], [inert]'),
-    );
+    const isPersistentUiTarget = (target) => {
+      if (
+        !(target instanceof Element)
+        || target.closest('[aria-hidden="true"], [inert]')
+      ) {
+        return false;
+      }
+
+      if (target.closest('[role="dialog"][aria-modal="true"]')) return true;
+
+      const isTextEntry = target.matches(
+        'textarea, select, [contenteditable="true"], input:not([type="range"]):not([type="color"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"])',
+      );
+      const isKeyboardOperatedControl = target.matches(
+        'button, a[href], input, [role="button"], [role="menuitem"], [role="slider"]',
+      ) && target.matches(':focus-visible');
+
+      return isTextEntry || isKeyboardOperatedControl;
+    };
     const syncFocusState = () => setHasPersistentUiFocus(isPersistentUiTarget(document.activeElement));
     const handleFocusIn = (event) => setHasPersistentUiFocus(isPersistentUiTarget(event.target));
     const handleFocusOut = () => window.requestAnimationFrame(syncFocusState);
@@ -110,7 +125,6 @@ export function AppProvider({ children }) {
   }, []);
 
   const hideUiManually = useCallback(() => {
-    manualHideTimestampRef.current = Date.now();
     if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
@@ -118,10 +132,6 @@ export function AppProvider({ children }) {
   }, []);
 
   const resetIdleTimer = useCallback(() => {
-    if (Date.now() - manualHideTimestampRef.current < 2000) {
-      rawResetIdleTimer?.();
-      return;
-    }
     setIsManualUiHidden(false);
     rawResetIdleTimer?.();
   }, [rawResetIdleTimer]);
@@ -134,10 +144,17 @@ export function AppProvider({ children }) {
     }
   }, [activeMode, releaseWakeLock, requestWakeLock]);
 
-  const activateMode = useCallback((nextMode) => {
+  const activateMode = useCallback((nextMode, requestedToolId = nextMode) => {
     if (!isDisplayMode(nextMode)) return false;
+    const resolvedTool = resolveToolLaunch(requestedToolId);
+    const nextToolId = nextMode === MODE_IDS.HOME
+      ? MODE_IDS.HOME
+      : resolvedTool?.mode === nextMode
+        ? resolvedTool.toolId
+        : nextMode;
     setIsManualUiHidden(false);
     setActiveMode(nextMode);
+    setActiveToolId(nextToolId);
     setIsDockOpen(true);
     resetIdleTimer();
     return true;
@@ -166,6 +183,24 @@ export function AppProvider({ children }) {
     return didToggle;
   }, [isWakeLockActive, showToast, toggleWakeLock]);
 
+  const shouldHideUi =
+    isDisplayModeActive
+    && (isManualUiHidden || (isImmersiveSession && isUiIdle))
+    && !isHelpOpen
+    && !hasPersistentUiFocus;
+
+  useEffect(() => {
+    if (!shouldHideUi || typeof document === 'undefined') return;
+
+    const activeElement = document.activeElement;
+    if (
+      activeElement instanceof HTMLElement
+      && activeElement.closest('.wbp-navbar, .wbp-dock, .display-mode__controls')
+    ) {
+      activeElement.blur();
+    }
+  }, [shouldHideUi]);
+
   const setWhiteLighting = useCallback((patch) => {
     setWhiteLightingState((current) => ({
       brightness: clampNumber(patch?.brightness, 0, 100, current.brightness),
@@ -191,7 +226,10 @@ export function AppProvider({ children }) {
     setIsDockOpen(true);
     resetIdleTimer();
     const didLeaveFullscreen = await leaveFullscreen();
-    if (activeMode !== MODE_IDS.HOME) setActiveMode(MODE_IDS.HOME);
+    if (activeMode !== MODE_IDS.HOME) {
+      setActiveMode(MODE_IDS.HOME);
+      setActiveToolId(MODE_IDS.HOME);
+    }
     if (!didLeaveFullscreen) {
       showToast('Esc', 'Interface restaurada; tela cheia permaneceu ativa');
     }
@@ -220,6 +258,7 @@ export function AppProvider({ children }) {
   const value = useMemo(
     () => ({
       activeMode,
+      activeToolId,
       activateMode,
       isFullscreen,
       fullscreenSupported,
@@ -233,11 +272,7 @@ export function AppProvider({ children }) {
         toggle: toggleWakeLockWithFeedback,
         clearError: clearWakeLockError,
       },
-      shouldHideUi:
-        isDisplayModeActive
-        && (isManualUiHidden || (isImmersiveSession && isUiIdle))
-        && !isHelpOpen
-        && !hasPersistentUiFocus,
+      shouldHideUi,
       hideUiManually,
       resetIdleTimer,
       isDockOpen,
@@ -257,26 +292,23 @@ export function AppProvider({ children }) {
     }),
     [
       activeMode,
+      activeToolId,
       activateMode,
       customColor,
       clearFullscreenError,
       clearWakeLockError,
       fullscreenError,
       fullscreenSupported,
-      hasPersistentUiFocus,
       hideUiManually,
-      isDisplayModeActive,
       isDockOpen,
       isFullscreen,
       isHelpOpen,
-      isImmersiveSession,
-      isManualUiHidden,
-      isUiIdle,
       isWakeLockActive,
       message,
       resetIdleTimer,
       restoreInterface,
       showToast,
+      shouldHideUi,
       setCustomColor,
       setMessage,
       setWhiteLighting,

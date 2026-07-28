@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import Button, { joinClasses } from '../UI/Button';
+import { joinClasses } from '../UI/Button';
 import { ControlIcon } from './Navbar';
 import { DEFAULT_DOCK_MODES, getModePresentation } from '../../constants/shortcuts';
 
@@ -21,32 +21,10 @@ function normalizeMode(mode) {
   };
 }
 
-function DockAction({ icon, label, active, onClick, disabled = false }) {
-  return (
-    <Button
-      className="wbp-dock__utility"
-      variant={active ? 'active' : 'ghost'}
-      size="sm"
-      icon={<ControlIcon name={icon} size={17} />}
-      aria-label={label}
-      title={label}
-      aria-pressed={typeof active === 'boolean' ? active : undefined}
-      onClick={onClick}
-      disabled={disabled || !onClick}
-    />
-  );
-}
-
 export default function DockMenu({
   currentMode,
   activeMode,
   onSelectMode,
-  onToggleFullscreen,
-  onHideUi,
-  isFullscreen = false,
-  onToggleWakeLock,
-  isWakeLockActive = false,
-  onOpenHelp,
   availableModes = DEFAULT_DOCK_MODES,
   hidden = false,
   className,
@@ -58,9 +36,15 @@ export default function DockMenu({
   const selectedMode = currentMode ?? activeMode;
   const selectedModeId =
     selectedMode && typeof selectedMode === 'object' ? selectedMode.id : selectedMode;
-  const modes = (Array.isArray(availableModes) ? availableModes : DEFAULT_DOCK_MODES).map(normalizeMode);
+  const modes = useMemo(
+    () => (Array.isArray(availableModes) ? availableModes : DEFAULT_DOCK_MODES).map(normalizeMode),
+    [availableModes],
+  );
 
   const currentIndex = modes.findIndex((m) => m.id === selectedModeId);
+  const [focusModeId, setFocusModeId] = useState(selectedModeId ?? null);
+  const focusIndex = modes.findIndex((mode) => mode.id === focusModeId);
+  const rovingIndex = focusIndex >= 0 ? focusIndex : currentIndex >= 0 ? currentIndex : 0;
 
   const handlePrevTool = () => {
     if (modes.length === 0 || !onSelectMode) return;
@@ -90,17 +74,27 @@ export default function DockMenu({
     }
   }, [selectedModeId, shouldReduceMotion]);
 
+  useEffect(() => {
+    setFocusModeId(selectedModeId ?? modes[0]?.id ?? null);
+  }, [selectedModeId, modes]);
+
   const handleModeKeyDown = (event, index) => {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
     event.preventDefault();
 
-    const nextIndex = event.key === 'Home'
+    const direction = event.key === 'ArrowLeft' ? -1 : 1;
+    let nextIndex = event.key === 'Home'
       ? 0
       : event.key === 'End'
         ? modes.length - 1
-        : event.key === 'ArrowRight'
-          ? (index + 1) % modes.length
-          : (index - 1 + modes.length) % modes.length;
+        : (index + direction + modes.length) % modes.length;
+
+    for (let attempts = 0; attempts < modes.length; attempts += 1) {
+      if (!modeButtonRefs.current[nextIndex]?.disabled) break;
+      nextIndex = (nextIndex + direction + modes.length) % modes.length;
+    }
+
+    setFocusModeId(modes[nextIndex]?.id ?? null);
     modeButtonRefs.current[nextIndex]?.focus();
   };
 
@@ -110,9 +104,9 @@ export default function DockMenu({
         <motion.nav
           className={joinClasses('wbp-dock', className)}
           aria-label={label}
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 20, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.985 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.985 }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           style={{ x: '-50%' }}
         >
@@ -140,10 +134,11 @@ export default function DockMenu({
                   aria-label={itemLabel}
                   aria-pressed={isActive}
                   aria-current={isActive ? 'true' : undefined}
-                  tabIndex={isActive || (currentIndex === -1 && index === 0) ? 0 : -1}
+                  tabIndex={index === rovingIndex ? 0 : -1}
                   disabled={mode.disabled || !onSelectMode}
                   title={mode.shortcut ? `${itemLabel} (${mode.shortcut})` : itemLabel}
                   onClick={() => onSelectMode?.(mode.id)}
+                  onFocus={() => setFocusModeId(mode.id)}
                   onKeyDown={(event) => handleModeKeyDown(event, index)}
                   whileHover={!mode.disabled && !shouldReduceMotion ? { y: -2 } : undefined}
                   whileTap={!mode.disabled && !shouldReduceMotion ? { scale: 0.97 } : undefined}
@@ -172,31 +167,6 @@ export default function DockMenu({
             <CaretRight size={16} weight="bold" />
           </button>
 
-          <span className="wbp-dock__separator" aria-hidden="true" />
-
-          <div className="wbp-dock__utilities" role="toolbar" aria-label="Ações da tela">
-            <DockAction
-              icon={isFullscreen ? 'minimize' : 'fullscreen'}
-              label={isFullscreen ? 'Sair da tela cheia (Esc ou F)' : 'Ocupar 100% da tela (F)'}
-              onClick={onToggleFullscreen}
-            />
-            {onToggleWakeLock ? (
-              <DockAction
-                icon="wake"
-                label={isWakeLockActive ? 'Permitir que a tela apague' : 'Manter a tela ativa'}
-                active={isWakeLockActive}
-                onClick={onToggleWakeLock}
-              />
-            ) : null}
-            {onHideUi ? (
-              <DockAction
-                icon="hideUi"
-                label="Ocultar barras e interface (Modo imersivo)"
-                onClick={onHideUi}
-              />
-            ) : null}
-            <DockAction icon="help" label="Ver atalhos de teclado (?)" onClick={onOpenHelp} />
-          </div>
         </motion.nav>
       ) : null}
     </AnimatePresence>

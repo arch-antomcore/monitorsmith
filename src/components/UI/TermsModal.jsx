@@ -116,7 +116,7 @@ export default function TermsModal({ label = 'Termos de Uso', className }) {
           </section>
 
           <p style={{ margin: 0, paddingTop: '14px', borderTop: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.5)', textAlign: 'center', fontFamily: 'monospace', fontSize: '0.74rem' }}>
-            Última atualização: 27 de julho de 2026 · EXVORN.TECH
+            Última atualização: 28 de julho de 2026 · EXVORN.TECH
           </p>
         </div>
       </Modal>

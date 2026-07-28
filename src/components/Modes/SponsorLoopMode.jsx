@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { getSponsorImageDimensionError } from '../../lib/sponsorLoopValidation';
 
 const join = (...c) => c.filter(Boolean).join(' ');
 
@@ -29,6 +30,29 @@ const MAX_TOTAL_BYTES = 40 * 1024 * 1024;
 const ACCEPTED_TYPES = new Set(['image/png', 'image/jpeg', 'image/webp']);
 const ACCEPTED = Array.from(ACCEPTED_TYPES).join(',');
 
+function decodeImageFile(file) {
+  return new Promise((resolve, reject) => {
+    const src = URL.createObjectURL(file);
+    const image = new Image();
+
+    image.decoding = 'async';
+    image.onload = () => {
+      const width = image.naturalWidth;
+      const height = image.naturalHeight;
+      image.onload = null;
+      image.onerror = null;
+      resolve({ src, width, height });
+    };
+    image.onerror = () => {
+      image.onload = null;
+      image.onerror = null;
+      URL.revokeObjectURL(src);
+      reject(new Error('decode-failed'));
+    };
+    image.src = src;
+  });
+}
+
 export default function SponsorLoopMode({
   ariaLabel = 'Loop de marcas',
   autoFocus = false,
@@ -39,8 +63,12 @@ export default function SponsorLoopMode({
   const fileInputRef = useRef(null);
   const timerRef = useRef(null);
   const progressRef = useRef(null);
+  const playbackDeadlineRef = useRef(0);
+  const importQueueRef = useRef(Promise.resolve());
   const transitionTimerRef = useRef(null);
+  const dragDepthRef = useRef(0);
   const imagesRef = useRef([]);
+  const isMountedRef = useRef(false);
   const closePanelButtonRef = useRef(null);
   const reopenPanelButtonRef = useRef(null);
   const pendingFocusTarget = useRef(null);
@@ -61,7 +89,6 @@ export default function SponsorLoopMode({
   const [oledShield, setOledShield] = useState(false);
   const [shiftOffset, setShiftOffset] = useState({ x: 0, y: 0 });
 
-  const [progress, setProgress] = useState(0);
   const [transitionClass, setTransitionClass] = useState('');
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadMessage, setUploadMessage] = useState('PNG, JPEG ou WebP; até 5 MB por arquivo e 40 MB no total.');
@@ -74,9 +101,13 @@ export default function SponsorLoopMode({
     imagesRef.current = images;
   }, [images]);
 
-  useEffect(() => () => {
-    imagesRef.current.forEach((image) => URL.revokeObjectURL(image.src));
-    window.clearTimeout(transitionTimerRef.current);
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      imagesRef.current.forEach((image) => URL.revokeObjectURL(image.src));
+      window.clearTimeout(transitionTimerRef.current);
+    };
   }, []);
 
   useEffect(() => {
@@ -130,11 +161,23 @@ export default function SponsorLoopMode({
     );
   }, [resolvedTransition, transitionSpeed]);
 
+  const updateProgress = useCallback((value) => {
+    const normalized = Math.max(0, Math.min(100, value)) / 100;
+    if (progressRef.current) {
+      progressRef.current.style.transform = `scaleX(${normalized})`;
+    }
+  }, []);
+
+  const restartPlaybackCycle = useCallback(() => {
+    playbackDeadlineRef.current = window.performance.now() + (duration * 1000);
+    updateProgress(0);
+  }, [duration, updateProgress]);
+
   // --- Navigation ---
   const advance = useCallback(() => {
     if (!images.length) return;
     setActiveIndex(i => (i + 1) % images.length);
-    setProgress(0);
+    restartPlaybackCycle();
     applyTransition();
     if (oledShield) {
       setShiftOffset({
@@ -142,76 +185,117 @@ export default function SponsorLoopMode({
         y: Math.round((Math.random() - 0.5) * 4),
       });
     }
-  }, [applyTransition, images.length, oledShield]);
+  }, [applyTransition, images.length, oledShield, restartPlaybackCycle]);
 
   const goBack = useCallback(() => {
     if (!images.length) return;
     setActiveIndex(i => (i - 1 + images.length) % images.length);
-    setProgress(0);
+    restartPlaybackCycle();
     applyTransition();
-  }, [applyTransition, images.length]);
+  }, [applyTransition, images.length, restartPlaybackCycle]);
 
   // --- Playback timer ---
   useEffect(() => {
     if (!isPlaying || images.length < 2) {
-      clearInterval(timerRef.current);
+      window.clearInterval(timerRef.current);
+      if (images.length < 2) updateProgress(0);
       return;
     }
 
-    const intervalMs = 250;
-    let startedAt = Date.now();
+    restartPlaybackCycle();
 
-    timerRef.current = setInterval(() => {
-      const elapsed = Date.now() - startedAt;
-      setProgress(Math.min(100, (elapsed / (duration * 1000)) * 100));
-      if (elapsed >= duration * 1000) {
-        startedAt = Date.now();
-        setProgress(0);
+    timerRef.current = window.setInterval(() => {
+      const now = window.performance.now();
+      const cycleDuration = duration * 1000;
+      const elapsed = cycleDuration - Math.max(0, playbackDeadlineRef.current - now);
+      updateProgress((elapsed / cycleDuration) * 100);
+      if (now >= playbackDeadlineRef.current) {
         advance();
       }
-    }, intervalMs);
+    }, 100);
 
-    return () => clearInterval(timerRef.current);
-  }, [isPlaying, duration, images.length, advance]);
+    return () => window.clearInterval(timerRef.current);
+  }, [advance, duration, images.length, isPlaying, restartPlaybackCycle, updateProgress]);
 
   // --- File handling ---
-  const processFiles = (fileList) => {
+  const processFiles = async (fileList) => {
     const candidates = Array.from(fileList);
     const accepted = [];
     const rejected = [];
-    let totalBytes = images.reduce((sum, image) => sum + image.size, 0);
-    let availableSlots = MAX_IMAGES - images.length;
+    const currentImages = imagesRef.current;
+    let totalBytes = currentImages.reduce((sum, image) => sum + image.size, 0);
+    let availableSlots = MAX_IMAGES - currentImages.length;
 
-    candidates.forEach((file) => {
+    if (candidates.length) {
+      setUploadMessage(
+        `Validando ${candidates.length} ${candidates.length === 1 ? 'imagem' : 'imagens'}...`,
+      );
+    }
+
+    for (const file of candidates) {
+      if (!isMountedRef.current) {
+        accepted.forEach((image) => URL.revokeObjectURL(image.src));
+        return;
+      }
       if (availableSlots <= 0) {
         rejected.push(`${file.name}: limite de ${MAX_IMAGES} imagens`);
-        return;
+        continue;
       }
       if (!ACCEPTED_TYPES.has(file.type)) {
         rejected.push(`${file.name}: formato não aceito`);
-        return;
+        continue;
       }
       if (file.size > MAX_FILE_BYTES) {
         rejected.push(`${file.name}: excede 5 MB`);
-        return;
+        continue;
       }
       if (totalBytes + file.size > MAX_TOTAL_BYTES) {
         rejected.push(`${file.name}: excede o limite total de 40 MB`);
+        continue;
+      }
+
+      let decoded;
+      try {
+        decoded = await decodeImageFile(file);
+      } catch {
+        rejected.push(`${file.name}: não foi possível decodificar a imagem`);
+        continue;
+      }
+
+      if (!isMountedRef.current) {
+        URL.revokeObjectURL(decoded.src);
+        accepted.forEach((image) => URL.revokeObjectURL(image.src));
         return;
+      }
+
+      const dimensionError = getSponsorImageDimensionError(decoded.width, decoded.height);
+      if (dimensionError) {
+        URL.revokeObjectURL(decoded.src);
+        rejected.push(`${file.name}: ${dimensionError}`);
+        continue;
       }
 
       accepted.push({
         name: file.name,
-        src: URL.createObjectURL(file),
+        src: decoded.src,
         size: file.size,
+        width: decoded.width,
+        height: decoded.height,
         id: `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
       });
       totalBytes += file.size;
       availableSlots -= 1;
-    });
+    }
+
+    if (!isMountedRef.current) {
+      accepted.forEach((image) => URL.revokeObjectURL(image.src));
+      return;
+    }
 
     if (accepted.length) {
-      setImages((previous) => [...previous, ...accepted]);
+      const next = [...imagesRef.current, ...accepted];
+      imagesRef.current = next;
+      setImages(next);
     }
 
     const acceptedMessage = accepted.length
@@ -223,23 +307,67 @@ export default function SponsorLoopMode({
     setUploadMessage(`${acceptedMessage}${rejectedMessage}`.trim() || 'Nenhum arquivo selecionado.');
   };
 
+  const enqueueFiles = (fileList) => {
+    const files = Array.from(fileList);
+    importQueueRef.current = importQueueRef.current
+      .catch(() => undefined)
+      .then(() => processFiles(files));
+    return importQueueRef.current;
+  };
+
   const handleFileSelect = (e) => {
-    processFiles(e.target.files);
+    void enqueueFiles(e.target.files);
     e.target.value = '';
   };
 
-  const handleDrop = (e) => {
+  const isFileDrag = (dataTransfer) => (
+    Array.from(dataTransfer?.types || []).includes('Files')
+  );
+
+  const handleDragEnter = (e) => {
+    if (!isFileDrag(e.dataTransfer)) return;
     e.preventDefault();
+    dragDepthRef.current += 1;
+    setIsDragOver(true);
+  };
+
+  const handleDragOver = (e) => {
+    if (!isFileDrag(e.dataTransfer)) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e) => {
+    if (dragDepthRef.current === 0) return;
+    e.preventDefault();
+    dragDepthRef.current = Math.max(0, dragDepthRef.current - 1);
+    if (dragDepthRef.current === 0) setIsDragOver(false);
+  };
+
+  const resetDragState = () => {
+    dragDepthRef.current = 0;
     setIsDragOver(false);
-    processFiles(e.dataTransfer.files);
+  };
+
+  const handleDrop = (e) => {
+    if (!isFileDrag(e.dataTransfer)) {
+      resetDragState();
+      return;
+    }
+    e.preventDefault();
+    resetDragState();
+    if (e.dataTransfer.files.length) void enqueueFiles(e.dataTransfer.files);
   };
 
   const removeImage = (id) => {
     const removedIndex = images.findIndex((image) => image.id === id);
     if (removedIndex < 0) return;
 
-    URL.revokeObjectURL(images[removedIndex].src);
+    const removedImage = images[removedIndex];
+    URL.revokeObjectURL(removedImage.src);
     const next = images.filter((image) => image.id !== id);
+    imagesRef.current = next;
     setImages(next);
     setActiveIndex((current) => {
       if (!next.length) return 0;
@@ -247,14 +375,19 @@ export default function SponsorLoopMode({
       return Math.min(adjusted, next.length - 1);
     });
     if (!next.length) setIsPlaying(false);
+    setUploadMessage(
+      `${removedImage.name} removida. ${next.length} ${next.length === 1 ? 'imagem restante' : 'imagens restantes'}.`,
+    );
   };
 
   const clearAll = () => {
     images.forEach((image) => URL.revokeObjectURL(image.src));
     setImages([]);
+    imagesRef.current = [];
     setActiveIndex(0);
     setIsPlaying(false);
-    setProgress(0);
+    playbackDeadlineRef.current = 0;
+    updateProgress(0);
     setUploadMessage('Todas as imagens foram removidas da memória local.');
   };
 
@@ -267,6 +400,10 @@ export default function SponsorLoopMode({
       aria-label={ariaLabel}
       className={join('display-mode', 'display-mode--sponsor-loop')}
       data-mode="sponsor-loop"
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
       onKeyDown={handleKeyDown}
       tabIndex="0"
     >
@@ -319,7 +456,6 @@ export default function SponsorLoopMode({
             <div
               ref={progressRef}
               className="sponsor-loop__progress-fill"
-              style={{ width: `${progress}%` }}
             />
           </div>
         )}
@@ -341,12 +477,7 @@ export default function SponsorLoopMode({
 
       {/* Drag overlay */}
       {isDragOver && (
-        <div
-          className="sponsor-loop__drop-overlay"
-          onDragOver={(e) => e.preventDefault()}
-          onDragLeave={() => setIsDragOver(false)}
-          onDrop={handleDrop}
-        >
+        <div className="sponsor-loop__drop-overlay">
           <p role="status">Solte as imagens aqui</p>
         </div>
       )}
@@ -359,13 +490,6 @@ export default function SponsorLoopMode({
         multiple
         onChange={handleFileSelect}
         style={{ display: 'none' }}
-      />
-
-      {/* Global drag listener (captures drags from outside the drop zone) */}
-      <div
-        className="sponsor-loop__drag-catcher"
-        onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
-        aria-hidden="true"
       />
 
       {/* Controls panel */}
@@ -403,7 +527,6 @@ export default function SponsorLoopMode({
                 fileInputRef.current?.click();
               }
             }}
-            onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
             role="button"
             tabIndex={images.length >= MAX_IMAGES ? -1 : 0}
             aria-label="Importar imagens PNG, JPEG ou WebP"
@@ -434,7 +557,11 @@ export default function SponsorLoopMode({
                     className="sponsor-loop__thumb-select"
                     aria-label={`Exibir ${img.name}`}
                     aria-pressed={idx === activeIndex}
-                    onClick={() => { setActiveIndex(idx); setProgress(0); applyTransition(); }}
+                    onClick={() => {
+                      setActiveIndex(idx);
+                      restartPlaybackCycle();
+                      applyTransition();
+                    }}
                   >
                     <img src={img.src} alt="" draggable="false" />
                   </button>
@@ -443,7 +570,7 @@ export default function SponsorLoopMode({
                     className="sponsor-loop__thumb-remove"
                     onClick={(e) => { e.stopPropagation(); removeImage(img.id); }}
                     aria-label={`Remover ${img.name}`}
-                    title="Remover"
+                    title={`Remover ${img.name}`}
                   >×</button>
                 </div>
               ))}

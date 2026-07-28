@@ -4,8 +4,6 @@ import {
   TerminalWindow, 
   Sun, 
   Moon, 
-  EnvelopeSimple,
-  GithubLogo,
   LinkedinLogo
 } from "@phosphor-icons/react";
 import BrandLogo from "./BrandLogo";
@@ -29,18 +27,22 @@ export function FooterSection({ onLaunch }) {
   });
 
   React.useEffect(() => {
-    if (typeof document !== "undefined") {
-      const root = document.documentElement;
-      if (isDarkMode) {
-        root.classList.add("dark", "ms-studio-dark");
-        root.classList.remove("ms-studio-light", "light-mode");
-        try { localStorage.setItem("ms_studio_theme", "dark"); } catch { /* Preferência não persistida. */ }
-      } else {
-        root.classList.remove("dark", "ms-studio-dark");
-        root.classList.add("ms-studio-light", "light-mode");
-        try { localStorage.setItem("ms_studio_theme", "light"); } catch { /* Preferência não persistida. */ }
-      }
+    if (typeof document === "undefined") return undefined;
+
+    const root = document.documentElement;
+    if (isDarkMode) {
+      root.classList.add("dark", "ms-studio-dark");
+      root.classList.remove("ms-studio-light", "light-mode");
+      try { localStorage.setItem("ms_studio_theme", "dark"); } catch { /* Preferência não persistida. */ }
+    } else {
+      root.classList.remove("dark", "ms-studio-dark");
+      root.classList.add("ms-studio-light", "light-mode");
+      try { localStorage.setItem("ms_studio_theme", "light"); } catch { /* Preferência não persistida. */ }
     }
+
+    return () => {
+      root.classList.remove("dark", "light-mode", "ms-studio-dark", "ms-studio-light");
+    };
   }, [isDarkMode]);
 
   const handleToolClick = (e, modeId, fallbackUrl) => {
@@ -93,15 +95,6 @@ export function FooterSection({ onLaunch }) {
             </p>
 
             <div className="flex items-center gap-3 pt-2">
-              <a 
-                href="https://github.com/arch-antomcore/monitorsmith"
-                target="_blank" 
-                rel="noreferrer"
-                aria-label="Repositório do MonitorSmith no GitHub"
-                className="w-9 h-9 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] flex items-center justify-center text-white/80 hover:text-white transition-all hover:scale-105"
-              >
-                <GithubLogo size={18} />
-              </a>
               <a 
                 href="https://www.linkedin.com/in/matheus-peres-da-silva/" 
                 target="_blank" 
@@ -241,26 +234,25 @@ export function FooterSection({ onLaunch }) {
             </ul>
           </div>
 
-          {/* Coluna 4: Newsletter & Atualizações */}
+          {/* Coluna 4: Atualizações do produto */}
           <div className="space-y-4">
             <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-2">
-              <EnvelopeSimple size={16} className="text-amber-400" />
-              <span>Notas de Lançamento</span>
+              <Sparkle size={16} className="text-amber-400" />
+              <span>Novidades</span>
             </h3>
             <p className="text-xs text-white/70 leading-relaxed">
-              Acompanhe versões, correções e novas ferramentas diretamente no repositório oficial do MonitorSmith.
+              Novas ferramentas, correções e guias são publicados diretamente no MonitorSmith.
+              Consulte a biblioteca para acompanhar o catálogo atual.
             </p>
             <a
-              href="https://github.com/arch-antomcore/monitorsmith"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#monitor-tools"
               className="w-full py-2 px-3 rounded-lg bg-white/[0.08] hover:bg-amber-500 hover:text-black border border-white/[0.08] hover:border-transparent text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center gap-2"
             >
-              <GithubLogo size={16} aria-hidden="true" />
-              Acompanhar no GitHub
+              <TerminalWindow size={16} aria-hidden="true" />
+              Explorar ferramentas
             </a>
             <span className="text-[10px] text-white/60 block">
-              Newsletter por e-mail em preparação; nenhuma inscrição é coletada aqui.
+              Uso gratuito e sem cadastro obrigatório.
             </span>
           </div>
 
@@ -269,7 +261,7 @@ export function FooterSection({ onLaunch }) {
         {/* Linha Divisória Inferior */}
         <div className="pt-8 border-t border-white/[0.08] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/60 font-mono">
           <div className="flex items-center gap-1.5">
-            <span>Desenvolvido com precisão pela</span>
+            <span>Desenvolvido pela</span>
             <a 
               href="https://exvorn.tech/"
               target="_blank" 

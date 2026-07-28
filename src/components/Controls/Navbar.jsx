@@ -205,7 +205,7 @@ export default function Navbar({
         />
         {showModeContext && onToggleWakeLock ? (
           <Button
-            className="wbp-navbar__action"
+            className="wbp-navbar__action wbp-navbar__action--wake"
             variant={isWakeLockActive ? 'active' : 'ghost'}
             size="sm"
             icon={<ControlIcon name="wake" size={16} />}

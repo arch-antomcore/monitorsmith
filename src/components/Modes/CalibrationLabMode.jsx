@@ -320,7 +320,7 @@ function SubpixelLayoutPattern() {
     <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%", backgroundColor: "#0B0C10", color: "#FFFFFF", padding: "40px", justifyContent: "center", alignItems: "center" }}>
       <h2 style={{ fontSize: "1.8rem", letterSpacing: "-0.03em" }}>Teste de Nitidez Subpixel ClearType</h2>
       <p style={{ color: "#94a3b8", maxWidth: "500px", textAlign: "center", lineHeight: "1.6" }}>
-        Observe as bordas do texto abaixo para identificar franjas de cor vermelhas/azuis (RGB vs BGR).
+        Observe franjas coloridas nas bordas do texto. Elas variam com escala e renderização e não confirmam sozinhas o arranjo físico RGB ou BGR.
       </p>
       <div style={{ marginTop: "30px", fontSize: "1.4rem", fontWeight: "600", color: "#FFFFFF" }}>
         ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789
@@ -465,15 +465,11 @@ export default function CalibrationLabMode({
 }) {
   const titleId = useId();
   const containerRef = useRef(null);
-  const closeGuideButtonRef = useRef(null);
-  const reopenGuideButtonRef = useRef(null);
   const patternButtonRefs = useRef([]);
-  const pendingGuideFocusTarget = useRef(null);
   const shouldReduceMotion = useReducedMotion();
   const [internalPattern, setInternalPattern] = useState(() => resolvePattern(defaultPattern));
   const [showGuidance, setShowGuidance] = useState(true);
   const [nativeFullscreen, setNativeFullscreen] = useState(false);
-  const [isPanelClosed, setIsPanelClosed] = useState(false);
   const [isAnimationPaused, setIsAnimationPaused] = useState(false);
 
   const patternIsControlled = typeof pattern === "string";
@@ -486,26 +482,6 @@ export default function CalibrationLabMode({
     () => CALIBRATION_PATTERNS.find((item) => item.id === resolvedPattern) || CALIBRATION_PATTERNS[0],
     [resolvedPattern]
   );
-
-  useEffect(() => {
-    if (!pendingGuideFocusTarget.current) return;
-    const target = pendingGuideFocusTarget.current === "reopen"
-      ? reopenGuideButtonRef.current
-      : closeGuideButtonRef.current;
-    if (!target) return;
-    target.focus({ preventScroll: true });
-    pendingGuideFocusTarget.current = null;
-  }, [isPanelClosed]);
-
-  const closeGuide = () => {
-    pendingGuideFocusTarget.current = "reopen";
-    setIsPanelClosed(true);
-  };
-
-  const openGuide = () => {
-    pendingGuideFocusTarget.current = "close";
-    setIsPanelClosed(false);
-  };
 
   useEffect(() => {
     if (!autoFocus || typeof document === "undefined") return;
@@ -581,42 +557,17 @@ export default function CalibrationLabMode({
         />
       </div>
 
-      {showGuidance && !isPanelClosed ? (
-        <aside className="calibration-lab__guide" aria-label="Instruções de inspeção">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <p className="calibration-lab__eyebrow">Padrão de inspeção</p>
-            <button
-              ref={closeGuideButtonRef}
-              type="button"
-              onClick={closeGuide}
-              aria-label="Ocultar instruções do padrão"
-              style={{ background: "none", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer", fontSize: "0.8rem" }}
-              title="Fechar painel de ajuda"
-            >
-              ✕
-            </button>
-          </div>
-          <h3 className="calibration-lab__title">
-            {activePattern.label}
-          </h3>
-          <p className="calibration-lab__instruction">{activePattern.instruction}</p>
-        </aside>
-      ) : null}
-
-      {showGuidance && isPanelClosed ? (
-        <button
-          ref={reopenGuideButtonRef}
-          type="button"
-          className="display-mode__reopen-panel-btn"
-          onClick={openGuide}
-          aria-label="Mostrar instruções do padrão"
-        >
-          Mostrar instruções
-        </button>
-      ) : null}
-
       {showControls ? (
-        <aside className="display-mode__controls display-mode__controls--calibration">
+        <aside
+          className="display-mode__controls display-mode__controls--calibration"
+          aria-label="Controles e instruções de verificação visual"
+        >
+          <div className="calibration-lab__guide calibration-lab__guide--inline">
+            <p className="calibration-lab__eyebrow">Como inspecionar</p>
+            <h3 className="calibration-lab__title">{activePattern.label}</h3>
+            <p className="calibration-lab__instruction">{activePattern.instruction}</p>
+          </div>
+
           <div className="calibration-lab__pattern-switcher" role="toolbar" aria-label="Seletor de padrão">
             {CALIBRATION_PATTERNS.map((item, index) => {
               const isActive = item.id === resolvedPattern;
@@ -647,10 +598,7 @@ export default function CalibrationLabMode({
             <label className="calibration-lab__guide-toggle">
               <input
                 checked={showGuidance}
-                onChange={(event) => {
-                  setShowGuidance(event.target.checked);
-                  if (event.target.checked) setIsPanelClosed(false);
-                }}
+                onChange={(event) => setShowGuidance(event.target.checked)}
                 type="checkbox"
               />
               <span>Dicas visuais</span>

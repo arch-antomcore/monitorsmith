@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'framer-motion';
 
 import Navbar from './components/Controls/Navbar';
 import DockMenu from './components/Controls/DockMenu';
@@ -34,9 +34,8 @@ const DEAD_PIXEL_PALETTE = [
   { id: 'black', label: 'Preto', value: '#000000' },
 ];
 
-const PRODUCT_DOCUMENT_TITLE = 'MonitorSmith — Ferramentas para Monitor | EXVORN.TECH';
+const PRODUCT_DOCUMENT_TITLE = 'MonitorSmith — Ferramentas visuais para monitores';
 
-const GREEN_SCREEN_COLOR = '#00B140';
 const SWIPE_EXCLUDED_SELECTOR = [
   'button',
   'a',
@@ -46,6 +45,11 @@ const SWIPE_EXCLUDED_SELECTOR = [
   '[contenteditable]',
   '[role="dialog"]',
   '[role="slider"]',
+  '.display-mode__controls',
+  '.display-mode__reopen-panel-btn',
+  '.calibration-lab__guide',
+  '.wbp-navbar',
+  '.wbp-dock',
   '[data-no-swipe="true"]',
 ].join(',');
 
@@ -59,9 +63,44 @@ function getModeTitle(mode) {
   return tool?.heroTitle || tool?.title || 'MonitorSmith';
 }
 
+function resolveLocationLaunch(location) {
+  const hashValue = location.hash.replace(/^#/, '').trim().toLowerCase();
+  const queryValue = new URLSearchParams(location.search).get('tool')?.trim().toLowerCase();
+
+  for (const value of [hashValue, queryValue]) {
+    if (!value) continue;
+    if (value === MODES.HOME) return { mode: MODES.HOME, toolId: MODES.HOME, preset: {} };
+
+    const tool = resolveToolLaunch(value);
+    if (tool) return tool;
+
+    const mode = Object.values(MODES).find((candidate) => candidate.toLowerCase() === value);
+    if (mode) return { mode, toolId: mode, preset: {} };
+  }
+
+  return {
+    mode: MODES.HOME,
+    toolId: MODES.HOME,
+    preset: {},
+    preserveHash: Boolean(hashValue),
+  };
+}
+
+function buildNavigationHref(toolId, { preserveHash = false } = {}) {
+  const url = new URL(window.location.href);
+  if (!preserveHash) url.hash = '';
+  if (!toolId || toolId === MODES.HOME) {
+    url.searchParams.delete('tool');
+  } else {
+    url.searchParams.set('tool', toolId);
+  }
+  return `${url.pathname}${url.search}`;
+}
+
 function DisplaySuite() {
   const {
     activeMode,
+    activeToolId,
     activateMode,
     isFullscreen,
     fullscreenError,
@@ -96,10 +135,10 @@ function DisplaySuite() {
   const previousModeRef = useRef(activeMode);
   const homeFocusOriginRef = useRef(null);
   const handledHomeFocusRequestRef = useRef(0);
+  const pendingLocationRef = useRef(null);
+  const hasResolvedInitialLocationRef = useRef(false);
   const shouldReduceMotion = useReducedMotion();
-  const isGreenScreen = customColor.toUpperCase() === GREEN_SCREEN_COLOR
-    && ambientBrightness === 100;
-  const activeToolId = activeMode === MODES.COLOR && isGreenScreen ? 'green-screen' : activeMode;
+  const isGreenScreen = activeToolId === 'green-screen';
 
   const showControls = !shouldHideUi;
 
@@ -113,49 +152,34 @@ function DisplaySuite() {
   }, [activeMode, activeToolId]);
 
   useEffect(() => {
+    if (typeof document === 'undefined' || activeMode === MODES.HOME) return;
+
+    // A preferência visual da landing page nunca deve alterar superfícies de
+    // inspeção. Mantemos o tema salvo para a próxima visita à biblioteca, mas
+    // retiramos suas classes globais enquanto uma ferramenta está aberta.
+    document.documentElement.classList.remove(
+      'dark',
+      'light-mode',
+      'ms-studio-dark',
+      'ms-studio-light',
+    );
+  }, [activeMode]);
+
+  useEffect(() => {
     if (typeof window === 'undefined') return;
     const activateUrlTarget = (target) => {
-      if (!target) return false;
-      if (typeof target === 'string') return activateMode(target);
-
       if (typeof target.preset?.customColor === 'string') setCustomColor(target.preset.customColor);
       if (typeof target.preset?.ambientBrightness === 'number') {
         setAmbientBrightness(target.preset.ambientBrightness);
       }
-      return activateMode(target.mode);
+      return activateMode(target.mode, target.toolId);
     };
 
     const handleUrlState = () => {
-      // 1. Check URL Hash (#black, #dead-pixel, etc.)
-      const hash = window.location.hash.replace('#', '').toLowerCase();
-      if (hash) {
-        const modeByHash = Object.values(MODES).find((m) => m.toLowerCase() === hash);
-        if (modeByHash) {
-          activateMode(modeByHash);
-          return;
-        }
-        
-        const resolvedTool = resolveToolLaunch(hash);
-        if (resolvedTool) {
-          activateUrlTarget(resolvedTool);
-          return;
-        }
-      }
-      // 2. Check Query Parameter (?tool=black, ?tool=dead-pixel, etc.)
-      const params = new URLSearchParams(window.location.search);
-      const toolParam = params.get('tool')?.toLowerCase();
-      if (toolParam) {
-        const modeByParam = Object.values(MODES).find((m) => m.toLowerCase() === toolParam);
-        if (modeByParam) {
-          activateMode(modeByParam);
-          return;
-        }
-        
-        const resolvedTool = resolveToolLaunch(toolParam);
-        if (resolvedTool) {
-          activateUrlTarget(resolvedTool);
-        }
-      }
+      const target = resolveLocationLaunch(window.location);
+      pendingLocationRef.current = target;
+      hasResolvedInitialLocationRef.current = true;
+      activateUrlTarget(target);
     };
     handleUrlState();
     window.addEventListener('hashchange', handleUrlState);
@@ -165,6 +189,35 @@ function DisplaySuite() {
       window.removeEventListener('popstate', handleUrlState);
     };
   }, [activateMode, setCustomColor]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !hasResolvedInitialLocationRef.current) return;
+
+    const pendingLocation = pendingLocationRef.current;
+    const desiredHref = buildNavigationHref(activeToolId, {
+      preserveHash: Boolean(pendingLocation?.preserveHash),
+    });
+    const currentHref = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+
+    if (pendingLocation) {
+      if (
+        pendingLocation.mode !== activeMode
+        || pendingLocation.toolId !== activeToolId
+      ) {
+        return;
+      }
+
+      if (currentHref !== desiredHref) {
+        window.history.replaceState({ monitorSmithTool: activeToolId }, '', desiredHref);
+      }
+      pendingLocationRef.current = null;
+      return;
+    }
+
+    if (currentHref !== desiredHref) {
+      window.history.pushState({ monitorSmithTool: activeToolId }, '', desiredHref);
+    }
+  }, [activeMode, activeToolId]);
 
   const touchStartRef = useRef(null);
 
@@ -216,16 +269,18 @@ function DisplaySuite() {
   }, [activeMode]);
 
   const handleSelectMode = useCallback(
-    (mode, homeFocusOriginId) => {
+    (mode, homeFocusOriginId, requestedToolId = mode) => {
       if (activeMode === MODES.HOME) {
         homeFocusOriginRef.current = homeFocusOriginId || null;
       }
 
-      if (mode !== activeMode && mode !== MODES.HOME) {
-        setIsTransitioning(true);
-      }
+      const target = resolveToolLaunch(requestedToolId) || resolveToolLaunch(mode);
+      const nextMode = target?.mode || mode;
+      const nextToolId = target?.toolId || nextMode;
 
-      activateMode(mode);
+      setIsTransitioning(activeMode === MODES.HOME && nextMode !== MODES.HOME);
+
+      activateMode(nextMode, nextToolId);
       resetIdleTimer();
     },
     [activeMode, activateMode, resetIdleTimer],
@@ -248,7 +303,7 @@ function DisplaySuite() {
         setAmbientBrightness(target.brightness);
       }
 
-      handleSelectMode(target.launchMode || target.id, homeFocusOriginId);
+      handleSelectMode(target.launchMode || target.id, homeFocusOriginId, target.id);
     },
     [handleSelectMode, setCustomColor],
   );
@@ -413,10 +468,12 @@ function DisplaySuite() {
             color={customColor}
             onBrightnessChange={(value) => {
               setAmbientBrightness(value);
+              if (isGreenScreen) activateMode(MODES.COLOR, 'color');
               resetIdleTimer();
             }}
             onColorChange={(value) => {
               setCustomColor(value);
+              if (isGreenScreen) activateMode(MODES.COLOR, 'color');
               resetIdleTimer();
             }}
           />
@@ -432,7 +489,8 @@ function DisplaySuite() {
   return (
     <div
       className={`app-shell ${activeMode === MODES.HOME ? 'is-library' : ''} ${isFullscreen ? 'is-fullscreen' : ''} ${shouldHideUi ? 'is-ui-idle' : ''}`}
-      onPointerMove={resetIdleTimer}
+      onPointerMove={shouldHideUi ? resetIdleTimer : undefined}
+      onPointerDown={shouldHideUi ? resetIdleTimer : undefined}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={() => { touchStartRef.current = null; }}
@@ -485,11 +543,6 @@ function DisplaySuite() {
       <DockMenu
         activeMode={activeMode}
         onSelectMode={handleSelectMode}
-        onToggleFullscreen={toggleFullscreen}
-        isFullscreen={isFullscreen}
-        onToggleWakeLock={wakeLock.isSupported ? wakeLock.toggle : undefined}
-        isWakeLockActive={wakeLock.isLocked}
-        onOpenHelp={openHelp}
         availableModes={DEFAULT_DOCK_MODES}
         hidden={activeMode === MODES.HOME || shouldHideUi || !isDockOpen}
       />
@@ -514,8 +567,10 @@ function DisplaySuite() {
 
 export default function App() {
   return (
-    <AppProvider>
-      <DisplaySuite />
-    </AppProvider>
+    <MotionConfig reducedMotion="user">
+      <AppProvider>
+        <DisplaySuite />
+      </AppProvider>
+    </MotionConfig>
   );
 }

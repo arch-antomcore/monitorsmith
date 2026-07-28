@@ -246,7 +246,7 @@ const LEGAL_PAGES = Object.freeze([
     sections: [
       ['Resumo', ['As ferramentas visuais do MonitorSmith executam no navegador. Textos, cores e imagens escolhidos dentro das ferramentas não são enviados pela EXVORN.TECH a servidor próprio para processamento.', 'A operação do site pode envolver infraestrutura e publicidade de terceiros. Esta página explica essa diferença.']],
       ['Dados no dispositivo', ['Preferências, consentimentos e avisos podem ser guardados no armazenamento local. O PWA usa cache técnico para recursos já baixados.', 'Imagens adicionadas ao Loop de Marcas são lidas localmente durante a sessão. Evite arquivos com informações pessoais desnecessárias.']],
-      ['Serviços externos', ['O Google AdSense permanece integrado para validação do domínio e possível publicidade. Conforme região, configuração e consentimento aplicável, Google e parceiros podem tratar IP, identificadores, dados do navegador e interação com anúncios.', 'As fontes tipográficas são distribuídas com a aplicação e não exigem uma solicitação ao Google Fonts. O GitHub hospeda o repositório público sob sua própria política.']],
+      ['Serviços externos', ['O Google AdSense permanece integrado para validação do domínio e possível publicidade. Conforme região, configuração e consentimento aplicável, Google e parceiros podem tratar IP, identificadores, dados do navegador e interação com anúncios.', 'As fontes tipográficas são distribuídas com a aplicação e não exigem uma solicitação ao Google Fonts. A infraestrutura de hospedagem pode registrar dados técnicos usuais, como endereço IP, horário, agente do navegador e caminho solicitado.']],
       ['Controle e contato', ['Você pode limpar dados, permissões e cache nas configurações do navegador, revogar consentimentos disponíveis e desinstalar o PWA.', `Para solicitações relativas a dados sob responsabilidade direta da EXVORN.TECH, use o canal institucional em ${SITE_METADATA.contactUrl}. Poderemos pedir informações mínimas para verificar e responder ao pedido.`]],
       ['Atualizações', [`Revisão de ${SITE_METADATA.contentLastModified}. Alterações materiais serão refletidas nesta página, que deve receber revisão jurídica periódica compatível com a operação do produto.`]],
     ],
@@ -260,7 +260,7 @@ const LEGAL_PAGES = Object.freeze([
       ['Uso', ['O MonitorSmith fornece superfícies, padrões visuais e utilitários executados no navegador. O uso é voluntário e deve respeitar leis, direitos de terceiros e orientações do fabricante.', 'Não use o produto para conteúdo ilícito, violação de direitos, comprometimento do site ou para apresentar uma inspeção visual como laudo técnico.']],
       ['Limites técnicos', ['Os resultados são observacionais. O MonitorSmith não mede diretamente eletrônica do painel, não certifica resolução, taxa de atualização, fidelidade de cor, cabo, GPU ou ausência de defeitos.', 'Navegador, sistema, escala, gerenciamento de cor, brilho, iluminação e percepção influenciam o resultado. Use instrumentos e assistência qualificada em decisões relevantes.']],
       ['Segurança', ['Interrompa o uso se luz, contraste, som ou movimento causarem desconforto. Siga as orientações de limpeza e ergonomia do fabricante.', 'Fullscreen, Wake Lock, áudio, instalação e offline dependem de suporte, permissão e políticas do navegador.']],
-      ['Conteúdo e direitos', ['Você é responsável por imagens, marcas e mensagens inseridas e deve ter autorização para exibi-las.', 'Marca, identidade e conteúdo editorial pertencem aos respectivos titulares. O código no GitHub segue a licença declarada no repositório.']],
+      ['Conteúdo e direitos', ['Você é responsável por imagens, marcas e mensagens inseridas e deve ter autorização para exibi-las.', 'Marca, identidade, interface e conteúdo editorial pertencem aos respectivos titulares. Permissões não concedidas expressamente permanecem reservadas.']],
       ['Terceiros e contato', ['Links, anúncios e serviços externos seguem os termos dos fornecedores. O produto pode ser atualizado ou interrompido por segurança e evolução.', `Revisão de ${SITE_METADATA.contentLastModified}. O contato institucional está em ${SITE_METADATA.contactUrl}. Estes termos devem receber revisão jurídica periódica.`]],
     ],
   },
@@ -324,6 +324,11 @@ function renderToolPage(route, locale) {
   const pageUrl = isEn ? `${BASE_URL}/en/${metadata.slug}/` : `${BASE_URL}/${metadata.slug}/`;
   const ptUrl = `${BASE_URL}/${route.pt.slug}/`;
   const enUrl = `${BASE_URL}/en/${route.en.slug}/`;
+  const documentTitle = `${metadata.title} | ${SITE_METADATA.name}`;
+  const breadcrumbId = `${pageUrl}#breadcrumb`;
+  const imageAlt = isEn
+    ? 'MonitorSmith — 11 visual tools for displays'
+    : 'MonitorSmith — 11 ferramentas visuais para monitores';
   const related = relatedKeys.map((key) => {
     const relatedRoute = ROUTE_BY_KEY.get(key);
     const item = relatedRoute[locale];
@@ -339,7 +344,17 @@ function renderToolPage(route, locale) {
     inLanguage: lang,
     dateModified: route.lastModified,
     isPartOf: { '@type': 'WebSite', name: SITE_METADATA.name, url: `${BASE_URL}/` },
+    breadcrumb: { '@id': breadcrumbId },
     publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
+  };
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': breadcrumbId,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: isEn ? 'MonitorSmith tools' : 'Ferramentas MonitorSmith', item: `${BASE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: metadata.h1, item: pageUrl },
+    ],
   };
   const faqSchema = {
     '@context': 'https://schema.org',
@@ -352,12 +367,12 @@ function renderToolPage(route, locale) {
     ? { back: 'All tools', open: 'Open tool', how: 'How to use', when: 'When to use', limits: 'Limitations', faq: 'Questions', related: 'Related guides', privacy: 'Privacy', terms: 'Terms', contact: 'Contact', interfaceNote: 'The interactive application currently uses a Portuguese interface.' }
     : { back: 'Todas as ferramentas', open: 'Abrir ferramenta', how: 'Como usar', when: 'Quando usar', limits: 'Limitações', faq: 'Perguntas', related: 'Guias relacionados', privacy: 'Privacidade', terms: 'Termos de uso', contact: 'Contato', interfaceNote: '' };
 
-  return `<!doctype html>
+  const html = `<!doctype html>
 <html lang="${lang}">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${escapeHtml(metadata.title)}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>${escapeHtml(documentTitle)}</title>
   <meta name="description" content="${escapeHtml(metadata.description)}">
   <meta name="theme-color" content="#030304">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
@@ -368,22 +383,25 @@ function renderToolPage(route, locale) {
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.webmanifest">
-  <meta property="og:title" content="${escapeHtml(metadata.title)}">
+  <meta property="og:title" content="${escapeHtml(documentTitle)}">
   <meta property="og:description" content="${escapeHtml(metadata.description)}">
   <meta property="og:url" content="${pageUrl}">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MonitorSmith">
   <meta property="og:locale" content="${isEn ? 'en_US' : 'pt_BR'}">
+  <meta property="og:locale:alternate" content="${isEn ? 'pt_BR' : 'en_US'}">
   <meta property="og:image" content="${BASE_URL}/og-image.jpg">
+  <meta property="og:image:secure_url" content="${BASE_URL}/og-image.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="MonitorSmith — ferramentas visuais para monitores">
+  <meta property="og:image:alt" content="${escapeHtml(imageAlt)}">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${escapeHtml(metadata.title)}">
+  <meta name="twitter:title" content="${escapeHtml(documentTitle)}">
   <meta name="twitter:description" content="${escapeHtml(metadata.description)}">
   <meta name="twitter:image" content="${BASE_URL}/og-image.jpg">
-  <script type="application/ld+json">${safeJson([webPageSchema, faqSchema])}</script>
+  <meta name="twitter:image:alt" content="${escapeHtml(imageAlt)}">
+  <script type="application/ld+json">${safeJson([webPageSchema, breadcrumbSchema, faqSchema])}</script>
   <style>
     :root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif}a{color:#fbbf24;text-underline-offset:.2em}
@@ -411,16 +429,21 @@ function renderToolPage(route, locale) {
   <footer><a href="/">${labels.back}</a><a href="/privacidade/">${labels.privacy}</a><a href="/termos/">${labels.terms}</a><a href="${SITE_METADATA.contactUrl}">${labels.contact}</a></footer>
 </body>
 </html>`;
+  return html;
 }
 
 function renderLegalPage(page) {
   const url = `${BASE_URL}/${page.slug}/`;
-  const schema = { '@context': 'https://schema.org', '@type': 'WebPage', name: page.title, description: page.description, url, inLanguage: 'pt-BR', dateModified: SITE_METADATA.contentLastModified, publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' } };
+  const schema = { '@context': 'https://schema.org', '@type': 'WebPage', name: page.title, description: page.description, url, inLanguage: 'pt-BR', dateModified: SITE_METADATA.contentLastModified, isPartOf: { '@type': 'WebSite', name: SITE_METADATA.name, url: `${BASE_URL}/` }, publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' } };
   const sections = page.sections.map(([heading, paragraphs]) => `<section><h2>${escapeHtml(heading)}</h2>${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</section>`).join('');
-  return `<!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(page.title)}</title><meta name="description" content="${escapeHtml(page.description)}"><meta name="theme-color" content="#030304"><meta name="robots" content="index,follow"><link rel="canonical" href="${url}"><link rel="alternate" hreflang="pt-BR" href="${url}"><link rel="alternate" hreflang="x-default" href="${url}"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta property="og:title" content="${escapeHtml(page.title)}"><meta property="og:description" content="${escapeHtml(page.description)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website"><meta property="og:site_name" content="MonitorSmith"><meta property="og:image" content="${BASE_URL}/og-image.jpg"><meta property="og:image:type" content="image/jpeg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${BASE_URL}/og-image.jpg"><script type="application/ld+json">${safeJson(schema)}</script>
+  const html = `<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(page.title)}</title><meta name="description" content="${escapeHtml(page.description)}"><meta name="theme-color" content="#030304"><meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1"><link rel="canonical" href="${url}"><link rel="alternate" hreflang="pt-BR" href="${url}"><link rel="alternate" hreflang="x-default" href="${url}"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta property="og:title" content="${escapeHtml(page.title)}"><meta property="og:description" content="${escapeHtml(page.description)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website"><meta property="og:site_name" content="MonitorSmith"><meta property="og:locale" content="pt_BR"><meta property="og:image" content="${BASE_URL}/og-image.jpg"><meta property="og:image:secure_url" content="${BASE_URL}/og-image.jpg"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="MonitorSmith — informações legais e de privacidade"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(page.title)}"><meta name="twitter:description" content="${escapeHtml(page.description)}"><meta name="twitter:image" content="${BASE_URL}/og-image.jpg"><meta name="twitter:image:alt" content="MonitorSmith — informações legais e de privacidade"><script type="application/ld+json">${safeJson(schema)}</script>
 <style>:root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif}header,main,footer{width:min(760px,calc(100% - 2rem));margin-inline:auto}header{padding:1.2rem 0;border-bottom:1px solid var(--line)}a{color:#fbbf24;text-underline-offset:.2em}header a{color:var(--text);font-weight:750;text-decoration:none}main{padding:3rem 0}h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1;letter-spacing:-.035em}h2{font-size:1.2rem;margin:2.2rem 0 .5rem}p{color:var(--muted)}.notice{padding:1rem;background:var(--surface);border:1px solid var(--line);border-radius:.8rem}footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:1rem;flex-wrap:wrap}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}</style></head>
 <body><header><a href="/">MonitorSmith · EXVORN.TECH</a></header><main><h1>${escapeHtml(page.h1)}</h1><p class="notice">Este documento descreve a operação atual do MonitorSmith. Em caso de dúvida, entre em contato antes de continuar o uso.</p>${sections}</main><footer><a href="/">Todas as ferramentas</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a><a href="${SITE_METADATA.contactUrl}">Contato</a></footer></body></html>`;
+  return html.replace(
+    'content="width=device-width,initial-scale=1"',
+    'content="width=device-width,initial-scale=1,viewport-fit=cover"',
+  );
 }
 
 function generateManifest() {
@@ -450,7 +473,6 @@ function generateLlmsText() {
 ## Informações oficiais
 - Site: ${BASE_URL}/
 - Empresa: EXVORN.TECH — https://exvorn.tech/
-- Repositório: ${SITE_METADATA.repositoryUrl}
 - Contato institucional: ${SITE_METADATA.contactUrl}
 - Uso gratuito, sem cadastro obrigatório.
 
@@ -489,7 +511,6 @@ function generateLlmsFullText() {
 - Produto: MonitorSmith
 - Empresa: EXVORN.TECH — https://exvorn.tech/
 - Site: ${BASE_URL}/
-- Código: ${SITE_METADATA.repositoryUrl}
 - Contato institucional: ${SITE_METADATA.contactUrl}
 
 ## Catálogo

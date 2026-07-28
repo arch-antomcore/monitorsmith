@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
@@ -8,6 +8,9 @@ const clamp = (value, minimum, maximum) =>
 
 const isFiniteNumber = (value) =>
   typeof value === "number" && Number.isFinite(value);
+
+const MIN_FITTED_FONT_SIZE = 8;
+const MAX_FITTED_FONT_SIZE = 256;
 
 const normalizeHex = (value, fallback) => {
   if (typeof value !== "string") return fallback;
@@ -65,6 +68,8 @@ export default function MessageOverlayMode({
 }) {
   const containerRef = useRef(null);
   const closePanelButtonRef = useRef(null);
+  const messageFitRef = useRef(null);
+  const messageTextRef = useRef(null);
   const reopenPanelButtonRef = useRef(null);
   const pendingFocusTarget = useRef(null);
   const [internalMessage, setInternalMessage] = useState(defaultMessage);
@@ -81,6 +86,7 @@ export default function MessageOverlayMode({
   const [showQrCode, setShowQrCode] = useState(false);
   const [qrContent, setQrContent] = useState('https://monitorsmith.app');
   const [isPanelClosed, setIsPanelClosed] = useState(false);
+  const [fittedFontSize, setFittedFontSize] = useState(44);
 
   const messageIsControlled = typeof message === "string";
   const textColorIsControlled = typeof textColor === "string";
@@ -101,6 +107,95 @@ export default function MessageOverlayMode({
     () => contrastRatio(resolvedTextColor, resolvedBackgroundColor),
     [resolvedBackgroundColor, resolvedTextColor],
   );
+
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const fitContainer = messageFitRef.current;
+    const textElement = messageTextRef.current;
+    if (!fitContainer || !textElement) return undefined;
+
+    let animationFrameId = 0;
+    let disposed = false;
+
+    const fitMessage = () => {
+      animationFrameId = 0;
+      if (disposed) return;
+
+      const availableWidth = fitContainer.clientWidth;
+      const availableHeight = fitContainer.clientHeight;
+      if (availableWidth <= 0 || availableHeight <= 0) return;
+
+      const viewportWidth = window.visualViewport?.width || window.innerWidth || availableWidth;
+      const preferredSize = clamp(
+        viewportWidth * (resolvedFontScale / 100),
+        44,
+        MAX_FITTED_FONT_SIZE,
+      );
+
+      const fits = (fontSize) => {
+        textElement.style.fontSize = `${fontSize}px`;
+        const textRect = textElement.getBoundingClientRect();
+        return (
+          textElement.scrollWidth <= availableWidth + 1 &&
+          Math.max(textElement.scrollHeight, textRect.height) <= availableHeight + 1
+        );
+      };
+
+      let fittedSize = preferredSize;
+      if (!fits(preferredSize)) {
+        let lowerBound = MIN_FITTED_FONT_SIZE;
+        let upperBound = preferredSize;
+
+        if (fits(lowerBound)) {
+          for (let iteration = 0; iteration < 12; iteration += 1) {
+            const candidate = (lowerBound + upperBound) / 2;
+            if (fits(candidate)) {
+              lowerBound = candidate;
+            } else {
+              upperBound = candidate;
+            }
+          }
+          fittedSize = lowerBound;
+        } else {
+          fittedSize = MIN_FITTED_FONT_SIZE;
+        }
+      }
+
+      const roundedSize = Math.floor(fittedSize * 10) / 10;
+      textElement.style.fontSize = `${roundedSize}px`;
+      setFittedFontSize((currentSize) =>
+        Math.abs(currentSize - roundedSize) >= 0.1 ? roundedSize : currentSize,
+      );
+    };
+
+    const scheduleFit = () => {
+      if (animationFrameId) window.cancelAnimationFrame(animationFrameId);
+      animationFrameId = window.requestAnimationFrame(fitMessage);
+    };
+
+    const resizeObserver = typeof ResizeObserver === "function"
+      ? new ResizeObserver(scheduleFit)
+      : null;
+    resizeObserver?.observe(fitContainer);
+
+    window.addEventListener("resize", scheduleFit);
+    window.visualViewport?.addEventListener("resize", scheduleFit);
+    document.fonts?.addEventListener?.("loadingdone", scheduleFit);
+    document.fonts?.ready?.then(() => {
+      if (!disposed) scheduleFit();
+    });
+    scheduleFit();
+
+    return () => {
+      disposed = true;
+      if (animationFrameId) window.cancelAnimationFrame(animationFrameId);
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", scheduleFit);
+      window.visualViewport?.removeEventListener("resize", scheduleFit);
+      document.fonts?.removeEventListener?.("loadingdone", scheduleFit);
+    };
+  }, [normalizedQrContent, resolvedFontScale, showQrCode, visibleMessage]);
 
   useEffect(() => {
     if (!pendingFocusTarget.current) return;
@@ -192,25 +287,31 @@ export default function MessageOverlayMode({
         }}
       >
         <div
+          className="message-overlay__copy"
           style={{
             transform: isTeleprompter ? 'scaleX(-1)' : 'none',
             transition: 'transform 200ms ease',
           }}
         >
           <p className="message-overlay__label">MonitorSmith</p>
-          <p
-            className="message-overlay__message"
-            style={{ fontSize: `clamp(2.75rem, ${resolvedFontScale}vw, 16rem)` }}
-          >
-            {visibleMessage}
-          </p>
+          <div ref={messageFitRef} className="message-overlay__fit">
+            <p
+              ref={messageTextRef}
+              className="message-overlay__message"
+              data-fit-font-size={fittedFontSize.toFixed(1)}
+              style={{ fontSize: `${fittedFontSize}px` }}
+            >
+              {visibleMessage}
+            </p>
+          </div>
         </div>
 
         {showQrCode ? (
-          <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+          <div className="message-overlay__qr">
             {normalizedQrContent ? (
-              <div style={{ padding: '12px', background: '#ffffff', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+              <div className="message-overlay__qr-card">
                 <QRCodeSVG
+                  className="message-overlay__qr-code"
                   value={normalizedQrContent}
                   size={160}
                   level="M"
@@ -224,7 +325,7 @@ export default function MessageOverlayMode({
               <p role="status">Digite um conteúdo no painel para gerar o QR Code.</p>
             )}
             {normalizedQrContent ? (
-              <span style={{ maxWidth: 'min(28rem, 80vw)', overflowWrap: 'anywhere', fontSize: '0.75rem', opacity: 0.8, fontFamily: "'DM Mono', monospace" }}>
+              <span className="message-overlay__qr-preview" title={normalizedQrContent}>
                 Conteúdo do QR: {normalizedQrContent}
               </span>
             ) : null}
