@@ -5242,14 +5242,14 @@ html.ms-studio-light .ms-library__eyebrow {
   font-weight: 700 !important;
 }
 
-/* Navbar superior */
+/* Navbar superior - Leve escurecida no Modo Claro para destaque elegante */
 html.ms-studio-light .wbp-navbar,
 html.ms-studio-light .display-mode__controls,
 html.ms-studio-light header.wbp-navbar,
 html.ms-studio-light nav {
-  background: rgba(247, 245, 240, 0.92) !important;
-  border-color: rgba(87, 83, 78, 0.14) !important;
-  box-shadow: 0 4px 20px rgba(87, 83, 78, 0.06) !important;
+  background: rgba(228, 222, 212, 0.95) !important;
+  border-color: rgba(87, 83, 78, 0.24) !important;
+  box-shadow: 0 12px 32px rgba(87, 83, 78, 0.14), 0 0 0 1px rgba(87, 83, 78, 0.08) !important;
   color: #1C1917 !important;
 }
 html.ms-studio-light .wbp-navbar__brand-name,
@@ -5261,10 +5261,19 @@ html.ms-studio-light .wbp-navbar__brand-tag {
   color: #D97706 !important;
 }
 html.ms-studio-light .wbp-navbar__action,
+html.ms-studio-light .wbp-navbar__back-btn,
+html.ms-studio-light .display-mode__control-btn {
+  background: rgba(255, 255, 255, 0.65) !important;
+  color: #44403C !important;
+  border-color: rgba(87, 83, 78, 0.2) !important;
+}
+html.ms-studio-light .wbp-navbar__action:hover,
+html.ms-studio-light .wbp-navbar__back-btn:hover,
+html.ms-studio-light .wbp-navbar__brand--button:hover,
 html.ms-studio-light .display-mode__control-btn:hover {
-  background: rgba(87, 83, 78, 0.08) !important;
-  color: #000000 !important;
-  border-color: rgba(87, 83, 78, 0.18) !important;
+  background: rgba(87, 83, 78, 0.12) !important;
+  color: #1C1917 !important;
+  border-color: rgba(87, 83, 78, 0.3) !important;
 }
 
 /* Cartões da Grade Principal (HeroGridCard, ToolCard e QuickLaunch) */
