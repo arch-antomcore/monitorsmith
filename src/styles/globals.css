@@ -2800,7 +2800,7 @@ p.display-mode__instructions {
 /* Keep floating navigation available without covering mode controls. */
 .app-shell:not(.is-library) {
   --ms-navbar-clearance: calc(86px + env(safe-area-inset-top));
-  --ms-dock-clearance: calc(92px + env(safe-area-inset-bottom));
+  --ms-dock-clearance: calc(94px + env(safe-area-inset-bottom));
   --ms-controls-clearance: calc(var(--ms-navbar-clearance) + var(--ms-dock-clearance));
 }
 
