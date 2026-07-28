@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { X, FileText, Gavel, CheckCircle } from '@phosphor-icons/react';
+import { X, Gavel, CheckCircle } from '@phosphor-icons/react';
+import BrandLogo from './BrandLogo';
 
 export default function TermsModal({ label = "Termos de Uso (Terms)", className }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -100,14 +101,12 @@ export default function TermsModal({ label = "Termos de Uso (Terms)", className 
             </button>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '24px' }}>
-              <div style={{ padding: '10px', borderRadius: '14px', background: 'rgba(96, 165, 250, 0.15)', border: '1px solid rgba(96, 165, 250, 0.3)' }}>
-                <FileText size={28} color="#60a5fa" weight="bold" />
-              </div>
+              <BrandLogo size={36} />
               <div>
                 <h2 id="terms-dialog-title" style={{ margin: 0, fontSize: '1.35rem', fontWeight: 700, letterSpacing: '-0.02em', color: '#ffffff' }}>
                   Termos de Serviço & Uso
                 </h2>
-                <p style={{ margin: 0, fontSize: '0.8rem', color: '#60a5fa', fontFamily: 'monospace' }}>
+                <p style={{ margin: 0, fontSize: '0.8rem', color: '#f59e0b', fontFamily: 'monospace' }}>
                   EXVORN.TECH — MONITORSMITH SUITE
                 </p>
               </div>
@@ -116,7 +115,7 @@ export default function TermsModal({ label = "Termos de Uso (Terms)", className 
             <div style={{ fontSize: '0.9rem', lineHeight: 1.7, color: 'rgba(255,255,255,0.82)', display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
                 <h3 style={{ margin: '0 0 6px 0', fontSize: '0.96rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <CheckCircle size={18} color="#60a5fa" weight="fill" /> 1. Licença e Uso Gratuito
+                  <CheckCircle size={18} color="#f59e0b" weight="fill" /> 1. Licença e Uso Gratuito
                 </h3>
                 <p style={{ margin: 0, fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>
                   O MonitorSmith é disponibilizado gratuitamente pela <strong>EXVORN.TECH</strong> para uso pessoal, educacional, comercial e em assistências técnicas. Não é permitida a redistribuição cobrada, engenharia reversa para clonagem comercial não autorizada ou revenda do software.
@@ -125,7 +124,7 @@ export default function TermsModal({ label = "Termos de Uso (Terms)", className 
 
               <div>
                 <h3 style={{ margin: '0 0 6px 0', fontSize: '0.96rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Gavel size={18} color="#60a5fa" weight="fill" /> 2. Diagnósticos Visuais e Isenção de Garantias
+                  <Gavel size={18} color="#f59e0b" weight="fill" /> 2. Diagnósticos Visuais e Isenção de Garantias
                 </h3>
                 <p style={{ margin: 0, fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>
                   As ferramentas visuais (teste de dead pixels, tela preta OLED, uniformidade e calibração de cor) são fornecidas "como estão" ("as is"), servindo como instrumentos de auxílio técnico e inspeção humana. A acurácia percebida pode variar conforme o painel, placa de vídeo, perfil de cor do sistema operativo e iluminação do ambiente.
@@ -134,7 +133,7 @@ export default function TermsModal({ label = "Termos de Uso (Terms)", className 
 
               <div>
                 <h3 style={{ margin: '0 0 6px 0', fontSize: '0.96rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <CheckCircle size={18} color="#60a5fa" weight="fill" /> 3. Operação Local e Segurança PWA
+                  <CheckCircle size={18} color="#f59e0b" weight="fill" /> 3. Operação Local e Segurança PWA
                 </h3>
                 <p style={{ margin: 0, fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>
                   Ao utilizar nossas ferramentas, você concorda que o processamento de imagens, geração de ruídos e temporizadores ocorre de forma 100% isolada e local na memória do seu dispositivo (client-side). O sistema não realiza gravação remota, rastreamento de digitação ou exfiltração de telas.
@@ -143,7 +142,7 @@ export default function TermsModal({ label = "Termos de Uso (Terms)", className 
 
               <div>
                 <h3 style={{ margin: '0 0 6px 0', fontSize: '0.96rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Gavel size={18} color="#60a5fa" weight="fill" /> 4. Propriedade Intelectual
+                  <Gavel size={18} color="#f59e0b" weight="fill" /> 4. Propriedade Intelectual
                 </h3>
                 <p style={{ margin: 0, fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>
                   A marca MonitorSmith, seu design system estrutural (Studio Hardware UI) e arquitetura são de titularidade da <strong>EXVORN.TECH</strong>. O uso contínuo da plataforma implica na aceitação integral e irrestrita destes termos.

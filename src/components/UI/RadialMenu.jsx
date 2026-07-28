@@ -76,7 +76,7 @@ export default function RadialMenu({ activeMode, onSelectMode }) {
               backdropFilter: 'blur(20px)',
               display: 'grid',
               placeItems: 'center',
-              color: '#34d399',
+              color: '#f59e0b',
               fontSize: '0.7rem',
               fontWeight: '600',
               pointerEvents: 'none',
@@ -111,16 +111,16 @@ export default function RadialMenu({ activeMode, onSelectMode }) {
                   height: '44px',
                   borderRadius: '50%',
                   background: isActive
-                    ? 'linear-gradient(135deg, #34d399, #059669)'
+                    ? 'linear-gradient(135deg, #f59e0b, #d97706)'
                     : 'rgba(18, 20, 28, 0.92)',
                   border: isActive
-                    ? '1px solid #a7f3d0'
+                    ? '1px solid #fde68a'
                     : '1px solid rgba(255, 255, 255, 0.14)',
-                  color: isActive ? '#022c22' : '#ffffff',
+                  color: isActive ? '#1c1917' : '#ffffff',
                   display: 'grid',
                   placeItems: 'center',
                   boxShadow: isActive
-                    ? '0 0 20px rgba(52, 211, 153, 0.6)'
+                    ? '0 0 20px rgba(245, 158, 11, 0.6)'
                     : '0 8px 24px rgba(0,0,0,0.5)',
                   cursor: 'pointer',
                   backdropFilter: 'blur(16px)',

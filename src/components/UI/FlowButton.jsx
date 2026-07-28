@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, Desktop, CheckCircle, X, Shield } from '@phosphor-icons/react';
+import BrandLogo from './BrandLogo';
 
 export default function FlowButton({ text = "Instalar MonitorSmith no Windows", onClick }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -107,11 +108,11 @@ export default function FlowButton({ text = "Instalar MonitorSmith no Windows", 
             style={{
               maxWidth: '500px',
               width: '100%',
-              background: '#0c0f16',
-              border: '1px solid rgba(52, 211, 153, 0.4)',
+              background: '#090A0F',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
               borderRadius: '24px',
               padding: '30px',
-              boxShadow: '0 24px 60px rgba(0,0,0,0.7)',
+              boxShadow: '0 24px 60px rgba(0,0,0,0.8), 0 0 30px rgba(245, 158, 11, 0.08)',
               position: 'relative',
               color: '#ffffff',
             }}
@@ -139,23 +140,10 @@ export default function FlowButton({ text = "Instalar MonitorSmith no Windows", 
             </button>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '18px' }}>
-              <div
-                style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '12px',
-                  background: 'rgba(52, 211, 153, 0.15)',
-                  border: '1px solid rgba(52, 211, 153, 0.3)',
-                  display: 'grid',
-                  placeItems: 'center',
-                  color: '#34d399',
-                }}
-              >
-                <Desktop size={24} weight="bold" />
-              </div>
+              <BrandLogo size={36} />
               <div>
                 <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 600 }}>Instalar no Windows / Desktop</h3>
-                <span style={{ fontSize: '0.74rem', color: '#34d399', opacity: 0.9 }}>Brave, Chrome, Edge e Opera</span>
+                <span style={{ fontSize: '0.74rem', color: '#f59e0b', opacity: 0.9 }}>Brave, Chrome, Edge e Opera</span>
               </div>
             </div>
 
@@ -171,21 +159,22 @@ export default function FlowButton({ text = "Instalar MonitorSmith no Windows", 
               </ol>
             </div>
 
-            <p style={{ fontSize: '0.78rem', color: 'rgba(52, 211, 153, 0.9)', margin: '0 0 20px', lineHeight: 1.4, fontWeight: 500 }}>
+            <p style={{ fontSize: '0.78rem', color: '#f59e0b', margin: '0 0 20px', lineHeight: 1.4, fontWeight: 500 }}>
               ✨ Como você já instalou o app no seu Windows, o Brave permite abrir direto pelo menu "Salvar e compartilhar"!
             </p>
 
             <button
               type="button"
               onClick={() => setShowModal(false)}
-              className="wbp-button wbp-button--active"
+              className="wbp-button"
               style={{
                 width: '100%',
                 padding: '12px',
                 fontSize: '0.86rem',
                 borderRadius: '12px',
-                background: '#059669',
-                borderColor: '#34d399',
+                background: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.18)',
+                color: '#ffffff',
                 fontWeight: 600,
                 cursor: 'pointer',
               }}

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ControlIcon } from '../Controls/Navbar';
 
 const MODE_META = {
-  black: { title: 'Tela Preta OLED', icon: 'void', hint: 'Preto absoluto • Reduz emissão de luz', color: '#34d399' },
+  black: { title: 'Tela Preta OLED', icon: 'void', hint: 'Preto absoluto • Reduz emissão de luz', color: '#f59e0b' },
   'dead-pixel': { title: 'Teste de Pixels', icon: 'pixels', hint: 'Inspeção de subpixels • 8 Cores sólidas', color: '#60a5fa' },
   cleaner: { title: 'Inspeção para Limpeza', icon: 'cleaner', hint: 'Alto contraste • Revela poeira e marcas', color: '#fbbf24' },
   calibration: { title: 'Verificação do Display', icon: 'calibration', hint: 'Padrões gráficos • Nitidez, escala e gama', color: '#a78bfa' },
@@ -33,7 +33,7 @@ export default function ToolTransitionOverlay({ activeMode, isTransitioning, onT
     title: 'MonitorSmith',
     icon: 'void',
     hint: 'Carregando ferramenta...',
-    color: '#34d399',
+    color: '#f59e0b',
   };
 
   return (

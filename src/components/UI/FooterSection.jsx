@@ -6,11 +6,11 @@ import {
   Sun, 
   Moon, 
   Heart, 
-  Cpu, 
   EnvelopeSimple,
   GithubLogo,
   LinkedinLogo
 } from "@phosphor-icons/react";
+import BrandLogo from "./BrandLogo";
 import AboutModal from "./AboutModal";
 import PrivacyModal from "./PrivacyModal";
 import TermsModal from "./TermsModal";
@@ -81,9 +81,7 @@ export function FooterSection({ onLaunch }) {
           {/* Coluna 1: Marca & Missão */}
           <div className="lg:col-span-2 space-y-5">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 text-black font-bold">
-                <Cpu size={22} weight="bold" />
-              </div>
+              <BrandLogo size={34} />
               <span className="text-xl font-extrabold tracking-tight text-white font-mono">
                 MONITOR<span className="text-amber-400">SMITH</span>
               </span>

@@ -32,15 +32,15 @@
 }
 
 *:focus-visible {
-  outline: 2px solid #10B981 !important;
+  outline: 2px solid #F59E0B !important;
   outline-offset: 3px !important;
-  box-shadow: 0 0 12px rgba(52, 211, 153, 0.45) !important;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.45) !important;
 }
 
 @media (color-gamut: p3) {
   :root {
-    --accent: color(display-p3 0.85 0.98 0.94);
-    --accent-glow: color(display-p3 0.56 1 0.87 / 0.2);
+    --accent: color(display-p3 0.98 0.61 0.08);
+    --accent-glow: color(display-p3 0.98 0.61 0.08 / 0.22);
   }
 }
 
@@ -2920,7 +2920,7 @@ button.wbp-navbar__mode:hover {
 /* Per-tone icon colors */
 .ms-tool-card--void .ms-card__icon-area { color: #F59E0B; }
 .ms-tool-card--light .ms-card__icon-area { color: #FEF3C7; }
-.ms-tool-card--pixel .ms-card__icon-area { color: #10B981; }
+.ms-tool-card--pixel .ms-card__icon-area { color: #60A5FA; }
 .ms-tool-card--clean .ms-card__icon-area { color: #E4E4E7; }
 .ms-tool-card--calibration .ms-card__icon-area { color: #F97316; }
 .ms-tool-card--color .ms-card__icon-area { color: #FBBF24; }
@@ -2963,8 +2963,8 @@ button.wbp-navbar__mode:hover {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #10B981;
-  box-shadow: 0 0 8px #10B981;
+  background: #F59E0B;
+  box-shadow: 0 0 8px #F59E0B;
   /* NOTE: pulse animation handled by Framer Motion ledMotionVariants */
 }
 
@@ -3059,7 +3059,7 @@ button.wbp-navbar__mode:hover {
 /* Per-tone decorative icon colors */
 .ms-tool-card--void .ms-card__decor { color: #F59E0B; }
 .ms-tool-card--light .ms-card__decor { color: #FEF3C7; }
-.ms-tool-card--pixel .ms-card__decor { color: #10B981; }
+.ms-tool-card--pixel .ms-card__decor { color: #60A5FA; }
 .ms-tool-card--clean .ms-card__decor { color: #E4E4E7; }
 .ms-tool-card--calibration .ms-card__decor { color: #F97316; }
 .ms-tool-card--color .ms-card__decor { color: #FBBF24; }
@@ -4658,7 +4658,7 @@ button.wbp-navbar__mode:hover {
   height: 8px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: linear-gradient(135deg, #059669 0%, #10b981 50%, #10B981 100%);
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%);
   opacity: 0;
   transition: width 750ms cubic-bezier(0.19, 1, 0.22, 1),
               height 750ms cubic-bezier(0.19, 1, 0.22, 1),
@@ -5156,6 +5156,9 @@ html.ms-studio-light section {
   --line-strong: rgba(87, 83, 78, 0.25) !important;
   --line-bright: rgba(87, 83, 78, 0.35) !important;
   --text: #1C1917 !important;       /* Stone 900 - Marrom chumbo escuro refinado */
+  --text-strong: #0C0A09 !important;
+  --text-muted: rgba(87, 83, 78, 0.88) !important;
+  --text-faint: rgba(87, 83, 78, 0.62) !important;
   color-scheme: light !important;
   background-color: #F7F5F0 !important;
   color: #1C1917 !important;
@@ -5435,20 +5438,45 @@ html.ms-studio-light footer a[aria-label^="GitHub"]:hover {
 
 /* Dock menu inferior em modo claro */
 html.ms-studio-light .wbp-dock {
-  background: rgba(250, 249, 246, 0.94) !important;
+  background: rgba(250, 249, 246, 0.96) !important;
+  border-color: rgba(87, 83, 78, 0.22) !important;
+  box-shadow: 0 16px 40px rgba(87, 83, 78, 0.16), 0 0 0 1px rgba(87, 83, 78, 0.08) !important;
+}
+html.ms-studio-light .wbp-dock__mode,
+html.ms-studio-light .wbp-dock__utility.wbp-button {
+  color: #44403C !important;
+}
+html.ms-studio-light .wbp-dock__mode:hover:not(:disabled),
+html.ms-studio-light .wbp-dock__mode.is-active,
+html.ms-studio-light .wbp-dock__utility.wbp-button:hover:not(:disabled) {
+  background: rgba(87, 83, 78, 0.1) !important;
   border-color: rgba(87, 83, 78, 0.18) !important;
-  box-shadow: 0 12px 36px rgba(87, 83, 78, 0.14), 0 0 0 1px rgba(87, 83, 78, 0.05) !important;
-}
-html.ms-studio-light .wbp-dock__item {
-  color: #57534E !important;
-}
-html.ms-studio-light .wbp-dock__item:hover,
-html.ms-studio-light .wbp-dock__item.is-active {
-  background: rgba(87, 83, 78, 0.08) !important;
   color: #1C1917 !important;
 }
-html.ms-studio-light .wbp-dock__divider {
-  background: rgba(87, 83, 78, 0.12) !important;
+html.ms-studio-light .wbp-dock__mode.is-active {
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.05) !important;
+  font-weight: 600 !important;
+}
+html.ms-studio-light .wbp-dock__mode.is-active .wbp-dock__mode-icon {
+  color: #D97706 !important;
+}
+html.ms-studio-light .wbp-dock__arrow-btn {
+  border-color: rgba(87, 83, 78, 0.2) !important;
+  background: rgba(87, 83, 78, 0.08) !important;
+  color: #44403C !important;
+}
+html.ms-studio-light .wbp-dock__arrow-btn:hover {
+  background: rgba(87, 83, 78, 0.16) !important;
+  border-color: rgba(87, 83, 78, 0.3) !important;
+  color: #1C1917 !important;
+}
+html.ms-studio-light .wbp-dock__shortcut {
+  border-color: rgba(87, 83, 78, 0.2) !important;
+  color: #57534E !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+}
+html.ms-studio-light .wbp-dock__separator {
+  background: rgba(87, 83, 78, 0.18) !important;
 }
 
 /* AdSense Containers no Modo Claro Quente */
@@ -5476,15 +5504,20 @@ html.ms-studio-light [role="dialog"] li,
 html.ms-studio-light [role="dialog"] div[style*="color: rgba(255"] {
   color: #44403C !important;
 }
-html.ms-studio-light [role="dialog"] button[aria-label^="Fechar"] {
+html.ms-studio-light [role="dialog"] button,
+html.ms-studio-light [role="dialog"] a[href*="linkedin"],
+html.ms-studio-light [role="dialog"] .wbp-button {
   background: rgba(87, 83, 78, 0.08) !important;
-  border-color: rgba(87, 83, 78, 0.15) !important;
-  color: #57534E !important;
+  border-color: rgba(87, 83, 78, 0.2) !important;
+  color: #292524 !important;
 }
-html.ms-studio-light [role="dialog"] button[aria-label^="Fechar"]:hover {
+html.ms-studio-light [role="dialog"] button:hover,
+html.ms-studio-light [role="dialog"] a[href*="linkedin"]:hover,
+html.ms-studio-light [role="dialog"] .wbp-button:hover {
   background: rgba(87, 83, 78, 0.15) !important;
   color: #1C1917 !important;
 }
+
 
 
 

@@ -21,6 +21,7 @@ import {
 } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import Button, { joinClasses } from '../UI/Button';
+import BrandLogo from '../UI/BrandLogo';
 import { MODE_PRESENTATION, getModePresentation } from '../../constants/shortcuts';
 
 export function ControlIcon({ name, size = 18, title }) {
@@ -119,25 +120,6 @@ export function ControlIcon({ name, size = 18, title }) {
     </span>
   );
 }
-
-function BrandLogoIcon({ size = 30 }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={size}
-      height={size}
-      viewBox="0 0 64 64"
-      fill="none"
-      style={{ display: 'block', flexShrink: 0, borderRadius: '9px', boxShadow: '0 0 14px rgba(201, 247, 255, 0.25)' }}
-    >
-      <rect width="64" height="64" rx="18" fill="#090a0f" />
-      <rect x="8.5" y="8.5" width="47" height="47" rx="13.5" stroke="#FFFFFF" strokeOpacity=".3" />
-      <path d="M17 45V20l15 16 15-16v25" stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M17 48h30" stroke="#C9F7FF" strokeWidth="3.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 export default function Navbar({
   currentMode,
   activeMode,
@@ -194,7 +176,7 @@ export default function Navbar({
             tabIndex={hiddenTabIndex}
             aria-label="Voltar às ferramentas"
           >
-            <BrandLogoIcon size={30} />
+            <BrandLogo size={30} />
             <div className="wbp-navbar__title-block">
               <span className="wbp-navbar__brand-name">MONITORSMITH</span>
               <span className="wbp-navbar__brand-tag">EXVORN.TECH</span>
@@ -202,7 +184,7 @@ export default function Navbar({
           </button>
         ) : (
           <div className="wbp-navbar__brand">
-            <BrandLogoIcon size={30} />
+            <BrandLogo size={30} />
             <div className="wbp-navbar__title-block">
               <span className="wbp-navbar__brand-name">MONITORSMITH</span>
               <span className="wbp-navbar__brand-tag">EXVORN.TECH</span>

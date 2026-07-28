@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
-import { X, Cpu, Sparkle } from '@phosphor-icons/react';
+import { X, Sparkle } from '@phosphor-icons/react';
 import { IconBrandLinkedin } from '@tabler/icons-react';
+import BrandLogo from './BrandLogo';
 
 export default function AboutModal({ label = "Sobre (About)", className }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -101,9 +102,7 @@ export default function AboutModal({ label = "Sobre (About)", className }) {
             </button>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '24px' }}>
-              <div style={{ padding: '10px', borderRadius: '14px', background: 'rgba(245, 158, 11, 0.15)', border: '1px solid rgba(245, 158, 11, 0.3)' }}>
-                <Cpu size={28} color="#f59e0b" weight="bold" />
-              </div>
+              <BrandLogo size={36} />
               <div>
                 <h2 id="about-dialog-title" style={{ margin: 0, fontSize: '1.35rem', fontWeight: 700, letterSpacing: '-0.02em', color: '#ffffff' }}>
                   Sobre o MonitorSmith
@@ -143,19 +142,19 @@ export default function AboutModal({ label = "Sobre (About)", className }) {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '10px',
-                  background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.1))',
-                  border: '1px solid rgba(59, 130, 246, 0.4)',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  border: '1px solid rgba(255, 255, 255, 0.18)',
                   padding: '12px 20px',
                   borderRadius: '14px',
-                  color: '#60a5fa',
+                  color: '#ffffff',
                   textDecoration: 'none',
                   fontWeight: 600,
                   fontSize: '0.9rem',
-                  boxShadow: '0 4px 12px rgba(59, 130, 246, 0.15)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
                   transition: 'all 0.2s ease',
                 }}
               >
-                <IconBrandLinkedin size={20} />
+                <IconBrandLinkedin size={20} color="#60a5fa" />
                 <span>LinkedIn EXVORN.TECH</span>
               </a>
 
