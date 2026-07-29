@@ -17,7 +17,7 @@ export function FaqAccordion({
   return (
     <div className={cn('w-full py-2', className)}>
       {timestamp ? (
-        <p className="mb-6 text-xs font-mono tracking-widest text-neutral-500 dark:text-white/50 uppercase flex items-center gap-2">
+        <p className="mb-6 text-xs font-mono tracking-widest text-black/50 dark:text-white/50 uppercase flex items-center gap-2">
           <span
             className="inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10B981]"
             aria-hidden="true"
@@ -47,15 +47,15 @@ export function FaqAccordion({
                   className={cn(
                     'relative flex items-center space-x-3 rounded-2xl px-5 py-3.5 transition-all duration-300 border',
                     isOpen
-                      ? 'bg-neutral-900/10 text-neutral-900 border-neutral-900/30 shadow-[0_4px_24px_rgba(0,0,0,0.08)] dark:bg-white/[0.1] dark:text-white dark:border-white/[0.28] dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)]'
-                      : 'bg-neutral-900/5 hover:bg-neutral-900/10 text-neutral-800 border-neutral-900/10 hover:border-neutral-900/20 dark:bg-white/[0.03] dark:hover:bg-white/[0.07] dark:text-white/80 dark:border-white/[0.08] dark:hover:border-white/[0.16]',
+                      ? 'bg-black/[0.04] dark:bg-white/[0.1] text-black dark:text-white border-black/[0.12] dark:border-white/[0.28] shadow-[0_4px_24px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)]'
+                      : 'bg-black/[0.02] dark:bg-white/[0.03] hover:bg-black/[0.05] dark:hover:bg-white/[0.07] text-black/80 dark:text-white/80 border-black/[0.06] dark:border-white/[0.08] hover:border-black/[0.15] dark:hover:border-white/[0.16]',
                     questionClassName,
                   )}
                 >
                   {item.icon ? (
                     <span
                       className={cn(
-                        'absolute -top-3 text-2xl select-none pointer-events-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] z-10',
+                        'absolute -top-3 text-2xl select-none pointer-events-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] z-10',
                         item.iconPosition === 'right' ? '-right-2.5' : '-left-2.5',
                       )}
                       style={{
@@ -71,8 +71,8 @@ export function FaqAccordion({
 
                 <span
                   className={cn(
-                    'flex items-center justify-center w-9 h-9 rounded-xl border border-neutral-900/10 bg-neutral-900/5 text-neutral-600 transition-all duration-300 group-hover:border-neutral-900/20 group-hover:text-neutral-900 dark:border-white/[0.08] dark:bg-white/[0.03] dark:text-white/60 dark:group-hover:border-white/[0.2] dark:group-hover:text-white shrink-0',
-                    isOpen && 'border-neutral-900/30 bg-neutral-900/10 text-neutral-900 shadow-sm dark:border-white/[0.28] dark:bg-white/[0.12] dark:text-white',
+                    'flex items-center justify-center w-9 h-9 rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.03] text-black/50 dark:text-white/60 transition-all duration-300 group-hover:border-black/[0.2] dark:group-hover:border-white/[0.2] group-hover:text-black dark:group-hover:text-white shrink-0',
+                    isOpen && 'border-black/[0.15] dark:border-white/[0.28] bg-black/[0.06] dark:bg-white/[0.12] text-black dark:text-white shadow-sm',
                   )}
                   aria-hidden="true"
                 >
@@ -96,7 +96,7 @@ export function FaqAccordion({
                   <div className="ml-4 mt-2.5 md:ml-8">
                     <div
                       className={cn(
-                        'relative max-w-[580px] rounded-2xl bg-gradient-to-br from-neutral-900/10 to-neutral-900/5 border border-neutral-900/10 px-5 py-3.5 text-neutral-800 text-[0.92rem] leading-relaxed shadow-xl backdrop-blur-sm dark:from-white/[0.12] dark:to-white/[0.05] dark:border-white/[0.14] dark:text-white/85',
+                        'relative max-w-[580px] rounded-2xl bg-gradient-to-br from-black/[0.04] to-black/[0.01] dark:from-white/[0.12] dark:to-white/[0.05] border border-black/[0.08] dark:border-white/[0.14] px-5 py-3.5 text-black/85 dark:text-white/85 text-[0.92rem] leading-relaxed shadow-sm dark:shadow-xl backdrop-blur-sm',
                         answerClassName,
                       )}
                     >
