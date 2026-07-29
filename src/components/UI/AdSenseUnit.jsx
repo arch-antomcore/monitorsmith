@@ -65,7 +65,7 @@ export default function AdSenseUnit({
       hasRequestedAdRef.current = true;
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch {
-      hasRequestedAdRef.current = false;
+      // Retain requested state on exception to prevent infinite retry loop
     }
   }, [isConfigured, isVisible]);
 

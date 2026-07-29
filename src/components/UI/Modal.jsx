@@ -101,7 +101,7 @@ export default function Modal({
       document.removeEventListener('keydown', handleKeyDown);
       releaseModalIsolation();
 
-      if (previouslyFocusedElement.current instanceof HTMLElement) {
+      if (previouslyFocusedElement.current instanceof HTMLElement && document.contains(previouslyFocusedElement.current)) {
         previouslyFocusedElement.current.focus({ preventScroll: true });
       }
     };

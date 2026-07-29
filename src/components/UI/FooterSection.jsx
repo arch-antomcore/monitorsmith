@@ -40,9 +40,6 @@ export function FooterSection({ onLaunch }) {
       try { localStorage.setItem("ms_studio_theme", "light"); } catch { /* Preferência não persistida. */ }
     }
 
-    return () => {
-      root.classList.remove("dark", "light-mode", "ms-studio-dark", "ms-studio-light");
-    };
   }, [isDarkMode]);
 
   const handleToolClick = (e, modeId, fallbackUrl) => {

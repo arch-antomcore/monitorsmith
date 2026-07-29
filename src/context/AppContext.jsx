@@ -28,7 +28,12 @@ function clampNumber(value, minimum, maximum, fallback) {
 }
 
 function normalizeHexColor(value, fallback) {
-  return typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value) ? value.toUpperCase() : fallback;
+  if (typeof value !== 'string') return fallback;
+  const compact = value.trim().replace('#', '');
+  if (/^[\da-f]{3}$/i.test(compact)) {
+    return `#${compact.split('').map((c) => `${c}${c}`).join('')}`.toUpperCase();
+  }
+  return /^[\da-f]{6}$/i.test(compact) ? `#${compact}`.toUpperCase() : fallback;
 }
 
 export function AppProvider({ children }) {
