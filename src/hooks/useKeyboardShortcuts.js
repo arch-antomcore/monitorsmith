@@ -11,13 +11,17 @@ function isEditableTarget(target) {
     return false;
   }
 
+  if (target.disabled || target.getAttribute('aria-disabled') === 'true') {
+    return false;
+  }
+
   return Boolean(
     target.isContentEditable ||
-      target.closest('input, textarea, select, [contenteditable]'),
+      target.closest('input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [contenteditable="true"]'),
   );
 }
 
-function isShortcutScopeBlocked(target) {
+export function isShortcutScopeBlocked(target) {
   if (typeof document === 'undefined') return false;
 
   if (document.querySelector('[role="dialog"][aria-modal="true"], [data-ms-shortcuts-disabled="true"]')) {

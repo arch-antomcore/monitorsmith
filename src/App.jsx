@@ -22,6 +22,7 @@ import ToolTransitionOverlay from './components/UI/ToolTransitionOverlay';
 import AppProvider, { MODES, useApp } from './context/AppContext';
 import { DEFAULT_DOCK_MODES, SHORTCUTS } from './constants/shortcuts';
 import { getToolById, resolveToolLaunch, TOOLS_REGISTRY } from './constants/tools';
+import { isShortcutScopeBlocked } from './hooks/useKeyboardShortcuts';
 
 const DEAD_PIXEL_PALETTE = [
   { id: 'red', label: 'Vermelho', value: '#ff0000' },
@@ -193,7 +194,11 @@ function DisplaySuite() {
 
     const handleGlobalKeyDown = (e) => {
       const isEditableTarget = e.target instanceof Element && Boolean(e.target.closest('input, textarea, select, [contenteditable="true"]'));
-      
+
+      if (isShortcutScopeBlocked(e.target)) {
+        return;
+      }
+
       if (e.key === 'Escape') {
         // Only navigate to home if we are not already home
         // AND not typing in a text field (escape might be used to blur/cancel input)

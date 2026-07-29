@@ -38,11 +38,30 @@ function decodeImageFile(file) {
 
     image.decoding = 'async';
     image.onload = () => {
-      const width = image.naturalWidth;
-      const height = image.naturalHeight;
-      image.onload = null;
-      image.onerror = null;
-      resolve({ src, width, height });
+      if (typeof window !== 'undefined' && 'createImageBitmap' in window) {
+        createImageBitmap(file)
+          .then((bitmap) => {
+            const width = bitmap.width;
+            const height = bitmap.height;
+            bitmap.close();
+            image.onload = null;
+            image.onerror = null;
+            resolve({ src, width, height });
+          })
+          .catch(() => {
+            const width = image.naturalWidth;
+            const height = image.naturalHeight;
+            image.onload = null;
+            image.onerror = null;
+            resolve({ src, width, height });
+          });
+      } else {
+        const width = image.naturalWidth;
+        const height = image.naturalHeight;
+        image.onload = null;
+        image.onerror = null;
+        resolve({ src, width, height });
+      }
     };
     image.onerror = () => {
       image.onload = null;
@@ -296,7 +315,11 @@ export default function SponsorLoopMode({
       const next = [...imagesRef.current, ...accepted];
       imagesRef.current = next;
       setImages(next);
-      saveSponsorImages(next);
+      saveSponsorImages(next).then((saveRes) => {
+        if (saveRes && !saveRes.success) {
+          setUploadMessage((msg) => `${msg} (Aviso: Não foi possível salvar no banco local).`);
+        }
+      });
     }
 
     const acceptedMessage = accepted.length
@@ -318,8 +341,11 @@ export default function SponsorLoopMode({
 
   useEffect(() => {
     let active = true;
-    loadSponsorImages().then((saved) => {
-      if (!active || !saved.length) return;
+    if (imagesRef.current.length > 0) return undefined;
+    loadSponsorImages().then((res) => {
+      if (!active) return;
+      const saved = Array.isArray(res) ? res : res?.data || [];
+      if (!saved.length) return;
       const files = saved.map((s) => s.file).filter(Boolean);
       if (files.length) {
         void enqueueFiles(files);

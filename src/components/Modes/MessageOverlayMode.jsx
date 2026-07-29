@@ -151,7 +151,7 @@ export default function MessageOverlayMode({
           fittedSize = upperBound;
         } else {
           if (fits(lowerBound)) {
-            for (let iteration = 0; iteration < 12; iteration += 1) {
+            for (let iteration = 0; iteration < 5; iteration += 1) {
               const candidate = (lowerBound + upperBound) / 2;
               if (fits(candidate)) {
                 lowerBound = candidate;
@@ -185,7 +185,9 @@ export default function MessageOverlayMode({
 
     window.addEventListener("resize", scheduleFit);
     window.visualViewport?.addEventListener("resize", scheduleFit);
-    document.fonts?.addEventListener?.("loadingdone", scheduleFit);
+    if (document.fonts?.addEventListener) {
+      document.fonts.addEventListener("loadingdone", scheduleFit);
+    }
     document.fonts?.ready?.then(() => {
       if (!disposed) scheduleFit();
     });
@@ -197,7 +199,9 @@ export default function MessageOverlayMode({
       resizeObserver?.disconnect();
       window.removeEventListener("resize", scheduleFit);
       window.visualViewport?.removeEventListener("resize", scheduleFit);
-      document.fonts?.removeEventListener?.("loadingdone", scheduleFit);
+      if (document.fonts?.removeEventListener) {
+        document.fonts.removeEventListener("loadingdone", scheduleFit);
+      }
     };
   }, [normalizedQrContent, resolvedFontScale, showQrCode, visibleMessage, isTeleprompter]);
 

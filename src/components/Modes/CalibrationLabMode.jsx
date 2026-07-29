@@ -235,7 +235,7 @@ function RetentionBurninPattern({ showGuidance }) {
 }
 
 function FpsStutterPattern({ motionEnabled, showGuidance }) {
-  const [fps, setFps] = useState(0);
+  const fpsTextRef = useRef(null);
   const animRef = useRef(null);
   const markerRef = useRef(null);
   const lastTimeRef = useRef(0);
@@ -253,7 +253,9 @@ function FpsStutterPattern({ motionEnabled, showGuidance }) {
     const loop = (now) => {
       framesRef.current += 1;
       if (now - lastTimeRef.current >= 1000) {
-        setFps(framesRef.current);
+        if (fpsTextRef.current) {
+          fpsTextRef.current.textContent = String(framesRef.current);
+        }
         framesRef.current = 0;
         lastTimeRef.current = now;
       }
@@ -287,7 +289,7 @@ function FpsStutterPattern({ motionEnabled, showGuidance }) {
       />
       {showGuidance ? (
         <div style={{ position: "absolute", bottom: "20px", left: "20px", color: "#34d399", fontFamily: "monospace", fontSize: "0.85rem", background: "rgba(0,0,0,0.75)", padding: "8px 14px", borderRadius: "8px" }}>
-          {motionEnabled ? <>Callbacks rAF no último segundo: <strong>{fps}</strong></> : <strong>Animação pausada</strong>}
+          {motionEnabled ? <>Callbacks rAF no último segundo: <strong ref={fpsTextRef}>60</strong></> : <strong>Animação pausada</strong>}
         </div>
       ) : null}
     </div>

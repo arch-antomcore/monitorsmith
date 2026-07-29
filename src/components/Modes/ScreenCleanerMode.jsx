@@ -80,15 +80,15 @@ export default function ScreenCleanerMode({
     restoreFocusAfterLock.current = true;
     window.requestAnimationFrame(() => unlockButtonRef.current?.focus({ preventScroll: true }));
 
+    const unlockDeadline = Date.now() + 30000;
+
     const interval = setInterval(() => {
-      setCleanLockTimer((prev) => {
-        if (prev <= 1) {
-          setIsCleanLocked(false);
-          return 30;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+      const remaining = Math.max(0, Math.ceil((unlockDeadline - Date.now()) / 1000));
+      setCleanLockTimer(remaining);
+      if (remaining <= 0) {
+        setIsCleanLocked(false);
+      }
+    }, 250);
 
     const handleKey = (event) => {
       if (event.key === "Escape") {

@@ -34,7 +34,7 @@ function getDB() {
 export async function saveSponsorImages(images) {
   try {
     const db = await getDB();
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const transaction = db.transaction(STORE_NAME, 'readwrite');
       const store = transaction.objectStore(STORE_NAME);
       
@@ -48,43 +48,45 @@ export async function saveSponsorImages(images) {
         });
       });
       
-      transaction.oncomplete = () => resolve();
-      transaction.onerror = () => reject(transaction.error);
+      transaction.oncomplete = () => resolve({ success: true });
+      transaction.onerror = () => resolve({ success: false, error: transaction.error });
     });
   } catch (error) {
     console.warn('Failed to save to SponsorDB', error);
+    return { success: false, error };
   }
 }
 
 export async function loadSponsorImages() {
   try {
     const db = await getDB();
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const transaction = db.transaction(STORE_NAME, 'readonly');
       const store = transaction.objectStore(STORE_NAME);
       const request = store.getAll();
       
-      request.onsuccess = () => resolve(request.result || []);
-      request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve({ success: true, data: request.result || [] });
+      request.onerror = () => resolve({ success: false, data: [] });
     });
   } catch (error) {
     console.warn('Failed to load from SponsorDB', error);
-    return [];
+    return { success: false, data: [] };
   }
 }
 
 export async function clearSponsorImages() {
   try {
     const db = await getDB();
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const transaction = db.transaction(STORE_NAME, 'readwrite');
       const store = transaction.objectStore(STORE_NAME);
       const request = store.clear();
       
-      request.onsuccess = () => resolve();
-      request.onerror = () => reject(request.error);
+      request.onsuccess = () => resolve({ success: true });
+      request.onerror = () => resolve({ success: false, error: transaction.error });
     });
   } catch (error) {
     console.warn('Failed to clear SponsorDB', error);
+    return { success: false, error };
   }
 }
