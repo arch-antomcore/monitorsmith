@@ -4138,20 +4138,24 @@ html.ms-studio-light .ms-seo-faq .group {
 }
 
 /* Caixa da Pergunta (Pílula com rounded-2xl idêntica ao modo escuro) */
+html.ms-studio-light .ms-seo-faq button > span[class*="space-x-3"],
 html.ms-studio-light .ms-seo-faq button > div[class*="space-x-3"],
+html.ms-studio-light .ms-seo-faq button span[class*="rounded-2xl"],
 html.ms-studio-light .ms-seo-faq button div[class*="rounded-2xl"] {
   background: #FFFFFF !important;
-  border: 1px solid rgba(87, 83, 78, 0.16) !important;
+  border: 1.5px solid #D6D3D1 !important;
   border-radius: 1rem !important;
   color: #1C1917 !important;
-  box-shadow: 0 2px 8px rgba(87, 83, 78, 0.04) !important;
+  box-shadow: 0 2px 10px rgba(28, 25, 23, 0.08) !important;
 }
 
+html.ms-studio-light .ms-seo-faq button[aria-expanded="true"] > span[class*="space-x-3"],
 html.ms-studio-light .ms-seo-faq button[aria-expanded="true"] > div[class*="space-x-3"],
+html.ms-studio-light .ms-seo-faq button:hover > span[class*="space-x-3"],
 html.ms-studio-light .ms-seo-faq button:hover > div[class*="space-x-3"] {
   background: #FFFFFF !important;
   border-color: #D97706 !important;
-  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.1) !important;
+  box-shadow: 0 4px 18px rgba(217, 119, 6, 0.18) !important;
 }
 
 html.ms-studio-light .ms-seo-faq button span {
@@ -4162,27 +4166,28 @@ html.ms-studio-light .ms-seo-faq button span {
 html.ms-studio-light .ms-seo-faq button > span.shrink-0,
 html.ms-studio-light .ms-seo-faq button span[class*="rounded-xl"] {
   background: #FFFFFF !important;
-  border: 1px solid rgba(87, 83, 78, 0.16) !important;
+  border: 1.5px solid #D6D3D1 !important;
   border-radius: 0.75rem !important;
   color: #1C1917 !important;
-  box-shadow: 0 2px 8px rgba(87, 83, 78, 0.04) !important;
+  box-shadow: 0 2px 10px rgba(28, 25, 23, 0.08) !important;
 }
 
 html.ms-studio-light .ms-seo-faq button[aria-expanded="true"] > span.shrink-0,
 html.ms-studio-light .ms-seo-faq button:hover > span.shrink-0 {
   border-color: #D97706 !important;
-  background: #FAF9F6 !important;
-  color: #D97706 !important;
+  background: #FEF3C7 !important;
+  color: #B45309 !important;
 }
 
 /* Resposta do FAQ (Container interno com rounded-2xl idêntico ao modo escuro) */
 html.ms-studio-light .ms-seo-faq [role="region"] > div > div > div,
-html.ms-studio-light .ms-seo-faq .overflow-hidden div[class*="rounded-2xl"] {
+html.ms-studio-light .ms-seo-faq .overflow-hidden div[class*="rounded-2xl"],
+html.ms-studio-light .ms-seo-faq .overflow-hidden span[class*="rounded-2xl"] {
   background: #FFFFFF !important;
-  border: 1px solid rgba(87, 83, 78, 0.16) !important;
+  border: 1.5px solid #D6D3D1 !important;
   border-radius: 1rem !important;
-  color: #44403C !important;
-  box-shadow: 0 4px 16px rgba(87, 83, 78, 0.06) !important;
+  color: #292524 !important;
+  box-shadow: 0 4px 16px rgba(28, 25, 23, 0.1) !important;
 }
 
 html.ms-studio-light .ms-seo-faq [role="region"] * {
