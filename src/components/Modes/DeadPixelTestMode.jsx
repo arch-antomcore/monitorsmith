@@ -44,9 +44,7 @@ export default function DeadPixelTestMode({
   defaultAutoCycle = false,
   defaultColor = "black",
   onAutoCycleChange,
-  onColorChange,
-  onExit,
-  palette,
+  onColorChange,  palette,
   selectedColor,
   showControls = true,
 }) {
@@ -116,13 +114,6 @@ export default function DeadPixelTestMode({
   }, [activeIndex, colors.length, cycleSpeed, resolvedAutoCycle, selectColor, shouldReduceMotion]);
 
   const handleKeyDown = (event) => {
-    if (event.key === "Escape" && onExit) {
-      event.preventDefault();
-      event.stopPropagation();
-      onExit();
-      return;
-    }
-
     const isEditableTarget = event.target instanceof Element
       && Boolean(event.target.closest('input, textarea, select, [contenteditable="true"]'));
 

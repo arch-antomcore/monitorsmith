@@ -15,9 +15,9 @@ const triggerStyle = (hasClassName) => ({
 
 const sectionStyle = {
   padding: '18px',
-  border: '1px solid rgba(255,255,255,0.08)',
+  border: '1px solid var(--ms-border, rgba(128,128,128,0.2))',
   borderRadius: '16px',
-  background: 'rgba(255,255,255,0.03)',
+  background: 'var(--ms-surface-dim, rgba(128,128,128,0.08))',
 };
 
 export default function AboutModal({ label = 'Sobre o MonitorSmith', className }) {
@@ -43,7 +43,7 @@ export default function AboutModal({ label = 'Sobre o MonitorSmith', className }
         size="lg"
         closeLabel="Fechar informações sobre o MonitorSmith"
       >
-        <div style={{ display: 'grid', gap: '20px', color: 'rgba(255,255,255,0.82)', fontSize: '0.9rem', lineHeight: 1.7 }}>
+        <div style={{ display: 'grid', gap: '20px', opacity: 0.82, fontSize: '0.9rem', lineHeight: 1.7 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <BrandLogo size={38} />
             <p style={{ margin: 0, color: '#f59e0b', fontFamily: 'monospace', fontSize: '0.76rem', letterSpacing: '0.06em' }}>
@@ -59,11 +59,11 @@ export default function AboutModal({ label = 'Sobre o MonitorSmith', className }
           </p>
 
           <section style={sectionStyle} aria-labelledby="about-privacy-title">
-            <h3 id="about-privacy-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 8px', color: '#fff', fontSize: '0.95rem' }}>
+            <h3 id="about-privacy-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 8px', color: 'inherit', fontSize: '0.95rem' }}>
               <Sparkle aria-hidden="true" size={18} color="#f59e0b" weight="fill" />
               Como a aplicação funciona
             </h3>
-            <p style={{ margin: 0, color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem' }}>
+            <p style={{ margin: 0, opacity: 0.7, fontSize: '0.85rem' }}>
               Os padrões, temporizadores, mensagens e imagens importadas são processados
               localmente nesta aba. As fontes são entregues pela própria aplicação; a
               publicidade pode solicitar conteúdo de serviços externos. A instalação PWA melhora o
@@ -73,10 +73,10 @@ export default function AboutModal({ label = 'Sobre o MonitorSmith', className }
           </section>
 
           <section aria-labelledby="about-limits-title">
-            <h3 id="about-limits-title" style={{ margin: '0 0 8px', color: '#fff', fontSize: '0.95rem' }}>
+            <h3 id="about-limits-title" style={{ margin: '0 0 8px', color: 'inherit', fontSize: '0.95rem' }}>
               Inspeção visual, não certificação
             </h3>
-            <p style={{ margin: 0, color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem' }}>
+            <p style={{ margin: 0, opacity: 0.7, fontSize: '0.85rem' }}>
               O MonitorSmith ajuda a observar o painel, mas não substitui colorímetro,
               osciloscópio, câmera de alta velocidade, assistência autorizada ou laudo
               técnico. Navegador, escala, perfil de cor, iluminação e o próprio monitor
@@ -89,13 +89,13 @@ export default function AboutModal({ label = 'Sobre o MonitorSmith', className }
             target="_blank"
             rel="noopener noreferrer"
             className="wbp-button wbp-button--secondary"
-            style={{ justifySelf: 'start', display: 'inline-flex', alignItems: 'center', gap: '10px', color: '#fff', textDecoration: 'none' }}
+            style={{ justifySelf: 'start', display: 'inline-flex', alignItems: 'center', gap: '10px', color: 'inherit', textDecoration: 'none' }}
           >
             <LinkedinLogo aria-hidden="true" size={20} color="#60a5fa" />
             LinkedIn do responsável pelo projeto
           </a>
 
-          <p style={{ margin: 0, paddingTop: '14px', borderTop: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.5)', textAlign: 'center', fontFamily: 'monospace', fontSize: '0.75rem' }}>
+          <p style={{ margin: 0, paddingTop: '14px', borderTop: '1px solid var(--ms-border, rgba(128,128,128,0.2))', opacity: 0.5, textAlign: 'center', fontFamily: 'monospace', fontSize: '0.75rem' }}>
             © 2026 EXVORN.TECH · TODOS OS DIREITOS RESERVADOS
           </p>
         </div>

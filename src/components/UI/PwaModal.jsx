@@ -164,7 +164,7 @@ export default function PwaModal({ label = 'Instalar app e usar offline', classN
         size="lg"
         closeLabel="Fechar instruções de instalação"
       >
-        <div style={{ display: 'grid', gap: '18px', color: 'rgba(255,255,255,0.82)', fontSize: '0.88rem', lineHeight: 1.65 }}>
+        <div style={{ display: 'grid', gap: '18px', opacity: 0.82, fontSize: '0.88rem', lineHeight: 1.65 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <BrandLogo size={34} />
             <span style={{ color: '#f59e0b', fontFamily: 'monospace', fontSize: '0.76rem' }}>
@@ -172,29 +172,29 @@ export default function PwaModal({ label = 'Instalar app e usar offline', classN
             </span>
           </div>
 
-          <section style={{ padding: '16px', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '14px', background: 'rgba(255,255,255,0.03)' }} aria-labelledby="pwa-status-title">
-            <h3 id="pwa-status-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 8px', color: '#fff', fontSize: '0.94rem' }}>
+          <section style={{ padding: '16px', border: '1px solid var(--ms-border, rgba(128,128,128,0.2))', borderRadius: '14px', background: 'var(--ms-surface-dim, rgba(128,128,128,0.08))' }} aria-labelledby="pwa-status-title">
+            <h3 id="pwa-status-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 8px', color: 'inherit', fontSize: '0.94rem' }}>
               <HardDrives aria-hidden="true" size={18} color="#f59e0b" />
               Estado local
             </h3>
-            <p role="status" aria-live="polite" style={{ margin: 0, color: 'rgba(255,255,255,0.72)', fontSize: '0.83rem' }}>
+            <p role="status" aria-live="polite" style={{ margin: 0, opacity: 0.72, fontSize: '0.83rem' }}>
               <strong>Conexão:</strong> {isOnline ? 'online' : 'offline'}. {swStatus}
             </p>
           </section>
 
           <section aria-labelledby="pwa-install-title">
-            <h3 id="pwa-install-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 8px', color: '#fff', fontSize: '0.94rem' }}>
+            <h3 id="pwa-install-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 8px', color: 'inherit', fontSize: '0.94rem' }}>
               <DeviceMobile aria-hidden="true" size={18} color="#f59e0b" weight="fill" />
               Como instalar
             </h3>
-            <ul style={{ margin: 0, paddingLeft: '20px', color: 'rgba(255,255,255,0.72)', fontSize: '0.84rem' }}>
+            <ul style={{ margin: 0, paddingLeft: '20px', opacity: 0.72, fontSize: '0.84rem' }}>
               <li><strong>Chrome, Edge e navegadores compatíveis:</strong> use o ícone de instalação na barra de endereços ou a opção “Instalar aplicativo” do menu.</li>
               <li><strong>iPhone e iPad:</strong> no Safari, abra Compartilhar e escolha “Adicionar à Tela de Início”.</li>
               <li><strong>Android:</strong> abra o menu do navegador e escolha “Instalar aplicativo” ou “Adicionar à tela inicial”.</li>
             </ul>
           </section>
 
-          <p style={{ margin: 0, color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem' }}>
+          <p style={{ margin: 0, opacity: 0.6, fontSize: '0.8rem' }}>
             Para preparar melhor o uso sem rede, abra online cada ferramenta de que pretende
             precisar. Fontes, anúncios e recursos externos podem não estar disponíveis offline.
           </p>

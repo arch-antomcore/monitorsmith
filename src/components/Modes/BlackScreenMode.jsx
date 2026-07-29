@@ -24,13 +24,6 @@ export default function BlackScreenMode({
     containerRef.current?.focus({ preventScroll: true });
   }, [autoFocus]);
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Escape" && onExit) {
-      event.preventDefault();
-      event.stopPropagation();
-      onExit();
-    }
-  };
 
   return (
     <section
@@ -38,7 +31,6 @@ export default function BlackScreenMode({
       aria-label={ariaLabel}
       className={classNames("display-mode", "display-mode--black", className)}
       data-mode="black"
-      onKeyDown={handleKeyDown}
       tabIndex={onExit || autoFocus ? 0 : -1}
     >
       <div

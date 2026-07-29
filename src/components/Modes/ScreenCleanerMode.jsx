@@ -53,9 +53,7 @@ export default function ScreenCleanerMode({
   className,
   defaultBrightness = 100,
   defaultPattern = "grid",
-  onBrightnessChange,
-  onExit,
-  onPatternChange,
+  onBrightnessChange,  onPatternChange,
   pattern,
   showControls = true,
 }) {
@@ -168,13 +166,6 @@ export default function ScreenCleanerMode({
     containerRef.current?.focus({ preventScroll: true });
   }, [autoFocus]);
 
-  const handleKeyDown = (event) => {
-    if (event.key !== "Escape" || !onExit) return;
-
-    event.preventDefault();
-    event.stopPropagation();
-    onExit();
-  };
 
   return (
     <DisplayToolShell
@@ -259,7 +250,6 @@ export default function ScreenCleanerMode({
         aria-label={ariaLabel}
         className={classNames("display-mode__canvas", "display-mode__canvas--cleaner", className)}
         style={canvasStyle}
-        onKeyDown={handleKeyDown}
         tabIndex="0"
       />
       {isCleanLocked && typeof document !== "undefined"

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 
 import DotPattern from '../UI/DotPattern';
 import FlowButton from '../UI/FlowButton';
@@ -86,6 +86,29 @@ const arrowAnimation = {
 function ToolCard({ tool, index, onLaunch }) {
   const shouldReduceMotion = useReducedMotion();
 
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7.5deg", "-7.5deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7.5deg", "7.5deg"]);
+
+  const handleMouseMove = (e) => {
+    if (shouldReduceMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    x.set(mouseX / width - 0.5);
+    y.set(mouseY / height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   // Card variants with entrance + hover — ALL through the variant system
   const variants = {
     initial: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
@@ -118,6 +141,14 @@ function ToolCard({ tool, index, onLaunch }) {
       animate="animate"
       whileHover="hover"
       whileTap={{ scale: 0.97 }}
+      style={{
+        rotateX: shouldReduceMotion ? 0 : rotateX,
+        rotateY: shouldReduceMotion ? 0 : rotateY,
+        transformStyle: 'preserve-3d',
+        transformPerspective: 1000
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Content layer — above the decorative icon */}
       <div className="ms-card__content">
@@ -165,6 +196,29 @@ function ToolCard({ tool, index, onLaunch }) {
 /* ── HeroGridCard (Hero Section — top 6 featured) ── */
 
 function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7.5deg", "-7.5deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7.5deg", "7.5deg"]);
+
+  const handleMouseMove = (e) => {
+    if (shouldReduceMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    x.set(mouseX / width - 0.5);
+    y.set(mouseY / height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   const variants = {
     initial: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
     animate: {
@@ -196,6 +250,14 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
       animate="animate"
       whileHover="hover"
       whileTap={{ scale: 0.97 }}
+      style={{
+        rotateX: shouldReduceMotion ? 0 : rotateX,
+        rotateY: shouldReduceMotion ? 0 : rotateY,
+        transformStyle: 'preserve-3d',
+        transformPerspective: 1000
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Content layer */}
       <div className="ms-card__content">
@@ -253,19 +315,8 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
     });
   };
 
-  const handleMouseMove = (e) => {
-    const cards = document.querySelectorAll('.ms-tool-card, .ms-hero-grid-card');
-    for (const card of cards) {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-    }
-  };
-
   return (
-    <main id="monitor-tools-home" className="ms-library" tabIndex={-1} onMouseMove={handleMouseMove}>
+    <main id="monitor-tools-home" className="ms-library" tabIndex={-1}>
       {/* Desktop Side Skyscraper Ads */}
       <AdSenseUnit placement="sidebar" format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--left" style={{ width: '160px', minHeight: '600px' }} />
       <AdSenseUnit placement="sidebar" format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--right" style={{ width: '160px', minHeight: '600px' }} />

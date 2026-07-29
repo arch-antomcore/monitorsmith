@@ -56,9 +56,7 @@ function decodeImageFile(file) {
 
 export default function SponsorLoopMode({
   ariaLabel = 'Loop de marcas',
-  autoFocus = false,
-  onExit,
-  showControls = true,
+  autoFocus = false,  showControls = true,
 }) {
   const containerRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -141,7 +139,7 @@ export default function SponsorLoopMode({
 
   // --- Keyboard ---
   const handleKeyDown = (e) => {
-    if (e.key === 'Escape' && onExit) { e.preventDefault(); onExit(); return; }
+
     if (e.target !== e.currentTarget) return;
     if (e.key === ' ' && hasImages) { e.preventDefault(); setIsPlaying(p => !p); return; }
     if (e.key === 'ArrowRight' && hasImages) { e.preventDefault(); advance(); return; }

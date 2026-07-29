@@ -103,9 +103,7 @@ export default function WhiteLightingMode({
   defaultColor = "#FFFFFF",
   defaultTemperature = 5000,
   onBrightnessChange,
-  onColorChange,
-  onExit,
-  onTemperatureChange,
+  onColorChange,  onTemperatureChange,
   showControls = true,
   temperature,
   title,
@@ -202,13 +200,7 @@ export default function WhiteLightingMode({
     containerRef.current?.focus({ preventScroll: true });
   }, [autoFocus]);
 
-  const handleKeyDown = (event) => {
-    if (event.key !== "Escape" || !onExit) return;
 
-    event.preventDefault();
-    event.stopPropagation();
-    onExit();
-  };
 
   return (
     <section
@@ -220,7 +212,6 @@ export default function WhiteLightingMode({
         className,
       )}
       data-mode={isColorMode ? "color" : "white"}
-      onKeyDown={handleKeyDown}
       style={{
         "--light-brightness": `${resolvedBrightness}%`,
         "--light-color": displayColor,

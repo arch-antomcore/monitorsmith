@@ -72,9 +72,7 @@ export default function FullScreenClockMode({
   defaultShowSeconds = true,
   hourCycle,
   isFullscreen,
-  locale = "pt-BR",
-  onExit,
-  onHourCycleChange,
+  locale = "pt-BR",  onHourCycleChange,
   onShowSecondsChange,
   onToggleFullscreen,
   showControls = true,
@@ -220,13 +218,6 @@ export default function FullScreenClockMode({
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "Escape" && onExit) {
-      event.preventDefault();
-      event.stopPropagation();
-      onExit();
-      return;
-    }
-
     if (event.key.toLowerCase() === "f") {
       event.preventDefault();
       event.stopPropagation();

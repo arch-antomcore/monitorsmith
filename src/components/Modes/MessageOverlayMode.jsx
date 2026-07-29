@@ -58,9 +58,7 @@ export default function MessageOverlayMode({
   defaultTextColor = "#FFFFFF",
   fontScale,
   message,
-  onBackgroundColorChange,
-  onExit,
-  onFontScaleChange,
+  onBackgroundColorChange,  onFontScaleChange,
   onMessageChange,
   onTextColorChange,
   showControls = true,
@@ -258,13 +256,6 @@ export default function MessageOverlayMode({
     containerRef.current?.focus({ preventScroll: true });
   }, [autoFocus]);
 
-  const handleKeyDown = (event) => {
-    if (event.key !== "Escape" || !onExit) return;
-
-    event.preventDefault();
-    event.stopPropagation();
-    onExit();
-  };
 
   return (
     <section
@@ -272,7 +263,6 @@ export default function MessageOverlayMode({
       aria-label={ariaLabel}
       className={classNames("display-mode", "display-mode--message", className)}
       data-mode="message"
-      onKeyDown={handleKeyDown}
       style={{
         "--message-background": resolvedBackgroundColor,
         "--message-color": resolvedTextColor,

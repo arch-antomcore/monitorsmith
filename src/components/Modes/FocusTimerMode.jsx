@@ -108,9 +108,7 @@ export default function FocusTimerMode({
   initialDuration = 25 * 60,
   isRunning,
   onComplete,
-  onDurationChange,
-  onExit,
-  onRunningChange,
+  onDurationChange,  onRunningChange,
   onSecondsRemainingChange,
   presets = DEFAULT_PRESETS,
   secondsRemaining,
@@ -337,13 +335,6 @@ export default function FocusTimerMode({
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "Escape" && onExit) {
-      event.preventDefault();
-      event.stopPropagation();
-      onExit();
-      return;
-    }
-
     if (event.target !== event.currentTarget) return;
 
     if (event.key === " ") {

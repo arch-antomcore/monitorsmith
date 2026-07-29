@@ -14,7 +14,7 @@ const triggerStyle = (hasClassName) => ({
 
 const headingStyle = {
   margin: '6px 0 4px',
-  color: '#fff',
+  color: 'inherit',
   fontSize: '0.95rem',
 };
 
@@ -43,7 +43,7 @@ export default function PrivacyModal({ label = 'Política de Privacidade', class
         size="lg"
         closeLabel="Fechar política de privacidade"
       >
-        <div style={{ display: 'grid', gap: '14px', color: 'rgba(255,255,255,0.78)', fontSize: '0.84rem', lineHeight: 1.65 }}>
+        <div style={{ display: 'grid', gap: '14px', opacity: 0.78, fontSize: '0.84rem', lineHeight: 1.65 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <BrandLogo size={32} />
             <p style={{ margin: 0 }}>
@@ -104,7 +104,7 @@ export default function PrivacyModal({ label = 'Política de Privacidade', class
             </p>
           </section>
 
-          <p style={{ margin: '6px 0 0', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.52)', fontFamily: 'monospace', fontSize: '0.74rem' }}>
+          <p style={{ margin: '6px 0 0', paddingTop: '12px', borderTop: '1px solid var(--ms-border, rgba(128,128,128,0.2))', opacity: 0.52, fontFamily: 'monospace', fontSize: '0.74rem' }}>
             Última atualização: 28 de julho de 2026.
           </p>
         </div>

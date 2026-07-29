@@ -120,7 +120,7 @@ for (const toolId of TOOL_IDS) {
 }
 
 test('deep link de tela verde aplica o preset chroma', async ({ page }) => {
-  await page.goto('/?tool=green-screen')
+  await page.goto('/#green-screen')
 
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   await expect(page.getByRole('textbox', { name: 'Escolher cor do estúdio' })).toHaveValue('#00b140')
@@ -128,7 +128,7 @@ test('deep link de tela verde aplica o preset chroma', async ({ page }) => {
 })
 
 test('menu radial é nomeado e realmente troca a ferramenta', async ({ page }) => {
-  await page.goto('/?tool=black')
+  await page.goto('/#black')
   await expect(page.getByRole('heading', { level: 1, name: /Tela preta/i })).toBeVisible()
 
   await page.locator('.app-mode-layer').click({ button: 'right', position: { x: 180, y: 220 } })
@@ -145,7 +145,7 @@ test('menu radial é nomeado e realmente troca a ferramenta', async ({ page }) =
 })
 
 test('dock usa tabindex móvel sem selecionar ferramentas ao navegar por setas', async ({ page }) => {
-  await page.goto('/?tool=dead-pixel')
+  await page.goto('/#dead-pixel')
 
   const items = page.locator('.wbp-dock__mode')
   const activeIndex = await items.evaluateAll((buttons) =>
@@ -174,7 +174,7 @@ test('dock usa tabindex móvel sem selecionar ferramentas ao navegar por setas',
 })
 
 test('swipe troca o canvas, mas nunca dispara a partir dos controles', async ({ page }) => {
-  await page.goto('/?tool=dead-pixel')
+  await page.goto('/#dead-pixel')
 
   const dispatchSwipe = async (selector) => page.evaluate((targetSelector) => {
     const target = document.querySelector(targetSelector)
@@ -233,33 +233,34 @@ test('tema claro da landing não vaza para ferramentas e é restaurado ao voltar
 })
 
 test('URL, histórico e identidade da ferramenta permanecem sincronizados', async ({ page }) => {
+  page.on('console', msg => console.log(msg.text()))
   await page.goto('/')
 
   await page.locator('#monitor-tool-grid-dead-pixel').click()
-  await expect(page).toHaveURL(/\?tool=dead-pixel$/)
+  await expect(page).toHaveURL(/#dead-pixel$/)
 
   await page.getByRole('button', { name: /^Inspeção\./ }).click()
-  await expect(page).toHaveURL(/\?tool=cleaner$/)
+  await expect(page).toHaveURL(/#cleaner$/)
 
   await page.goBack()
-  await expect(page).toHaveURL(/\?tool=dead-pixel$/)
+  await expect(page).toHaveURL(/#dead-pixel$/)
   await expect(page.getByRole('heading', { level: 1, name: /Teste de pixels/i })).toBeVisible()
 
   await page.goForward()
-  await expect(page).toHaveURL(/\?tool=cleaner$/)
+  await expect(page).toHaveURL(/#cleaner$/)
   await expect(page.getByRole('heading', { level: 1, name: /Limpeza/i })).toBeVisible()
 
   await page.keyboard.press('Escape')
-  await expect(page).not.toHaveURL(/[?&]tool=/)
+  await expect(page).not.toHaveURL(/#/)
   await expect(page.locator('#monitor-tools-home')).toBeVisible()
 })
 
 test('tela verde e estúdio de cor têm identidade explícita, não inferida pela cor', async ({ page }) => {
-  await page.goto('/?tool=green-screen')
+  await page.goto('/#green-screen')
   await expect(page.getByRole('heading', { level: 1, name: 'Tela Verde' })).toBeVisible()
 
   await page.locator('.wbp-dock__mode').filter({ hasText: 'Estúdio de cor' }).click()
-  await expect(page).toHaveURL(/\?tool=color$/)
+  await expect(page).toHaveURL(/#color$/)
   await expect(page.getByRole('heading', { level: 1, name: 'Estúdio de Cor' })).toBeVisible()
 
   const colorInput = page.getByRole('textbox', { name: 'Escolher cor do estúdio' })
@@ -272,15 +273,15 @@ test('tela verde e estúdio de cor têm identidade explícita, não inferida pel
   await brightnessInput.fill('100')
 
   await expect(page.getByRole('heading', { level: 1, name: 'Estúdio de Cor' })).toBeVisible()
-  await expect(page).toHaveURL(/\?tool=color$/)
+  await expect(page).toHaveURL(/#color$/)
 
   await page.goBack()
-  await expect(page).toHaveURL(/\?tool=green-screen$/)
+  await expect(page).toHaveURL(/#green-screen$/)
   await expect(page.getByRole('heading', { level: 1, name: 'Tela Verde' })).toBeVisible()
 })
 
 test('painel compartilhado minimiza, respeita o dock e restaura o foco', async ({ page }) => {
-  await page.goto('/?tool=dead-pixel')
+  await page.goto('/#dead-pixel')
 
   const closeButton = page.getByRole('button', { name: 'Minimizar painel de opções' })
   await closeButton.click()
@@ -303,7 +304,7 @@ test('painel compartilhado minimiza, respeita o dock e restaura o foco', async (
 })
 
 test('atalhos locais de pixels continuam funcionando após foco nos controles', async ({ page }) => {
-  await page.goto('/?tool=dead-pixel')
+  await page.goto('/#dead-pixel')
 
   const red = page.getByRole('button', { name: 'Usar Vermelho no teste' })
   const green = page.getByRole('button', { name: 'Usar Verde no teste' })
@@ -313,7 +314,7 @@ test('atalhos locais de pixels continuam funcionando após foco nos controles', 
 })
 
 test('ocultação manual restaura a interface no primeiro movimento', async ({ page }) => {
-  await page.goto('/?tool=black')
+  await page.goto('/#black')
 
   const navbar = page.locator('.wbp-navbar')
   await page.getByRole('button', { name: 'Ocultar barras e interface (Modo imersivo)' }).click()
@@ -325,7 +326,7 @@ test('ocultação manual restaura a interface no primeiro movimento', async ({ p
 
 test('guia de calibração integra o painel e acompanha o modo imersivo', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 568 })
-  await page.goto('/?tool=calibration')
+  await page.goto('/#calibration')
 
   const panel = page.locator('.display-mode__controls--calibration')
   const guide = panel.locator('.calibration-lab__guide--inline')
@@ -358,7 +359,7 @@ test('guia de calibração integra o painel e acompanha o modo imersivo', async 
 })
 
 test('padrão RGB da calibração usa canais puros sem vazamento', async ({ page }) => {
-  await page.goto('/?tool=calibration')
+  await page.goto('/#calibration')
   await page.click('button:has-text("Barras RGB")')
 
   const bars = page.locator('.calibration-lab__rgb-bar')
@@ -371,7 +372,7 @@ test('padrão RGB da calibração usa canais puros sem vazamento', async ({ page
 })
 
 test('padrão gamma calcula blocos cinzas reais e exibe aviso de zoom', async ({ page }) => {
-  await page.goto('/?tool=calibration')
+  await page.goto('/#calibration')
   await page.click('button:has-text("Gamma")')
 
   await page.mouse.move(120, 260)
@@ -408,7 +409,7 @@ test.describe('quando o sistema força uma paleta de alto contraste', () => {
   test.use({ forcedColors: 'active' })
 
   test('preserva a cor diagnóstica sem impedir a adaptação dos controles', async ({ page }) => {
-    await page.goto('/?tool=dead-pixel')
+    await page.goto('/#dead-pixel')
 
     const canvas = page.locator('.display-mode__canvas')
     const controls = page.locator('.display-mode__controls')

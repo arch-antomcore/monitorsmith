@@ -2254,36 +2254,6 @@ p.display-mode__instructions {
 }
 
 /* Framer Motion handles scale — CSS handles border/shadow glow on hover */
-.ms-tool-card::before,
-.ms-hero-grid-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  background: radial-gradient(
-    600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
-    rgba(255, 255, 255, 0.05),
-    transparent 40%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.ms-tool-card:hover::before,
-.ms-hero-grid-card:hover::before {
-  opacity: 1;
-}
-
-/* Ensure content stays above the spotlight glow */
-.ms-card__content, .ms-card__decor {
-  position: relative;
-  z-index: 1;
-}
 
 /* Framer Motion handles scale — CSS handles border/shadow glow on hover */
 .ms-tool-card:hover {
