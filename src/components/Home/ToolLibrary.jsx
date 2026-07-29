@@ -61,23 +61,37 @@ function ToolPreview({ tool }) {
  * to child motion elements. The reference ServiceCard only uses variants + whileHover.
  */
 
-// Decorative floating icon: scale + rotate + translate (enhanced for clear visibility)
-const imageAnimation = {
-  animate: { scale: 1, rotate: 0, x: 0, transition: { duration: 0.35, ease: 'easeInOut' } },
+// Small icon area: subtle scale and rotate for organic feel
+const iconMotionVariants = {
+  initial: { scale: 1, rotate: 0 },
+  animate: { scale: 1, rotate: 0, transition: { type: 'spring', stiffness: 260, damping: 20 } },
   hover: {
-    scale: 1.15,
-    rotate: 6,
-    x: 12,
-    transition: { duration: 0.35, ease: 'easeOut' },
+    scale: 1.1,
+    rotate: -4,
+    transition: { type: 'spring', stiffness: 300, damping: 12 },
   },
 };
 
-// Arrow bounce: infinite reverse (identical to reference arrowAnimation)
+// Decorative floating icon: scale + rotate + translate (enhanced for clear visibility)
+const imageAnimation = {
+  initial: { scale: 1, rotate: 0, x: 0, y: 0 },
+  animate: { scale: 1, rotate: 0, x: 0, y: 0, transition: { type: 'spring', stiffness: 200, damping: 20 } },
+  hover: {
+    scale: 1.25,
+    rotate: 10,
+    x: 16,
+    y: 8,
+    transition: { type: 'spring', stiffness: 250, damping: 15 },
+  },
+};
+
+// Arrow bounce: infinite reverse
 const arrowAnimation = {
+  initial: { x: 0 },
   animate: { x: 0 },
   hover: {
     x: 5,
-    transition: { duration: 0.3, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' },
+    transition: { duration: 0.35, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' },
   },
 };
 
@@ -154,9 +168,9 @@ function ToolCard({ tool, index, onLaunch }) {
       <div className="ms-card__content">
         {/* Header — small icon · title · LED · kbd */}
         <span className="ms-card__head">
-          <span className="ms-card__icon-area">
+          <motion.span className="ms-card__icon-area" variants={iconMotionVariants}>
             <ToolPreview tool={tool} />
-          </span>
+          </motion.span>
           <span className="ms-card__titles">
             <strong>{tool.title}</strong>
             {tool.badge ? (
@@ -262,9 +276,9 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
       {/* Content layer */}
       <div className="ms-card__content">
         <span className="ms-card__head">
-          <span className="ms-card__icon-area">
+          <motion.span className="ms-card__icon-area" variants={iconMotionVariants}>
             <ControlIcon name={tool.icon} size={24} />
-          </span>
+          </motion.span>
           <span className="ms-card__titles">
             <strong>{tool.title}</strong>
             {tool.badge ? (
