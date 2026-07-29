@@ -150,13 +150,19 @@ export default function FullScreenClockMode({
     return () => window.clearTimeout(timeoutId);
   }, []);
 
+  const initialTitleRef = useRef(null);
+
   useEffect(() => {
     if (typeof document === "undefined") return undefined;
-    const previousTitle = document.title;
+    if (initialTitleRef.current === null) {
+      initialTitleRef.current = document.title;
+    }
     document.title = `${clockParts.hours}:${clockParts.minutes} — Relógio — MonitorSmith`;
 
     return () => {
-      document.title = previousTitle;
+      if (initialTitleRef.current !== null) {
+        document.title = initialTitleRef.current;
+      }
     };
   }, [clockParts.hours, clockParts.minutes]);
 

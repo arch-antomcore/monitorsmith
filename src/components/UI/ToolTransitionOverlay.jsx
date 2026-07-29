@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
 import { getToolById } from '../../constants/tools';
@@ -27,15 +27,20 @@ export default function ToolTransitionOverlay({
 }) {
   const shouldReduceMotion = useReducedMotion();
 
+  const onCompleteRef = useRef(onTransitionComplete);
+  useEffect(() => {
+    onCompleteRef.current = onTransitionComplete;
+  }, [onTransitionComplete]);
+
   useEffect(() => {
     if (!isTransitioning || activeMode === 'home') return undefined;
 
     const timer = window.setTimeout(
-      () => onTransitionComplete?.(),
+      () => onCompleteRef.current?.(),
       shouldReduceMotion ? 0 : TRANSITION_DURATION_MS,
     );
     return () => window.clearTimeout(timer);
-  }, [activeMode, isTransitioning, onTransitionComplete, shouldReduceMotion]);
+  }, [activeMode, isTransitioning, shouldReduceMotion]);
 
   const tool = getToolById(toolId);
   const title = tool?.heroTitle || tool?.title || 'MonitorSmith';

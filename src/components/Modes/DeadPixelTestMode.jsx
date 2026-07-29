@@ -53,7 +53,7 @@ export default function DeadPixelTestMode({
   const [internalColor, setInternalColor] = useState(defaultColor);
   const [internalAutoCycle, setInternalAutoCycle] = useState(defaultAutoCycle);
   const [cycleSpeed, setCycleSpeed] = useState(() =>
-    Math.min(Math.max(Number(cycleInterval) || 5000, 2000), 15000),
+    Math.min(Math.max(Number(cycleInterval) || 5000, 1600), 15000),
   );
   const [showInspectionGuide, setShowInspectionGuide] = useState(false);
   const shouldReduceMotion = useReducedMotion();

@@ -168,12 +168,8 @@ export function useWakeLock({ autoRequest = false } = {}) {
   useEffect(() => {
     if (autoRequest) {
       void requestWakeLock();
-      return undefined;
     }
-
-    void releaseWakeLock();
-    return undefined;
-  }, [autoRequest, releaseWakeLock, requestWakeLock]);
+  }, [autoRequest, requestWakeLock]);
 
   const toggleWakeLock = useCallback(() => {
     const activeSentinel = sentinelRef.current;
