@@ -47,8 +47,8 @@ export function FaqAccordion({
                   className={cn(
                     'relative flex items-center space-x-3 rounded-2xl px-5 py-3.5 transition-all duration-300 border',
                     isOpen
-                      ? 'bg-black/[0.04] dark:bg-white/[0.1] text-black dark:text-white border-black/[0.12] dark:border-white/[0.28] shadow-[0_4px_24px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)]'
-                      : 'bg-black/[0.02] dark:bg-white/[0.03] hover:bg-black/[0.05] dark:hover:bg-white/[0.07] text-black/80 dark:text-white/80 border-black/[0.06] dark:border-white/[0.08] hover:border-black/[0.15] dark:hover:border-white/[0.16]',
+                      ? 'bg-black/10 dark:bg-white/[0.1] text-black dark:text-white border-black/20 dark:border-white/[0.28] shadow-[0_4px_24px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)]'
+                      : 'bg-black/5 dark:bg-white/[0.03] hover:bg-black/10 dark:hover:bg-white/[0.07] text-black/80 dark:text-white/80 border-black/10 dark:border-white/[0.08] hover:border-black/20 dark:hover:border-white/[0.16]',
                     questionClassName,
                   )}
                 >
@@ -71,8 +71,8 @@ export function FaqAccordion({
 
                 <span
                   className={cn(
-                    'flex items-center justify-center w-9 h-9 rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.03] text-black/50 dark:text-white/60 transition-all duration-300 group-hover:border-black/[0.2] dark:group-hover:border-white/[0.2] group-hover:text-black dark:group-hover:text-white shrink-0',
-                    isOpen && 'border-black/[0.15] dark:border-white/[0.28] bg-black/[0.06] dark:bg-white/[0.12] text-black dark:text-white shadow-sm',
+                    'flex items-center justify-center w-9 h-9 rounded-xl border border-black/10 dark:border-white/[0.08] bg-black/5 dark:bg-white/[0.03] text-black/60 dark:text-white/60 transition-all duration-300 group-hover:border-black/20 dark:group-hover:border-white/[0.2] group-hover:text-black dark:group-hover:text-white shrink-0',
+                    isOpen && 'border-black/30 dark:border-white/[0.28] bg-black/10 dark:bg-white/[0.12] text-black dark:text-white shadow-sm',
                   )}
                   aria-hidden="true"
                 >
@@ -96,7 +96,7 @@ export function FaqAccordion({
                   <div className="ml-4 mt-2.5 md:ml-8">
                     <div
                       className={cn(
-                        'relative max-w-[580px] rounded-2xl bg-gradient-to-br from-black/[0.04] to-black/[0.01] dark:from-white/[0.12] dark:to-white/[0.05] border border-black/[0.08] dark:border-white/[0.14] px-5 py-3.5 text-black/85 dark:text-white/85 text-[0.92rem] leading-relaxed shadow-sm dark:shadow-xl backdrop-blur-sm',
+                        'relative max-w-[580px] rounded-2xl bg-gradient-to-br from-black/10 to-black/5 dark:from-white/[0.12] dark:to-white/[0.05] border border-black/15 dark:border-white/[0.14] px-5 py-3.5 text-black/90 dark:text-white/85 text-[0.92rem] leading-relaxed shadow-sm dark:shadow-xl backdrop-blur-sm',
                         answerClassName,
                       )}
                     >
