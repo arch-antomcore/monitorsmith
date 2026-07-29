@@ -253,8 +253,19 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
     });
   };
 
+  const handleMouseMove = (e) => {
+    const cards = document.querySelectorAll('.ms-tool-card, .ms-hero-grid-card');
+    for (const card of cards) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    }
+  };
+
   return (
-    <div id="monitor-tools-home" className="ms-library" tabIndex={-1}>
+    <main id="monitor-tools-home" className="ms-library" tabIndex={-1} onMouseMove={handleMouseMove}>
       {/* Desktop Side Skyscraper Ads */}
       <AdSenseUnit placement="sidebar" format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--left" style={{ width: '160px', minHeight: '600px' }} />
       <AdSenseUnit placement="sidebar" format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--right" style={{ width: '160px', minHeight: '600px' }} />
@@ -376,6 +387,6 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
       </section>
 
       <FooterSection onLaunch={onLaunch} />
-    </div>
+    </main>
   );
 }
