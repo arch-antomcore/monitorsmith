@@ -2280,26 +2280,28 @@ p.display-mode__instructions {
   gap: 12px;
 }
 
-/* Icon area — the colored icon container */
+/* Icon area — standalone icon without card container background */
 .ms-card__icon-area {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 32px;
+  height: 32px;
+  border-radius: 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
   color: var(--accent);
   /* NOTE: transform handled by Framer Motion iconMotionVariants */
-  transition: background 260ms ease, border-color 260ms ease;
+  transition: color 260ms ease;
 }
 
 .ms-tool-card:hover .ms-card__icon-area,
 .ms-hero-grid-card:hover .ms-card__icon-area {
-  background: rgba(255, 255, 255, 0.10);
-  border-color: rgba(255, 255, 255, 0.18);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 /* Per-tone icon colors */
@@ -4119,8 +4121,9 @@ html.ms-studio-light .ms-hero-grid-card__badge {
   color: #57534E !important;
 }
 html.ms-studio-light .ms-card__icon-area {
-  background: #F5F3EE !important;
-  border-color: rgba(87, 83, 78, 0.12) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 html.ms-studio-light .ms-card__kbd {
   background: #E7E5E4 !important;
