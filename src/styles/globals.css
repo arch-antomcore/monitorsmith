@@ -865,14 +865,10 @@ input:disabled {
   }
 }
 
+/* Reduced motion — keep essential smooth scroll control without blocking UI transitions */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+  html {
+    scroll-behavior: auto;
   }
 }
 
@@ -2982,19 +2978,7 @@ p.display-mode__instructions {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-  }
 
-  .ms-tool-card:hover::before {
-    opacity: 0.72;
-    transform: none;
-  }
-}
 
 /* MonitorSmith tool library — Unified Design System */
 .ms-library__eyebrow {

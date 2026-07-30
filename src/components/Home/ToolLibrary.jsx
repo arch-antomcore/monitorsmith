@@ -125,7 +125,7 @@ function ToolCard({ tool, index, onLaunch }) {
       variants={variants}
       initial="initial"
       animate="animate"
-      whileHover={shouldReduceMotion ? undefined : 'hover'}
+      whileHover="hover"
       whileTap={{ scale: 0.97 }}
     >
       {/* Content layer — above the decorative icon */}
@@ -203,7 +203,7 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
       variants={variants}
       initial="initial"
       animate="animate"
-      whileHover={shouldReduceMotion ? undefined : 'hover'}
+      whileHover="hover"
       whileTap={{ scale: 0.97 }}
     >
       {/* Content layer */}
