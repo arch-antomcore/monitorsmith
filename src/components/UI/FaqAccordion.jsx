@@ -1,5 +1,5 @@
 import { useId, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Minus, Plus } from '@phosphor-icons/react';
 import { cn } from '../../lib/utils';
 
@@ -12,7 +12,6 @@ export function FaqAccordion({
 }) {
   const [openItem, setOpenItem] = useState(null);
   const componentId = useId().replaceAll(':', '');
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <div className={cn('w-full py-2', className)}>
@@ -69,15 +68,17 @@ export function FaqAccordion({
                   <span className="font-medium text-[0.98rem] tracking-tight">{item.question}</span>
                 </span>
 
-                <span
+                <motion.span
                   className={cn(
                     'flex items-center justify-center w-9 h-9 rounded-xl border ms-faq-icon transition-all duration-300 shrink-0',
                     isOpen ? 'ms-faq-icon--open' : 'ms-faq-icon--closed',
                   )}
+                  animate={{ rotate: isOpen ? 180 : 0, scale: isOpen ? 1.05 : 1 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   aria-hidden="true"
                 >
                   {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                </span>
+                </motion.span>
               </button>
             </h3>
 
@@ -87,21 +88,25 @@ export function FaqAccordion({
                   id={panelId}
                   role="region"
                   aria-labelledby={triggerId}
-                  initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+                  initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
-                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
-                  transition={{ duration: shouldReduceMotion ? 0 : 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   className="overflow-hidden"
                 >
-                  <div className="ml-4 mt-2.5 md:ml-8">
-                    <div
+                  <div className="ml-4 mt-2.5 md:ml-8 pb-1">
+                    <motion.div
+                      initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                       className={cn(
                         'ms-faq-answer relative max-w-[580px] rounded-2xl px-5 py-4 text-[0.94rem] leading-relaxed backdrop-blur-md',
                         answerClassName,
                       )}
                     >
                       {item.answer}
-                    </div>
+                    </motion.div>
                   </div>
                 </motion.div>
               ) : null}
