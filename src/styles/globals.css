@@ -330,17 +330,17 @@ input:disabled {
   height: 30px;
   flex: 0 0 auto;
   place-items: center;
-  border: 1px solid transparent;
+  border: 1px solid rgba(239, 68, 68, 0.25);
   border-radius: 9px;
-  background: transparent;
-  color: var(--text-muted);
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444 !important;
   transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
 }
 
 .wbp-modal__close:hover {
-  border-color: var(--line);
-  background: rgba(255, 255, 255, 0.065);
-  color: #fff;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  background: rgba(239, 68, 68, 0.18) !important;
+  color: #dc2626 !important;
 }
 
 .wbp-modal__body {
@@ -4274,16 +4274,26 @@ html.ms-studio-light .wbp-modal li,
 html.ms-studio-light .wbp-modal div[style*="color: rgba(255"] {
   color: #44403C !important;
 }
-html.ms-studio-light .wbp-modal button,
+html.ms-studio-light .wbp-modal button:not(.wbp-modal__close),
 html.ms-studio-light .wbp-modal a[href*="linkedin"],
 html.ms-studio-light .wbp-modal .wbp-button {
   background: rgba(87, 83, 78, 0.08) !important;
   border-color: rgba(87, 83, 78, 0.2) !important;
   color: #292524 !important;
 }
-html.ms-studio-light .wbp-modal button:hover,
+html.ms-studio-light .wbp-modal button:not(.wbp-modal__close):hover,
 html.ms-studio-light .wbp-modal a[href*="linkedin"]:hover,
 html.ms-studio-light .wbp-modal .wbp-button:hover {
   background: rgba(87, 83, 78, 0.15) !important;
   color: #1C1917 !important;
+}
+html.ms-studio-light .wbp-modal .wbp-modal__close {
+  background: rgba(239, 68, 68, 0.08) !important;
+  border-color: rgba(239, 68, 68, 0.25) !important;
+  color: #ef4444 !important;
+}
+html.ms-studio-light .wbp-modal .wbp-modal__close:hover {
+  background: rgba(239, 68, 68, 0.18) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  color: #dc2626 !important;
 }
