@@ -349,25 +349,30 @@ input:disabled {
 
 /* Controls */
 .wbp-navbar {
-  position: fixed;
   z-index: 50;
-  top: calc(18px + env(safe-area-inset-top));
-  left: 50%;
   display: flex;
-  width: min(calc(100% - 32px - env(safe-area-inset-left) - env(safe-area-inset-right)), 1292px);
-  min-height: 54px;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+.wbp-navbar--tool {
+  position: fixed;
+  top: calc(18px + env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%) !important;
+  width: min(calc(100vw - 32px - env(safe-area-inset-left) - env(safe-area-inset-right)), 1292px) !important;
+  max-width: calc(100vw - 32px) !important;
+  box-sizing: border-box !important;
+  min-height: 54px;
   padding: 6px 7px 6px 16px;
-  transform: translateX(-50%);
   border: 1px solid rgba(255, 255, 255, 0.095);
   border-radius: 17px;
   background: rgba(8, 9, 13, 0.74);
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.065);
   backdrop-filter: blur(24px) saturate(125%);
   -webkit-backdrop-filter: blur(24px) saturate(125%);
-  transition: opacity 250ms ease, transform 250ms ease;
 }
 
 .wbp-dock {
