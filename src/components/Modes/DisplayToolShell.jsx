@@ -90,7 +90,7 @@ export function DisplayToolShell({
             {Array.isArray(instructions) && instructions.length > 0 ? (
               <ol className="display-mode__instructions" aria-label="Como usar">
                 {instructions.map((step, idx) => (
-                  <li key={idx}>{step}</li>
+                  <li key={`${idx}-${step.slice(0, 12)}`}>{step}</li>
                 ))}
               </ol>
             ) : typeof instructions === 'string' ? (

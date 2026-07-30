@@ -170,7 +170,8 @@ export default function Navbar({
             className="wbp-navbar__brand wbp-navbar__brand--button"
             type="button"
             onClick={onBrandClick}
-            tabIndex={hiddenTabIndex}
+            tabIndex={showModeContext ? -1 : hiddenTabIndex}
+            aria-hidden={showModeContext ? true : undefined}
             aria-label="Voltar às ferramentas"
           >
             <BrandLogo size={30} />

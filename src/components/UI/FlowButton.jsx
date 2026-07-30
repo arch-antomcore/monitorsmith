@@ -39,9 +39,16 @@ export default function FlowButton({ text = 'Instalar MonitorSmith', onClick }) 
     window.addEventListener('beforeinstallprompt', handleBeforeInstall);
     window.addEventListener('appinstalled', handleAppInstalled);
 
+    const displayMode = window.matchMedia('(display-mode: standalone)');
+    const updateDisplayMode = () => {
+      setIsInstalled(displayMode.matches || Boolean(navigator.standalone));
+    };
+    displayMode.addEventListener?.('change', updateDisplayMode);
+
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
       window.removeEventListener('appinstalled', handleAppInstalled);
+      displayMode.removeEventListener?.('change', updateDisplayMode);
     };
   }, []);
 
