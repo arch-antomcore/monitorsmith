@@ -220,6 +220,7 @@ export default function Navbar({
       animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : -10 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       style={{
+        transform: showModeContext ? 'translateX(-50%)' : undefined,
         pointerEvents: visible ? 'auto' : 'none'
       }}
     >
@@ -231,11 +232,11 @@ export default function Navbar({
         )}
       >
         {/* Brand Identity & Back Action */}
-        <div className="wbp-navbar__identity flex items-center gap-2">
+        <div className="wbp-navbar__identity flex items-center gap-2 min-w-0 flex-shrink">
           {status ? <span className="sr-only" aria-live="polite">{status}</span> : null}
           {showModeContext && onBrandClick ? (
             <button
-              className="wbp-navbar__back-btn flex items-center justify-center w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 text-white transition-colors border border-white/10 cursor-pointer"
+              className="wbp-navbar__back-btn flex items-center justify-center w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 text-white transition-colors border border-white/10 cursor-pointer flex-shrink-0"
               type="button"
               onClick={onBrandClick}
               tabIndex={hiddenTabIndex}
@@ -248,7 +249,7 @@ export default function Navbar({
 
           {onBrandClick ? (
             <button
-              className="wbp-navbar__brand wbp-navbar__brand--button flex items-center gap-2.5 text-left bg-transparent border-0 cursor-pointer p-1 rounded-xl group"
+              className="wbp-navbar__brand wbp-navbar__brand--button flex items-center gap-2.5 text-left bg-transparent border-0 cursor-pointer p-1 rounded-xl group min-w-0 flex-shrink"
               type="button"
               onClick={onBrandClick}
               tabIndex={showModeContext ? -1 : hiddenTabIndex}
@@ -256,23 +257,23 @@ export default function Navbar({
               aria-label="Voltar às ferramentas"
             >
               <BrandLogo size={28} />
-              <div className="wbp-navbar__title-block flex flex-col leading-none">
-                <span className="wbp-navbar__brand-name font-bold text-[0.88rem] tracking-wider text-white group-hover:text-amber-400 transition-colors">
+              <div className="wbp-navbar__title-block flex flex-col leading-none min-w-0 overflow-hidden">
+                <span className="wbp-navbar__brand-name font-bold text-[0.88rem] tracking-wider text-white group-hover:text-amber-400 transition-colors truncate">
                   {brandName}
                 </span>
-                <span className="wbp-navbar__brand-tag text-[0.62rem] font-mono tracking-widest text-amber-500/90 font-medium">
+                <span className="wbp-navbar__brand-tag text-[0.62rem] font-mono tracking-widest text-amber-500/90 font-medium truncate">
                   {productName}
                 </span>
               </div>
             </button>
           ) : (
-            <div className="wbp-navbar__brand flex items-center gap-2.5">
+            <div className="wbp-navbar__brand flex items-center gap-2.5 min-w-0 flex-shrink">
               <BrandLogo size={28} />
-              <div className="wbp-navbar__title-block flex flex-col leading-none">
-                <span className="wbp-navbar__brand-name font-bold text-[0.88rem] tracking-wider text-white">
+              <div className="wbp-navbar__title-block flex flex-col leading-none min-w-0 overflow-hidden">
+                <span className="wbp-navbar__brand-name font-bold text-[0.88rem] tracking-wider text-white truncate">
                   {brandName}
                 </span>
-                <span className="wbp-navbar__brand-tag text-[0.62rem] font-mono tracking-widest text-amber-500/90 font-medium">
+                <span className="wbp-navbar__brand-tag text-[0.62rem] font-mono tracking-widest text-amber-500/90 font-medium truncate">
                   {productName}
                 </span>
               </div>
@@ -281,7 +282,7 @@ export default function Navbar({
         </div>
 
         {/* Links & Action Buttons */}
-        <div className={joinClasses('items-center gap-2 wbp-navbar__actions', showModeContext ? 'flex' : 'hidden md:flex')}>
+        <div className={joinClasses('items-center gap-2 wbp-navbar__actions min-w-0 flex-shrink-0', showModeContext ? 'flex' : 'hidden md:flex')}>
           {onToggleFullscreen ? (
             <Button
               className="wbp-navbar__action"
