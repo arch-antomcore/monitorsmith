@@ -603,7 +603,7 @@ function DisplaySuite() {
 
 export default function App() {
   return (
-    <MotionConfig reducedMotion="user">
+    <MotionConfig reducedMotion="never">
       <AppProvider>
         <DisplaySuite />
       </AppProvider>

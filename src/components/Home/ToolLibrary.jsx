@@ -93,11 +93,9 @@ const arrowAnimation = {
 /* ── ToolCard (Library Grid — "Todas as ferramentas") ── */
 
 function ToolCard({ tool, index, onLaunch }) {
-  const shouldReduceMotion = useReducedMotion();
-
   // Card variants with entrance + hover — smooth scale & elevation
   const variants = {
-    initial: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
+    initial: { opacity: 0, y: 18 },
     animate: {
       opacity: 1,
       y: 0,
@@ -106,11 +104,12 @@ function ToolCard({ tool, index, onLaunch }) {
         type: 'spring',
         stiffness: 280,
         damping: 26,
-        delay: shouldReduceMotion ? 0 : Math.min(index, 10) * 0.055,
+        delay: Math.min(index, 10) * 0.055,
       },
     },
     hover: {
       scale: 1.025,
+      y: -4,
       transition: { duration: 0.3, ease: 'easeInOut' },
     },
   };
@@ -173,9 +172,9 @@ function ToolCard({ tool, index, onLaunch }) {
 
 /* ── HeroGridCard (Hero Section — top 6 featured) ── */
 
-function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
+function HeroGridCard({ tool, index, onLaunch }) {
   const variants = {
-    initial: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
+    initial: { opacity: 0, y: 18 },
     animate: {
       opacity: 1,
       y: 0,
@@ -184,11 +183,12 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
         type: 'spring',
         stiffness: 280,
         damping: 26,
-        delay: shouldReduceMotion ? 0 : 0.12 + index * 0.055,
+        delay: 0.12 + index * 0.055,
       },
     },
     hover: {
       scale: 1.025,
+      y: -4,
       transition: { duration: 0.3, ease: 'easeInOut' },
     },
   };
