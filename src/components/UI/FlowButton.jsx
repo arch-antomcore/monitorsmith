@@ -113,20 +113,16 @@ export default function FlowButton({ text = 'Instalar MonitorSmith', onClick }) 
     <>
       <button
         type="button"
-        className="ms-flow-btn"
+        className="ms-motion-btn group"
         onClick={handleInstall}
         aria-label={text}
         aria-haspopup={deferredPrompt ? undefined : 'dialog'}
       >
-        <span className="ms-flow-btn__arr-2" aria-hidden="true">
-          <ArrowRight size={15} weight="bold" />
-        </span>
-        <span className="ms-flow-btn__text">{text}</span>
-        <span className="ms-flow-btn__circle" aria-hidden="true" />
-        <span className="ms-flow-btn__shimmer" aria-hidden="true" />
-        <span className="ms-flow-btn__arr-1" aria-hidden="true">
-          <ArrowRight size={15} weight="bold" />
-        </span>
+        <span className="ms-motion-btn__circle" aria-hidden="true" />
+        <div className="ms-motion-btn__icon" aria-hidden="true">
+          <ArrowRight size={20} weight="bold" />
+        </div>
+        <span className="ms-motion-btn__text">{text}</span>
       </button>
 
       <Modal

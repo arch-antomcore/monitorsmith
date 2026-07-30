@@ -3334,112 +3334,94 @@ p.display-mode__instructions {
   margin: 24px auto 0;
 }
 
-.ms-flow-btn {
+/* Motion Button — Expanding Circle Install CTA */
+.ms-motion-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  overflow: hidden;
-  padding: 13px 36px;
-  border: 1.5px solid rgba(52, 211, 153, 0.38);
+  justify-content: center;
+  height: 50px;
+  min-width: 240px;
+  padding: 4px 28px 4px 6px;
   border-radius: 999px;
-  background: rgba(12, 14, 20, 0.6);
+  border: 1.5px solid rgba(245, 158, 11, 0.38);
+  background: rgba(12, 14, 20, 0.75);
   color: #ffffff;
-  font-size: 0.86rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  outline: 0;
+  outline: none;
+  overflow: hidden;
+  user-select: none;
   backdrop-filter: blur(12px);
-  transition: border-color 500ms ease, box-shadow 500ms ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(245, 158, 11, 0.08);
+  transition: border-color 400ms ease, box-shadow 400ms ease, transform 150ms ease;
   z-index: 1;
 }
 
-.ms-flow-btn:hover {
-  border-color: rgba(167, 243, 208, 0.9);
-  border-radius: 999px;
-  color: #ffffff;
-  animation: ms-btn-pulse-glow 2.2s infinite ease-in-out;
+.ms-motion-btn:hover {
+  border-color: rgba(251, 191, 36, 0.9);
+  box-shadow: 0 6px 28px rgba(245, 158, 11, 0.28), 0 0 25px rgba(245, 158, 11, 0.15);
 }
 
-.ms-flow-btn:active {
+.ms-motion-btn:active {
   transform: scale(0.97);
 }
 
-.ms-flow-btn__arr-2 {
+/* Expanding left circle element */
+.ms-motion-btn__circle {
   position: absolute;
-  left: -25%;
-  display: grid;
-  place-items: center;
-  z-index: 9;
-  transition: left 650ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.ms-flow-btn:hover .ms-flow-btn__arr-2 {
-  left: 16px;
-}
-
-.ms-flow-btn__arr-1 {
-  position: absolute;
-  right: 16px;
-  display: grid;
-  place-items: center;
-  z-index: 9;
-  transition: right 650ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.ms-flow-btn:hover .ms-flow-btn__arr-1 {
-  right: -25%;
-}
-
-.ms-flow-btn__text {
-  position: relative;
-  z-index: 4;
-  transform: translateX(-10px);
-  transition: transform 650ms cubic-bezier(0.34, 1.56, 0.64, 1), text-shadow 500ms ease;
-}
-
-.ms-flow-btn:hover .ms-flow-btn__text {
-  transform: translateX(12px);
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
-}
-
-.ms-flow-btn__circle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  display: block;
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  border-radius: 999px;
   background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%);
-  opacity: 0;
-  transition: width 750ms cubic-bezier(0.19, 1, 0.22, 1),
-              height 750ms cubic-bezier(0.19, 1, 0.22, 1),
-              opacity 400ms ease;
+  transition: width 500ms cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 2;
 }
 
-.ms-flow-btn:hover .ms-flow-btn__circle {
-  width: 380px;
-  height: 380px;
-  opacity: 1;
+.ms-motion-btn:hover .ms-motion-btn__circle {
+  width: calc(100% - 6px);
 }
 
-.ms-flow-btn__shimmer {
+/* Arrow Icon on the left circle */
+.ms-motion-btn__icon {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.28) 50%,
-    transparent 100%
-  );
-  opacity: 0;
+  top: 50%;
+  left: 14px;
+  display: grid;
+  place-items: center;
+  color: #0c0e14;
+  transform: translateY(-50%) translateX(0);
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1), color 300ms ease;
   z-index: 3;
-  pointer-events: none;
+}
+
+.ms-motion-btn:hover .ms-motion-btn__icon {
+  transform: translateY(-50%) translateX(6px);
+  color: #0c0e14;
+}
+
+/* Button Text */
+.ms-motion-btn__text {
+  position: relative;
+  z-index: 3;
+  margin-left: 32px;
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: color 500ms ease, transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ms-motion-btn:hover .ms-motion-btn__text {
+  color: #0c0e14;
+  transform: translateX(4px);
 }
 
 .ms-side-ad-gutter {
@@ -4197,9 +4179,8 @@ html.ms-studio-light .ms-seo-faq [role="region"] * {
   color: #44403C !important;
 }
 
-/* Botões de Ação, CTA e FlowButton em modo claro */
+/* Botões de Ação, CTA e MotionButton em modo claro */
 html.ms-studio-light .ms-hero__scroll-btn,
-html.ms-studio-light .ms-flow-btn,
 html.ms-studio-light button[class*="scroll-btn"] {
   background: #FFFFFF !important;
   border-color: rgba(87, 83, 78, 0.2) !important;
@@ -4209,6 +4190,24 @@ html.ms-studio-light button[class*="scroll-btn"] {
 html.ms-studio-light .ms-hero__scroll-btn:hover {
   border-color: #D97706 !important;
   background: #FAF9F6 !important;
+}
+html.ms-studio-light .ms-motion-btn {
+  background: #FFFFFF !important;
+  border-color: rgba(217, 119, 6, 0.4) !important;
+  box-shadow: 0 4px 18px rgba(87, 83, 78, 0.12) !important;
+}
+html.ms-studio-light .ms-motion-btn:hover {
+  border-color: #D97706 !important;
+  box-shadow: 0 6px 24px rgba(217, 119, 6, 0.22) !important;
+}
+html.ms-studio-light .ms-motion-btn__icon {
+  color: #FFFFFF !important;
+}
+html.ms-studio-light .ms-motion-btn__text {
+  color: #1C1917 !important;
+}
+html.ms-studio-light .ms-motion-btn:hover .ms-motion-btn__text {
+  color: #FFFFFF !important;
 }
 
 /* Footer no modo claro (Sobrescrevendo o bg-[#050506] com alta especificidade) */
