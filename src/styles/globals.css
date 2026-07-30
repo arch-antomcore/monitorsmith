@@ -360,10 +360,11 @@ input:disabled {
 .wbp-navbar--tool {
   position: fixed;
   top: calc(18px + env(safe-area-inset-top));
-  left: 50%;
-  transform: translateX(-50%) !important;
-  width: min(calc(100vw - 32px - env(safe-area-inset-left) - env(safe-area-inset-right)), 1292px) !important;
-  max-width: calc(100vw - 32px) !important;
+  left: 16px;
+  right: 16px;
+  margin: 0 auto;
+  width: auto !important;
+  max-width: 1292px !important;
   box-sizing: border-box !important;
   overflow: hidden !important;
   min-height: 54px;
