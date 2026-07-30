@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { motion, useReducedMotion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 import DotPattern from '../UI/DotPattern';
 import FlowButton from '../UI/FlowButton';
@@ -26,15 +26,15 @@ const FAQ_DATA = [
   },
   {
     id: 3,
-    question: "O teste funciona no celular ou tablet?",
-    answer: "Sim. O conjunto principal funciona em navegadores modernos de Android e iOS; tela cheia, Wake Lock e instalação podem variar conforme o navegador e o sistema.",
-    icon: "📱",
+    question: "Como a ferramenta de tela preta reduz o consumo de energia?",
+    answer: "Em painéis OLED e AMOLED, pixels pretos ficam totalmente desligados, reduzindo o consumo de energia a zero nessas áreas e eliminando a emissão de luz em ambientes escuros.",
+    icon: "🌙",
     iconPosition: "right",
   },
   {
     id: 4,
-    question: "O MonitorSmith é gratuito e funciona offline?",
-    answer: "É gratuito e não exige cadastro. Como PWA, pode manter os recursos preparados pelo aplicativo disponíveis após o primeiro carregamento; instalação e disponibilidade offline variam conforme o navegador.",
+    question: "Preciso instalar algo para usar o MonitorSmith?",
+    answer: "Não. Todas as ferramentas rodam 100% no seu navegador sem cadastro ou download. Você também pode instalar o MonitorSmith como PWA para acesso direto pelo sistema operacional e funcionamento offline.",
     icon: "⚡",
     iconPosition: "left",
   },
@@ -54,34 +54,29 @@ function ToolPreview({ tool }) {
   return <ControlIcon name={tool.icon} size={24} />;
 }
 
-/* ── Framer Motion Variants — EXACT values from ServiceCard reference ──
- *
- * CRITICAL: We must use variant LABELS ("initial"/"animate"/"hover") exclusively.
- * Mixing direct initial/animate props with variants BREAKS whileHover propagation
- * to child motion elements. The reference ServiceCard only uses variants + whileHover.
- */
+/* ── Framer Motion Variants ── */
 
 // Small icon area: subtle scale and rotate for organic feel
 const iconMotionVariants = {
   initial: { scale: 1, rotate: 0 },
-  animate: { scale: 1, rotate: 0, transition: { type: 'spring', stiffness: 260, damping: 20 } },
+  animate: { scale: 1, rotate: 0, transition: { type: 'spring', stiffness: 220, damping: 18 } },
   hover: {
-    scale: 1.1,
+    scale: 1.12,
     rotate: -4,
-    transition: { type: 'spring', stiffness: 300, damping: 12 },
+    transition: { type: 'spring', stiffness: 240, damping: 14 },
   },
 };
 
-// Decorative floating icon: scale + rotate + translate (enhanced for clear visibility)
+// Decorative floating icon: scale + rotate + translate (subtle floating zoom)
 const imageAnimation = {
   initial: { scale: 1, rotate: 0, x: 0, y: 0 },
-  animate: { scale: 1, rotate: 0, x: 0, y: 0, transition: { type: 'spring', stiffness: 200, damping: 20 } },
+  animate: { scale: 1, rotate: 0, x: 0, y: 0, transition: { duration: 0.35, ease: 'easeInOut' } },
   hover: {
-    scale: 1.25,
-    rotate: 10,
-    x: 16,
-    y: 8,
-    transition: { type: 'spring', stiffness: 250, damping: 15 },
+    scale: 1.15,
+    rotate: 6,
+    x: 10,
+    y: 4,
+    transition: { duration: 0.35, ease: 'easeOut' },
   },
 };
 
@@ -100,30 +95,7 @@ const arrowAnimation = {
 function ToolCard({ tool, index, onLaunch }) {
   const shouldReduceMotion = useReducedMotion();
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
-  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7.5deg", "-7.5deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7.5deg", "7.5deg"]);
-
-  const handleMouseMove = (e) => {
-    if (shouldReduceMotion) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    x.set(mouseX / width - 0.5);
-    y.set(mouseY / height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  // Card variants with entrance + hover — ALL through the variant system
+  // Card variants with entrance + hover — smooth scale & elevation
   const variants = {
     initial: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
     animate: {
@@ -138,8 +110,8 @@ function ToolCard({ tool, index, onLaunch }) {
       },
     },
     hover: {
-      scale: 1.03,
-      transition: { duration: 0.28, ease: [0.16, 1, 0.3, 1] },
+      scale: 1.025,
+      transition: { duration: 0.3, ease: 'easeInOut' },
     },
   };
 
@@ -153,16 +125,8 @@ function ToolCard({ tool, index, onLaunch }) {
       variants={variants}
       initial="initial"
       animate="animate"
-      whileHover="hover"
+      whileHover={shouldReduceMotion ? undefined : 'hover'}
       whileTap={{ scale: 0.97 }}
-      style={{
-        rotateX: shouldReduceMotion ? 0 : rotateX,
-        rotateY: shouldReduceMotion ? 0 : rotateY,
-        transformStyle: 'preserve-3d',
-        transformPerspective: 1000
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
     >
       {/* Content layer — above the decorative icon */}
       <div className="ms-card__content">
@@ -210,29 +174,6 @@ function ToolCard({ tool, index, onLaunch }) {
 /* ── HeroGridCard (Hero Section — top 6 featured) ── */
 
 function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
-  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7.5deg", "-7.5deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7.5deg", "7.5deg"]);
-
-  const handleMouseMove = (e) => {
-    if (shouldReduceMotion) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    x.set(mouseX / width - 0.5);
-    y.set(mouseY / height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
   const variants = {
     initial: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
     animate: {
@@ -247,8 +188,8 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
       },
     },
     hover: {
-      scale: 1.03,
-      transition: { duration: 0.28, ease: [0.16, 1, 0.3, 1] },
+      scale: 1.025,
+      transition: { duration: 0.3, ease: 'easeInOut' },
     },
   };
 
@@ -262,16 +203,8 @@ function HeroGridCard({ tool, index, onLaunch, shouldReduceMotion }) {
       variants={variants}
       initial="initial"
       animate="animate"
-      whileHover="hover"
+      whileHover={shouldReduceMotion ? undefined : 'hover'}
       whileTap={{ scale: 0.97 }}
-      style={{
-        rotateX: shouldReduceMotion ? 0 : rotateX,
-        rotateY: shouldReduceMotion ? 0 : rotateY,
-        transformStyle: 'preserve-3d',
-        transformPerspective: 1000
-      }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
     >
       {/* Content layer */}
       <div className="ms-card__content">
