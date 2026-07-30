@@ -2249,14 +2249,11 @@ p.display-mode__instructions {
   cursor: pointer;
   transform-origin: center center;
   will-change: transform;
-  /* NOTE: hover transform & scale handled by Framer Motion variants */
-  transition: border-color 260ms ease, box-shadow 320ms ease, background 260ms ease;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), border-color 260ms ease, box-shadow 320ms ease, background 260ms ease;
 }
 
-/* Framer Motion handles scale — CSS handles border/shadow glow on hover */
-
-/* Framer Motion handles scale — CSS handles border/shadow glow on hover */
 .ms-tool-card:hover {
+  transform: translateY(-5px) scale(1.025);
   border-color: rgba(255, 255, 255, 0.28);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 24px 56px rgba(0, 0, 0, 0.7);
   background: linear-gradient(180deg, rgba(24, 26, 38, 0.95) 0%, rgba(12, 14, 22, 0.9) 100%);
@@ -3224,11 +3221,11 @@ p.display-mode__instructions {
   transform-origin: center center;
   will-change: transform;
   /* NOTE: hover scale handled by Framer Motion cardVariants */
-  transition: border-color 260ms ease, box-shadow 320ms ease, background 260ms ease;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), border-color 260ms ease, box-shadow 320ms ease, background 260ms ease;
 }
 
-/* Framer Motion handles scale — CSS handles glow on hover */
 .ms-hero-grid-card:hover {
+  transform: translateY(-5px) scale(1.025);
   border-color: rgba(255, 255, 255, 0.28);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 24px 56px rgba(0, 0, 0, 0.7);
   background: linear-gradient(180deg, rgba(24, 26, 38, 0.95) 0%, rgba(12, 14, 22, 0.9) 100%);
@@ -4084,9 +4081,9 @@ html.ms-studio-light .ms-hero-grid-card {
 html.ms-studio-light .ms-tool-card:hover,
 html.ms-studio-light .ms-hero-grid-card:hover {
   border-color: #D97706 !important;
-  box-shadow: 0 12px 30px rgba(217, 119, 6, 0.12), 0 0 0 1px rgba(217, 119, 6, 0.2) !important;
-  transform: translateY(-3px);
-  background: #FAF9F6 !important;
+  box-shadow: 0 16px 36px rgba(217, 119, 6, 0.16), 0 0 0 1px rgba(217, 119, 6, 0.25) !important;
+  transform: translateY(-5px) scale(1.025) !important;
+  background: #FFFFFF !important;
 }
 
 /* Textos e Ícones internos dos cartões em modo claro */
