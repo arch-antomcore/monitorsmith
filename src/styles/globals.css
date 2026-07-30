@@ -3917,6 +3917,49 @@ p.display-mode__instructions {
   }
 }
 
+/* ── FAQ Accordion High-Contrast Styling (Dark Mode Default) ── */
+.ms-faq-question {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+}
+
+.ms-faq-question--closed:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
+.ms-faq-question--open {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(245, 158, 11, 0.7);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  color: #FFFFFF;
+}
+
+.ms-faq-icon {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ms-faq-icon--open {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: #F59E0B;
+  color: #F59E0B;
+}
+
+/* Answer Container in Dark Mode (High Contrast Dark Background & Bright Text) */
+.ms-faq-answer {
+  background: rgba(18, 20, 28, 0.96) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: #F3F4F6 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.ms-faq-answer * {
+  color: #F3F4F6 !important;
+}
+
 /* ==========================================================================
    STUDIO LIGHT MODE (Tema Claro — Off White Acetinado / Warm Studio Fine Art)
    ========================================================================== */
@@ -4091,70 +4134,47 @@ html.ms-studio-light .ms-card__kbd {
   color: #1C1917 !important;
 }
 
-/* FAQ / Dúvidas Comuns (Accordions — Cantos arredondados 100% idênticos ao modo escuro) */
-html.ms-studio-light .ms-seo-faq [data-state],
-html.ms-studio-light .ms-seo-faq button[aria-expanded],
-html.ms-studio-light .ms-seo-faq .group {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* Caixa da Pergunta (Pílula com rounded-2xl idêntica ao modo escuro) */
-html.ms-studio-light .ms-seo-faq button > span[class*="space-x-3"],
-html.ms-studio-light .ms-seo-faq button > div[class*="space-x-3"],
-html.ms-studio-light .ms-seo-faq button span[class*="rounded-2xl"],
-html.ms-studio-light .ms-seo-faq button div[class*="rounded-2xl"] {
+/* FAQ Accordion Light Mode Overrides */
+html.ms-studio-light .ms-faq-question {
   background: #FFFFFF !important;
-  border: 1.5px solid #D6D3D1 !important;
-  border-radius: 1rem !important;
+  border-color: #E7E5E4 !important;
   color: #1C1917 !important;
-  box-shadow: 0 2px 10px rgba(28, 25, 23, 0.08) !important;
+  box-shadow: 0 2px 8px rgba(87, 83, 78, 0.06) !important;
 }
 
-html.ms-studio-light .ms-seo-faq button[aria-expanded="true"] > span[class*="space-x-3"],
-html.ms-studio-light .ms-seo-faq button[aria-expanded="true"] > div[class*="space-x-3"],
-html.ms-studio-light .ms-seo-faq button:hover > span[class*="space-x-3"],
-html.ms-studio-light .ms-seo-faq button:hover > div[class*="space-x-3"] {
+html.ms-studio-light .ms-faq-question--closed:hover {
+  background: #FAF9F6 !important;
+  border-color: #D97706 !important;
+}
+
+html.ms-studio-light .ms-faq-question--open {
   background: #FFFFFF !important;
   border-color: #D97706 !important;
-  box-shadow: 0 4px 18px rgba(217, 119, 6, 0.18) !important;
-}
-
-html.ms-studio-light .ms-seo-faq button span {
+  box-shadow: 0 4px 18px rgba(217, 119, 6, 0.15) !important;
   color: #1C1917 !important;
 }
 
-/* Botão de Ícone + / - (Caixa com rounded-xl idêntica ao modo escuro) */
-html.ms-studio-light .ms-seo-faq button > span.shrink-0,
-html.ms-studio-light .ms-seo-faq button span[class*="rounded-xl"] {
+html.ms-studio-light .ms-faq-icon {
   background: #FFFFFF !important;
-  border: 1.5px solid #D6D3D1 !important;
-  border-radius: 0.75rem !important;
-  color: #1C1917 !important;
-  box-shadow: 0 2px 10px rgba(28, 25, 23, 0.08) !important;
+  border-color: #E7E5E4 !important;
+  color: #57534E !important;
 }
 
-html.ms-studio-light .ms-seo-faq button[aria-expanded="true"] > span.shrink-0,
-html.ms-studio-light .ms-seo-faq button:hover > span.shrink-0 {
-  border-color: #D97706 !important;
+html.ms-studio-light .ms-faq-icon--open {
   background: #FEF3C7 !important;
+  border-color: #D97706 !important;
   color: #B45309 !important;
 }
 
-/* Resposta do FAQ (Container interno com rounded-2xl idêntico ao modo escuro) */
-html.ms-studio-light .ms-seo-faq [role="region"] > div > div > div,
-html.ms-studio-light .ms-seo-faq .overflow-hidden div[class*="rounded-2xl"],
-html.ms-studio-light .ms-seo-faq .overflow-hidden span[class*="rounded-2xl"] {
+html.ms-studio-light .ms-faq-answer {
   background: #FFFFFF !important;
   border: 1.5px solid #D6D3D1 !important;
-  border-radius: 1rem !important;
-  color: #292524 !important;
-  box-shadow: 0 4px 16px rgba(28, 25, 23, 0.1) !important;
+  color: #1C1917 !important;
+  box-shadow: 0 8px 24px rgba(87, 83, 78, 0.12) !important;
 }
 
-html.ms-studio-light .ms-seo-faq [role="region"] * {
-  color: #44403C !important;
+html.ms-studio-light .ms-faq-answer * {
+  color: #1C1917 !important;
 }
 
 /* Botões de Ação, CTA e MotionButton em modo claro */

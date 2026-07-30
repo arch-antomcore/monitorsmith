@@ -45,10 +45,10 @@ export function FaqAccordion({
               >
                 <span
                   className={cn(
-                    'relative flex items-center space-x-3 rounded-2xl px-5 py-3.5 transition-all duration-300 border',
+                    'relative flex items-center space-x-3 rounded-2xl px-5 py-3.5 transition-all duration-300 border ms-faq-question',
                     isOpen
-                      ? 'bg-white dark:bg-white/[0.1] text-black dark:text-white border-amber-600/70 dark:border-white/[0.28] shadow-[0_4px_24px_rgba(217,119,6,0.12)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)]'
-                      : 'bg-white dark:bg-white/[0.03] hover:bg-white dark:hover:bg-white/[0.07] text-black/90 dark:text-white/80 border-black/15 dark:border-white/[0.08] hover:border-amber-600/50 dark:hover:border-white/[0.16] shadow-sm dark:shadow-none',
+                      ? 'ms-faq-question--open'
+                      : 'ms-faq-question--closed',
                     questionClassName,
                   )}
                 >
@@ -71,8 +71,8 @@ export function FaqAccordion({
 
                 <span
                   className={cn(
-                    'flex items-center justify-center w-9 h-9 rounded-xl border border-black/15 dark:border-white/[0.08] bg-white dark:bg-white/[0.03] text-black/70 dark:text-white/60 transition-all duration-300 group-hover:border-amber-600/60 dark:group-hover:border-white/[0.2] group-hover:text-amber-600 dark:group-hover:text-white shrink-0 shadow-sm dark:shadow-none',
-                    isOpen && 'border-amber-600 dark:border-white/[0.28] bg-amber-500/10 dark:bg-white/[0.12] text-amber-700 dark:text-white shadow-sm',
+                    'flex items-center justify-center w-9 h-9 rounded-xl border ms-faq-icon transition-all duration-300 shrink-0',
+                    isOpen ? 'ms-faq-icon--open' : 'ms-faq-icon--closed',
                   )}
                   aria-hidden="true"
                 >
@@ -96,7 +96,7 @@ export function FaqAccordion({
                   <div className="ml-4 mt-2.5 md:ml-8">
                     <div
                       className={cn(
-                        'relative max-w-[580px] rounded-2xl bg-white dark:bg-gradient-to-br dark:from-white/[0.12] dark:to-white/[0.05] border border-black/15 dark:border-white/[0.14] px-5 py-3.5 text-stone-800 dark:text-white/85 text-[0.92rem] leading-relaxed shadow-md dark:shadow-xl backdrop-blur-sm',
+                        'ms-faq-answer relative max-w-[580px] rounded-2xl px-5 py-4 text-[0.94rem] leading-relaxed backdrop-blur-md',
                         answerClassName,
                       )}
                     >
