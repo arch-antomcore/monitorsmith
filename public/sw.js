@@ -7,7 +7,7 @@ const PRECACHE_URLS = /*__PRECACHE_URLS__*/ [
   '/',
   '/index.html',
   '/manifest.webmanifest',
-  '/favicon.svg',
+  '/logo-transparent.png',
 ]
 const RUNTIME_LIMIT = 120
 
