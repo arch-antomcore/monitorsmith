@@ -172,7 +172,7 @@ export default function AdaptiveNavbar({
         <div className="relative z-10 h-full w-full flex items-center justify-center px-4 overflow-hidden">
           {/* Collapsed State: Logo + Brand Name */}
           <div
-            className="flex items-center gap-2 cursor-default select-none whitespace-nowrap absolute transition-all duration-200"
+            className="flex items-center justify-center gap-3 cursor-default select-none whitespace-nowrap absolute transition-all duration-200"
             style={{ 
               opacity: expanded ? 0 : 1, 
               filter: expanded ? 'blur(4px)' : 'blur(0px)',
@@ -180,8 +180,8 @@ export default function AdaptiveNavbar({
               transform: expanded ? 'scale(0.9)' : 'scale(1)'
             }}
           >
-            <BrandLogo size={14} className="mr-1" />
-            <div className="flex flex-col leading-none" style={{ marginTop: '2px' }}>
+            <BrandLogo size={18} className="translate-y-[1px]" />
+            <div className="flex flex-col leading-none justify-center text-left">
               <span className="font-bold text-[0.85rem] tracking-wider text-white" style={{ fontFamily: 'Inter, sans-serif' }}>
                 {showModeContext && mode.title ? mode.title.toUpperCase() : brandName}
               </span>
