@@ -6,13 +6,13 @@ export default function BrandLogo({ size = 30, className = '', style = {} }) {
     <img
       src="/logo-transparent.png"
       alt=""
-      height={size * 2}
       className={className}
       aria-hidden="true"
       style={{
         display: 'inline-block',
         flexShrink: 0,
         width: 'auto',
+        height: `${size * 2}px`,
         filter: 'drop-shadow(0 0 8px rgba(245, 158, 11, 0.4))',
         ...style,
       }}
