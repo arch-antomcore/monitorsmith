@@ -4,7 +4,7 @@
 export default function BrandLogo({ size = 30, className = '', style = {} }) {
   return (
     <img
-      src="/favicon.svg"
+      src="/logo-transparent.png"
       alt=""
       width={size}
       height={size}
