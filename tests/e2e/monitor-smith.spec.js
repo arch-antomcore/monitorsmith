@@ -379,7 +379,7 @@ test('padrão RGB da calibração usa canais puros sem vazamento', async ({ page
 test('padrão gamma calcula blocos cinzas reais e exibe aviso de zoom', async ({ page }) => {
   await page.goto('/#calibration')
   await page.click('button:has-text("Cor & Gamma")')
-  await page.click('button:has-text("Gamma")')
+  await page.getByRole('button', { name: 'Gamma', exact: true }).click()
 
   await page.mouse.move(120, 260)
   const warning = page.locator('text=/Estimativa visual baseada em mistura espacial/')
