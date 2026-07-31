@@ -6,7 +6,7 @@ export default function BrandLogo({ size = 30, className = '', style = {} }) {
     <img
       src="/logo-transparent.png"
       alt=""
-      height={size}
+      height={size * 2}
       className={className}
       aria-hidden="true"
       style={{
