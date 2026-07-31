@@ -63,12 +63,12 @@ export default function AdaptiveNavbar({
       <div 
         className="wbp-navbar flex justify-center items-center"
         style={{ height: '48px', padding: 0, margin: 0, width: '100%' }}
+        aria-hidden={!visible}
       >
         <motion.nav
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
           className="relative rounded-full pointer-events-auto flex items-center justify-center"
-        aria-hidden={!visible}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.1 }}
