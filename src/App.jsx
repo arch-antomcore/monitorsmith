@@ -534,6 +534,20 @@ function DisplaySuite() {
       <a className="ms-skip-link" href="#main-content">
         Pular para o conteúdo principal
       </a>
+
+      <Navbar
+        activeMode={activeMode}
+        onBrandClick={() => handleSelectMode(MODES.HOME)}
+        onToggleFullscreen={toggleFullscreen}
+        onHideUi={hideUiManually}
+        isFullscreen={isFullscreen}
+        onToggleWakeLock={wakeLock.isSupported ? wakeLock.toggle : undefined}
+        isWakeLockActive={wakeLock.isLocked}
+        onOpenHelp={openHelp}
+        visible={showControls}
+        status={status}
+      />
+
       <AnimatePresence mode="wait" initial={false}>
         <motion.main
           key={activeMode}
@@ -562,19 +576,6 @@ function DisplaySuite() {
           </Suspense>
         </motion.main>
       </AnimatePresence>
-
-      <Navbar
-        activeMode={activeMode}
-        onBrandClick={() => handleSelectMode(MODES.HOME)}
-        onToggleFullscreen={toggleFullscreen}
-        onHideUi={hideUiManually}
-        isFullscreen={isFullscreen}
-        onToggleWakeLock={wakeLock.isSupported ? wakeLock.toggle : undefined}
-        isWakeLockActive={wakeLock.isLocked}
-        onOpenHelp={openHelp}
-        visible={showControls}
-        status={status}
-      />
 
       <DockMenu
         activeMode={activeMode}
