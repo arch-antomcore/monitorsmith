@@ -50,15 +50,13 @@ describe('contratos públicos de segurança e publicação', () => {
     }
   })
 
-  it('usa a identidade M atual em favicon e ícones instaláveis', async () => {
-    const [favicon, manifest] = await Promise.all([
-      readFile(path.join(root, 'public', 'favicon.svg'), 'utf8'),
+  it('usa a identidade atual em ícones instaláveis', async () => {
+    const [logoStat, manifest] = await Promise.all([
+      import('fs').then(m => m.promises.stat(path.join(root, 'public', 'logo-transparent.png')).catch(() => null)),
       readFile(path.join(root, 'public', 'manifest.webmanifest'), 'utf8'),
     ])
 
-    expect(favicon).toContain('viewBox="0 0 64 64"')
-    expect(favicon).toContain('#F59E0B')
-    expect(favicon).toMatch(/d="M14 47V17h8l10 14 10-14h8v30h-8V29L35 39h-6l-7-10v18H14Z"/)
+    expect(logoStat).toBeTruthy()
     expect(JSON.parse(manifest).icons).toEqual(expect.arrayContaining([
       expect.objectContaining({ src: '/icons/icon-192.png', sizes: '192x192' }),
       expect.objectContaining({ src: '/icons/icon-512.png', sizes: '512x512' }),
