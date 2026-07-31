@@ -21,7 +21,8 @@ import {
   X,
 } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import Button, { joinClasses } from '../UI/Button';
+import Button from '../UI/Button';
+import { cn } from '../../lib/utils';
 import BrandLogo from '../UI/BrandLogo';
 import { getModePresentation } from '../../constants/shortcuts';
 
@@ -137,23 +138,23 @@ function useScroll(threshold = 10) {
 
 export function MenuToggleIcon({ open, className = 'w-5 h-5', duration = 300 }) {
   return (
-    <div className={joinClasses('relative flex items-center justify-center cursor-pointer', className)}>
+    <div className={cn('relative flex items-center justify-center cursor-pointer', className)}>
       <span
-        className={joinClasses(
+        className={cn(
           'absolute h-0.5 w-5 bg-current transition-all ease-out',
           open ? 'rotate-45' : '-translate-y-1.5'
         )}
         style={{ transitionDuration: `${duration}ms` }}
       />
       <span
-        className={joinClasses(
+        className={cn(
           'absolute h-0.5 w-5 bg-current transition-all ease-out',
           open ? 'opacity-0 scale-50' : 'opacity-100'
         )}
         style={{ transitionDuration: `${duration}ms` }}
       />
       <span
-        className={joinClasses(
+        className={cn(
           'absolute h-0.5 w-5 bg-current transition-all ease-out',
           open ? '-rotate-45' : 'translate-y-1.5'
         )}
@@ -200,11 +201,11 @@ export default function Navbar({
 
   return (
     <motion.header
-      className={joinClasses(
+      className={cn(
         'wbp-navbar z-50 transition-all duration-300 ease-out',
         showModeContext
           ? 'wbp-navbar--tool'
-          : joinClasses(
+          : cn(
               'sticky top-0 mx-auto w-full max-w-5xl border-b border-transparent md:rounded-2xl md:border wbp-navbar-template',
               scrolled && !open
                 ? 'bg-slate-950/85 supports-[backdrop-filter]:bg-slate-950/60 border-white/10 backdrop-blur-xl md:top-4 md:max-w-4xl md:shadow-2xl'
@@ -224,7 +225,7 @@ export default function Navbar({
       }}
     >
       <nav
-        className={joinClasses(
+        className={cn(
           'flex w-full items-center justify-between transition-all duration-300 ease-out',
           showModeContext ? 'h-11 px-3 md:h-11' : 'h-14 px-4 md:h-12',
           scrolled && !showModeContext && 'md:px-3'
@@ -256,7 +257,7 @@ export default function Navbar({
               aria-label="Voltar às ferramentas"
             >
               <BrandLogo size={28} />
-              <div className={joinClasses("wbp-navbar__title-block flex flex-col leading-none min-w-0 overflow-hidden", showModeContext && "hidden sm:flex")}>
+              <div className={cn("wbp-navbar__title-block flex flex-col leading-none min-w-0 overflow-hidden", showModeContext && "hidden sm:flex")}>
                 <span className="wbp-navbar__brand-name font-bold text-[0.88rem] tracking-wider text-white group-hover:text-amber-400 transition-colors truncate">
                   {brandName}
                 </span>
@@ -268,7 +269,7 @@ export default function Navbar({
           ) : (
             <div className="wbp-navbar__brand flex items-center gap-2.5 min-w-0 flex-shrink">
               <BrandLogo size={28} />
-              <div className={joinClasses("wbp-navbar__title-block flex flex-col leading-none min-w-0 overflow-hidden", showModeContext && "hidden sm:flex")}>
+              <div className={cn("wbp-navbar__title-block flex flex-col leading-none min-w-0 overflow-hidden", showModeContext && "hidden sm:flex")}>
                 <span className="wbp-navbar__brand-name font-bold text-[0.88rem] tracking-wider text-white truncate">
                   {brandName}
                 </span>
@@ -281,7 +282,7 @@ export default function Navbar({
         </div>
 
         {/* Links & Action Buttons */}
-        <div className={joinClasses('items-center gap-2 wbp-navbar__actions min-w-0 flex-shrink-0', showModeContext ? 'flex' : 'hidden md:flex')}>
+        <div className={cn('items-center gap-2 wbp-navbar__actions min-w-0 flex-shrink-0', showModeContext ? 'flex' : 'hidden md:flex')}>
           {onToggleFullscreen ? (
             <Button
               className="wbp-navbar__action"

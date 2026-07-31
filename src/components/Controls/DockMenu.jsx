@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { joinClasses } from '../UI/Button';
+import { cn } from '../../lib/utils';
 import { ControlIcon } from './Navbar';
 import { DEFAULT_DOCK_MODES, getModePresentation } from '../../constants/shortcuts';
 
@@ -101,7 +101,7 @@ export default function DockMenu({
     <AnimatePresence>
       {!hidden ? (
         <motion.nav
-          className={joinClasses('wbp-dock', className)}
+          className={cn('wbp-dock', className)}
           aria-label={label}
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -128,7 +128,7 @@ export default function DockMenu({
                 <motion.button
                   ref={(element) => { modeButtonRefs.current[index] = element; }}
                   key={mode.id}
-                  className={joinClasses('wbp-dock__mode', isActive && 'is-active')}
+                  className={cn('wbp-dock__mode', isActive && 'is-active')}
                   type="button"
                   aria-label={itemLabel}
                   aria-pressed={isActive}
