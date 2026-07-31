@@ -256,7 +256,7 @@ export default function Navbar({
               aria-hidden={showModeContext ? true : undefined}
               aria-label="Voltar às ferramentas"
             >
-              <BrandLogo size={28} />
+              <BrandLogo size={16} />
               <div className={cn("wbp-navbar__title-block flex flex-col leading-none min-w-0 overflow-hidden", showModeContext && "hidden sm:flex")}>
                 <span className="wbp-navbar__brand-name font-bold text-[0.88rem] tracking-wider text-white group-hover:text-amber-400 transition-colors truncate">
                   {brandName}
@@ -268,7 +268,7 @@ export default function Navbar({
             </button>
           ) : (
             <div className="wbp-navbar__brand flex items-center gap-2.5 min-w-0 flex-shrink">
-              <BrandLogo size={28} />
+              <BrandLogo size={16} />
               <div className={cn("wbp-navbar__title-block flex flex-col leading-none min-w-0 overflow-hidden", showModeContext && "hidden sm:flex")}>
                 <span className="wbp-navbar__brand-name font-bold text-[0.88rem] tracking-wider text-white truncate">
                   {brandName}

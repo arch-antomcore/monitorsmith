@@ -180,7 +180,7 @@ export default function AdaptiveNavbar({
               transform: expanded ? 'scale(0.9)' : 'scale(1)'
             }}
           >
-            <BrandLogo size={22} />
+            <BrandLogo size={14} className="mr-1" />
             <div className="flex flex-col leading-none" style={{ marginTop: '2px' }}>
               <span className="font-bold text-[0.85rem] tracking-wider text-white" style={{ fontFamily: 'Inter, sans-serif' }}>
                 {showModeContext && mode.title ? mode.title.toUpperCase() : brandName}
