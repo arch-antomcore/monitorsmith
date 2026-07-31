@@ -113,7 +113,7 @@ export default function FocusTimerMode({
   onSecondsRemainingChange,
   presets = DEFAULT_PRESETS,
   secondsRemaining,
-  visible = true,
+  showControls = true,
   title = "Foco profundo",
   totalDuration,
 }) {
@@ -409,7 +409,7 @@ export default function FocusTimerMode({
       title="Cronômetro"
       subtitle="Timer de foco"
       controls={controls}
-      visible={visible}
+      visible={showControls}
       className={className}
       aria-label={ariaLabel}
       data-mode="focus-timer"
