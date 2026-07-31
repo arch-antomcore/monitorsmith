@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { getToolById } from '../../constants/tools';
 import BrandLogo from './BrandLogo';
@@ -25,7 +25,7 @@ export default function ToolTransitionOverlay({
   isTransitioning,
   onTransitionComplete,
 }) {
-  const shouldReduceMotion = useReducedMotion();
+
 
   const onCompleteRef = useRef(onTransitionComplete);
   useEffect(() => {
@@ -37,10 +37,10 @@ export default function ToolTransitionOverlay({
 
     const timer = window.setTimeout(
       () => onCompleteRef.current?.(),
-      shouldReduceMotion ? 0 : TRANSITION_DURATION_MS,
+      TRANSITION_DURATION_MS,
     );
     return () => window.clearTimeout(timer);
-  }, [activeMode, isTransitioning, shouldReduceMotion]);
+  }, [activeMode, isTransitioning]);
 
   const tool = getToolById(toolId);
   const title = tool?.heroTitle || tool?.title || 'MonitorSmith';
@@ -54,27 +54,25 @@ export default function ToolTransitionOverlay({
           className="ms-tool-entry"
           aria-hidden="true"
           style={{ '--tool-entry-accent': accent }}
-          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.16 }}
+          transition={{ duration: 0.16 }}
         >
           <motion.span
             className="ms-tool-entry__aperture"
-            initial={shouldReduceMotion ? false : { scaleX: 0, opacity: 0 }}
+            initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
             exit={{ scaleX: 0, opacity: 0 }}
-            transition={{ duration: shouldReduceMotion ? 0 : 0.42, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
           />
 
           <motion.div
             className="ms-tool-entry__content"
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 10, scale: 0.97 }}
+            initial={{ opacity: 0, y: 10, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -7, scale: 1.015 }}
-            transition={shouldReduceMotion
-              ? { duration: 0 }
-              : { type: 'spring', stiffness: 360, damping: 30, delay: 0.04 }}
+            exit={{ opacity: 0, y: -7, scale: 1.015 }}
+            transition={{ type: 'spring', stiffness: 360, damping: 30, delay: 0.04 }}
           >
             <div className="ms-tool-entry__mark">
               <BrandLogo size={48} />
@@ -84,9 +82,9 @@ export default function ToolTransitionOverlay({
             <h2>{title}</h2>
             <div className="ms-tool-entry__progress">
               <motion.span
-                initial={shouldReduceMotion ? false : { scaleX: 0 }}
+                initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: shouldReduceMotion ? 0 : 0.48, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
               />
             </div>
           </motion.div>

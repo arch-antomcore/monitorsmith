@@ -1,5 +1,5 @@
 import { useCallback, useState, useRef } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function DisplayToolShell({
   id,
@@ -18,7 +18,6 @@ export function DisplayToolShell({
   const closeButtonRef = useRef(null);
   const reopenButtonRef = useRef(null);
   const pendingFocusTarget = useRef(null);
-  const shouldReduceMotion = useReducedMotion();
   const panelTitleId = `${id || 'tool'}-controls-title`;
 
   const focusWhenMounted = useCallback((targetName, node) => {
@@ -64,10 +63,10 @@ export function DisplayToolShell({
             key="tool-panel"
             className={`display-mode__controls display-mode__controls--${id || 'tool'}`}
             aria-labelledby={title ? panelTitleId : undefined}
-            initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96, y: 10 }}
+            initial={{ opacity: 0, scale: 0.96, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 10 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 350, damping: 28 }}
+            exit={{ opacity: 0, scale: 0.96, y: 10 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 28 }}
           >
             <div className="display-mode__panel-header">
               <div>
@@ -114,10 +113,10 @@ export function DisplayToolShell({
             type="button"
             className="display-mode__reopen-panel-btn"
             onClick={openPanel}
-            initial={shouldReduceMotion ? false : { opacity: 0 }}
+            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: shouldReduceMotion ? 0 : 0.16 }}
+            transition={{ duration: 0.16 }}
           >
             {customOptionsLabel || `Opções de ${title || 'ajuste'}`}
           </motion.button>

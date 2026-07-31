@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import DotPattern from '../UI/DotPattern';
 import FlowButton from '../UI/FlowButton';
@@ -247,7 +247,7 @@ function HeroGridCard({ tool, index, onLaunch }) {
 }
 
 export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturnFocus }) {
-  const shouldReduceMotion = useReducedMotion();
+
 
   useEffect(() => {
     if (returnFocusRequest > 0) {
@@ -257,7 +257,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
 
   const scrollToTools = () => {
     document.getElementById('monitor-tools')?.scrollIntoView({
-      behavior: shouldReduceMotion ? 'auto' : 'smooth',
+      behavior: 'smooth',
       block: 'start',
     });
   };
@@ -279,7 +279,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
 
         <motion.div
           className="ms-hero__content"
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         >
@@ -305,7 +305,6 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
               tool={tool}
               index={index}
               onLaunch={onLaunch}
-              shouldReduceMotion={shouldReduceMotion}
             />
           ))}
         </div>
@@ -318,9 +317,9 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
 
         <motion.div
           className="ms-hero__cta"
-          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: shouldReduceMotion ? 0 : 0.5, duration: 0.4 }}
+          transition={{ delay: 0.5, duration: 0.4 }}
         >
           <button className="ms-hero__scroll-btn" type="button" onClick={scrollToTools}>
             Ver todas as {TOOL_LIBRARY.length} ferramentas <span aria-hidden="true">↓</span>

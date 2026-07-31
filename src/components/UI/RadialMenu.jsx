@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ControlIcon } from '../Controls/Navbar';
 import { DEFAULT_DOCK_MODES, getModePresentation } from '../../constants/shortcuts';
 import { acquireModalIsolation } from '../../utils/modalIsolation';
@@ -105,7 +105,6 @@ export default function RadialMenu({
   const closeButtonRef = useRef(null);
   const returnFocusRef = useRef(null);
   const buttonRefs = useRef([]);
-  const shouldReduceMotion = useReducedMotion();
   const modes = useMemo(
     () => (Array.isArray(availableModes) ? availableModes : DEFAULT_DOCK_MODES)
       .map(normalizeMode)
@@ -301,7 +300,7 @@ export default function RadialMenu({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.14 }}
+          transition={{ duration: 0.14 }}
           style={overlayStyle}
           onContextMenu={(event) => event.preventDefault()}
           onPointerDown={(event) => {
@@ -314,22 +313,17 @@ export default function RadialMenu({
             aria-modal="true"
             aria-label="Seleção rápida de ferramenta"
             data-layout={isCompact ? 'compact' : 'radial'}
-            initial={shouldReduceMotion
-              ? false
-              : isCompact
+            initial={isCompact
                 ? { scale: 0.98, opacity: 0 }
                 : { scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            exit={shouldReduceMotion
-              ? { opacity: 0 }
-              : isCompact
+            exit={isCompact
                 ? { scale: 0.98, opacity: 0 }
                 : { scale: 0.85, opacity: 0 }}
             transition={{
               type: 'spring',
               stiffness: 400,
               damping: 25,
-              duration: shouldReduceMotion ? 0 : undefined,
             }}
             onKeyDown={handleMenuKeyDown}
             style={dialogStyle}
@@ -416,8 +410,8 @@ export default function RadialMenu({
                     role="menuitem"
                     aria-current={isActive ? 'true' : undefined}
                     aria-label={`${mode.label}${isActive ? ', ferramenta atual' : ''}`}
-                    whileHover={shouldReduceMotion ? undefined : { scale: isCompact ? 1.025 : 1.14 }}
-                    whileTap={shouldReduceMotion ? undefined : { scale: 0.94 }}
+                    whileHover={{ scale: isCompact ? 1.025 : 1.14 }}
+                    whileTap={{ scale: 0.94 }}
                     onClick={() => {
                       onSelectMode(mode.id);
                       closeMenu(false);

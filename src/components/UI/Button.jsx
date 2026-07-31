@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const joinClasses = (...values) => values.filter(Boolean).join(' ');
 
@@ -25,7 +25,7 @@ const Button = forwardRef(function Button(
   },
   ref,
 ) {
-  const shouldReduceMotion = useReducedMotion();
+
   const isDisabled = disabled || loading;
   const hasOnlyIcon = !children && Boolean(icon);
 
@@ -46,11 +46,11 @@ const Button = forwardRef(function Button(
       disabled={isDisabled}
       aria-busy={loading || undefined}
       whileHover={
-        !isDisabled && !shouldReduceMotion
+        !isDisabled
           ? { y: -1, transition: { duration: 0.16 } }
           : undefined
       }
-      whileTap={!isDisabled && !shouldReduceMotion ? { scale: 0.98 } : undefined}
+      whileTap={!isDisabled ? { scale: 0.98 } : undefined}
       transition={{ type: 'spring', stiffness: 360, damping: 26 }}
       {...buttonProps}
       {...motionProps}

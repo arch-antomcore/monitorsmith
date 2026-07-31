@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { joinClasses } from '../UI/Button';
 import { ControlIcon } from './Navbar';
 import { DEFAULT_DOCK_MODES, getModePresentation } from '../../constants/shortcuts';
@@ -32,7 +32,6 @@ export default function DockMenu({
 }) {
   const modesRef = useRef(null);
   const modeButtonRefs = useRef([]);
-  const shouldReduceMotion = useReducedMotion();
   const selectedMode = currentMode ?? activeMode;
   const selectedModeId =
     selectedMode && typeof selectedMode === 'object' ? selectedMode.id : selectedMode;
@@ -69,10 +68,10 @@ export default function DockMenu({
       const targetScrollLeft = elLeft - (containerWidth / 2) + (elWidth / 2);
       container.scrollTo({
         left: Math.max(0, targetScrollLeft),
-        behavior: shouldReduceMotion ? 'auto' : 'smooth',
+        behavior: 'smooth',
       });
     }
-  }, [selectedModeId, shouldReduceMotion]);
+  }, [selectedModeId]);
 
   useEffect(() => {
     setFocusModeId(selectedModeId ?? modes[0]?.id ?? null);
@@ -104,9 +103,9 @@ export default function DockMenu({
         <motion.nav
           className={joinClasses('wbp-dock', className)}
           aria-label={label}
-          initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.98 }}
+          initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.985 }}
+          exit={{ opacity: 0, scale: 0.985 }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           style={{ x: '-50%' }}
         >
@@ -140,8 +139,8 @@ export default function DockMenu({
                   onClick={() => onSelectMode?.(mode.id)}
                   onFocus={() => setFocusModeId(mode.id)}
                   onKeyDown={(event) => handleModeKeyDown(event, index)}
-                  whileHover={!mode.disabled && !shouldReduceMotion ? { y: -2 } : undefined}
-                  whileTap={!mode.disabled && !shouldReduceMotion ? { scale: 0.97 } : undefined}
+                  whileHover={!mode.disabled ? { y: -2 } : undefined}
+                  whileTap={!mode.disabled ? { scale: 0.97 } : undefined}
                   transition={{ type: 'spring', stiffness: 380, damping: 28 }}
                 >
                   <span className="wbp-dock__mode-icon" aria-hidden="true">

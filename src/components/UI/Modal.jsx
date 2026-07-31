@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Button, { joinClasses } from './Button';
 import { acquireModalIsolation } from '../../utils/modalIsolation';
 
@@ -39,7 +39,7 @@ export default function Modal({
   const onCloseRef = useRef(onClose);
   const titleId = useId();
   const descriptionId = useId();
-  const shouldReduceMotion = useReducedMotion();
+
 
   useEffect(() => {
     onCloseRef.current = onClose;
@@ -121,7 +121,7 @@ export default function Modal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.18 }}
+          transition={{ duration: 0.18 }}
           onPointerDown={(event) => {
             if (closeOnOverlayClick && event.target === event.currentTarget) {
               onCloseRef.current?.();
@@ -137,9 +137,9 @@ export default function Modal({
             aria-describedby={hasDescription ? descriptionId : undefined}
             aria-label={!hasTitle ? ariaLabel || 'Janela de configuração' : undefined}
             tabIndex={-1}
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 14, scale: 0.985 }}
+            initial={{ opacity: 0, y: 14, scale: 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.99 }}
+            exit={{ opacity: 0, y: 10, scale: 0.99 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             onPointerDown={(event) => event.stopPropagation()}
           >

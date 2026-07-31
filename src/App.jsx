@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
-import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 
 import Navbar from './components/Controls/Navbar';
 import DockMenu from './components/Controls/DockMenu';
@@ -138,7 +138,7 @@ function DisplaySuite() {
   const handledHomeFocusRequestRef = useRef(0);
   const pendingLocationRef = useRef(null);
   const hasResolvedInitialLocationRef = useRef(false);
-  const shouldReduceMotion = useReducedMotion();
+
   const isGreenScreen = activeToolId === 'green-screen';
 
   const showControls = !shouldHideUi;
@@ -534,6 +534,35 @@ function DisplaySuite() {
       <a className="ms-skip-link" href="#main-content">
         Pular para o conteúdo principal
       </a>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.main
+          key={activeMode}
+          id="main-content"
+          className={`app-mode-layer ${activeMode === MODES.HOME ? 'app-mode-layer--library' : ''}`}
+          tabIndex={-1}
+          style={{ minHeight: '100dvh' }}
+          initial={{ opacity: 0.001, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.015 }}
+          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {activeMode !== MODES.HOME ? (
+            <h1 className="sr-only">{getModeTitle(activeToolId)}</h1>
+          ) : null}
+          <Suspense fallback={
+            <div style={{ position: 'fixed', inset: 0, background: '#050506', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px', zIndex: 99999 }}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid rgba(245, 158, 11, 0.2)', borderTopColor: '#F59E0B', animation: 'spin 0.8s linear infinite' }} />
+              <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem', letterSpacing: '0.08em' }}>
+                CARREGANDO MÓDULO...
+              </div>
+              <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+            </div>
+          }>
+            {renderActiveMode()}
+          </Suspense>
+        </motion.main>
+      </AnimatePresence>
+
       <Navbar
         activeMode={activeMode}
         onBrandClick={() => handleSelectMode(MODES.HOME)}
@@ -546,35 +575,6 @@ function DisplaySuite() {
         visible={showControls}
         status={status}
       />
-
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.main
-          key={activeMode}
-          id="main-content"
-          className={`app-mode-layer ${activeMode === MODES.HOME ? 'app-mode-layer--library' : ''}`}
-          tabIndex={-1}
-          style={{ minHeight: '100dvh' }}
-          initial={shouldReduceMotion ? false : { opacity: 0.001, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.015 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.28, ease: [0.16, 1, 0.3, 1] }}
-        >
-          {activeMode !== MODES.HOME ? (
-            <h1 className="sr-only">{getModeTitle(activeToolId)}</h1>
-          ) : null}
-          <Suspense fallback={
-            <div style={{ position: 'fixed', inset: 0, background: '#050506', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px', zIndex: 99999 }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid rgba(245, 158, 11, 0.2)', borderTopColor: '#F59E0B', animation: shouldReduceMotion ? 'none' : 'spin 0.8s linear infinite' }} />
-              <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem', letterSpacing: '0.08em' }}>
-                CARREGANDO MÓDULO...
-              </div>
-              <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
-            </div>
-          }>
-            {renderActiveMode()}
-          </Suspense>
-        </motion.main>
-      </AnimatePresence>
 
       <DockMenu
         activeMode={activeMode}
