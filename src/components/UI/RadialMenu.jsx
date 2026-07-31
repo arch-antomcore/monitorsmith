@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ControlIcon } from '../Controls/Navbar';
 import { DEFAULT_DOCK_MODES, getModePresentation } from '../../constants/shortcuts';
 import { acquireModalIsolation } from '../../utils/modalIsolation';
@@ -101,6 +101,7 @@ export default function RadialMenu({
   const [openedForMode, setOpenedForMode] = useState(null);
   const [anchor, setAnchor] = useState({ x: 0, y: 0, centered: true });
   const [viewport, setViewport] = useState(() => getViewportSnapshot({ includeSafeArea: false }));
+  const shouldReduceMotion = useReducedMotion();
   const menuRef = useRef(null);
   const closeButtonRef = useRef(null);
   const returnFocusRef = useRef(null);
@@ -300,7 +301,7 @@ export default function RadialMenu({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.14 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.14 }}
           style={overlayStyle}
           onContextMenu={(event) => event.preventDefault()}
           onPointerDown={(event) => {
@@ -314,16 +315,17 @@ export default function RadialMenu({
             aria-label="Seleção rápida de ferramenta"
             data-layout={isCompact ? 'compact' : 'radial'}
             initial={isCompact
-                ? { scale: 0.98, opacity: 0 }
-                : { scale: 0.8, opacity: 0 }}
+                ? { scale: shouldReduceMotion ? 1 : 0.98, opacity: 0 }
+                : { scale: shouldReduceMotion ? 1 : 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={isCompact
-                ? { scale: 0.98, opacity: 0 }
-                : { scale: 0.85, opacity: 0 }}
+                ? { scale: shouldReduceMotion ? 1 : 0.98, opacity: 0 }
+                : { scale: shouldReduceMotion ? 1 : 0.85, opacity: 0 }}
             transition={{
               type: 'spring',
               stiffness: 400,
               damping: 25,
+              duration: shouldReduceMotion ? 0 : undefined
             }}
             onKeyDown={handleMenuKeyDown}
             style={dialogStyle}
@@ -378,9 +380,22 @@ export default function RadialMenu({
               </div>
             )}
 
-            <div
+            <motion.div
               role="menu"
               aria-label="Troca rápida de ferramenta"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: shouldReduceMotion ? 0 : 0.03,
+                    delayChildren: shouldReduceMotion ? 0 : 0.05
+                  }
+                }
+              }}
               style={isCompact
                 ? {
                     display: 'grid',
@@ -410,8 +425,12 @@ export default function RadialMenu({
                     role="menuitem"
                     aria-current={isActive ? 'true' : undefined}
                     aria-label={`${mode.label}${isActive ? ', ferramenta atual' : ''}`}
-                    whileHover={{ scale: isCompact ? 1.025 : 1.14 }}
-                    whileTap={{ scale: 0.94 }}
+                    variants={{
+                      hidden: { opacity: 0, scale: shouldReduceMotion ? 1 : 0.8 },
+                      visible: { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 350, damping: 25 } }
+                    }}
+                    whileHover={!shouldReduceMotion ? { scale: isCompact ? 1.025 : 1.14 } : undefined}
+                    whileTap={!shouldReduceMotion ? { scale: 0.94 } : undefined}
                     onClick={() => {
                       onSelectMode(mode.id);
                       closeMenu(false);
@@ -464,7 +483,7 @@ export default function RadialMenu({
                   </motion.button>
                 );
               })}
-            </div>
+            </motion.div>
           </motion.div>
         </motion.div>
       ) : null}

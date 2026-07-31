@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import DisplayToolShell from "./DisplayToolShell";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
 
@@ -117,9 +118,6 @@ export default function FocusTimerMode({
   totalDuration,
 }) {
   const containerRef = useRef(null);
-  const closePanelButtonRef = useRef(null);
-  const reopenPanelButtonRef = useRef(null);
-  const pendingFocusTarget = useRef(null);
   const normalizedInitialDuration = clampSeconds(initialDuration) || 25 * 60;
   const [internalSeconds, setInternalSeconds] = useState(
     normalizedInitialDuration,
@@ -129,29 +127,8 @@ export default function FocusTimerMode({
     normalizedInitialDuration,
   );
   const [customMinutesInput, setCustomMinutesInput] = useState('');
-  const [isPanelClosed, setIsPanelClosed] = useState(false);
   const [isAmbientNoiseActive, setIsAmbientNoiseActive] = useState(false);
   const ambientNoiseRef = useRef(null);
-
-  useEffect(() => {
-    if (!pendingFocusTarget.current) return;
-    const target = pendingFocusTarget.current === "reopen"
-      ? reopenPanelButtonRef.current
-      : closePanelButtonRef.current;
-    if (!target) return;
-    target.focus({ preventScroll: true });
-    pendingFocusTarget.current = null;
-  }, [isPanelClosed]);
-
-  const closePanel = () => {
-    pendingFocusTarget.current = "reopen";
-    setIsPanelClosed(true);
-  };
-
-  const openPanel = () => {
-    pendingFocusTarget.current = "close";
-    setIsPanelClosed(false);
-  };
 
   const toggleAmbientNoise = () => {
     if (isAmbientNoiseActive) {
@@ -348,11 +325,93 @@ export default function FocusTimerMode({
     }
   };
 
+  const controls = (
+    <>
+      <div className="focus-timer__actions">
+        <button
+          className="display-mode__primary-button"
+          onClick={toggleTimer}
+          type="button"
+        >
+          {resolvedRunning ? "Pausar" : resolvedSeconds === 0 ? "Recomeçar" : "Iniciar"}
+        </button>
+        <button
+          className="display-mode__secondary-button"
+          onClick={() => resetTimer()}
+          type="button"
+        >
+          Reiniciar
+        </button>
+      </div>
+
+      <button
+        type="button"
+        className={classNames("wbp-button", isAmbientNoiseActive ? "wbp-button--active" : "wbp-button--ghost")}
+        style={{ width: "100%", marginTop: "8px", fontSize: "0.75rem" }}
+        onClick={() => toggleAmbientNoise()}
+        aria-pressed={isAmbientNoiseActive}
+      >
+        {isAmbientNoiseActive ? "Pausar ruído ambiente sintetizado" : "Ativar ruído ambiente sintetizado"}
+      </button>
+
+      <div
+        aria-label="Duração da sessão"
+        className="display-mode__preset-row"
+        role="group"
+      >
+        {presets.map((preset) => (
+          <button
+            aria-pressed={
+              !resolvedRunning && resolvedSeconds === clampSeconds(preset.seconds)
+            }
+            className="display-mode__preset-button"
+            key={`${preset.label}-${preset.seconds}`}
+            onClick={() => {
+              setCustomMinutesInput('');
+              resetTimer(clampSeconds(preset.seconds));
+            }}
+            type="button"
+          >
+            {preset.label}
+          </button>
+        ))}
+      </div>
+
+      <label className="display-mode__field" htmlFor="custom-focus-time">
+        <span className="display-mode__field-label">Tempo personalizado (minutos)</span>
+        <input
+          id="custom-focus-time"
+          type="number"
+          min="1"
+          max="999"
+          placeholder="Ex.: 45"
+          value={customMinutesInput}
+          onChange={(event) => {
+            const val = event.target.value;
+            setCustomMinutesInput(val);
+            const num = parseInt(val, 10);
+            if (num > 0 && num <= 999) {
+              resetTimer(num * 60);
+            }
+          }}
+        />
+      </label>
+
+      <p className="display-mode__hint">
+        Espaço inicia ou pausa. R reinicia a duração escolhida.
+      </p>
+    </>
+  );
+
   return (
-    <section
-      ref={containerRef}
+    <DisplayToolShell
+      id="focus"
+      title="Cronômetro"
+      subtitle="Timer de foco"
+      controls={controls}
+      visible={showControls}
+      className={className}
       aria-label={ariaLabel}
-      className={classNames("display-mode", "display-mode--focus", className)}
       data-mode="focus-timer"
       data-running={resolvedRunning}
       onKeyDown={handleKeyDown}
@@ -385,115 +444,6 @@ export default function FocusTimerMode({
             : "Comece quando estiver pronto para uma única tarefa importante."}
         </p>
       </div>
-
-      {showControls && !isPanelClosed ? (
-        <aside
-          aria-label="Controles do cronômetro"
-          className="display-mode__controls display-mode__controls--focus"
-        >
-          <div className="display-mode__panel-header">
-            <div>
-              <p className="display-mode__eyebrow">Timer de foco</p>
-              <h2 className="display-mode__title">Cronômetro</h2>
-            </div>
-            <button
-              ref={closePanelButtonRef}
-              aria-label="Ocultar painel do cronômetro"
-              className="display-mode__icon-button"
-              onClick={closePanel}
-              type="button"
-              title="Ocultar painel"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-
-          <div className="focus-timer__actions">
-            <button
-              className="display-mode__primary-button"
-              onClick={toggleTimer}
-              type="button"
-            >
-              {resolvedRunning ? "Pausar" : resolvedSeconds === 0 ? "Recomeçar" : "Iniciar"}
-            </button>
-            <button
-              className="display-mode__secondary-button"
-              onClick={() => resetTimer()}
-              type="button"
-            >
-              Reiniciar
-            </button>
-          </div>
-
-          <button
-            type="button"
-            className={classNames("wbp-button", isAmbientNoiseActive ? "wbp-button--active" : "wbp-button--ghost")}
-            style={{ width: "100%", marginTop: "8px", fontSize: "0.75rem" }}
-            onClick={() => toggleAmbientNoise()}
-            aria-pressed={isAmbientNoiseActive}
-          >
-            {isAmbientNoiseActive ? "Pausar ruído ambiente sintetizado" : "Ativar ruído ambiente sintetizado"}
-          </button>
-
-          <div
-            aria-label="Duração da sessão"
-            className="display-mode__preset-row"
-            role="group"
-          >
-            {presets.map((preset) => (
-              <button
-                aria-pressed={
-                  !resolvedRunning && resolvedSeconds === clampSeconds(preset.seconds)
-                }
-                className="display-mode__preset-button"
-                key={`${preset.label}-${preset.seconds}`}
-                onClick={() => {
-                  setCustomMinutesInput('');
-                  resetTimer(clampSeconds(preset.seconds));
-                }}
-                type="button"
-              >
-                {preset.label}
-              </button>
-            ))}
-          </div>
-
-          <label className="display-mode__field" htmlFor="custom-focus-time">
-            <span className="display-mode__field-label">Tempo personalizado (minutos)</span>
-            <input
-              id="custom-focus-time"
-              type="number"
-              min="1"
-              max="999"
-              placeholder="Ex.: 45"
-              value={customMinutesInput}
-              onChange={(event) => {
-                const val = event.target.value;
-                setCustomMinutesInput(val);
-                const num = parseInt(val, 10);
-                if (num > 0 && num <= 999) {
-                  resetTimer(num * 60);
-                }
-              }}
-            />
-          </label>
-
-          <p className="display-mode__hint">
-            Espaço inicia ou pausa. R reinicia a duração escolhida.
-          </p>
-        </aside>
-      ) : showControls && isPanelClosed ? (
-        <button
-          ref={reopenPanelButtonRef}
-          type="button"
-          className="display-mode__reopen-panel-btn"
-          onClick={openPanel}
-          title="Abrir painel do cronômetro"
-          aria-label="Abrir painel do cronômetro"
-        >
-          <span>Opções do timer</span>
-        </button>
-      ) : null}
-    </section>
+    </DisplayToolShell>
   );
 }

@@ -1,7 +1,8 @@
 import { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import Button, { joinClasses } from './Button';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import Button from './Button';
+import { cn } from '../../lib/utils';
 import { acquireModalIsolation } from '../../utils/modalIsolation';
 
 const getFocusableElements = (container) => {
@@ -39,6 +40,7 @@ export default function Modal({
   const onCloseRef = useRef(onClose);
   const titleId = useId();
   const descriptionId = useId();
+  const shouldReduceMotion = useReducedMotion();
 
 
   useEffect(() => {
@@ -121,7 +123,7 @@ export default function Modal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.18 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.18 }}
           onPointerDown={(event) => {
             if (closeOnOverlayClick && event.target === event.currentTarget) {
               onCloseRef.current?.();
@@ -130,17 +132,17 @@ export default function Modal({
         >
           <motion.section
             ref={dialogRef}
-            className={joinClasses('wbp-modal', `wbp-modal--${size}`, className)}
+            className={cn('wbp-modal', `wbp-modal--${size}`, className)}
             role="dialog"
             aria-modal="true"
             aria-labelledby={hasTitle ? titleId : undefined}
             aria-describedby={hasDescription ? descriptionId : undefined}
             aria-label={!hasTitle ? ariaLabel || 'Janela de configuração' : undefined}
             tabIndex={-1}
-            initial={{ opacity: 0, y: 14, scale: 0.985 }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 14, scale: shouldReduceMotion ? 1 : 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.99 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 10, scale: shouldReduceMotion ? 1 : 0.99 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30, duration: shouldReduceMotion ? 0 : undefined }}
             onPointerDown={(event) => event.stopPropagation()}
           >
             {hasTitle || hasDescription || showCloseButton ? (

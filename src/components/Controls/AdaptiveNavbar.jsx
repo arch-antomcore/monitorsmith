@@ -28,7 +28,7 @@ export default function AdaptiveNavbar({
 
   // Larguras baseadas no contexto (Home tem menos botões que Tool)
   const COLLAPSED_WIDTH = 180;
-  const EXPANDED_WIDTH = showModeContext ? 280 : 160;
+  const EXPANDED_WIDTH = showModeContext ? 280 : 200;
 
   // Spring animations for smooth motion
   const pillWidth = useSpring(COLLAPSED_WIDTH, { stiffness: 220, damping: 25, mass: 1 });
@@ -68,6 +68,7 @@ export default function AdaptiveNavbar({
         <motion.nav
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
+          onClick={() => setHovering(!hovering)}
           className="relative rounded-full pointer-events-auto flex items-center justify-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

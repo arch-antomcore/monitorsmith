@@ -13,6 +13,12 @@ export function DisplayToolShell({
   customOptionsLabel,
   onKeyDown,
   visible = true,
+  style,
+  tabIndex,
+  'data-mode': dataMode,
+  'data-running': dataRunning,
+  'data-seconds': dataSeconds,
+  'aria-label': ariaLabel,
 }) {
   const [isPanelClosed, setIsPanelClosed] = useState(false);
   const closeButtonRef = useRef(null);
@@ -54,6 +60,12 @@ export function DisplayToolShell({
     <div
       className={`display-mode display-mode--${id || 'tool'} ${className}`}
       onKeyDown={onKeyDown}
+      style={style}
+      tabIndex={tabIndex}
+      data-mode={dataMode}
+      data-running={dataRunning}
+      data-seconds={dataSeconds}
+      aria-label={ariaLabel}
     >
       {children}
 
@@ -113,10 +125,10 @@ export function DisplayToolShell({
             type="button"
             className="display-mode__reopen-panel-btn"
             onClick={openPanel}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.16 }}
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 10 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
           >
             {customOptionsLabel || `Opções de ${title || 'ajuste'}`}
           </motion.button>

@@ -94,6 +94,30 @@ const resolvePattern = (candidate) =>
     ? candidate
     : "grayscale";
 
+const PATTERN_CATEGORIES = [
+  { id: 'all', label: 'Todos' },
+  { id: 'luminance', label: 'Luminância & Contraste' },
+  { id: 'color', label: 'Cor & Gamma' },
+  { id: 'geometry', label: 'Geometria & Nitidez' },
+  { id: 'motion', label: 'Movimento & Retenção' },
+];
+
+const CATEGORY_MAP = {
+  'grayscale': 'luminance',
+  'near-black': 'luminance',
+  'ansi-checker': 'luminance',
+  'smpte-bars': 'color',
+  'rgb-bars': 'color',
+  'gamma': 'color',
+  'gradient-dither': 'color',
+  'sharpness-grid': 'geometry',
+  'subpixel-layout': 'geometry',
+  'moire-aliasing': 'geometry',
+  'fps-stutter': 'motion',
+  'flicker-shutter': 'motion',
+  'retention-burnin': 'motion',
+};
+
 function GrayscalePattern({ showGuidance }) {
   return (
     <div aria-label="Escala de cinza" className="calibration-lab__grayscale" role="img">
@@ -558,6 +582,8 @@ export default function CalibrationLabMode({
     () => CALIBRATION_PATTERNS.find((item) => item.id === resolvedPattern) || CALIBRATION_PATTERNS[0],
     [resolvedPattern]
   );
+  const [activeCategory, setActiveCategory] = useState(() => CATEGORY_MAP[activePattern.id] || 'all');
+  const filteredPatterns = CALIBRATION_PATTERNS.filter(p => activeCategory === 'all' || CATEGORY_MAP[p.id] === activeCategory);
 
   useEffect(() => {
     if (!autoFocus || typeof document === "undefined") return;
@@ -594,7 +620,7 @@ export default function CalibrationLabMode({
 
     if (nextIndex === null) return;
     event.preventDefault();
-    updatePattern(CALIBRATION_PATTERNS[nextIndex].id);
+    updatePattern(filteredPatterns[nextIndex].id);
     patternButtonRefs.current[nextIndex]?.focus({ preventScroll: true });
   };
 
@@ -644,8 +670,22 @@ export default function CalibrationLabMode({
             <p className="calibration-lab__instruction">{activePattern.instruction}</p>
           </div>
 
+          <div className="calibration-lab__categories" style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
+            {PATTERN_CATEGORIES.map(cat => (
+              <button
+                key={cat.id}
+                type="button"
+                className={classNames("display-mode__preset-button", activeCategory === cat.id && "display-mode__preset-button--active")}
+                style={{ padding: '4px 8px', fontSize: '0.75rem', backgroundColor: activeCategory === cat.id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.05)' }}
+                onClick={() => setActiveCategory(cat.id)}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+
           <div className="calibration-lab__pattern-switcher" role="toolbar" aria-label="Seletor de padrão">
-            {CALIBRATION_PATTERNS.map((item, index) => {
+            {filteredPatterns.map((item, index) => {
               const isActive = item.id === resolvedPattern;
               return (
                 <button

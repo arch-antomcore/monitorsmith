@@ -23,6 +23,7 @@ import AppProvider, { MODES, useApp } from './context/AppContext';
 import { DEFAULT_DOCK_MODES, SHORTCUTS } from './constants/shortcuts';
 import { getToolById, resolveToolLaunch, TOOLS_REGISTRY } from './constants/tools';
 import { isShortcutScopeBlocked } from './hooks/useKeyboardShortcuts';
+import { useThemeSync } from './hooks/useThemeSync';
 
 const DEAD_PIXEL_PALETTE = [
   { id: 'red', label: 'Vermelho', value: '#ff0000' },
@@ -142,29 +143,8 @@ function DisplaySuite() {
   const isGreenScreen = activeToolId === 'green-screen';
 
   const showControls = !shouldHideUi;
-
-  useEffect(() => {
-    if (typeof document === 'undefined') return;
-
-    const modeTitle = activeMode === MODES.HOME ? null : getModeTitle(activeToolId);
-    document.title = modeTitle
-      ? `${modeTitle} — MonitorSmith | EXVORN.TECH`
-      : PRODUCT_DOCUMENT_TITLE;
-  }, [activeMode, activeToolId]);
-
-  useEffect(() => {
-    if (typeof document === 'undefined' || activeMode === MODES.HOME) return;
-
-    // A preferência visual da landing page nunca deve alterar superfícies de
-    // inspeção. Mantemos o tema salvo para a próxima visita à biblioteca, mas
-    // retiramos suas classes globais enquanto uma ferramenta está aberta.
-    document.documentElement.classList.remove(
-      'dark',
-      'light-mode',
-      'ms-studio-dark',
-      'ms-studio-light',
-    );
-  }, [activeMode]);
+  const modeTitle = activeMode === MODES.HOME ? null : getModeTitle(activeToolId);
+  useThemeSync(activeMode, modeTitle);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -564,12 +544,11 @@ function DisplaySuite() {
             <h1 className="sr-only">{getModeTitle(activeToolId)}</h1>
           ) : null}
           <Suspense fallback={
-            <div style={{ position: 'fixed', inset: 0, background: '#050506', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px', zIndex: 99999 }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid rgba(245, 158, 11, 0.2)', borderTopColor: '#F59E0B', animation: 'spin 0.8s linear infinite' }} />
-              <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem', letterSpacing: '0.08em' }}>
+            <div className="fixed inset-0 bg-[#050506] flex flex-col items-center justify-center gap-3 z-[99999]">
+              <div className="w-8 h-8 rounded-full border-2 border-amber-500/20 border-t-amber-500 animate-spin" />
+              <div className="text-white/70 font-mono text-xs tracking-[0.08em] uppercase">
                 CARREGANDO MÓDULO...
               </div>
-              <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
             </div>
           }>
             {renderActiveMode()}

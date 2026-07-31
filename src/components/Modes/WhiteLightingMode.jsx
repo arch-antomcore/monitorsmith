@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import DisplayToolShell from "./DisplayToolShell";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
 
@@ -110,9 +111,6 @@ export default function WhiteLightingMode({
   variant = "white",
 }) {
   const containerRef = useRef(null);
-  const closePanelButtonRef = useRef(null);
-  const reopenPanelButtonRef = useRef(null);
-  const pendingFocusTarget = useRef(null);
   const [internalBrightness, setInternalBrightness] = useState(() =>
     clamp(Number(defaultBrightness) || 0, 0, 100),
   );
@@ -122,27 +120,6 @@ export default function WhiteLightingMode({
   const [internalColor, setInternalColor] = useState(
     () => normalizeHex(defaultColor) || "#FFFFFF",
   );
-  const [isPanelClosed, setIsPanelClosed] = useState(false);
-
-  useEffect(() => {
-    if (!pendingFocusTarget.current) return;
-    const target = pendingFocusTarget.current === "reopen"
-      ? reopenPanelButtonRef.current
-      : closePanelButtonRef.current;
-    if (!target) return;
-    target.focus({ preventScroll: true });
-    pendingFocusTarget.current = null;
-  }, [isPanelClosed]);
-
-  const closePanel = () => {
-    pendingFocusTarget.current = "reopen";
-    setIsPanelClosed(true);
-  };
-
-  const openPanel = () => {
-    pendingFocusTarget.current = "close";
-    setIsPanelClosed(false);
-  };
 
   const brightnessIsControlled = isFiniteNumber(brightness);
   const temperatureIsControlled = isFiniteNumber(temperature);
@@ -202,15 +179,119 @@ export default function WhiteLightingMode({
 
 
 
-  return (
-    <section
-      ref={containerRef}
-      aria-label={resolvedAriaLabel}
-      className={classNames(
-        "display-mode",
-        isColorMode ? "display-mode--color" : "display-mode--light",
-        className,
+  const controls = (
+    <>
+      <label className="display-mode__field" htmlFor="light-brightness">
+        <span className="display-mode__field-label">
+          Intensidade <output>{resolvedBrightness}%</output>
+        </span>
+        <input
+          aria-label="Intensidade da luz"
+          id="light-brightness"
+          max="100"
+          min="0"
+          onChange={(event) => updateBrightness(event.target.value)}
+          step="1"
+          type="range"
+          value={resolvedBrightness}
+        />
+      </label>
+
+      {isColorMode ? (
+        <>
+          <label className="display-mode__field" htmlFor="light-color">
+            <span className="display-mode__field-label">Cor personalizada</span>
+            <input
+              aria-label="Escolher cor do estúdio"
+              id="light-color"
+              onChange={(event) => updateColor(event.target.value)}
+              type="color"
+              value={resolvedColor}
+            />
+          </label>
+
+          <div
+            aria-label="Cores sólidas rápidas"
+            className="display-mode__color-presets"
+            role="group"
+          >
+            {COLOR_STUDIO_PRESETS.map((preset) => (
+              <button
+                aria-pressed={resolvedColor === preset.value}
+                className="display-mode__color-preset"
+                key={preset.value}
+                onClick={() => updateColor(preset.value)}
+                type="button"
+              >
+                <span
+                  aria-hidden="true"
+                  className="display-mode__color-preset-swatch"
+                  style={{ backgroundColor: preset.value }}
+                />
+                <span>{preset.label}</span>
+              </button>
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <label
+            className="display-mode__field"
+            htmlFor="light-temperature"
+          >
+            <span className="display-mode__field-label">
+              Temperatura visual <output>{resolvedTemperature} K</output>
+            </span>
+            <input
+              aria-label="Temperatura visual"
+              id="light-temperature"
+              max="12000"
+              min="1800"
+              onChange={(event) => updateTemperature(event.target.value)}
+              step="50"
+              type="range"
+              value={clamp(resolvedTemperature, 1800, 12000)}
+            />
+          </label>
+
+          <div
+            aria-label="Predefinições de temperatura visual"
+            className="display-mode__preset-row"
+            role="group"
+          >
+            {TEMPERATURE_PRESETS.map((preset) => (
+              <button
+                aria-pressed={
+                  Math.abs(resolvedTemperature - preset.value) < 150
+                }
+                className="display-mode__preset-button"
+                key={preset.value}
+                onClick={() => updateTemperature(preset.value)}
+                type="button"
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
+        </>
       )}
+
+      <p className="display-mode__supporting-text">
+        {isColorMode
+          ? "Cores sólidas para cenário, chroma e atmosfera. A intensidade altera a cor renderizada; o brilho físico continua configurado no monitor."
+          : "Referência visual aproximada para chamadas ou luz ambiente. A tela não substitui uma luminária calibrada, e a intensidade não altera o brilho físico configurado no monitor."}
+      </p>
+    </>
+  );
+
+  return (
+    <DisplayToolShell
+      id={isColorMode ? "color" : "light"}
+      title={panelTitle}
+      controls={controls}
+      visible={showControls}
+      className={className}
+      aria-label={resolvedAriaLabel}
       data-mode={isColorMode ? "color" : "white"}
       style={{
         "--light-brightness": `${resolvedBrightness}%`,
@@ -224,142 +305,6 @@ export default function WhiteLightingMode({
         className="display-mode__canvas display-mode__canvas--light"
         style={{ backgroundColor: displayColor }}
       />
-
-      {showControls && !isPanelClosed ? (
-        <aside
-          aria-label={controlsLabel}
-          className="display-mode__controls display-mode__controls--light"
-        >
-          <div className="display-mode__panel-header">
-            <div>
-              <p className="display-mode__eyebrow">MonitorSmith</p>
-              <h2 className="display-mode__title">{panelTitle}</h2>
-            </div>
-            <button
-              ref={closePanelButtonRef}
-              aria-label="Ocultar painel de ajuste"
-              className="display-mode__icon-button"
-              onClick={closePanel}
-              type="button"
-              title="Ocultar painel"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-
-          <label className="display-mode__field" htmlFor="light-brightness">
-            <span className="display-mode__field-label">
-              Intensidade <output>{resolvedBrightness}%</output>
-            </span>
-            <input
-              aria-label="Intensidade da luz"
-              id="light-brightness"
-              max="100"
-              min="0"
-              onChange={(event) => updateBrightness(event.target.value)}
-              step="1"
-              type="range"
-              value={resolvedBrightness}
-            />
-          </label>
-
-          {isColorMode ? (
-            <>
-              <label className="display-mode__field" htmlFor="light-color">
-                <span className="display-mode__field-label">Cor personalizada</span>
-                <input
-                  aria-label="Escolher cor do estúdio"
-                  id="light-color"
-                  onChange={(event) => updateColor(event.target.value)}
-                  type="color"
-                  value={resolvedColor}
-                />
-              </label>
-
-              <div
-                aria-label="Cores sólidas rápidas"
-                className="display-mode__color-presets"
-                role="group"
-              >
-                {COLOR_STUDIO_PRESETS.map((preset) => (
-                  <button
-                    aria-pressed={resolvedColor === preset.value}
-                    className="display-mode__color-preset"
-                    key={preset.value}
-                    onClick={() => updateColor(preset.value)}
-                    type="button"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="display-mode__color-preset-swatch"
-                      style={{ backgroundColor: preset.value }}
-                    />
-                    <span>{preset.label}</span>
-                  </button>
-                ))}
-              </div>
-            </>
-          ) : (
-            <>
-              <label
-                className="display-mode__field"
-                htmlFor="light-temperature"
-              >
-                <span className="display-mode__field-label">
-                  Temperatura visual <output>{resolvedTemperature} K</output>
-                </span>
-                <input
-                  aria-label="Temperatura visual"
-                  id="light-temperature"
-                  max="12000"
-                  min="1800"
-                  onChange={(event) => updateTemperature(event.target.value)}
-                  step="50"
-                  type="range"
-                  value={clamp(resolvedTemperature, 1800, 12000)}
-                />
-              </label>
-
-              <div
-                aria-label="Predefinições de temperatura visual"
-                className="display-mode__preset-row"
-                role="group"
-              >
-                {TEMPERATURE_PRESETS.map((preset) => (
-                  <button
-                    aria-pressed={
-                      Math.abs(resolvedTemperature - preset.value) < 150
-                    }
-                    className="display-mode__preset-button"
-                    key={preset.value}
-                    onClick={() => updateTemperature(preset.value)}
-                    type="button"
-                  >
-                    {preset.label}
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
-
-          <p className="display-mode__supporting-text">
-            {isColorMode
-              ? "Cores sólidas para cenário, chroma e atmosfera. A intensidade altera a cor renderizada; o brilho físico continua configurado no monitor."
-              : "Referência visual aproximada para chamadas ou luz ambiente. A tela não substitui uma luminária calibrada, e a intensidade não altera o brilho físico configurado no monitor."}
-          </p>
-        </aside>
-      ) : showControls && isPanelClosed ? (
-        <button
-          ref={reopenPanelButtonRef}
-          type="button"
-          className="display-mode__reopen-panel-btn"
-          onClick={openPanel}
-          title="Abrir painel de ajustes"
-          aria-label="Abrir painel de ajustes"
-        >
-          <span>Opções de iluminação</span>
-        </button>
-      ) : null}
-    </section>
+    </DisplayToolShell>
   );
 }

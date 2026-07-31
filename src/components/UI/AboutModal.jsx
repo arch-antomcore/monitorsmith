@@ -6,7 +6,7 @@ import Modal from './Modal';
 const triggerStyle = (hasClassName) => ({
   background: 'none',
   border: 'none',
-  color: hasClassName ? undefined : 'rgba(255, 255, 255, 0.7)',
+  color: hasClassName ? undefined : 'var(--text-muted)',
   cursor: 'pointer',
   fontSize: hasClassName ? undefined : '0.75rem',
   textDecoration: hasClassName ? undefined : 'underline',
@@ -43,7 +43,7 @@ export default function AboutModal({ label = 'Sobre o MonitorSmith', className }
         size="lg"
         closeLabel="Fechar informações sobre o MonitorSmith"
       >
-        <div style={{ display: 'grid', gap: '20px', opacity: 0.82, fontSize: '0.9rem', lineHeight: 1.7 }}>
+        <div style={{ display: 'grid', gap: '20px', color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.7 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <BrandLogo size={38} />
             <p style={{ margin: 0, color: '#f59e0b', fontFamily: 'monospace', fontSize: '0.76rem', letterSpacing: '0.06em' }}>
@@ -63,7 +63,7 @@ export default function AboutModal({ label = 'Sobre o MonitorSmith', className }
               <Sparkle aria-hidden="true" size={18} color="#f59e0b" weight="fill" />
               Como a aplicação funciona
             </h3>
-            <p style={{ margin: 0, opacity: 0.7, fontSize: '0.85rem' }}>
+            <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.85rem' }}>
               Os padrões, temporizadores, mensagens e imagens importadas são processados
               localmente nesta aba. As fontes são entregues pela própria aplicação; a
               publicidade pode solicitar conteúdo de serviços externos. A instalação PWA melhora o
@@ -76,7 +76,7 @@ export default function AboutModal({ label = 'Sobre o MonitorSmith', className }
             <h3 id="about-limits-title" style={{ margin: '0 0 8px', color: 'inherit', fontSize: '0.95rem' }}>
               Inspeção visual, não certificação
             </h3>
-            <p style={{ margin: 0, opacity: 0.7, fontSize: '0.85rem' }}>
+            <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.85rem' }}>
               O MonitorSmith ajuda a observar o painel, mas não substitui colorímetro,
               osciloscópio, câmera de alta velocidade, assistência autorizada ou laudo
               técnico. Navegador, escala, perfil de cor, iluminação e o próprio monitor
@@ -95,7 +95,7 @@ export default function AboutModal({ label = 'Sobre o MonitorSmith', className }
             LinkedIn do responsável pelo projeto
           </a>
 
-          <p style={{ margin: 0, paddingTop: '14px', borderTop: '1px solid var(--ms-border, rgba(128,128,128,0.2))', opacity: 0.5, textAlign: 'center', fontFamily: 'monospace', fontSize: '0.75rem' }}>
+          <p style={{ margin: 0, paddingTop: '14px', borderTop: '1px solid var(--ms-border, rgba(128,128,128,0.2))', color: 'var(--text-muted)', textAlign: 'center', fontFamily: 'monospace', fontSize: '0.75rem' }}>
             © 2026 EXVORN.TECH · TODOS OS DIREITOS RESERVADOS
           </p>
         </div>

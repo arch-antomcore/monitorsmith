@@ -260,6 +260,16 @@ export function AppProvider({ children }) {
     },
   });
 
+  const openHelp = useCallback(() => {
+    setIsHelpOpen(true);
+    resetIdleTimer();
+  }, [resetIdleTimer]);
+
+  const closeHelp = useCallback(() => {
+    setIsHelpOpen(false);
+    resetIdleTimer();
+  }, [resetIdleTimer]);
+
   const value = useMemo(
     () => ({
       activeMode,
@@ -283,8 +293,8 @@ export function AppProvider({ children }) {
       isDockOpen,
       setIsDockOpen,
       isHelpOpen,
-      openHelp: () => { setIsHelpOpen(true); resetIdleTimer(); },
-      closeHelp: () => { setIsHelpOpen(false); resetIdleTimer(); },
+      openHelp,
+      closeHelp,
       restoreInterface,
       toast,
       showToast,
@@ -299,6 +309,7 @@ export function AppProvider({ children }) {
       activeMode,
       activeToolId,
       activateMode,
+      closeHelp,
       customColor,
       clearFullscreenError,
       clearWakeLockError,
@@ -310,6 +321,7 @@ export function AppProvider({ children }) {
       isHelpOpen,
       isWakeLockActive,
       message,
+      openHelp,
       resetIdleTimer,
       restoreInterface,
       showToast,

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
 
@@ -12,6 +12,15 @@ export default function BlackScreenMode({
   showHint = false,
 }) {
   const containerRef = useRef(null);
+  const [isHintVisible, setIsHintVisible] = useState(showHint);
+
+  useEffect(() => {
+    if (showHint) {
+      setIsHintVisible(true);
+      const timer = setTimeout(() => setIsHintVisible(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showHint]);
 
   useEffect(() => {
     if (!autoFocus || typeof document === "undefined") return;
@@ -38,7 +47,7 @@ export default function BlackScreenMode({
         className="display-mode__canvas display-mode__canvas--black"
       />
 
-      {showHint ? (
+      {isHintVisible ? (
         <p className="display-mode__hint display-mode__hint--inverse">{hint}</p>
       ) : null}
 

@@ -1,7 +1,6 @@
 import { forwardRef } from 'react';
-import { motion } from 'framer-motion';
-
-const joinClasses = (...values) => values.filter(Boolean).join(' ');
+import { motion, useReducedMotion } from 'framer-motion';
+import { cn } from '../../lib/utils';
 
 /**
  * Botão base do MonitorSmith. Mantém os estados visuais e de acessibilidade
@@ -28,12 +27,17 @@ const Button = forwardRef(function Button(
 
   const isDisabled = disabled || loading;
   const hasOnlyIcon = !children && Boolean(icon);
+  const shouldReduceMotion = useReducedMotion();
+
+  const buttonAriaLabel = hasOnlyIcon 
+    ? (buttonProps['aria-label'] || 'Botão com ícone')
+    : buttonProps['aria-label'];
 
   return (
     <motion.button
       ref={ref}
       type={type}
-      className={joinClasses(
+      className={cn(
         'wbp-button',
         `wbp-button--${variant}`,
         `wbp-button--${size}`,
@@ -44,13 +48,14 @@ const Button = forwardRef(function Button(
       )}
       data-variant={variant}
       disabled={isDisabled}
+      aria-label={buttonAriaLabel}
       aria-busy={loading || undefined}
       whileHover={
-        !isDisabled
+        !isDisabled && !shouldReduceMotion
           ? { y: -1, transition: { duration: 0.16 } }
           : undefined
       }
-      whileTap={!isDisabled ? { scale: 0.98 } : undefined}
+      whileTap={!isDisabled && !shouldReduceMotion ? { scale: 0.98 } : undefined}
       transition={{ type: 'spring', stiffness: 360, damping: 26 }}
       {...buttonProps}
       {...motionProps}
@@ -72,5 +77,4 @@ const Button = forwardRef(function Button(
   );
 });
 
-export { joinClasses };
 export default Button;

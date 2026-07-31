@@ -41,9 +41,8 @@ export function useIdleTimer({
     };
   }, []);
 
-  useEffect(() => {
-    callbacksRef.current = { onIdle, onActive };
-  }, [onActive, onIdle]);
+  // Update refs synchronously during render for immediate availability
+  callbacksRef.current = { onIdle, onActive };
 
   const setIdleState = useCallback((nextIsIdle) => {
     if (isIdleRef.current === nextIsIdle) {
@@ -142,13 +141,15 @@ export function useIdleTimer({
     };
   }, [clearIdleTimer, enabled, events, resetIdleTimer, setIdleState, timeout]);
 
-  return {
+  const getLastActivity = useCallback(() => lastActivityRef.current, []);
+
+  return useMemo(() => ({
     isIdle,
     lastActivity,
-    getLastActivity: () => lastActivityRef.current,
+    getLastActivity,
     resetIdleTimer,
     clearIdleTimer,
-  };
+  }), [isIdle, lastActivity, getLastActivity, resetIdleTimer, clearIdleTimer]);
 }
 
 export default useIdleTimer;

@@ -73,11 +73,10 @@ export function useKeyboardShortcuts(configOrShortcuts = {}, legacyHandlers, leg
   const handlersRef = useRef(handlers);
   const ignoreEditableRef = useRef(ignoreEditable);
 
-  useEffect(() => {
-    shortcutsRef.current = shortcuts;
-    handlersRef.current = handlers;
-    ignoreEditableRef.current = ignoreEditable;
-  }, [handlers, ignoreEditable, shortcuts]);
+  // Update refs synchronously during render for immediate availability
+  shortcutsRef.current = shortcuts;
+  handlersRef.current = handlers;
+  ignoreEditableRef.current = ignoreEditable;
 
   useEffect(() => {
     if (!canUseDom() || !enabled) {

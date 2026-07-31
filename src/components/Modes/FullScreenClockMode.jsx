@@ -292,11 +292,11 @@ export default function FullScreenClockMode({
             role="timer"
           >
             <span className="fullscreen-clock__hours">{clockParts.hours}</span>
-            <span aria-hidden="true" className="fullscreen-clock__separator">:</span>
+            <span aria-hidden="true" className="fullscreen-clock__separator" style={{ opacity: now.getSeconds() % 2 === 0 ? 1 : 0.3 }}>:</span>
             <span className="fullscreen-clock__minutes">{clockParts.minutes}</span>
             {resolvedShowSeconds ? (
               <>
-                <span aria-hidden="true" className="fullscreen-clock__separator">:</span>
+                <span aria-hidden="true" className="fullscreen-clock__separator" style={{ opacity: now.getSeconds() % 2 === 0 ? 1 : 0.3 }}>:</span>
                 <span className="fullscreen-clock__seconds">{clockParts.seconds}</span>
               </>
             ) : null}

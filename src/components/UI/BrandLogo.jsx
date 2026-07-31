@@ -5,7 +5,7 @@ export default function BrandLogo({ size = 30, className = '', style = {} }) {
   return (
     <img
       src="/favicon.svg"
-      alt="MonitorSmith Logo"
+      alt=""
       width={size}
       height={size}
       className={className}

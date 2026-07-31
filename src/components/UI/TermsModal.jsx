@@ -6,7 +6,7 @@ import Modal from './Modal';
 const triggerStyle = (hasClassName) => ({
   background: 'none',
   border: 'none',
-  color: hasClassName ? undefined : 'rgba(255, 255, 255, 0.62)',
+  color: hasClassName ? undefined : 'var(--text-muted)',
   cursor: 'pointer',
   fontSize: hasClassName ? undefined : '0.72rem',
   textDecoration: hasClassName ? undefined : 'underline',
@@ -15,7 +15,7 @@ const triggerStyle = (hasClassName) => ({
 
 const sectionStyle = { display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '10px' };
 const titleStyle = { margin: 0, color: 'inherit', fontSize: '0.96rem' };
-const paragraphStyle = { margin: '5px 0 0', opacity: 0.72, fontSize: '0.85rem' };
+const paragraphStyle = { margin: '5px 0 0', color: 'var(--text-muted)', fontSize: '0.85rem' };
 
 export default function TermsModal({ label = 'Termos de Uso', className }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +40,7 @@ export default function TermsModal({ label = 'Termos de Uso', className }) {
         size="lg"
         closeLabel="Fechar termos de uso"
       >
-        <div style={{ display: 'grid', gap: '20px', opacity: 0.82, lineHeight: 1.65 }}>
+        <div style={{ display: 'grid', gap: '20px', color: 'var(--text-muted)', lineHeight: 1.65 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <BrandLogo size={34} />
             <span style={{ color: '#f59e0b', fontFamily: 'monospace', fontSize: '0.76rem' }}>
@@ -115,7 +115,7 @@ export default function TermsModal({ label = 'Termos de Uso', className }) {
             </div>
           </section>
 
-          <p style={{ margin: 0, paddingTop: '14px', borderTop: '1px solid var(--ms-border, rgba(128,128,128,0.2))', opacity: 0.5, textAlign: 'center', fontFamily: 'monospace', fontSize: '0.74rem' }}>
+          <p style={{ margin: 0, paddingTop: '14px', borderTop: '1px solid var(--ms-border, rgba(128,128,128,0.2))', color: 'var(--text-muted)', textAlign: 'center', fontFamily: 'monospace', fontSize: '0.74rem' }}>
             Última atualização: 28 de julho de 2026 · EXVORN.TECH
           </p>
         </div>

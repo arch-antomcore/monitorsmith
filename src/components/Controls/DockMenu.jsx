@@ -98,7 +98,7 @@ export default function DockMenu({
   };
 
   return (
-    <AnimatePresence initial={false}>
+    <AnimatePresence>
       {!hidden ? (
         <motion.nav
           className={joinClasses('wbp-dock', className)}
