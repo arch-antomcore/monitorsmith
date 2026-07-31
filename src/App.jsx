@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 
-import Navbar from './components/Controls/Navbar';
+import AdaptiveNavbar from './components/Controls/AdaptiveNavbar';
 import DockMenu from './components/Controls/DockMenu';
 import KeyboardShortcutsModal from './components/Controls/KeyboardShortcutsModal';
 import ToolLibrary from './components/Home/ToolLibrary';
@@ -535,7 +535,7 @@ function DisplaySuite() {
         Pular para o conteúdo principal
       </a>
 
-      <Navbar
+      <AdaptiveNavbar
         activeMode={activeMode}
         onBrandClick={() => handleSelectMode(MODES.HOME)}
         onToggleFullscreen={toggleFullscreen}
