@@ -1,8 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import DisplayToolShell from "./DisplayToolShell";
-
-const classNames = (...names) => names.filter(Boolean).join(" ");
-
 const clamp = (value, minimum, maximum) =>
   Math.min(Math.max(value, minimum), maximum);
 
@@ -137,9 +134,6 @@ export default function WhiteLightingMode({
   const defaultModeTitle = isColorMode ? "Estúdio de cor" : "Luz suave";
   const panelTitle = title || defaultModeTitle;
   const resolvedAriaLabel = ariaLabel || panelTitle;
-  const controlsLabel = isColorMode
-    ? `Controles: ${panelTitle}`
-    : "Controles de iluminação";
   const baseTemperatureColor = useMemo(
     () => temperatureToRgb(resolvedTemperature),
     [resolvedTemperature],

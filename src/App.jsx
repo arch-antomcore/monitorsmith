@@ -36,7 +36,6 @@ const DEAD_PIXEL_PALETTE = [
   { id: 'black', label: 'Preto', value: '#000000' },
 ];
 
-const PRODUCT_DOCUMENT_TITLE = 'MonitorSmith — Ferramentas visuais para monitores';
 
 const SWIPE_EXCLUDED_SELECTOR = [
   'button',

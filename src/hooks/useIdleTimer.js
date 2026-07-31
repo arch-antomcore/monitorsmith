@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 
 const DEFAULT_EVENTS = [
   'pointermove',
@@ -41,8 +41,10 @@ export function useIdleTimer({
     };
   }, []);
 
-  // Update refs synchronously during render for immediate availability
-  callbacksRef.current = { onIdle, onActive };
+  // Update refs in an effect to avoid mutating during render
+  useEffect(() => {
+    callbacksRef.current = { onIdle, onActive };
+  }, [onIdle, onActive]);
 
   const setIdleState = useCallback((nextIsIdle) => {
     if (isIdleRef.current === nextIsIdle) {
