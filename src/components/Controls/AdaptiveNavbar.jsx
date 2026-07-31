@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, useSpring, AnimatePresence } from 'framer-motion';
+import { motion, useSpring } from 'framer-motion';
 import BrandLogo from '../UI/BrandLogo';
 import { ControlIcon } from './Navbar';
 import { getModePresentation } from '../../constants/shortcuts';
