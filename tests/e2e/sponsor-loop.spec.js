@@ -66,7 +66,9 @@ test('drop com DataTransfer funciona no palco inteiro e HUD respeita o shell', a
   expect(chromeGeometry.counterBottom).toBeLessThanOrEqual(chromeGeometry.dockTop - 4)
   expect(chromeGeometry.badgeTop).toBeGreaterThanOrEqual(chromeGeometry.navbarBottom + 4)
 
-  await page.getByRole('button', { name: 'Ocultar barras e interface (Modo imersivo)' }).click()
+  await page.locator('.wbp-navbar').hover({ force: true })
+  await page.waitForTimeout(300)
+  await page.getByRole('button', { name: 'Ocultar barras e interface (Modo imersivo)' }).click({ force: true })
   await expect(page.locator('.app-shell')).toHaveClass(/is-ui-idle/)
 
   const idleOffsets = await page.evaluate(() => ({

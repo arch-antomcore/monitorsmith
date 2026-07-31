@@ -49,24 +49,33 @@ export default function AdaptiveNavbar({
     };
   }, [hovering, pillWidth, EXPANDED_WIDTH, COLLAPSED_WIDTH]);
 
-  if (!visible) return null;
+  const wakeLockLabel = isWakeLockActive ? 'Tela sempre ligada (clique para desativar)' : 'Evitar que a tela apague (Manter tela ligada)';
+  const fullscreenLabel = isFullscreen ? 'Sair da tela cheia (Esc ou F)' : 'Ocupar 100% da tela / Tela cheia (F)';
 
   return (
     <div 
-      className="fixed z-50 flex justify-center w-full pointer-events-none transition-all duration-300 ease-out"
-      style={{ top: 'calc(18px + env(safe-area-inset-top))' }}
+      className="fixed top-0 z-50 flex justify-center w-full pointer-events-none transition-all duration-300 ease-out"
+      style={{ 
+        paddingTop: 'calc(12px + env(safe-area-inset-top))',
+        opacity: visible ? 1 : 0,
+      }}
     >
-      <motion.nav
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={() => setHovering(false)}
-        className="relative rounded-full pointer-events-auto flex items-center justify-center"
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      <div 
+        className="wbp-navbar flex justify-center items-center"
+        style={{ height: '48px', padding: 0, margin: 0, width: '100%' }}
+      >
+        <motion.nav
+          onMouseEnter={() => setHovering(true)}
+          onMouseLeave={() => setHovering(false)}
+          className="relative rounded-full pointer-events-auto flex items-center justify-center"
+        aria-hidden={!visible}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.1 }}
         style={{
           width: pillWidth,
-          height: '56px',
-          // Adaptação Dark Mode Glassmorphism do background original
+          maxWidth: 'calc(100vw - 32px)',
+          height: '48px',
           background: `
             linear-gradient(135deg, 
               rgba(28, 30, 38, 0.85) 0%, 
@@ -101,7 +110,7 @@ export default function AdaptiveNavbar({
           transition: 'box-shadow 0.3s ease-out',
         }}
       >
-        {/* Geometria 3D Original - Cores adaptadas para Dark Mode */}
+        {/* Geometria 3D Original */}
         <div 
           className="absolute inset-x-0 top-0 rounded-t-full pointer-events-none"
           style={{
@@ -159,108 +168,104 @@ export default function AdaptiveNavbar({
           }}
         />
 
-        {/* Navigation items container */}
         <div className="relative z-10 h-full w-full flex items-center justify-center px-4 overflow-hidden">
-          
           {/* Collapsed State: Logo + Brand Name */}
-          <AnimatePresence mode="wait">
-            {!expanded && (
-              <motion.div
-                key="collapsed"
-                initial={{ opacity: 0, filter: 'blur(4px)' }}
-                animate={{ opacity: 1, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, filter: 'blur(4px)' }}
-                transition={{ duration: 0.15 }}
-                className="flex items-center gap-2 cursor-default select-none whitespace-nowrap absolute"
-              >
-                <BrandLogo size={22} />
-                <div className="flex flex-col leading-none" style={{ marginTop: '2px' }}>
-                  <span className="font-bold text-[0.85rem] tracking-wider text-white" style={{ fontFamily: 'Inter, sans-serif' }}>
-                    {showModeContext && mode.title ? mode.title.toUpperCase() : brandName}
-                  </span>
-                  {!showModeContext && (
-                    <span className="text-[0.58rem] font-mono tracking-widest text-amber-500/90 font-medium mt-0.5">
-                      {productName}
-                    </span>
-                  )}
-                </div>
-              </motion.div>
+          <div
+            className="flex items-center gap-2 cursor-default select-none whitespace-nowrap absolute transition-all duration-200"
+            style={{ 
+              opacity: expanded ? 0 : 1, 
+              filter: expanded ? 'blur(4px)' : 'blur(0px)',
+              pointerEvents: expanded ? 'none' : 'auto',
+              transform: expanded ? 'scale(0.9)' : 'scale(1)'
+            }}
+          >
+            <BrandLogo size={22} />
+            <div className="flex flex-col leading-none" style={{ marginTop: '2px' }}>
+              <span className="font-bold text-[0.85rem] tracking-wider text-white" style={{ fontFamily: 'Inter, sans-serif' }}>
+                {showModeContext && mode.title ? mode.title.toUpperCase() : brandName}
+              </span>
+              {!showModeContext && (
+                <span className="text-[0.58rem] font-mono tracking-widest text-amber-500/90 font-medium mt-0.5">
+                  {productName}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Expanded State: Actions */}
+          <div
+            className="flex items-center justify-evenly w-full absolute px-3 transition-all duration-200 delay-75"
+            style={{ 
+              opacity: expanded ? 1 : 0, 
+              filter: expanded ? 'blur(0px)' : 'blur(4px)',
+              pointerEvents: expanded ? 'auto' : 'none',
+              transform: expanded ? 'scale(1)' : 'scale(0.9)'
+            }}
+          >
+            {showModeContext && onBrandClick && (
+              <Button
+                variant="ghost"
+                size="sm"
+                icon={<ControlIcon name="home" size={18} />}
+                aria-label="Voltar às ferramentas"
+                title="Voltar às ferramentas (H)"
+                onClick={onBrandClick}
+                className="!p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full"
+              />
             )}
 
-            {/* Expanded State: Actions */}
-            {expanded && (
-              <motion.div
-                key="expanded"
-                initial={{ opacity: 0, filter: 'blur(4px)' }}
-                animate={{ opacity: 1, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, filter: 'blur(4px)' }}
-                transition={{ duration: 0.2, delay: 0.05 }}
-                className="flex items-center justify-evenly w-full absolute px-3"
-              >
-                {showModeContext && onBrandClick && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    icon={<ControlIcon name="home" size={18} />}
-                    aria-label="Ir para Início"
-                    title="Início (H)"
-                    onClick={onBrandClick}
-                    className="!p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full"
-                  />
-                )}
-
-                {onToggleFullscreen && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    icon={<ControlIcon name={isFullscreen ? 'minimize' : 'fullscreen'} size={18} />}
-                    aria-label={isFullscreen ? 'Sair da tela cheia' : 'Tela cheia'}
-                    title={isFullscreen ? 'Sair (Esc/F)' : 'Tela Cheia (F)'}
-                    onClick={onToggleFullscreen}
-                    className="!p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full"
-                  />
-                )}
-
-                {showModeContext && onToggleWakeLock && (
-                  <Button
-                    variant={isWakeLockActive ? 'active' : 'ghost'}
-                    size="sm"
-                    icon={<ControlIcon name="wake" size={18} />}
-                    aria-label="Manter tela ligada"
-                    title="Manter Tela Ligada"
-                    onClick={onToggleWakeLock}
-                    className={`!p-1.5 rounded-full ${isWakeLockActive ? 'text-amber-400 bg-amber-500/20' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
-                  />
-                )}
-
-                {showModeContext && onHideUi && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    icon={<ControlIcon name="x" size={18} />}
-                    aria-label="Ocultar barras"
-                    title="Ocultar Interface (×)"
-                    onClick={onHideUi}
-                    className="!p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full"
-                  />
-                )}
-
-                {onOpenHelp && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    icon={<ControlIcon name="help" size={18} />}
-                    aria-label="Atalhos"
-                    title="Atalhos (K)"
-                    onClick={onOpenHelp}
-                    className="!p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full"
-                  />
-                )}
-              </motion.div>
+            {onToggleFullscreen && (
+              <Button
+                variant="ghost"
+                size="sm"
+                icon={<ControlIcon name={isFullscreen ? 'minimize' : 'fullscreen'} size={18} />}
+                aria-label={fullscreenLabel}
+                title={fullscreenLabel}
+                onClick={onToggleFullscreen}
+                className="!p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full"
+              />
             )}
-          </AnimatePresence>
+
+            {showModeContext && onToggleWakeLock && (
+              <Button
+                variant={isWakeLockActive ? 'active' : 'ghost'}
+                size="sm"
+                icon={<ControlIcon name="wake" size={18} />}
+                aria-label={wakeLockLabel}
+                aria-pressed={isWakeLockActive}
+                title={wakeLockLabel}
+                onClick={onToggleWakeLock}
+                className={`!p-1.5 rounded-full ${isWakeLockActive ? 'text-amber-400 bg-amber-500/20' : 'text-white/80 hover:text-white hover:bg-white/10'}`}
+              />
+            )}
+
+            {showModeContext && onHideUi && (
+              <Button
+                variant="ghost"
+                size="sm"
+                icon={<ControlIcon name="x" size={18} />}
+                aria-label="Ocultar barras e interface (Modo imersivo)"
+                title="Ocultar barras e controles (×)"
+                onClick={onHideUi}
+                className="!p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full"
+              />
+            )}
+
+            {onOpenHelp && (
+              <Button
+                variant="ghost"
+                size="sm"
+                icon={<ControlIcon name="help" size={18} />}
+                aria-label="Abrir atalhos de teclado"
+                title="Atalhos de teclado (? / K)"
+                onClick={onOpenHelp}
+                className="!p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full"
+              />
+            )}
+          </div>
         </div>
       </motion.nav>
     </div>
+  </div>
   );
 }

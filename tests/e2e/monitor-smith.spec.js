@@ -317,7 +317,9 @@ test('ocultação manual restaura a interface no primeiro movimento', async ({ p
   await page.goto('/#black')
 
   const navbar = page.locator('.wbp-navbar')
-  await page.getByRole('button', { name: 'Ocultar barras e interface (Modo imersivo)' }).click()
+  await page.locator('.wbp-navbar').hover({ force: true })
+  await page.waitForTimeout(300)
+  await page.getByRole('button', { name: 'Ocultar barras e interface (Modo imersivo)' }).click({ force: true })
   await expect(navbar).toHaveAttribute('aria-hidden', 'true')
 
   await page.mouse.move(120, 260)
@@ -350,7 +352,9 @@ test('guia de calibração integra o painel e acompanha o modo imersivo', async 
   expect(geometry.guide.bottom).toBeLessThanOrEqual(geometry.panel.bottom)
   expect(geometry.guide.left).toBeGreaterThanOrEqual(geometry.panel.left)
 
-  await page.getByRole('button', { name: 'Ocultar barras e interface (Modo imersivo)' }).click()
+  await page.locator('.wbp-navbar').hover({ force: true })
+  await page.waitForTimeout(300)
+  await page.getByRole('button', { name: 'Ocultar barras e interface (Modo imersivo)' }).click({ force: true })
   await expect(panel).toBeHidden()
   await expect(page.locator('.calibration-lab__guide')).toHaveCount(0)
 
@@ -451,6 +455,13 @@ test('shell permanece contido nos viewports mínimos portrait e landscape', asyn
       expectRectInsideViewport(geometry.navbar, geometry.viewport, `${toolId}: navbar`)
       expectRectInsideViewport(geometry.dock, geometry.viewport, `${toolId}: dock`)
       if (geometry.panel) {
+        const navbarHtml = await page.evaluate(() => {
+          const el = document.querySelector('.wbp-navbar');
+          return el ? el.outerHTML : 'null';
+        });
+        console.log(`geometry.navbar HTML: `, navbarHtml)
+        console.log(`geometry.navbar: `, geometry.navbar)
+        console.log(`geometry.panel: `, geometry.panel)
         expectRectInsideViewport(geometry.panel, geometry.viewport, `${toolId}: painel`)
         expect(geometry.panel.top, `${toolId}: painel abaixo da navbar`).toBeGreaterThanOrEqual(
           geometry.navbar.bottom + 4,

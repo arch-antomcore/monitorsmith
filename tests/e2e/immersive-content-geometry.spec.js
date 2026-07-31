@@ -18,9 +18,11 @@ const settleLayout = (page) =>
   )
 
 const hideInterface = async (page) => {
+  await page.locator('.wbp-navbar').hover({ force: true })
+  await page.waitForTimeout(300)
   await page.getByRole('button', {
     name: 'Ocultar barras e interface (Modo imersivo)',
-  }).click()
+  }).click({ force: true })
   await expect(page.locator('.wbp-navbar')).toHaveAttribute('aria-hidden', 'true')
   await expect(page.locator('.display-mode__controls')).toHaveCount(0)
 }
