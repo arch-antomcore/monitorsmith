@@ -77,7 +77,7 @@ export function FooterSection({ onLaunch }) {
           {/* Coluna 1: Marca & Missão */}
           <div className="lg:col-span-2 space-y-5">
             <div className="flex items-center gap-3">
-              <BrandLogo size={34} />
+              <BrandLogo size={24} className="translate-y-[1px]" />
               <span className="text-xl font-extrabold tracking-tight text-white font-mono">
                 MONITOR<span className="text-amber-400">SMITH</span>
               </span>
