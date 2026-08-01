@@ -2291,7 +2291,7 @@ p.display-mode__instructions {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  color: var(--accent);
+  color: var(--fg-dim);
   /* NOTE: transform handled by Framer Motion iconMotionVariants */
   transition: color 260ms ease;
 }
@@ -2303,18 +2303,7 @@ p.display-mode__instructions {
   box-shadow: none !important;
 }
 
-/* Per-tone icon colors */
-.ms-tool-card--void .ms-card__icon-area { color: #F59E0B; }
-.ms-tool-card--light .ms-card__icon-area { color: #FEF3C7; }
-.ms-tool-card--pixel .ms-card__icon-area { color: #60A5FA; }
-.ms-tool-card--clean .ms-card__icon-area { color: #E4E4E7; }
-.ms-tool-card--calibration .ms-card__icon-area { color: #F97316; }
-.ms-tool-card--color .ms-card__icon-area { color: #FBBF24; }
-.ms-tool-card--green .ms-card__icon-area { color: #10B981; }
-.ms-tool-card--focus .ms-card__icon-area { color: #F59E0B; }
-.ms-tool-card--clock .ms-card__icon-area { color: #38BDF8; }
-.ms-tool-card--message .ms-card__icon-area { color: #F59E0B; }
-
+/* Per-tone icon colors removed for monochrome look */
 /* Titles container */
 .ms-card__titles {
   display: flex;
@@ -2442,18 +2431,7 @@ p.display-mode__instructions {
   opacity: 0.18;
 }
 
-/* Per-tone decorative icon colors */
-.ms-tool-card--void .ms-card__decor { color: #F59E0B; }
-.ms-tool-card--light .ms-card__decor { color: #FEF3C7; }
-.ms-tool-card--pixel .ms-card__decor { color: #60A5FA; }
-.ms-tool-card--clean .ms-card__decor { color: #E4E4E7; }
-.ms-tool-card--calibration .ms-card__decor { color: #F97316; }
-.ms-tool-card--color .ms-card__decor { color: #FBBF24; }
-.ms-tool-card--green .ms-card__decor { color: #10B981; }
-.ms-tool-card--focus .ms-card__decor { color: #F59E0B; }
-.ms-tool-card--clock .ms-card__decor { color: #38BDF8; }
-.ms-tool-card--message .ms-card__decor { color: #F59E0B; }
-
+/* Per-tone decorative icon colors removed for monochrome look */
 /* New inspection and presence tools. */
 .display-mode--calibration {
   place-items: center;
