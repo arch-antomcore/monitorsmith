@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowRight } from '@phosphor-icons/react';
+import ArrowRightBold from '../Icons/ArrowRightBold';
 import BrandLogo from './BrandLogo';
 import Modal from './Modal';
 
@@ -120,7 +120,7 @@ export default function FlowButton({ text = 'Instalar MonitorSmith', onClick }) 
       >
         <span className="ms-motion-btn__circle" aria-hidden="true" />
         <div className="ms-motion-btn__icon" aria-hidden="true">
-          <ArrowRight size={20} weight="bold" />
+          <ArrowRightBold width={20} height={20} />
         </div>
         <span className="ms-motion-btn__text">{text}</span>
       </button>

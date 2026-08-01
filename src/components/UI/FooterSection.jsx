@@ -1,11 +1,9 @@
 import React from "react";
-import { 
-  Sparkle, 
-  TerminalWindow, 
-  Sun, 
-  Moon, 
-  LinkedinLogo
-} from "@phosphor-icons/react";
+import SparkleDuotone from '../Icons/SparkleDuotone';
+import TerminalWindowDuotone from '../Icons/TerminalWindowDuotone';
+import SunDuotone from '../Icons/SunDuotone';
+import MoonDuotone from '../Icons/MoonDuotone';
+import LinkedinLogoRegular from '../Icons/LinkedinLogoRegular';
 import BrandLogo from "./BrandLogo";
 import AboutModal from "./AboutModal";
 import PrivacyModal from "./PrivacyModal";
@@ -99,7 +97,7 @@ export function FooterSection({ onLaunch }) {
                 aria-label="LinkedIn EXVORN.TECH"
                 className="w-9 h-9 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] flex items-center justify-center text-white/80 hover:text-white transition-all hover:scale-105"
               >
-                <LinkedinLogo size={18} />
+                <LinkedinLogoRegular width={20} height={20} weight="fill" />
               </a>
               <div className="h-4 w-[1px] bg-white/[0.1] mx-1" />
               <button
@@ -109,12 +107,12 @@ export function FooterSection({ onLaunch }) {
               >
                 {isDarkMode ? (
                   <>
-                    <Moon size={15} className="text-amber-400" />
+                    <MoonDuotone width={18} height={18} className="text-amber-400" />
                     <span>Modo Escuro</span>
                   </>
                 ) : (
                   <>
-                    <Sun size={15} className="text-amber-500" />
+                    <SunDuotone width={18} height={18} className="text-amber-500" />
                     <span>Modo Claro</span>
                   </>
                 )}
@@ -125,7 +123,7 @@ export function FooterSection({ onLaunch }) {
           {/* Coluna 2: Ferramentas Rápidas */}
           <div className="space-y-4">
             <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-2">
-              <TerminalWindow size={16} className="text-amber-400" />
+              <TerminalWindowDuotone width={16} height={16} className="text-amber-400" />
               <span>Ferramentas Rápidas</span>
             </h3>
             <ul className="space-y-2.5 text-sm text-white/70">
@@ -199,7 +197,7 @@ export function FooterSection({ onLaunch }) {
           {/* Coluna 3: Estúdio e display */}
           <div className="space-y-4">
             <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-2">
-              <Sparkle size={16} className="text-amber-400" />
+              <SparkleDuotone width={16} height={16} className="text-amber-400" />
               <span>Estúdio & Display</span>
             </h3>
             <ul className="space-y-2.5 text-sm text-white/70">
@@ -234,7 +232,7 @@ export function FooterSection({ onLaunch }) {
           {/* Coluna 4: Atualizações do produto */}
           <div className="space-y-4">
             <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-2">
-              <Sparkle size={16} className="text-amber-400" />
+              <SparkleDuotone width={16} height={16} className="text-amber-400" />
               <span>Novidades</span>
             </h3>
             <p className="text-xs text-white/70 leading-relaxed">
@@ -245,7 +243,7 @@ export function FooterSection({ onLaunch }) {
               href="#monitor-tools"
               className="w-full py-2 px-3 rounded-lg bg-white/[0.08] hover:bg-amber-500 hover:text-black border border-white/[0.08] hover:border-transparent text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center gap-2"
             >
-              <TerminalWindow size={16} aria-hidden="true" />
+              <SparkleDuotone width={16} height={16} aria-hidden="true" />
               Explorar ferramentas
             </a>
             <span className="text-[10px] text-white/60 block">

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import CaretLeftBold from '../Icons/CaretLeftBold';
+import CaretRightBold from '../Icons/CaretRightBold';
 import { AnimatePresence, motion } from 'framer-motion';
 import { cn } from '../../lib/utils';
 import { ControlIcon } from './Navbar';
@@ -116,7 +117,7 @@ export default function DockMenu({
             aria-label="Ferramenta anterior"
             title="Ferramenta anterior (←)"
           >
-            <CaretLeft size={16} weight="bold" />
+            <CaretLeftBold width={16} height={16} />
           </button>
 
           <div ref={modesRef} className="wbp-dock__modes" role="toolbar" aria-label="Modos de exibição">
@@ -163,7 +164,7 @@ export default function DockMenu({
             aria-label="Próxima ferramenta"
             title="Próxima ferramenta (→)"
           >
-            <CaretRight size={16} weight="bold" />
+            <CaretRightBold width={16} height={16} />
           </button>
 
         </motion.nav>

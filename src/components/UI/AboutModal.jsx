@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { LinkedinLogo, Sparkle } from '@phosphor-icons/react';
+import LinkedinLogoRegular from '../Icons/LinkedinLogoRegular';
+import SparkleFill from '../Icons/SparkleFill';
 import BrandLogo from './BrandLogo';
 import Modal from './Modal';
 
@@ -60,7 +61,7 @@ export default function AboutModal({ label = 'Sobre o MonitorSmith', className }
 
           <section style={sectionStyle} aria-labelledby="about-privacy-title">
             <h3 id="about-privacy-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 8px', color: 'inherit', fontSize: '0.95rem' }}>
-              <Sparkle aria-hidden="true" size={18} color="#f59e0b" weight="fill" />
+              <SparkleFill aria-hidden="true" width={18} height={18} color="#f59e0b" />
               Como a aplicação funciona
             </h3>
             <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.85rem' }}>
@@ -91,7 +92,7 @@ export default function AboutModal({ label = 'Sobre o MonitorSmith', className }
             className="wbp-button wbp-button--secondary"
             style={{ justifySelf: 'start', display: 'inline-flex', alignItems: 'center', gap: '10px', color: 'inherit', textDecoration: 'none' }}
           >
-            <LinkedinLogo aria-hidden="true" size={20} color="#60a5fa" />
+            <LinkedinLogoRegular aria-hidden="true" width={20} height={20} color="#60a5fa" />
             LinkedIn do responsável pelo projeto
           </a>
 

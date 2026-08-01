@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { ArrowClockwise, DeviceMobile, HardDrives } from '@phosphor-icons/react';
+import ArrowClockwiseRegular from '../Icons/ArrowClockwiseRegular';
+import DeviceMobileFill from '../Icons/DeviceMobileFill';
+import HardDrivesRegular from '../Icons/HardDrivesRegular';
 import BrandLogo from './BrandLogo';
 import Button from './Button';
 import Modal from './Modal';
@@ -174,7 +176,7 @@ export default function PwaModal({ label = 'Instalar app e usar offline', classN
 
           <section style={{ padding: '16px', border: '1px solid var(--ms-border, rgba(128,128,128,0.2))', borderRadius: '14px', background: 'var(--ms-surface-dim, rgba(128,128,128,0.08))' }} aria-labelledby="pwa-status-title">
             <h3 id="pwa-status-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 8px', color: 'inherit', fontSize: '0.94rem' }}>
-              <HardDrives aria-hidden="true" size={18} color="#f59e0b" />
+              <HardDrivesRegular aria-hidden="true" width={18} height={18} color="#f59e0b" />
               Estado local
             </h3>
             <p role="status" aria-live="polite" style={{ margin: 0, opacity: 0.72, fontSize: '0.83rem' }}>
@@ -184,7 +186,7 @@ export default function PwaModal({ label = 'Instalar app e usar offline', classN
 
           <section aria-labelledby="pwa-install-title">
             <h3 id="pwa-install-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 8px', color: 'inherit', fontSize: '0.94rem' }}>
-              <DeviceMobile aria-hidden="true" size={18} color="#f59e0b" weight="fill" />
+              <DeviceMobileFill aria-hidden="true" width={18} height={18} color="#f59e0b" />
               Como instalar
             </h3>
             <ul style={{ margin: 0, paddingLeft: '20px', opacity: 0.72, fontSize: '0.84rem' }}>
@@ -201,7 +203,7 @@ export default function PwaModal({ label = 'Instalar app e usar offline', classN
 
           <Button
             fullWidth
-            icon={<ArrowClockwise size={18} />}
+            icon={<ArrowClockwiseRegular width={18} height={18} />}
             loading={isUpdating}
             loadingLabel="Verificando atualização"
             onClick={handleReloadCache}

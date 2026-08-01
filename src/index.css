@@ -1,5 +1,63 @@
 @import './styles/globals.css';
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "@fontsource-variable/geist";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .theme {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Geist Variable', sans-serif
+  }
+  :root, .dark {
+    --background: var(--void);
+    --foreground: var(--text);
+    --card: var(--surface);
+    --card-foreground: var(--text-strong);
+    --popover: var(--surface-raised);
+    --popover-foreground: var(--text-strong);
+    --primary: var(--accent);
+    --primary-foreground: var(--accent-ink);
+    --secondary: rgba(255, 255, 255, 0.05);
+    --secondary-foreground: var(--text-strong);
+    --muted: rgba(255, 255, 255, 0.03);
+    --muted-foreground: var(--text-muted);
+    --accent: var(--accent-glow);
+    --accent-foreground: var(--accent);
+    --destructive: var(--danger);
+    --border: var(--line);
+    --input: var(--line);
+    --ring: var(--accent);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: var(--radius-md);
+    --sidebar: var(--surface);
+    --sidebar-foreground: var(--text);
+    --sidebar-primary: var(--accent);
+    --sidebar-primary-foreground: var(--accent-ink);
+    --sidebar-accent: rgba(255, 255, 255, 0.05);
+    --sidebar-accent-foreground: var(--text-strong);
+    --sidebar-border: var(--line);
+    --sidebar-ring: var(--accent);
+  }
+  * {
+    @apply border-border outline-ring;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}

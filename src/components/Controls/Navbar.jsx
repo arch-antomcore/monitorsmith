@@ -1,25 +1,23 @@
 import { useEffect, useState } from 'react';
-import {
-  ArrowLeft,
-  Broom,
-  ChatTeardropText,
-  Clock,
-  Compass,
-  CornersIn,
-  CornersOut,
-  EyeSlash,
-  GridFour,
-  House,
-  Lightning,
-  Moon,
-  Palette,
-  Question,
-  Slideshow,
-  Sparkle,
-  SunDim,
-  Timer,
-  X,
-} from '@phosphor-icons/react';
+import ArrowLeftBold from '../Icons/ArrowLeftBold';
+import BroomDuotone from '../Icons/BroomDuotone';
+import ChatTeardropTextDuotone from '../Icons/ChatTeardropTextDuotone';
+import ClockDuotone from '../Icons/ClockDuotone';
+import CompassDuotone from '../Icons/CompassDuotone';
+import CornersInBold from '../Icons/CornersInBold';
+import CornersOutBold from '../Icons/CornersOutBold';
+import EyeSlashDuotone from '../Icons/EyeSlashDuotone';
+import GridFourDuotone from '../Icons/GridFourDuotone';
+import HouseDuotone from '../Icons/HouseDuotone';
+import LightningFill from '../Icons/LightningFill';
+import MoonDuotone from '../Icons/MoonDuotone';
+import PaletteDuotone from '../Icons/PaletteDuotone';
+import QuestionDuotone from '../Icons/QuestionDuotone';
+import SlideshowDuotone from '../Icons/SlideshowDuotone';
+import SparkleDuotone from '../Icons/SparkleDuotone';
+import SunDimDuotone from '../Icons/SunDimDuotone';
+import TimerDuotone from '../Icons/TimerDuotone';
+import XBold from '../Icons/XBold';
 import { motion } from 'framer-motion';
 import Button from '../UI/Button';
 import { cn } from '../../lib/utils';
@@ -28,95 +26,73 @@ import { getModePresentation } from '../../constants/shortcuts';
 
 export function ControlIcon({ name, size = 18, title }) {
   let IconComponent;
-  let weight;
-
   switch (name) {
     case 'arrowLeft':
-      IconComponent = ArrowLeft;
-      weight = 'bold';
+      IconComponent = ArrowLeftBold;
       break;
     case 'home':
-      IconComponent = House;
-      weight = 'duotone';
+      IconComponent = HouseDuotone;
       break;
     case 'fullscreen':
-      IconComponent = CornersOut;
-      weight = 'bold';
+      IconComponent = CornersOutBold;
       break;
     case 'minimize':
-      IconComponent = CornersIn;
-      weight = 'bold';
+      IconComponent = CornersInBold;
       break;
     case 'wake':
-      IconComponent = Lightning;
-      weight = 'fill';
+      IconComponent = LightningFill;
       break;
     case 'help':
-      IconComponent = Question;
-      weight = 'duotone';
+      IconComponent = QuestionDuotone;
       break;
     case 'hideUi':
-      IconComponent = EyeSlash;
-      weight = 'duotone';
+      IconComponent = EyeSlashDuotone;
       break;
     case 'close':
     case 'x':
-      IconComponent = X;
-      weight = 'bold';
+      IconComponent = XBold;
       break;
     case 'void':
-      IconComponent = Moon;
-      weight = 'duotone';
+      IconComponent = MoonDuotone;
       break;
     case 'sun':
-      IconComponent = SunDim;
-      weight = 'duotone';
+      IconComponent = SunDimDuotone;
       break;
     case 'cleaner':
-      IconComponent = Broom;
-      weight = 'duotone';
+      IconComponent = BroomDuotone;
       break;
     case 'pixels':
-      IconComponent = GridFour;
-      weight = 'duotone';
+      IconComponent = GridFourDuotone;
       break;
     case 'calibration':
-      IconComponent = Compass;
-      weight = 'duotone';
+      IconComponent = CompassDuotone;
       break;
     case 'timer':
-      IconComponent = Timer;
-      weight = 'duotone';
+      IconComponent = TimerDuotone;
       break;
     case 'clock':
-      IconComponent = Clock;
-      weight = 'duotone';
+      IconComponent = ClockDuotone;
       break;
     case 'message':
-      IconComponent = ChatTeardropText;
-      weight = 'duotone';
+      IconComponent = ChatTeardropTextDuotone;
       break;
     case 'color':
-      IconComponent = Palette;
-      weight = 'duotone';
+      IconComponent = PaletteDuotone;
       break;
     case 'spark':
-      IconComponent = Sparkle;
-      weight = 'duotone';
+      IconComponent = SparkleDuotone;
       break;
     case 'sponsor':
-      IconComponent = Slideshow;
-      weight = 'duotone';
+      IconComponent = SlideshowDuotone;
       break;
     default:
-      IconComponent = Sparkle;
-      weight = 'duotone';
+      IconComponent = SparkleDuotone;
   }
 
   return (
     <span className="wbp-icon" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
       {title ? <span className="sr-only">{title}</span> : null}
-      <IconComponent size={size} weight={weight} aria-hidden={title ? undefined : true} />
+      <IconComponent width={size} height={size} aria-hidden={title ? undefined : true} />
     </span>
   );
 }
@@ -256,7 +232,7 @@ export default function Navbar({
               aria-hidden={showModeContext ? true : undefined}
               aria-label="Voltar às ferramentas"
             >
-              <BrandLogo size={16} />
+              <BrandLogo size={18} className="translate-y-[1px]" />
               <div className={cn("wbp-navbar__title-block flex flex-col leading-none min-w-0 overflow-hidden", showModeContext && "hidden sm:flex")}>
                 <span className="wbp-navbar__brand-name font-bold text-[0.88rem] tracking-wider text-white group-hover:text-amber-400 transition-colors truncate">
                   {brandName}
@@ -268,7 +244,7 @@ export default function Navbar({
             </button>
           ) : (
             <div className="wbp-navbar__brand flex items-center gap-2.5 min-w-0 flex-shrink">
-              <BrandLogo size={16} />
+              <BrandLogo size={18} className="translate-y-[1px]" />
               <div className={cn("wbp-navbar__title-block flex flex-col leading-none min-w-0 overflow-hidden", showModeContext && "hidden sm:flex")}>
                 <span className="wbp-navbar__brand-name font-bold text-[0.88rem] tracking-wider text-white truncate">
                   {brandName}

@@ -1,6 +1,7 @@
 import { useId, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Minus, Plus } from '@phosphor-icons/react';
+import MinusRegular from '../Icons/MinusRegular';
+import PlusRegular from '../Icons/PlusRegular';
 import { cn } from '../../lib/utils';
 
 export function FaqAccordion({
@@ -76,7 +77,7 @@ export function FaqAccordion({
                   )}
                   aria-hidden="true"
                 >
-                  {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                  {isOpen ? <MinusRegular className="h-4 w-4" /> : <PlusRegular className="h-4 w-4" />}
                 </span>
               </button>
             </h3>
