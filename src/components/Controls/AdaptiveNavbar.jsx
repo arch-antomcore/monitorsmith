@@ -133,7 +133,7 @@ export default function AdaptiveNavbar({
         onClick={handleNavClick}
         aria-hidden={!visible}
         className={cn(
-          "wbp-navbar flex items-center overflow-hidden rounded-full h-12 pointer-events-auto bg-background/80 backdrop-blur-md border border-border shadow-sm",
+          "wbp-navbar flex items-center overflow-hidden rounded-full h-12 pointer-events-auto glass3d border border-border shadow-sm",
           !isExpanded && "cursor-pointer justify-center"
         )}
       >
@@ -196,7 +196,7 @@ export default function AdaptiveNavbar({
           )}
         </motion.div>
         
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="!absolute inset-0 flex items-center justify-center pointer-events-none">
           <motion.div
             variants={collapsedIconVariants}
             animate={isExpanded ? "expanded" : "collapsed"}
