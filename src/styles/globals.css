@@ -3690,9 +3690,10 @@ p.display-mode__instructions {
 
   .sponsor-loop__thumb {
     display: grid;
-    width: 96px;
+    width: auto;
+    min-width: 104px;
     height: 48px;
-    grid-template-columns: minmax(0, 1fr) 44px;
+    grid-template-columns: minmax(48px, 1fr) 46px;
     gap: 4px;
     overflow: visible;
     background: transparent;

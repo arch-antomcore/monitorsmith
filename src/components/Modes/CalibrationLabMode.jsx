@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useReducedMotion, motion, AnimatePresence } from "framer-motion";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
 const isFiniteBoolean = (value) => typeof value === "boolean";
@@ -127,15 +127,21 @@ function GrayscalePattern({ showGuidance }) {
           key={step.id}
           style={{ backgroundColor: `rgb(${step.value} ${step.value} ${step.value})` }}
         >
+          <AnimatePresence>
           {showGuidance ? (
-            <span
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ type: "spring", stiffness: 350, damping: 28 }}
               aria-hidden="true"
               className="calibration-lab__grayscale-label"
               style={{ color: step.value > 142 ? "#111111" : "#FFFFFF" }}
             >
               {step.label}
-            </span>
+            </motion.span>
           ) : null}
+          </AnimatePresence>
         </div>
       ))}
     </div>
@@ -166,8 +172,13 @@ function NearBlackPattern({ showGuidance }) {
             borderRight: idx < steps.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
           }}
         >
+          <AnimatePresence>
           {showGuidance ? (
-            <span
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ type: "spring", stiffness: 350, damping: 28 }}
               style={{
                 fontFamily: "monospace",
                 fontSize: "0.7rem",
@@ -178,8 +189,9 @@ function NearBlackPattern({ showGuidance }) {
               }}
             >
               {step.label}
-            </span>
+            </motion.span>
           ) : null}
+          </AnimatePresence>
         </div>
       ))}
     </div>
@@ -214,11 +226,19 @@ function SmpteBarsPattern({ showGuidance }) {
               justifyContent: "center",
             }}
           >
+            <AnimatePresence>
             {showGuidance ? (
-              <span style={{ fontFamily: "monospace", fontSize: "0.6rem", color: "#888888" }}>
+              <motion.span
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                style={{ fontFamily: "monospace", fontSize: "0.6rem", color: "#888888" }}
+              >
                 {bar.label}
-              </span>
+              </motion.span>
             ) : null}
+            </AnimatePresence>
           </div>
         ))}
       </div>
@@ -236,8 +256,13 @@ function RetentionBurninPattern({ showGuidance }) {
         backgroundColor: "#7F7F7F",
       }}
     >
+      <AnimatePresence>
       {showGuidance ? (
-        <p
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          transition={{ type: "spring", stiffness: 350, damping: 28 }}
           style={{
             position: "absolute",
             right: "20px",
@@ -252,8 +277,9 @@ function RetentionBurninPattern({ showGuidance }) {
           }}
         >
           Campo uniforme 50% · procure sombras residuais sem fixar o olhar
-        </p>
+        </motion.p>
       ) : null}
+      </AnimatePresence>
     </div>
   );
 }
@@ -311,11 +337,19 @@ function FpsStutterPattern({ motionEnabled, showGuidance }) {
           boxShadow: "0 0 30px rgba(56,189,248,0.8)",
         }}
       />
+      <AnimatePresence>
       {showGuidance ? (
-        <div style={{ position: "absolute", bottom: "20px", left: "20px", color: "#34d399", fontFamily: "monospace", fontSize: "0.85rem", background: "rgba(0,0,0,0.75)", padding: "8px 14px", borderRadius: "8px" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          transition={{ type: "spring", stiffness: 350, damping: 28 }}
+          style={{ position: "absolute", bottom: "20px", left: "20px", color: "#34d399", fontFamily: "monospace", fontSize: "0.85rem", background: "rgba(0,0,0,0.75)", padding: "8px 14px", borderRadius: "8px" }}
+        >
           {motionEnabled ? <>Callbacks rAF no último segundo: <strong ref={fpsTextRef}>60</strong></> : <strong>Animação pausada</strong>}
-        </div>
+        </motion.div>
       ) : null}
+      </AnimatePresence>
     </div>
   );
 }
@@ -382,9 +416,19 @@ function RgbBarsPattern({ showGuidance }) {
               backgroundImage: `linear-gradient(90deg, #000000 0%, ${channel.color} 100%)`,
             }}
           />
+          <AnimatePresence>
           {showGuidance ? (
-            <span className="calibration-lab__rgb-label">Canal {channel.label}</span>
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+              className="calibration-lab__rgb-label"
+            >
+              Canal {channel.label}
+            </motion.span>
           ) : null}
+          </AnimatePresence>
         </div>
       ))}
     </div>
@@ -416,9 +460,19 @@ function SharpnessGridPattern({ showGuidance }) {
       {checks.map((check) => (
         <div className="calibration-lab__sharpness-check" key={check.id}>
           <div aria-hidden="true" className="calibration-lab__sharpness-sample" style={check.style} />
+          <AnimatePresence>
           {showGuidance ? (
-            <span className="calibration-lab__sharpness-label">{check.label}</span>
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+              className="calibration-lab__sharpness-label"
+            >
+              {check.label}
+            </motion.span>
           ) : null}
+          </AnimatePresence>
         </div>
       ))}
     </div>
@@ -499,22 +553,38 @@ function GammaPattern({ showGuidance }) {
                 boxShadow: "0 4px 12px rgba(0,0,0,0.5)"
               }}
             />
+            <AnimatePresence>
             {showGuidance ? (
-              <span style={{ backgroundColor: "rgba(0,0,0,0.8)", color: "#FFF", padding: "4px 10px", borderRadius: "4px", fontSize: "0.8rem", fontWeight: "bold" }}>
+              <motion.span
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                style={{ backgroundColor: "rgba(0,0,0,0.8)", color: "#FFF", padding: "4px 10px", borderRadius: "4px", fontSize: "0.8rem", fontWeight: "bold" }}
+              >
                 {target.gamma}
-              </span>
+              </motion.span>
             ) : null}
+            </AnimatePresence>
           </div>
         ))}
       </div>
 
+      <AnimatePresence>
       {showGuidance ? (
-        <div style={{ position: "absolute", bottom: "16px", left: "0", right: "0", textAlign: "center" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          transition={{ type: "spring", stiffness: 350, damping: 28 }}
+          style={{ position: "absolute", bottom: "16px", left: "0", right: "0", textAlign: "center" }}
+        >
           <span style={{ backgroundColor: "rgba(0,0,0,0.8)", color: "#FFF", padding: "6px 12px", borderRadius: "4px", fontSize: "0.75rem", display: "inline-block", maxWidth: "90%" }}>
             Estimativa visual baseada em mistura espacial. Ajuste o zoom do navegador para 100% (físico).
           </span>
-        </div>
+        </motion.div>
       ) : null}
+      </AnimatePresence>
     </div>
   );
 }
@@ -652,15 +722,31 @@ export default function CalibrationLabMode({
         className="calibration-lab__canvas"
         role="img"
       >
-        <CalibrationPattern
-          motionEnabled={motionEnabled}
-          pattern={resolvedPattern}
-          showGuidance={showGuidance}
-        />
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={resolvedPattern}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            style={{ width: "100%", height: "100%" }}
+          >
+            <CalibrationPattern
+              motionEnabled={motionEnabled}
+              pattern={resolvedPattern}
+              showGuidance={showGuidance}
+            />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
+      <AnimatePresence>
       {showControls ? (
-        <aside
+        <motion.aside
+          initial={{ opacity: 0, scale: 0.96, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 10 }}
+          transition={{ type: "spring", stiffness: 350, damping: 28 }}
           className="display-mode__controls display-mode__controls--calibration"
           aria-label="Controles e instruções de verificação visual"
         >
@@ -751,8 +837,9 @@ export default function CalibrationLabMode({
           <p className="display-mode__hint">
             Estes padrões servem à inspeção visual e são afetados pelo navegador, escala, perfil de cor e ambiente. Não constituem calibração instrumental ou laudo do painel.
           </p>
-        </aside>
+        </motion.aside>
       ) : null}
+      </AnimatePresence>
     </section>
   );
 }

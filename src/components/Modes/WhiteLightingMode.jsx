@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import DisplayToolShell from "./DisplayToolShell";
 const clamp = (value, minimum, maximum) =>
   Math.min(Math.max(value, minimum), maximum);
@@ -209,22 +210,32 @@ export default function WhiteLightingMode({
             className="display-mode__color-presets"
             role="group"
           >
-            {COLOR_STUDIO_PRESETS.map((preset) => (
+            {COLOR_STUDIO_PRESETS.map((preset) => {
+              const isActive = resolvedColor === preset.value;
+              return (
               <button
-                aria-pressed={resolvedColor === preset.value}
+                aria-pressed={isActive}
                 className="display-mode__color-preset"
                 key={preset.value}
                 onClick={() => updateColor(preset.value)}
                 type="button"
+                style={{ position: 'relative' }}
               >
                 <span
                   aria-hidden="true"
                   className="display-mode__color-preset-swatch"
-                  style={{ backgroundColor: preset.value }}
+                  style={{ backgroundColor: preset.value, position: 'relative', zIndex: 1 }}
                 />
-                <span>{preset.label}</span>
+                <span style={{ position: 'relative', zIndex: 1 }}>{preset.label}</span>
+                {isActive && (
+                  <motion.div
+                    layoutId="activeColorSwatch"
+                    transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                    style={{ position: "absolute", inset: 0, border: "2px solid currentColor", borderRadius: "inherit", zIndex: 0 }}
+                  />
+                )}
               </button>
-            ))}
+            )})}
           </div>
         </>
       ) : (
@@ -294,10 +305,11 @@ export default function WhiteLightingMode({
       }}
       tabIndex="0"
     >
-      <div
+      <motion.div
         aria-hidden="true"
         className="display-mode__canvas display-mode__canvas--light"
-        style={{ backgroundColor: displayColor }}
+        animate={{ backgroundColor: displayColor }}
+        transition={{ type: "spring", stiffness: 350, damping: 28 }}
       />
     </DisplayToolShell>
   );

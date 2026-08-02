@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { acquireModalIsolation } from "../../utils/modalIsolation";
 import DisplayToolShell from "./DisplayToolShell";
 
@@ -195,21 +196,30 @@ export default function ScreenCleanerMode({
               aria-labelledby="cleaner-pattern-label"
               style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}
             >
-              {CLEANER_PATTERNS.map((item) => (
+              {CLEANER_PATTERNS.map((item) => {
+                const isActive = item.id === resolvedPattern;
+                return (
                 <button
                   key={item.id}
                   type="button"
-                  aria-pressed={item.id === resolvedPattern}
+                  aria-pressed={isActive}
                   className={classNames(
                     "wbp-button",
-                    item.id === resolvedPattern ? "wbp-button--active" : "wbp-button--ghost"
+                    isActive ? "wbp-button--active" : "wbp-button--ghost"
                   )}
-                  style={{ fontSize: '0.78rem', padding: '6px 12px' }}
+                  style={{ fontSize: '0.78rem', padding: '6px 12px', position: 'relative' }}
                   onClick={() => updatePattern(item.id)}
                 >
-                  {item.label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeCleanPattern"
+                      transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                      style={{ position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.1)', borderRadius: 'inherit', zIndex: 0 }}
+                    />
+                  )}
+                  <span style={{ position: 'relative', zIndex: 1 }}>{item.label}</span>
                 </button>
-              ))}
+              )})}
             </div>
           </div>
 
@@ -244,70 +254,79 @@ export default function ScreenCleanerMode({
         </div> : null
       }
     >
-      <div
+      <motion.div
         ref={containerRef}
         role="region"
         aria-label={ariaLabel}
         className={classNames("display-mode__canvas", "display-mode__canvas--cleaner", className)}
-        style={canvasStyle}
+        animate={canvasStyle}
+        transition={{ type: "spring", stiffness: 350, damping: 28 }}
         tabIndex="0"
       />
-      {isCleanLocked && typeof document !== "undefined"
+      {typeof document !== "undefined"
         ? createPortal(
-          <div
-            data-ms-shortcuts-disabled="true"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="cleaner-lock-title"
-            aria-describedby="cleaner-lock-description"
-            onContextMenu={(event) => event.preventDefault()}
-            onPointerDown={(event) => {
-              if (event.target !== unlockButtonRef.current) event.preventDefault();
-              event.stopPropagation();
-            }}
-            onTouchMove={(event) => event.preventDefault()}
-            onWheel={(event) => event.preventDefault()}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              zIndex: 99999,
-              backgroundColor: 'rgba(5, 6, 8, 0.96)',
-              backdropFilter: 'blur(24px)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#ffffff',
-              textAlign: 'center',
-              padding: '24px',
-              touchAction: 'none',
-              userSelect: 'none',
-            }}
-          >
-            <div aria-hidden="true" style={{ fontSize: '3rem', marginBottom: '16px' }}>🔒</div>
-            <h2 id="cleaner-lock-title" style={{ fontSize: '1.6rem', fontWeight: 600, letterSpacing: '-0.04em', margin: '0 0 10px' }}>
-              Bloqueio local ativo
-            </h2>
-            <p id="cleaner-lock-description" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '480px', fontSize: '0.88rem', lineHeight: 1.6, margin: '0 0 24px' }}>
-              O MonitorSmith ignorará atalhos e interações por 30 segundos. Isso não bloqueia teclas do sistema operacional. Para limpeza física, desligue o monitor e siga o manual do fabricante.
-            </p>
-            <div
-              aria-label={`${cleanLockTimer} segundos restantes`}
-              role="timer"
-              style={{ fontFamily: "'DM Mono', monospace", fontSize: '2.5rem', color: '#34d399', margin: '0 0 24px' }}
+          <AnimatePresence>
+            {isCleanLocked && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+              data-ms-shortcuts-disabled="true"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="cleaner-lock-title"
+              aria-describedby="cleaner-lock-description"
+              onContextMenu={(event) => event.preventDefault()}
+              onPointerDown={(event) => {
+                if (event.target !== unlockButtonRef.current) event.preventDefault();
+                event.stopPropagation();
+              }}
+              onTouchMove={(event) => event.preventDefault()}
+              onWheel={(event) => event.preventDefault()}
+              style={{
+                position: 'fixed',
+                inset: 0,
+                zIndex: 99999,
+                backgroundColor: 'rgba(5, 6, 8, 0.96)',
+                backdropFilter: 'blur(24px)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#ffffff',
+                textAlign: 'center',
+                padding: '24px',
+                touchAction: 'none',
+                userSelect: 'none',
+              }}
             >
-              00:{String(cleanLockTimer).padStart(2, '0')}
-            </div>
-            <button
-              ref={unlockButtonRef}
-              type="button"
-              className="wbp-button wbp-button--ghost"
-              style={{ fontSize: '0.8rem', padding: '8px 16px', borderRadius: '10px' }}
-              onClick={() => setIsCleanLocked(false)}
-            >
-              Encerrar bloqueio agora (Esc)
-            </button>
-          </div>,
+              <div aria-hidden="true" style={{ fontSize: '3rem', marginBottom: '16px' }}>🔒</div>
+              <h2 id="cleaner-lock-title" style={{ fontSize: '1.6rem', fontWeight: 600, letterSpacing: '-0.04em', margin: '0 0 10px' }}>
+                Bloqueio local ativo
+              </h2>
+              <p id="cleaner-lock-description" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '480px', fontSize: '0.88rem', lineHeight: 1.6, margin: '0 0 24px' }}>
+                O MonitorSmith ignorará atalhos e interações por 30 segundos. Isso não bloqueia teclas do sistema operacional. Para limpeza física, desligue o monitor e siga o manual do fabricante.
+              </p>
+              <div
+                aria-label={`${cleanLockTimer} segundos restantes`}
+                role="timer"
+                style={{ fontFamily: "'DM Mono', monospace", fontSize: '2.5rem', color: '#34d399', margin: '0 0 24px' }}
+              >
+                00:{String(cleanLockTimer).padStart(2, '0')}
+              </div>
+              <button
+                ref={unlockButtonRef}
+                type="button"
+                className="wbp-button wbp-button--ghost"
+                style={{ fontSize: '0.8rem', padding: '8px 16px', borderRadius: '10px' }}
+                onClick={() => setIsCleanLocked(false)}
+              >
+                Encerrar bloqueio agora (Esc)
+              </button>
+            </motion.div>
+            )}
+          </AnimatePresence>,
           document.body,
         )
         : null}

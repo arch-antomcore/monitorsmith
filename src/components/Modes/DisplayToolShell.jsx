@@ -75,10 +75,10 @@ export function DisplayToolShell({
             key="tool-panel"
             className={`display-mode__controls display-mode__controls--${id || 'tool'}`}
             aria-labelledby={title ? panelTitleId : undefined}
-            initial={false}
+            initial={{ opacity: 0, scale: 0.96, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 10 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 28, staggerChildren: 0.05 }}
           >
             <div className="display-mode__panel-header">
               <div>
@@ -86,16 +86,18 @@ export function DisplayToolShell({
                 {title ? <h2 id={panelTitleId} className="display-mode__title">{title}</h2> : null}
                 {subtitle ? <p className="display-mode__subtitle">{subtitle}</p> : null}
               </div>
-              <button
+              <motion.button
                 ref={setCloseButtonRef}
                 type="button"
                 className="display-mode__icon-button"
                 onClick={closePanel}
                 title="Minimizar painel de opções (×)"
                 aria-label="Minimizar painel de opções"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
                 ×
-              </button>
+              </motion.button>
             </div>
 
             {Array.isArray(instructions) && instructions.length > 0 ? (
@@ -128,7 +130,9 @@ export function DisplayToolShell({
             initial={{ opacity: 0, scale: 0.9, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 10 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 28 }}
           >
             {customOptionsLabel || `Opções de ${title || 'ajuste'}`}
           </motion.button>

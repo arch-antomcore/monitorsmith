@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import DisplayToolShell from "./DisplayToolShell";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
@@ -209,15 +209,21 @@ export default function DeadPixelTestMode({
         </div>
       }
     >
-      <div
+      <motion.div
         ref={containerRef}
         aria-label={ariaLabel}
         className={classNames("display-mode__canvas", className)}
-        style={{ backgroundColor: activeColor.value }}
+        animate={{ backgroundColor: activeColor.value }}
+        transition={{ type: "spring", stiffness: 350, damping: 28 }}
         tabIndex="0"
       >
+        <AnimatePresence>
         {showInspectionGuide ? (
-          <div
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ type: "spring", stiffness: 350, damping: 28 }}
             aria-label="Guia estático de inspeção dividido em nove áreas"
             role="img"
             style={{
@@ -229,10 +235,11 @@ export default function DeadPixelTestMode({
             }}
           />
         ) : null}
+        </AnimatePresence>
         <span className="sr-only" aria-live="polite">
           Cor de inspeção: {activeColor.label}.
         </span>
-      </div>
+      </motion.div>
     </DisplayToolShell>
   );
 }

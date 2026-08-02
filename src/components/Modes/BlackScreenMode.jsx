@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
 
@@ -42,14 +43,28 @@ export default function BlackScreenMode({
       data-mode="black"
       tabIndex={onExit || autoFocus ? 0 : -1}
     >
-      <div
+      <motion.div
         aria-hidden="true"
         className="display-mode__canvas display-mode__canvas--black"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ type: "spring", stiffness: 350, damping: 28 }}
       />
 
-      {isHintVisible ? (
-        <p className="display-mode__hint display-mode__hint--inverse">{hint}</p>
-      ) : null}
+      <AnimatePresence>
+        {isHintVisible ? (
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ type: "spring", stiffness: 350, damping: 28 }}
+            className="display-mode__hint display-mode__hint--inverse"
+          >
+            {hint}
+          </motion.p>
+        ) : null}
+      </AnimatePresence>
 
       {children}
     </section>

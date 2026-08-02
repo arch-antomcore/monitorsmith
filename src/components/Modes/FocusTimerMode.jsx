@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import DisplayToolShell from "./DisplayToolShell";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
@@ -333,7 +334,17 @@ export default function FocusTimerMode({
           onClick={toggleTimer}
           type="button"
         >
-          {resolvedRunning ? "Pausar" : resolvedSeconds === 0 ? "Recomeçar" : "Iniciar"}
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={resolvedRunning ? "pause" : resolvedSeconds === 0 ? "restart" : "start"}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+            >
+              {resolvedRunning ? "Pausar" : resolvedSeconds === 0 ? "Recomeçar" : "Iniciar"}
+            </motion.span>
+          </AnimatePresence>
         </button>
         <button
           className="display-mode__secondary-button"
@@ -421,10 +432,18 @@ export default function FocusTimerMode({
 
       <div className="focus-timer" role="timer">
         <p className="focus-timer__eyebrow">Sessão de concentração</p>
-        <div
+        <motion.div
           aria-label={`${formatFocusTime(resolvedSeconds)} restantes`}
           aria-live="off"
           className="focus-timer__dial"
+          animate={{
+            "--focus-progress": `${Math.round(progress * 360)}deg`,
+            scale: resolvedSeconds === 0 ? [1, 1.05, 1] : 1
+          }}
+          transition={{
+            "--focus-progress": { type: "spring", stiffness: 350, damping: 28 },
+            scale: { repeat: resolvedSeconds === 0 ? Infinity : 0, duration: 1.5 }
+          }}
           style={{ "--focus-progress": `${Math.round(progress * 360)}deg` }}
         >
           <time className="focus-timer__time" dateTime={`PT${resolvedSeconds}S`}>
@@ -433,7 +452,7 @@ export default function FocusTimerMode({
           <span className="focus-timer__state">
             {resolvedRunning ? "Em foco" : resolvedSeconds === 0 ? "Concluído" : "Pronto"}
           </span>
-        </div>
+        </motion.div>
         <span className="sr-only" aria-live="polite">
           {resolvedSeconds === 0 ? 'Sessão de foco concluída.' : ''}
         </span>

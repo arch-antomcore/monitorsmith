@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useReducedMotion } from 'framer-motion';
+import { useReducedMotion, motion, AnimatePresence } from 'framer-motion';
 import { getSponsorImageDimensionError } from '../../lib/sponsorLoopValidation';
 import { loadSponsorImages, saveSponsorImages, clearSponsorImages } from '../../lib/sponsorDB';
 
@@ -458,8 +458,14 @@ export default function SponsorLoopMode({
 
       {/* Slide display */}
       <div className="sponsor-loop__stage">
+        <AnimatePresence mode="popLayout">
         {currentImage ? (
-          <div
+          <motion.div
+            key={currentImage.id}
+            initial={{ opacity: 0, scale: resolvedTransition === 'zoom' ? 0.9 : 1, x: resolvedTransition === 'slide' ? 100 : 0 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            exit={{ opacity: 0, scale: resolvedTransition === 'zoom' ? 1.1 : 1, x: resolvedTransition === 'slide' ? -100 : 0 }}
+            transition={resolvedTransition === 'none' ? { duration: 0 } : { duration: transitionSpeed / 1000 }}
             className={join('sponsor-loop__slide', transitionClass)}
             style={{
               '--sponsor-transition-ms': `${transitionSpeed}ms`,
@@ -481,16 +487,24 @@ export default function SponsorLoopMode({
                 height: fitMode === 'cover' ? '100%' : undefined,
               }}
             />
-          </div>
+          </motion.div>
         ) : (
-          <div className="sponsor-loop__empty">
+          <motion.div
+            key="empty"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ type: "spring", stiffness: 350, damping: 28 }}
+            className="sponsor-loop__empty"
+          >
             <p className="sponsor-loop__empty-icon">📺</p>
             <p className="sponsor-loop__empty-title">Nenhuma imagem carregada</p>
             <p className="sponsor-loop__empty-hint">
               Arraste logos aqui ou use o painel lateral para importar.
             </p>
-          </div>
+          </motion.div>
         )}
+        </AnimatePresence>
 
         {/* Progress bar */}
         {hasImages && images.length > 1 && (
@@ -535,8 +549,13 @@ export default function SponsorLoopMode({
       />
 
       {/* Controls panel */}
+      <AnimatePresence>
       {showControls && !isPanelClosed ? (
-        <aside
+        <motion.aside
+          initial={{ opacity: 0, scale: 0.96, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 10 }}
+          transition={{ type: "spring", stiffness: 350, damping: 28 }}
           aria-label="Controles do loop de marcas"
           className="display-mode__controls display-mode__controls--sponsor-loop"
         >
@@ -729,16 +748,19 @@ export default function SponsorLoopMode({
                   key={bg.id}
                   type="button"
                   className={join('sponsor-loop__bg-btn', bgColor === bg.color && 'sponsor-loop__bg-btn--active')}
-                  style={{ '--swatch': bg.color }}
+                  style={{ '--swatch': bg.color, position: 'relative' }}
                   aria-pressed={bgColor === bg.color}
                   onClick={() => setBgColor(bg.color)}
                   title={bg.label}
                 >
                   <span className="sponsor-loop__bg-swatch" />
                   <span className="sponsor-loop__bg-label">{bg.label}</span>
+                  {bgColor === bg.color && (
+                    <motion.div layoutId="activeColorPill" className="sponsor-loop__bg-active-pill" style={{ position: 'absolute', inset: 0, border: '2px solid white', borderRadius: '4px' }} />
+                  )}
                 </button>
               ))}
-              <label className={join('sponsor-loop__bg-btn sponsor-loop__bg-btn--custom', !BACKGROUNDS.find(b => b.color === bgColor) && 'sponsor-loop__bg-btn--active')}>
+              <label className={join('sponsor-loop__bg-btn sponsor-loop__bg-btn--custom', !BACKGROUNDS.find(b => b.color === bgColor) && 'sponsor-loop__bg-btn--active')} style={{ position: 'relative' }}>
                 <input
                   type="color"
                   value={customBg}
@@ -747,6 +769,9 @@ export default function SponsorLoopMode({
                 />
                 <span className="sponsor-loop__bg-swatch" style={{ '--swatch': customBg }} />
                 <span className="sponsor-loop__bg-label">Livre</span>
+                {!BACKGROUNDS.find(b => b.color === bgColor) && (
+                  <motion.div layoutId="activeColorPill" className="sponsor-loop__bg-active-pill" style={{ position: 'absolute', inset: 0, border: '2px solid white', borderRadius: '4px' }} />
+                )}
               </label>
             </div>
           </div>
@@ -766,8 +791,10 @@ export default function SponsorLoopMode({
             O deslocamento sutil reduz conteúdo completamente estático, mas não evita nem repara burn-in.
             {shouldReduceMotion ? ' As transições foram removidas pela preferência de movimento reduzido.' : ''}
           </p>
-        </aside>
-      ) : showControls && isPanelClosed ? (
+        </motion.aside>
+      ) : null}
+      </AnimatePresence>
+      {showControls && isPanelClosed ? (
         <button
           ref={reopenPanelButtonRef}
           type="button"

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
 
@@ -259,8 +260,16 @@ export default function FullScreenClockMode({
       <div className="fullscreen-clock">
         <p className="fullscreen-clock__context">Horário local</p>
 
+        <AnimatePresence mode="wait">
         {clockStyle === "analog" ? (
-          <div className="fullscreen-clock__analog-wrap" style={{ margin: "20px 0" }}>
+          <motion.div
+            key="analog"
+            className="fullscreen-clock__analog-wrap" style={{ margin: "20px 0" }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 350, damping: 28 }}
+          >
             <svg aria-hidden="true" focusable="false" width="260" height="260" viewBox="0 0 200 200">
               <circle cx="100" cy="100" r="94" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" strokeWidth="2.5" />
               {Array.from({ length: 12 }).map((_, i) => {
@@ -271,19 +280,24 @@ export default function FullScreenClockMode({
                 const y2 = 100 - 90 * Math.cos(rad);
                 return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(255,255,255,0.3)" strokeWidth="2" />;
               })}
-              <line x1="100" y1="100" x2={100 + 52 * Math.sin((hoursAngle * Math.PI) / 180)} y2={100 - 52 * Math.cos((hoursAngle * Math.PI) / 180)} stroke="#ededed" strokeWidth="4.5" strokeLinecap="round" />
-              <line x1="100" y1="100" x2={100 + 72 * Math.sin((minutesAngle * Math.PI) / 180)} y2={100 - 72 * Math.cos((minutesAngle * Math.PI) / 180)} stroke="#afe3d4" strokeWidth="3" strokeLinecap="round" />
+              <motion.line x1="100" y1="100" animate={{ x2: 100 + 52 * Math.sin((hoursAngle * Math.PI) / 180), y2: 100 - 52 * Math.cos((hoursAngle * Math.PI) / 180) }} transition={{ type: "spring", stiffness: 350, damping: 28 }} stroke="#ededed" strokeWidth="4.5" strokeLinecap="round" />
+              <motion.line x1="100" y1="100" animate={{ x2: 100 + 72 * Math.sin((minutesAngle * Math.PI) / 180), y2: 100 - 72 * Math.cos((minutesAngle * Math.PI) / 180) }} transition={{ type: "spring", stiffness: 350, damping: 28 }} stroke="#afe3d4" strokeWidth="3" strokeLinecap="round" />
               {resolvedShowSeconds ? (
-                <line x1="100" y1="100" x2={100 + 82 * Math.sin((secondsAngle * Math.PI) / 180)} y2={100 - 82 * Math.cos((secondsAngle * Math.PI) / 180)} stroke="#ff5252" strokeWidth="1.5" strokeLinecap="round" />
+                <motion.line x1="100" y1="100" animate={{ x2: 100 + 82 * Math.sin((secondsAngle * Math.PI) / 180), y2: 100 - 82 * Math.cos((secondsAngle * Math.PI) / 180) }} transition={{ type: "spring", stiffness: 350, damping: 28 }} stroke="#ff5252" strokeWidth="1.5" strokeLinecap="round" />
               ) : null}
               <circle cx="100" cy="100" r="4" fill="#afe3d4" />
             </svg>
             <time className="sr-only" dateTime={now.toISOString()}>
               {clockParts.spoken}
             </time>
-          </div>
+          </motion.div>
         ) : (
-          <time
+          <motion.time
+            key="digital"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 350, damping: 28 }}
             aria-atomic="true"
             aria-label={clockParts.spoken}
             aria-live="off"
@@ -303,8 +317,9 @@ export default function FullScreenClockMode({
             {clockParts.dayPeriod ? (
               <span className="fullscreen-clock__period">{clockParts.dayPeriod}</span>
             ) : null}
-          </time>
+          </motion.time>
         )}
+        </AnimatePresence>
 
         <time className="fullscreen-clock__date" dateTime={now.toISOString()}>
           {dateLabel}
@@ -312,8 +327,13 @@ export default function FullScreenClockMode({
         <p className="fullscreen-clock__timezone">{timeZoneLabel}</p>
       </div>
 
+      <AnimatePresence>
       {showControls && !isPanelClosed ? (
-        <aside
+        <motion.aside
+          initial={{ opacity: 0, scale: 0.96, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 10 }}
+          transition={{ type: "spring", stiffness: 350, damping: 28 }}
           aria-label="Controles do relógio"
           className="display-mode__controls display-mode__controls--clock"
         >
@@ -403,8 +423,10 @@ export default function FullScreenClockMode({
           <p className="display-mode__hint">
             F alterna tela cheia. Use os controles para mudar o formato e os segundos.
           </p>
-        </aside>
-      ) : showControls && isPanelClosed ? (
+        </motion.aside>
+      ) : null}
+      </AnimatePresence>
+      {showControls && isPanelClosed ? (
         <button
           ref={reopenPanelButtonRef}
           type="button"

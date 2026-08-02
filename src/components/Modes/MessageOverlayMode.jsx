@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { QRCodeSVG } from "qrcode.react";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
@@ -274,9 +275,11 @@ export default function MessageOverlayMode({
       }}
       tabIndex="0"
     >
-      <div
+      <motion.div
         aria-hidden="true"
         className="display-mode__canvas display-mode__canvas--message"
+        animate={{ backgroundColor: resolvedBackgroundColor }}
+        transition={{ duration: 0.5 }}
         style={{ backgroundColor: resolvedBackgroundColor }}
       />
 
@@ -312,8 +315,15 @@ export default function MessageOverlayMode({
           </div>
         </div>
 
+        <AnimatePresence>
         {showQrCode ? (
-          <div className="message-overlay__qr">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 350, damping: 28 }}
+            className="message-overlay__qr"
+          >
             {normalizedQrContent ? (
               <div className="message-overlay__qr-card">
                 <QRCodeSVG
@@ -335,12 +345,18 @@ export default function MessageOverlayMode({
                 Conteúdo do QR: {normalizedQrContent}
               </span>
             ) : null}
-          </div>
+          </motion.div>
         ) : null}
+        </AnimatePresence>
       </div>
 
+      <AnimatePresence>
       {showControls && !isPanelClosed ? (
-        <aside
+        <motion.aside
+          initial={{ opacity: 0, scale: 0.96, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 10 }}
+          transition={{ type: "spring", stiffness: 350, damping: 28 }}
           aria-label="Editor de mensagem"
           className="display-mode__controls display-mode__controls--message"
         >
@@ -504,8 +520,10 @@ export default function MessageOverlayMode({
           <p className="display-mode__hint">
             Mantenha a frase curta para leitura confortável à distância.
           </p>
-        </aside>
-      ) : showControls && isPanelClosed ? (
+        </motion.aside>
+      ) : null}
+      </AnimatePresence>
+      {showControls && isPanelClosed ? (
         <button
           ref={reopenPanelButtonRef}
           type="button"
