@@ -75,10 +75,10 @@ export function DisplayToolShell({
             key="tool-panel"
             className={`display-mode__controls display-mode__controls--${id || 'tool'}`}
             aria-labelledby={title ? panelTitleId : undefined}
-            initial={{ opacity: 0, scale: 0.96, y: 10 }}
+            initial={false}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 10 }}
-            transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           >
             <div className="display-mode__panel-header">
               <div>
