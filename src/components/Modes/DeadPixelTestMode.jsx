@@ -213,6 +213,7 @@ export default function DeadPixelTestMode({
         ref={containerRef}
         aria-label={ariaLabel}
         className={classNames("display-mode__canvas", className)}
+        style={{ forcedColorAdjust: "none" }}
         animate={{ backgroundColor: activeColor.value }}
         transition={{ type: "spring", stiffness: 350, damping: 28 }}
         tabIndex="0"

@@ -9,21 +9,30 @@ import BlackScreenMode from './components/Modes/BlackScreenMode';
 import WhiteLightingMode from './components/Modes/WhiteLightingMode';
 import DeadPixelTestMode from './components/Modes/DeadPixelTestMode';
 
-
 const CalibrationLabMode = lazy(() => import('./components/Modes/CalibrationLabMode'));
 const FocusTimerMode = lazy(() => import('./components/Modes/FocusTimerMode'));
 const FullScreenClockMode = lazy(() => import('./components/Modes/FullScreenClockMode'));
 const MessageOverlayMode = lazy(() => import('./components/Modes/MessageOverlayMode'));
 const ScreenCleanerMode = lazy(() => import('./components/Modes/ScreenCleanerMode'));
 const SponsorLoopMode = lazy(() => import('./components/Modes/SponsorLoopMode'));
+
 import RadialMenu from './components/UI/RadialMenu';
 import ShortcutToast from './components/UI/ShortcutToast';
 import ToolTransitionOverlay from './components/UI/ToolTransitionOverlay';
-import AppProvider, { MODES, useApp } from './context/AppContext';
-import { DEFAULT_DOCK_MODES, SHORTCUTS } from './constants/shortcuts';
+
+import { DEFAULT_DOCK_MODES, SHORTCUTS, isDisplayMode, MODE_IDS as MODES } from './constants/shortcuts';
 import { getToolById, resolveToolLaunch, TOOLS_REGISTRY } from './constants/tools';
-import { isShortcutScopeBlocked } from './hooks/useKeyboardShortcuts';
+
 import { useThemeSync } from './hooks/useThemeSync';
+import { useFullscreen } from './hooks/useFullscreen';
+import { useWakeLock } from './hooks/useWakeLock';
+import { useIdleTimer } from './hooks/useIdleTimer';
+import { useAppRouting } from './hooks/useAppRouting';
+import { useAppKeyboard } from './hooks/useAppKeyboard';
+import { useAppSwipe } from './hooks/useAppSwipe';
+
+import { useToolStore } from './store/toolStore';
+import { useUIStore } from './store/uiStore';
 
 const DEAD_PIXEL_PALETTE = [
   { id: 'red', label: 'Vermelho', value: '#ff0000' },
@@ -36,247 +45,170 @@ const DEAD_PIXEL_PALETTE = [
   { id: 'black', label: 'Preto', value: '#000000' },
 ];
 
-
-const SWIPE_EXCLUDED_SELECTOR = [
-  'button',
-  'a',
-  'input',
-  'textarea',
-  'select',
-  '[contenteditable]',
-  '[role="dialog"]',
-  '[role="slider"]',
-  '.display-mode__controls',
-  '.display-mode__reopen-panel-btn',
-  '.calibration-lab__guide',
-  '.wbp-navbar',
-  '.wbp-dock',
-  '[data-no-swipe="true"]',
-].join(',');
-
-function getModeId(mode) {
-  return typeof mode === 'string' ? mode : mode?.id;
-}
-
 function getModeTitle(mode) {
   if (mode === MODES.HOME) return 'Ferramentas de monitor';
   const tool = getToolById(mode);
   return tool?.heroTitle || tool?.title || 'MonitorSmith';
 }
 
-function resolveLocationLaunch(location) {
-  const hashValue = location.hash.replace(/^#/, '').trim().toLowerCase();
-  const queryValue = new URLSearchParams(location.search).get('tool')?.trim().toLowerCase();
-
-  for (const value of [hashValue, queryValue]) {
-    if (!value) continue;
-    if (value === MODES.HOME) return { mode: MODES.HOME, toolId: MODES.HOME, preset: {} };
-
-    const tool = resolveToolLaunch(value);
-    if (tool) return tool;
-
-    const mode = Object.values(MODES).find((candidate) => candidate.toLowerCase() === value);
-    if (mode) return { mode, toolId: mode, preset: {} };
-  }
-
-  return {
-    mode: MODES.HOME,
-    toolId: MODES.HOME,
-    preset: {},
-    preserveHash: Boolean(hashValue),
-  };
-}
-
-function buildNavigationHref(toolId) {
-  const url = new URL(window.location.href);
-  url.searchParams.delete('tool');
-  if (!toolId || toolId === MODES.HOME) {
-    url.hash = '';
-  } else {
-    url.hash = toolId;
-  }
-  return `${url.pathname}${url.search}${url.hash}`;
-}
-
 function DisplaySuite() {
+  const { activeMode, activeToolId, activateMode } = useToolStore();
   const {
-    activeMode,
-    activeToolId,
-    activateMode,
-    isFullscreen,
-    fullscreenError,
-    toggleFullscreen,
-    wakeLock,
-    shouldHideUi,
-    hideUiManually,
     isDockOpen,
     isHelpOpen,
-    openHelp,
-    closeHelp,
-    restoreInterface,
-    resetIdleTimer,
+    setIsHelpOpen,
+    isManualUiHidden,
+    hideUiManually,
+    hasPersistentUiFocus,
+    setHasPersistentUiFocus,
     toast,
-    whiteLighting,
-    setWhiteLighting,
-    customColor,
-    setCustomColor,
-    message,
-    setMessage,
-  } = useApp();
-  const [deadPixelColor, setDeadPixelColor] = useState(DEAD_PIXEL_PALETTE[0].value);
-  const [autoCycle, setAutoCycle] = useState(false);
-  const [cleanerPattern, setCleanerPattern] = useState('checker');
-  const [cleanerBrightness, setCleanerBrightness] = useState(92);
-  const [focusSeconds, setFocusSeconds] = useState(25 * 60);
-  const [focusDuration, setFocusDuration] = useState(25 * 60);
-  const [isFocusRunning, setIsFocusRunning] = useState(false);
-  const [ambientBrightness, setAmbientBrightness] = useState(72);
+    showToast,
+  } = useUIStore();
+
   const [homeFocusRequest, setHomeFocusRequest] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const previousModeRef = useRef(activeMode);
   const homeFocusOriginRef = useRef(null);
   const handledHomeFocusRequestRef = useRef(0);
-  const pendingLocationRef = useRef(null);
-  const hasResolvedInitialLocationRef = useRef(false);
 
   const isGreenScreen = activeToolId === 'green-screen';
+
+  const {
+    isFullscreen,
+    isSupported: fullscreenSupported,
+    error: fullscreenError,
+    exitFullscreen: leaveFullscreen,
+    toggleFullscreen: toggleNativeFullscreen,
+    clearError: clearFullscreenError,
+  } = useFullscreen();
+
+  const isDisplayModeActive = activeMode !== MODES.HOME;
+  const isImmersiveSession = isDisplayModeActive && isFullscreen;
+
+  const { isIdle: isUiIdle, resetIdleTimer: rawResetIdleTimer } = useIdleTimer({
+    enabled: isImmersiveSession && !hasPersistentUiFocus,
+    timeout: 3000,
+  });
+
+  const {
+    isSupported: wakeLockSupported,
+    isLocked: isWakeLockActive,
+    requestWakeLock,
+    releaseWakeLock,
+    toggleWakeLock,
+    error: wakeLockError,
+    clearError: clearWakeLockError,
+  } = useWakeLock();
+
+  const resetIdleTimer = useCallback(() => {
+    useUIStore.getState().setIsManualUiHidden(false);
+    rawResetIdleTimer?.();
+  }, [rawResetIdleTimer]);
+
+  const toggleFullscreen = useCallback(async () => {
+    const wasFullscreen = isFullscreen;
+    const didToggle = await toggleNativeFullscreen();
+    if (didToggle) {
+      resetIdleTimer();
+      showToast('F', wasFullscreen ? 'Tela cheia encerrada' : 'Tela cheia ativada');
+    } else {
+      showToast('F', 'Não foi possível alternar a tela cheia');
+    }
+    return didToggle;
+  }, [isFullscreen, resetIdleTimer, showToast, toggleNativeFullscreen]);
+
+  const toggleWakeLockWithFeedback = useCallback(async () => {
+    const wasLocked = isWakeLockActive;
+    const didToggle = await toggleWakeLock();
+    if (didToggle) {
+      showToast('Tela', wasLocked ? 'Manter tela ativa desativado' : 'Tela será mantida ativa');
+    } else {
+      showToast('Tela', 'Não foi possível manter a tela ativa');
+    }
+    return didToggle;
+  }, [isWakeLockActive, showToast, toggleWakeLock]);
+
+  const restoreInterface = useCallback(async () => {
+    setIsHelpOpen(false);
+    useUIStore.getState().setIsDockOpen(true);
+    resetIdleTimer();
+    const didLeaveFullscreen = await leaveFullscreen();
+    if (activeMode !== MODES.HOME) {
+      activateMode(MODES.HOME);
+    }
+    if (!didLeaveFullscreen) {
+      showToast('Esc', 'Interface restaurada; tela cheia permaneceu ativa');
+    }
+    return didLeaveFullscreen;
+  }, [activeMode, leaveFullscreen, resetIdleTimer, showToast, activateMode, setIsHelpOpen]);
+
+  useAppRouting();
+  useAppKeyboard(toggleFullscreen, restoreInterface);
+  const swipeHandlers = useAppSwipe();
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return undefined;
+
+    const isPersistentUiTarget = (target) => {
+      if (!(target instanceof Element) || target.closest('[aria-hidden="true"], [inert]')) {
+        return false;
+      }
+      if (target.closest('[role="dialog"][aria-modal="true"]')) return true;
+      const isTextEntry = target.matches(
+        'textarea, select, [contenteditable="true"], input:not([type="range"]):not([type="color"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"])',
+      );
+      const isKeyboardOperatedControl = target.matches(
+        'button, a[href], input, [role="button"], [role="menuitem"], [role="slider"]',
+      ) && target.matches(':focus-visible');
+      return isTextEntry || isKeyboardOperatedControl;
+    };
+    const syncFocusState = () => setHasPersistentUiFocus(isPersistentUiTarget(document.activeElement));
+    const handleFocusIn = (event) => setHasPersistentUiFocus(isPersistentUiTarget(event.target));
+    const handleFocusOut = () => window.requestAnimationFrame(syncFocusState);
+
+    document.addEventListener('focusin', handleFocusIn);
+    document.addEventListener('focusout', handleFocusOut);
+    syncFocusState();
+
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+      document.removeEventListener('focusout', handleFocusOut);
+    };
+  }, [setHasPersistentUiFocus]);
+
+  useEffect(() => {
+    if (activeMode === MODES.HOME) {
+      void releaseWakeLock();
+    } else {
+      void requestWakeLock();
+    }
+  }, [activeMode, releaseWakeLock, requestWakeLock]);
+
+  const shouldHideUi =
+    isDisplayModeActive
+    && (isManualUiHidden || (isImmersiveSession && isUiIdle))
+    && !isHelpOpen
+    && !hasPersistentUiFocus;
+
+  useEffect(() => {
+    if (!shouldHideUi || typeof document === 'undefined') return;
+    const activeElement = document.activeElement;
+    if (
+      activeElement instanceof HTMLElement
+      && activeElement.closest('.wbp-navbar, .wbp-dock, .display-mode__controls')
+    ) {
+      activeElement.blur();
+    }
+  }, [shouldHideUi]);
 
   const showControls = !shouldHideUi;
   const modeTitle = activeMode === MODES.HOME ? null : getModeTitle(activeToolId);
   useThemeSync(activeMode, modeTitle);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const activateUrlTarget = (target) => {
-      if (typeof target.preset?.customColor === 'string') setCustomColor(target.preset.customColor);
-      if (typeof target.preset?.ambientBrightness === 'number') {
-        setAmbientBrightness(target.preset.ambientBrightness);
-      }
-      return activateMode(target.mode, target.toolId);
-    };
-
-    const handleUrlState = () => {
-      const target = resolveLocationLaunch(window.location);
-      pendingLocationRef.current = target;
-      hasResolvedInitialLocationRef.current = true;
-      activateUrlTarget(target);
-    };
-    handleUrlState();
-    window.addEventListener('popstate', handleUrlState);
-    return () => {
-      window.removeEventListener('popstate', handleUrlState);
-    };
-  }, [activateMode, setCustomColor]);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const handleGlobalKeyDown = (e) => {
-      const isEditableTarget = e.target instanceof Element && Boolean(e.target.closest('input, textarea, select, [contenteditable="true"]'));
-
-      if (isShortcutScopeBlocked(e.target)) {
-        return;
-      }
-
-      if (e.key === 'Escape') {
-        // Only navigate to home if we are not already home
-        // AND not typing in a text field (escape might be used to blur/cancel input)
-        if (activeMode !== MODES.HOME && !isEditableTarget) {
-          e.preventDefault();
-          activateMode(MODES.HOME);
-        }
-        return;
-      }
-
-      if (e.key >= '1' && e.key <= '9' && !isEditableTarget) {
-        const index = parseInt(e.key, 10) - 1;
-        // The dock logic filters out HOME, so dock tools match TOOLS_REGISTRY where dock.visible is true
-        const dockTools = TOOLS_REGISTRY.filter((t) => t.dock?.visible).sort((a, b) => a.dock.order - b.dock.order);
-        const targetTool = dockTools[index];
-        if (targetTool) {
-          e.preventDefault();
-          activateMode(targetTool.mode, targetTool.id);
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleGlobalKeyDown);
-    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
-  }, [activeMode, activateMode]);
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || !hasResolvedInitialLocationRef.current) return;
-
-    const pendingLocation = pendingLocationRef.current;
-    const desiredHref = buildNavigationHref(activeToolId);
-    const currentHref = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-
-    if (pendingLocation) {
-      if (
-        pendingLocation.mode !== activeMode
-        || pendingLocation.toolId !== activeToolId
-      ) {
-        return;
-      }
-
-      if (currentHref !== desiredHref) {
-        window.history.replaceState({ monitorSmithTool: activeToolId }, '', desiredHref);
-      }
-      pendingLocationRef.current = null;
-      return;
-    }
-
-    if (currentHref !== desiredHref) {
-      window.history.pushState({ monitorSmithTool: activeToolId }, '', desiredHref);
-    }
-  }, [activeMode, activeToolId]);
-
-  const touchStartRef = useRef(null);
-
-  const handleTouchStart = (e) => {
-    if (e.touches?.length !== 1 || e.target?.closest?.(SWIPE_EXCLUDED_SELECTOR)) {
-      touchStartRef.current = null;
-      return;
-    }
-
-    touchStartRef.current = {
-      x: e.touches[0].clientX,
-      y: e.touches[0].clientY,
-    };
-  };
-
-  const handleTouchEnd = (e) => {
-    if (touchStartRef.current === null || !e.changedTouches?.length) return;
-    const deltaX = e.changedTouches[0].clientX - touchStartRef.current.x;
-    const deltaY = e.changedTouches[0].clientY - touchStartRef.current.y;
-    touchStartRef.current = null;
-
-    const isHorizontalSwipe = Math.abs(deltaX) > 90 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5;
-    if (isHorizontalSwipe && activeMode !== MODES.HOME) {
-      const modeKeys = DEFAULT_DOCK_MODES.map(getModeId).filter(Boolean);
-      const currIdx = modeKeys.indexOf(activeMode);
-      if (currIdx !== -1) {
-        const nextIdx = deltaX < 0
-          ? (currIdx + 1) % modeKeys.length
-          : (currIdx - 1 + modeKeys.length) % modeKeys.length;
-        activateMode(modeKeys[nextIdx]);
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (activeMode !== MODES.FOCUS_TIMER && isFocusRunning) {
-      const frame = window.requestAnimationFrame(() => setIsFocusRunning(false));
-      return () => window.cancelAnimationFrame(frame);
-    }
-    return undefined;
-  }, [activeMode, isFocusRunning]);
-
-  useEffect(() => {
     if (activeMode === MODES.HOME && previousModeRef.current !== MODES.HOME) {
       setHomeFocusRequest((request) => request + 1);
     }
-
     previousModeRef.current = activeMode;
   }, [activeMode]);
 
@@ -285,13 +217,10 @@ function DisplaySuite() {
       if (activeMode === MODES.HOME) {
         homeFocusOriginRef.current = homeFocusOriginId || null;
       }
-
       const target = resolveToolLaunch(requestedToolId) || resolveToolLaunch(mode);
       const nextMode = target?.mode || mode;
       const nextToolId = target?.toolId || nextMode;
-
       setIsTransitioning(activeMode === MODES.HOME && nextMode !== MODES.HOME);
-
       activateMode(nextMode, nextToolId);
       resetIdleTimer();
     },
@@ -304,39 +233,22 @@ function DisplaySuite() {
         handleSelectMode(target, homeFocusOriginId);
         return;
       }
-
       if (!target || typeof target !== 'object') return;
-
-      if (typeof target.color === 'string') {
-        setCustomColor(target.color);
-      }
-
-      if (typeof target.brightness === 'number') {
-        setAmbientBrightness(target.brightness);
-      }
-
       handleSelectMode(target.launchMode || target.id, homeFocusOriginId, target.id);
     },
-    [handleSelectMode, setCustomColor],
+    [handleSelectMode],
   );
 
   const restoreHomeFocus = useCallback((request) => {
-    if (
-      !request ||
-      request === handledHomeFocusRequestRef.current ||
-      typeof document === 'undefined'
-    ) {
+    if (!request || request === handledHomeFocusRequestRef.current || typeof document === 'undefined') {
       return;
     }
-
     handledHomeFocusRequestRef.current = request;
     const originId = homeFocusOriginRef.current;
     homeFocusOriginRef.current = null;
-
     const focusTarget =
       (originId ? document.getElementById(originId) : null) ||
       document.getElementById('monitor-tools-home');
-
     if (focusTarget) {
       focusTarget.focus({ preventScroll: true });
       focusTarget.scrollIntoView({ block: 'nearest', behavior: 'instant' });
@@ -344,26 +256,17 @@ function DisplaySuite() {
   }, []);
 
   const handleExitMode = useCallback(async () => {
-    setIsFocusRunning(false);
     await restoreInterface();
   }, [restoreInterface]);
-
-  const handleWhiteLighting = useCallback(
-    (setting, value) => {
-      setWhiteLighting({ [setting]: value });
-      resetIdleTimer();
-    },
-    [resetIdleTimer, setWhiteLighting],
-  );
 
   const status = useMemo(() => {
     if (activeMode === MODES.HOME) return getModeTitle(MODES.HOME);
     if (fullscreenError) return 'Tela cheia indisponível';
-    if (wakeLock.error) return 'Wake Lock indisponível';
-    if (wakeLock.isLocked) return 'Tela mantida ativa';
+    if (wakeLockError) return 'Wake Lock indisponível';
+    if (isWakeLockActive) return 'Tela mantida ativa';
     if (isFullscreen) return 'Modo imersivo';
     return getModeTitle(activeToolId);
-  }, [activeMode, activeToolId, fullscreenError, isFullscreen, wakeLock.error, wakeLock.isLocked]);
+  }, [activeMode, activeToolId, fullscreenError, isFullscreen, wakeLockError, isWakeLockActive]);
 
   const handleTransitionComplete = useCallback(() => {
     setIsTransitioning(false);
@@ -374,6 +277,7 @@ function DisplaySuite() {
     onExit: handleExitMode,
     showControls,
   };
+
   const renderActiveMode = () => {
     switch (activeMode) {
       case MODES.HOME:
@@ -388,26 +292,12 @@ function DisplaySuite() {
         return (
           <WhiteLightingMode
             {...commonModeProps}
-            brightness={whiteLighting.brightness}
-            temperature={whiteLighting.temperature}
-            onBrightnessChange={(value) => handleWhiteLighting('brightness', value)}
-            onTemperatureChange={(value) => handleWhiteLighting('temperature', value)}
           />
         );
       case MODES.CLEANER:
         return (
           <ScreenCleanerMode
             {...commonModeProps}
-            pattern={cleanerPattern}
-            brightness={cleanerBrightness}
-            onPatternChange={(value) => {
-              setCleanerPattern(value);
-              resetIdleTimer();
-            }}
-            onBrightnessChange={(value) => {
-              setCleanerBrightness(value);
-              resetIdleTimer();
-            }}
           />
         );
       case MODES.DEAD_PIXEL:
@@ -415,17 +305,6 @@ function DisplaySuite() {
           <DeadPixelTestMode
             {...commonModeProps}
             palette={DEAD_PIXEL_PALETTE}
-            selectedColor={deadPixelColor}
-            onColorChange={(value) => {
-              setDeadPixelColor(value);
-              resetIdleTimer();
-            }}
-            autoCycle={autoCycle}
-            onAutoCycleChange={(value) => {
-              setAutoCycle(value);
-              resetIdleTimer();
-            }}
-            cycleInterval={1600}
           />
         );
       case MODES.CALIBRATION:
@@ -440,14 +319,6 @@ function DisplaySuite() {
         return (
           <FocusTimerMode
             {...commonModeProps}
-            secondsRemaining={focusSeconds}
-            initialDuration={focusDuration}
-            totalDuration={focusDuration}
-            onSecondsRemainingChange={setFocusSeconds}
-            onDurationChange={setFocusDuration}
-            isRunning={isFocusRunning}
-            onRunningChange={setIsFocusRunning}
-            onComplete={() => setIsFocusRunning(false)}
           />
         );
       case MODES.CLOCK:
@@ -462,14 +333,6 @@ function DisplaySuite() {
         return (
           <MessageOverlayMode
             {...commonModeProps}
-            message={message.text}
-            textColor={message.textColor}
-            backgroundColor={message.backgroundColor}
-            fontScale={message.fontScale}
-            onMessageChange={(text) => setMessage({ text })}
-            onTextColorChange={(textColor) => setMessage({ textColor })}
-            onBackgroundColorChange={(backgroundColor) => setMessage({ backgroundColor })}
-            onFontScaleChange={(fontScale) => setMessage({ fontScale })}
           />
         );
       case MODES.COLOR:
@@ -479,18 +342,6 @@ function DisplaySuite() {
             variant="color"
             ariaLabel={isGreenScreen ? 'Tela verde para chroma' : 'Estúdio de cor'}
             title={isGreenScreen ? 'Tela verde para chroma' : 'Estúdio de cor'}
-            brightness={ambientBrightness}
-            color={customColor}
-            onBrightnessChange={(value) => {
-              setAmbientBrightness(value);
-              if (isGreenScreen) activateMode(MODES.COLOR, 'color');
-              resetIdleTimer();
-            }}
-            onColorChange={(value) => {
-              setCustomColor(value);
-              if (isGreenScreen) activateMode(MODES.COLOR, 'color');
-              resetIdleTimer();
-            }}
           />
         );
       case MODES.SPONSOR_LOOP:
@@ -506,9 +357,7 @@ function DisplaySuite() {
       className={`app-shell ${activeMode === MODES.HOME ? 'is-library' : ''} ${isFullscreen ? 'is-fullscreen' : ''} ${shouldHideUi ? 'is-ui-idle' : ''}`}
       onPointerMove={shouldHideUi ? resetIdleTimer : undefined}
       onPointerDown={shouldHideUi ? resetIdleTimer : undefined}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      onTouchCancel={() => { touchStartRef.current = null; }}
+      {...swipeHandlers}
     >
       <a className="ms-skip-link" href="#main-content">
         Pular para o conteúdo principal
@@ -520,9 +369,9 @@ function DisplaySuite() {
         onToggleFullscreen={toggleFullscreen}
         onHideUi={hideUiManually}
         isFullscreen={isFullscreen}
-        onToggleWakeLock={wakeLock.isSupported ? wakeLock.toggle : undefined}
-        isWakeLockActive={wakeLock.isLocked}
-        onOpenHelp={openHelp}
+        onToggleWakeLock={wakeLockSupported ? toggleWakeLockWithFeedback : undefined}
+        isWakeLockActive={isWakeLockActive}
+        onOpenHelp={() => setIsHelpOpen(true)}
         visible={showControls}
         status={status}
       />
@@ -562,7 +411,7 @@ function DisplaySuite() {
         hidden={activeMode === MODES.HOME || shouldHideUi || !isDockOpen}
       />
 
-      <KeyboardShortcutsModal open={isHelpOpen} onClose={closeHelp} shortcuts={SHORTCUTS} />
+      <KeyboardShortcutsModal open={isHelpOpen} onClose={() => setIsHelpOpen(false)} shortcuts={SHORTCUTS} />
 
       <RadialMenu
         activeMode={activeMode}
@@ -583,9 +432,7 @@ function DisplaySuite() {
 export default function App() {
   return (
     <MotionConfig reducedMotion="never">
-      <AppProvider>
-        <DisplaySuite />
-      </AppProvider>
+      <DisplaySuite />
     </MotionConfig>
   );
 }

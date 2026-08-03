@@ -58,23 +58,25 @@ function createAmbientNoiseSynth() {
     const bufferSize = 2 * ctx.sampleRate;
     const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const output = noiseBuffer.getChannelData(0);
-    let lastOut = 0.0;
 
     for (let i = 0; i < bufferSize; i++) {
-      const white = Math.random() * 2 - 1;
-      output[i] = (lastOut + 0.02 * white) / 1.02;
-      lastOut = output[i];
-      output[i] *= 3.5;
+      output[i] = Math.random() * 2 - 1; // Pure white noise
     }
 
     const whiteNoise = ctx.createBufferSource();
     whiteNoise.buffer = noiseBuffer;
     whiteNoise.loop = true;
 
-    const gainNode = ctx.createGain();
-    gainNode.gain.setValueAtTime(0.08, ctx.currentTime);
+    // Use a BiquadFilter to create Pink/Brown noise for a warmer feel
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 400; // Cut off harsh high frequencies (warmer sound)
 
-    whiteNoise.connect(gainNode);
+    const gainNode = ctx.createGain();
+    gainNode.gain.setValueAtTime(0.8, ctx.currentTime);
+
+    whiteNoise.connect(filter);
+    filter.connect(gainNode);
     gainNode.connect(ctx.destination);
     whiteNoise.start();
 
@@ -130,6 +132,7 @@ export default function FocusTimerMode({
   const [customMinutesInput, setCustomMinutesInput] = useState('');
   const [isAmbientNoiseActive, setIsAmbientNoiseActive] = useState(false);
   const ambientNoiseRef = useRef(null);
+  const debounceRef = useRef(null);
 
   const toggleAmbientNoise = () => {
     if (isAmbientNoiseActive) {
@@ -400,10 +403,14 @@ export default function FocusTimerMode({
           onChange={(event) => {
             const val = event.target.value;
             setCustomMinutesInput(val);
-            const num = parseInt(val, 10);
-            if (num > 0 && num <= 999) {
-              resetTimer(num * 60);
-            }
+            
+            if (debounceRef.current) clearTimeout(debounceRef.current);
+            debounceRef.current = setTimeout(() => {
+              const num = parseInt(val, 10);
+              if (num > 0 && num <= 999) {
+                resetTimer(num * 60);
+              }
+            }, 500);
           }}
         />
       </label>

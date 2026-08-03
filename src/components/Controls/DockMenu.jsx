@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import CaretLeftBold from '../Icons/CaretLeftBold';
 import CaretRightBold from '../Icons/CaretRightBold';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -22,7 +22,7 @@ function normalizeMode(mode) {
   };
 }
 
-export default function DockMenu({
+export default React.memo(function DockMenu({
   currentMode,
   activeMode,
   onSelectMode,
@@ -120,7 +120,7 @@ export default function DockMenu({
             <CaretLeftBold width={16} height={16} />
           </button>
 
-          <div ref={modesRef} className="wbp-dock__modes" role="toolbar" aria-label="Modos de exibição">
+          <div ref={modesRef} className="wbp-dock__modes" role="tablist" aria-label="Modos de exibição">
             {modes.map((mode, index) => {
               const isActive = selectedModeId === mode.id;
               const itemLabel = mode.detail ? `${mode.label}. ${mode.detail}` : mode.label;
@@ -132,8 +132,8 @@ export default function DockMenu({
                   className={cn('wbp-dock__mode', isActive && 'is-active')}
                   type="button"
                   aria-label={itemLabel}
-                  aria-pressed={isActive}
-                  aria-current={isActive ? 'true' : undefined}
+                  role="tab"
+                  aria-selected={isActive}
                   tabIndex={index === rovingIndex ? 0 : -1}
                   disabled={mode.disabled || !onSelectMode}
                   title={mode.shortcut ? `${itemLabel} (${mode.shortcut})` : itemLabel}
@@ -171,4 +171,4 @@ export default function DockMenu({
       ) : null}
     </AnimatePresence>
   );
-}
+});

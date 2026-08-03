@@ -193,6 +193,7 @@ export default function Navbar({
       )}
       aria-label={`Barra de controle do ${brandName}`}
       aria-hidden={!visible}
+      inert={!visible ? "" : undefined}
       initial={false}
       animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : -10 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
@@ -324,6 +325,8 @@ export default function Navbar({
             onClick={() => setOpen(!open)}
             className="md:hidden flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-white hover:bg-white/10 transition-colors p-0 cursor-pointer"
             aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+            aria-expanded={open}
+            aria-controls="mobile-menu-drawer"
           >
             <MenuToggleIcon open={open} className="w-5 h-5" duration={300} />
           </Button>
@@ -332,8 +335,21 @@ export default function Navbar({
 
       {/* Mobile Menu Overlay Drawer */}
       {open ? (
-        <div className="fixed top-14 right-0 bottom-0 left-0 z-[60] flex flex-col overflow-y-auto border-t border-white/10 bg-slate-950/95 backdrop-blur-2xl md:hidden transition-all">
-          <div className="flex h-full w-full flex-col justify-between gap-y-4 p-6">
+        <div 
+          id="mobile-menu-drawer"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu móvel"
+          className="fixed top-14 right-0 bottom-0 left-0 z-[60] flex flex-col overflow-y-auto border-t border-white/10 bg-slate-950/95 backdrop-blur-2xl md:hidden transition-all"
+        >
+          {/* Focus Trap Start */}
+          <div tabIndex={0} onFocus={(e) => {
+            const focusables = e.currentTarget.parentElement.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const last = focusables[focusables.length - 2]; // -2 because of the focus trap ends
+            if (last) last.focus();
+          }}></div>
+          
+          <div className="flex h-full w-full flex-col justify-between gap-y-4 p-6 wbp-drawer-content">
             <div className="grid gap-y-3">
               <button
                 type="button"
@@ -402,6 +418,13 @@ export default function Navbar({
               ) : null}
             </div>
           </div>
+
+          {/* Focus Trap End */}
+          <div tabIndex={0} onFocus={(e) => {
+            const focusables = e.currentTarget.parentElement.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const first = focusables[1]; // 1 because 0 is the start focus trap
+            if (first) first.focus();
+          }}></div>
         </div>
       ) : null}
     </motion.header>

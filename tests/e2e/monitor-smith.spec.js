@@ -151,7 +151,7 @@ test('dock usa tabindex móvel sem selecionar ferramentas ao navegar por setas',
 
   const items = page.locator('.wbp-dock__mode')
   const activeIndex = await items.evaluateAll((buttons) =>
-    buttons.findIndex((button) => button.getAttribute('aria-pressed') === 'true'),
+    buttons.findIndex((button) => button.getAttribute('aria-selected') === 'true'),
   )
   expect(activeIndex).toBeGreaterThanOrEqual(0)
 
@@ -165,14 +165,14 @@ test('dock usa tabindex móvel sem selecionar ferramentas ao navegar por setas',
     zeroIndexes: buttons
       .map((button, index) => button.tabIndex === 0 ? index : -1)
       .filter((index) => index >= 0),
-    pressedIndex: buttons.findIndex((button) => button.getAttribute('aria-pressed') === 'true'),
+    pressedIndex: buttons.findIndex((button) => button.getAttribute('aria-selected') === 'true'),
   }))
   expect(rovingState.focusedIndex).toBe(nextIndex)
   expect(rovingState.zeroIndexes).toEqual([nextIndex])
   expect(rovingState.pressedIndex).toBe(activeIndex)
 
   await page.keyboard.press('Tab')
-  await expect(page.locator('[role="toolbar"]:focus-within')).toHaveCount(0)
+  await expect(page.locator('[role="tablist"]:focus-within')).toHaveCount(0)
 })
 
 test('swipe troca o canvas, mas nunca dispara a partir dos controles', async ({ page }) => {
@@ -241,7 +241,7 @@ test('URL, histórico e identidade da ferramenta permanecem sincronizados', asyn
   await page.locator('#monitor-tool-grid-dead-pixel').click()
   await expect(page).toHaveURL(/#dead-pixel$/)
 
-  await page.getByRole('button', { name: /^Inspeção\./ }).click()
+  await page.getByRole('button', { name: /^Inspeção/ }).click()
   await expect(page).toHaveURL(/#cleaner$/)
 
   await page.goBack()

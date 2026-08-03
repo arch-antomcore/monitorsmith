@@ -606,11 +606,10 @@ export default function SponsorLoopMode({
 
           {/* Thumbnails */}
           {hasImages && (
-            <div className="sponsor-loop__thumbs" role="list" aria-label="Imagens carregadas">
+            <ul className="sponsor-loop__thumbs" aria-label="Imagens carregadas">
               {images.map((img, idx) => (
-                <div
+                <li
                   key={img.id}
-                  role="listitem"
                   className={join('sponsor-loop__thumb', idx === activeIndex && 'sponsor-loop__thumb--active')}
                 >
                   <button
@@ -633,9 +632,9 @@ export default function SponsorLoopMode({
                     aria-label={`Remover ${img.name}`}
                     title={`Remover ${img.name}`}
                   >×</button>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
 
           {hasImages && (

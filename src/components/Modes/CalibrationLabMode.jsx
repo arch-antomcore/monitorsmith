@@ -1,5 +1,6 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useReducedMotion, motion, AnimatePresence } from "framer-motion";
+import { triggerHaptic, HAPTIC_PATTERNS } from "../../utils/haptics";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
 const isFiniteBoolean = (value) => typeof value === "boolean";
@@ -116,6 +117,22 @@ const CATEGORY_MAP = {
   'fps-stutter': 'motion',
   'flicker-shutter': 'motion',
   'retention-burnin': 'motion',
+};
+
+const PATTERN_SWATCHES = {
+  'grayscale': { background: 'linear-gradient(to right, #000, #fff)' },
+  'near-black': { background: '#111' },
+  'smpte-bars': { background: 'linear-gradient(to right, #ccc 14%, #ff0 14% 28%, #0ff 28% 42%, #0f0 42% 56%, #f0f 56% 70%, #f00 70% 84%, #00f 84%)' },
+  'rgb-bars': { background: 'linear-gradient(to right, #f00 33.3%, #0f0 33.3% 66.6%, #00f 66.6%)' },
+  'gamma': { background: 'repeating-linear-gradient(45deg, #000, #000 2px, #fff 2px, #fff 4px)' },
+  'gradient-dither': { background: 'linear-gradient(to right, #000, #fff)' },
+  'ansi-checker': { background: 'conic-gradient(#fff 90deg, #000 90deg 180deg, #fff 180deg 270deg, #000 270deg)' },
+  'sharpness-grid': { background: 'repeating-linear-gradient(0deg, #fff, #fff 1px, transparent 1px, transparent 4px), repeating-linear-gradient(90deg, #fff, #fff 1px, transparent 1px, transparent 4px)', backgroundColor: '#000' },
+  'flicker-shutter': { background: 'repeating-linear-gradient(90deg, #fff, #fff 2px, #000 2px, #000 4px)' },
+  'subpixel-layout': { background: '#fff' },
+  'fps-stutter': { background: '#333' },
+  'moire-aliasing': { background: 'repeating-linear-gradient(45deg, #fff, #fff 1px, #000 1px, #000 2px)' },
+  'retention-burnin': { background: '#888' },
 };
 
 function GrayscalePattern({ showGuidance }) {
@@ -671,9 +688,10 @@ export default function CalibrationLabMode({
   }, []);
 
   const updatePattern = (nextPattern) => {
-    const next = resolvePattern(nextPattern);
-    if (!patternIsControlled) setInternalPattern(next);
-    onPatternChange?.(next);
+    const valid = resolvePattern(nextPattern);
+    if (!patternIsControlled) setInternalPattern(valid);
+    onPatternChange?.(valid);
+    triggerHaptic(HAPTIC_PATTERNS.light);
   };
 
   const handlePatternKeyDown = (event, index) => {
@@ -791,6 +809,18 @@ export default function CalibrationLabMode({
                   <span className="calibration-lab__pattern-key" aria-hidden="true">
                     {index + 1}
                   </span>
+                  <div 
+                    aria-hidden="true" 
+                    style={{
+                      width: '16px', height: '16px', borderRadius: '4px', marginRight: '8px', 
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center', 
+                      overflow: 'hidden', border: '1px solid rgba(255,255,255,0.2)',
+                      flexShrink: 0,
+                      ...(PATTERN_SWATCHES[item.id] || { background: '#555' })
+                    }}
+                  >
+                    {item.id === 'subpixel-layout' && <span style={{ color: '#000', fontSize: '10px', lineHeight: '12px', fontWeight: 'bold' }}>A</span>}
+                  </div>
                   <span>{item.label}</span>
                 </button>
               );

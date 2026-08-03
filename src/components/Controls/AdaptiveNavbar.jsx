@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import BrandLogo from '../UI/BrandLogo';
 import { ControlIcon } from './Navbar';
@@ -67,7 +67,7 @@ const collapsedIconVariants = {
     },
 };
 
-export default function AdaptiveNavbar({
+export default React.memo(function AdaptiveNavbar({
   currentMode,
   activeMode,
   onToggleFullscreen,
@@ -207,4 +207,4 @@ export default function AdaptiveNavbar({
       </motion.nav>
     </div>
   );
-}
+});

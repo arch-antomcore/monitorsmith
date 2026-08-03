@@ -53,8 +53,8 @@ export default function ScreenCleanerMode({
   brightness,
   className,
   defaultBrightness = 100,
-  defaultPattern = "grid",
-  onBrightnessChange,  onPatternChange,
+  defaultPattern = "checker",
+  onBrightnessChange,  onPatternChange,
   pattern,
   showControls = true,
 }) {

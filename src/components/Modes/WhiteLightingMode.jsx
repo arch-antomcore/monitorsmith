@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import DisplayToolShell from "./DisplayToolShell";
+import { triggerHaptic, HAPTIC_PATTERNS } from "../../utils/haptics";
 const clamp = (value, minimum, maximum) =>
   Math.min(Math.max(value, minimum), maximum);
 
@@ -147,18 +148,21 @@ export default function WhiteLightingMode({
     const next = clamp(Number(nextValue) || 0, 0, 100);
     if (!brightnessIsControlled) setInternalBrightness(next);
     onBrightnessChange?.(next);
+    triggerHaptic(HAPTIC_PATTERNS.light);
   };
 
   const updateTemperature = (nextValue) => {
     const next = clamp(Number(nextValue) || 1800, 1800, 12000);
     if (!temperatureIsControlled) setInternalTemperature(next);
     onTemperatureChange?.(next);
+    triggerHaptic(HAPTIC_PATTERNS.light);
   };
 
   const updateColor = (nextValue) => {
     const next = normalizeHex(nextValue) || "#FFFFFF";
     if (!colorIsControlled) setInternalColor(next);
     onColorChange?.(next);
+    triggerHaptic(HAPTIC_PATTERNS.light);
   };
 
   useEffect(() => {
@@ -308,8 +312,13 @@ export default function WhiteLightingMode({
       <motion.div
         aria-hidden="true"
         className="display-mode__canvas display-mode__canvas--light"
-        animate={{ backgroundColor: displayColor }}
-        transition={{ type: "spring", stiffness: 350, damping: 28 }}
+        style={{ forcedColorAdjust: "none" }}
+        animate={{ opacity: 1, backgroundColor: displayColor }}
+        initial={{ opacity: 0, backgroundColor: displayColor }}
+        transition={{ 
+          opacity: { duration: 0.8, ease: "easeOut" },
+          backgroundColor: { type: "spring", stiffness: 350, damping: 28 } 
+        }}
       />
     </DisplayToolShell>
   );
