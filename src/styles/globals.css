@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   color-scheme: dark;
   --void: #050506;
   --void-soft: #0a0a0e;
@@ -63,6 +63,7 @@ body,
   min-height: 100%;
   min-height: 100dvh;
   margin: 0;
+  overflow-x: hidden;
 }
 
 html {
@@ -2343,7 +2344,7 @@ p.display-mode__instructions {
 .display-mode--calibration {
   position: absolute;
   inset: 0;
-  width: 100vw;
+  width: 100%;
   height: 100dvh;
   overflow: hidden;
   background: #000000;
