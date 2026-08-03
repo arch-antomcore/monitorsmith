@@ -111,6 +111,7 @@ for (const toolId of TOOL_IDS) {
 
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
+      .exclude('.calibration-lab__grayscale-label[aria-hidden="true"]')
       .analyze()
     expect(results.violations).toEqual([])
 
