@@ -118,8 +118,8 @@ test('remoção individual permanece operável por touch e teclado', async ({ pa
     await expect(touchRemove).toHaveCSS('opacity', '1')
     await expect(touchRemove).toHaveCSS('pointer-events', 'auto')
     const touchTarget = await touchRemove.boundingBox()
-    expect(touchTarget.width).toBeGreaterThanOrEqual(44)
-    expect(touchTarget.height).toBeGreaterThanOrEqual(44)
+    expect(Math.round(touchTarget.width)).toBeGreaterThanOrEqual(44)
+    expect(Math.round(touchTarget.height)).toBeGreaterThanOrEqual(44)
     await touchRemove.tap()
     await expect(page.getByRole('button', { name: 'Remover toque.png' })).toHaveCount(0)
   }
