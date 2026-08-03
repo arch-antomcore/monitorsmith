@@ -177,7 +177,7 @@ test('dock usa tabindex móvel sem selecionar ferramentas ao navegar por setas',
 
 test('swipe troca o canvas, mas nunca dispara a partir dos controles', async ({ page }) => {
   await page.goto('/#dead-pixel')
-
+  page.on('console', msg => console.log('BROWSER:', msg.text()));
   const dispatchSwipe = async (selector) => page.evaluate((targetSelector) => {
     const target = document.querySelector(targetSelector)
     if (!target) throw new Error(`Alvo de swipe ausente: ${targetSelector}`)
@@ -241,7 +241,8 @@ test('URL, histórico e identidade da ferramenta permanecem sincronizados', asyn
   await page.locator('#monitor-tool-grid-dead-pixel').click()
   await expect(page).toHaveURL(/#dead-pixel$/)
 
-  await page.getByRole('button', { name: /^Inspeção/ }).click()
+  await page.mouse.move(100, 100)
+  await page.getByRole('tab', { name: /^Inspeção/ }).click()
   await expect(page).toHaveURL(/#cleaner$/)
 
   await page.goBack()
@@ -418,6 +419,7 @@ test.describe('quando o sistema força uma paleta de alto contraste', () => {
 
   test('preserva a cor diagnóstica sem impedir a adaptação dos controles', async ({ page }) => {
     await page.goto('/#dead-pixel')
+    await page.getByRole('button', { name: 'Vermelho' }).click()
 
     const canvas = page.locator('.display-mode__canvas')
     const controls = page.locator('.display-mode__controls')

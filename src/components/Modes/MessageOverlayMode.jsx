@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { QRCodeSVG } from "qrcode.react";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
@@ -65,6 +65,7 @@ export default function MessageOverlayMode({
   showControls = true,
   textColor,
 }) {
+  const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef(null);
   const closePanelButtonRef = useRef(null);
   const messageFitRef = useRef(null);
@@ -279,7 +280,7 @@ export default function MessageOverlayMode({
         aria-hidden="true"
         className="display-mode__canvas display-mode__canvas--message"
         animate={{ backgroundColor: resolvedBackgroundColor }}
-        transition={{ duration: 0.5 }}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
         style={{ backgroundColor: resolvedBackgroundColor }}
       />
 
@@ -321,7 +322,7 @@ export default function MessageOverlayMode({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 350, damping: 28 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
             className="message-overlay__qr"
           >
             {normalizedQrContent ? (
@@ -356,7 +357,7 @@ export default function MessageOverlayMode({
           initial={{ opacity: 0, scale: 0.96, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 10 }}
-          transition={{ type: "spring", stiffness: 350, damping: 28 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
           aria-label="Editor de mensagem"
           className="display-mode__controls display-mode__controls--message"
         >

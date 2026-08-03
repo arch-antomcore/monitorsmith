@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import DisplayToolShell from "./DisplayToolShell";
 import { triggerHaptic, HAPTIC_PATTERNS } from "../../utils/haptics";
 const clamp = (value, minimum, maximum) =>
@@ -109,6 +109,7 @@ export default function WhiteLightingMode({
   title,
   variant = "white",
 }) {
+  const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef(null);
   const [internalBrightness, setInternalBrightness] = useState(() =>
     clamp(Number(defaultBrightness) || 0, 0, 100),
@@ -205,7 +206,7 @@ export default function WhiteLightingMode({
               id="light-color"
               onChange={(event) => updateColor(event.target.value)}
               type="color"
-              value={resolvedColor}
+              value={resolvedColor.toLowerCase()}
             />
           </label>
 
@@ -234,7 +235,7 @@ export default function WhiteLightingMode({
                 {isActive && (
                   <motion.div
                     layoutId="activeColorSwatch"
-                    transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
                     style={{ position: "absolute", inset: 0, border: "2px solid currentColor", borderRadius: "inherit", zIndex: 0 }}
                   />
                 )}
@@ -315,7 +316,7 @@ export default function WhiteLightingMode({
         style={{ forcedColorAdjust: "none" }}
         animate={{ opacity: 1, backgroundColor: displayColor }}
         initial={{ opacity: 0, backgroundColor: displayColor }}
-        transition={{ 
+        transition={shouldReduceMotion ? { duration: 0 } : { 
           opacity: { duration: 0.8, ease: "easeOut" },
           backgroundColor: { type: "spring", stiffness: 350, damping: 28 } 
         }}

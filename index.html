@@ -50,7 +50,8 @@
       (function() {
         try {
           var saved = localStorage.getItem("ms_studio_theme");
-          if (saved === "light") {
+          var isLight = saved === "light" || (!saved && window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches);
+          if (isLight) {
             document.documentElement.classList.add("ms-studio-light", "light-mode");
             document.documentElement.classList.remove("dark", "ms-studio-dark");
           } else {

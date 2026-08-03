@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import CaretLeftBold from '../Icons/CaretLeftBold';
 import CaretRightBold from '../Icons/CaretRightBold';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { cn } from '../../lib/utils';
 import { ControlIcon } from './Navbar';
 import { DEFAULT_DOCK_MODES, getModePresentation } from '../../constants/shortcuts';
@@ -31,6 +31,7 @@ export default React.memo(function DockMenu({
   className,
   label = 'Ferramentas do monitor',
 }) {
+  const shouldReduceMotion = useReducedMotion();
   const modesRef = useRef(null);
   const modeButtonRefs = useRef([]);
   const selectedMode = currentMode ?? activeMode;
@@ -107,7 +108,7 @@ export default React.memo(function DockMenu({
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.985 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 300, damping: 30 }}
           style={{ x: '-50%' }}
         >
           <button
@@ -140,10 +141,18 @@ export default React.memo(function DockMenu({
                   onClick={() => onSelectMode?.(mode.id)}
                   onFocus={() => setFocusModeId(mode.id)}
                   onKeyDown={(event) => handleModeKeyDown(event, index)}
-                  whileHover={!mode.disabled ? { y: -2 } : undefined}
-                  whileTap={!mode.disabled ? { scale: 0.97 } : undefined}
-                  transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                  whileHover={!mode.disabled && !shouldReduceMotion ? { y: -2 } : {}}
+                  whileTap={!mode.disabled && !shouldReduceMotion ? { scale: 0.97 } : {}}
+                  transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 28 }}
                 >
+                  {isActive && (
+                    <motion.span
+                      className="wbp-dock__active-pill"
+                      layoutId="activeDockIndicator"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      aria-hidden="true"
+                    />
+                  )}
                   <span className="wbp-dock__mode-icon" aria-hidden="true">
                     <ControlIcon name={mode.icon} size={18} />
                   </span>

@@ -1,5 +1,5 @@
 import { useCallback, useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 export function DisplayToolShell({
   id,
@@ -20,6 +20,7 @@ export function DisplayToolShell({
   'data-seconds': dataSeconds,
   'aria-label': ariaLabel,
 }) {
+  const shouldReduceMotion = useReducedMotion();
   const [isPanelClosed, setIsPanelClosed] = useState(false);
   const closeButtonRef = useRef(null);
   const reopenButtonRef = useRef(null);
@@ -78,7 +79,7 @@ export function DisplayToolShell({
             initial={{ opacity: 0, scale: 0.96, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 10 }}
-            transition={{ type: 'spring', stiffness: 350, damping: 28, staggerChildren: 0.05 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 350, damping: 28, staggerChildren: 0.05 }}
           >
             <div className="display-mode__panel-header">
               <div>
@@ -93,8 +94,8 @@ export function DisplayToolShell({
                 onClick={closePanel}
                 title="Minimizar painel de opções (×)"
                 aria-label="Minimizar painel de opções"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={!shouldReduceMotion ? { scale: 1.1 } : {}}
+                whileTap={!shouldReduceMotion ? { scale: 0.9 } : {}}
               >
                 ×
               </motion.button>
@@ -130,9 +131,9 @@ export function DisplayToolShell({
             initial={{ opacity: 0, scale: 0.9, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 10 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+            whileHover={!shouldReduceMotion ? { scale: 1.02 } : {}}
+            whileTap={!shouldReduceMotion ? { scale: 0.98 } : {}}
+            transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 350, damping: 28 }}
           >
             {customOptionsLabel || `Opções de ${title || 'ajuste'}`}
           </motion.button>

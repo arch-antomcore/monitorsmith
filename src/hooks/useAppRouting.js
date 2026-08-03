@@ -15,18 +15,42 @@ function buildNavigationHref(toolId) {
 }
 
 function resolveLocationLaunch(location) {
-  const hashValue = location.hash.replace(/^#/, '').trim().toLowerCase();
-  const queryValue = new URLSearchParams(location.search).get('tool')?.trim().toLowerCase();
+  const hashParts = location.hash.replace(/^#/, '').split('?');
+  const hashValue = hashParts[0].trim().toLowerCase();
+  const hashParams = new URLSearchParams(hashParts[1] || '');
+  
+  const searchParams = new URLSearchParams(location.search);
+  const queryValue = searchParams.get('tool')?.trim().toLowerCase();
+
+  const customColor = searchParams.get('color') || hashParams.get('color');
+  const ambientBrightness = searchParams.get('brightness') || hashParams.get('brightness');
+  
+  const extractDynamicPreset = (basePreset) => {
+    const preset = { ...basePreset };
+    if (customColor && /^#?[0-9a-f]{6}$/i.test(customColor)) {
+      preset.customColor = customColor.startsWith('#') ? customColor : `#${customColor}`;
+    }
+    if (ambientBrightness) {
+      const parsed = parseInt(ambientBrightness, 10);
+      if (!Number.isNaN(parsed) && parsed >= 0 && parsed <= 100) {
+        preset.ambientBrightness = parsed;
+      }
+    }
+    return preset;
+  };
 
   for (const value of [hashValue, queryValue]) {
     if (!value) continue;
     if (value === MODES.HOME) return { mode: MODES.HOME, toolId: MODES.HOME, preset: {} };
 
     const tool = resolveToolLaunch(value);
-    if (tool) return tool;
+    if (tool) {
+      tool.preset = extractDynamicPreset(tool.preset);
+      return tool;
+    }
 
     const mode = Object.values(MODES).find((candidate) => candidate.toLowerCase() === value);
-    if (mode) return { mode, toolId: mode, preset: {} };
+    if (mode) return { mode, toolId: mode, preset: extractDynamicPreset({}) };
   }
 
   return {
@@ -45,8 +69,7 @@ export function useAppRouting() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const activateUrlTarget = (target) => {
-      // Custom color and brightness removed from URL parsing as we pushed state down
-      return activateMode(target.mode, target.toolId);
+      return activateMode(target.mode, target.toolId, target.preset);
     };
 
     const handleUrlState = () => {

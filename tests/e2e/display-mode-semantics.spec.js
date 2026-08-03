@@ -31,13 +31,13 @@ test('limpeza expõe padrões como seleção exclusiva e bloqueio como modal iso
   await expect(patternGroup).toBeVisible()
   await expect(patternButtons).toHaveCount(5)
 
+  const gridButton = patternGroup.getByRole('button', { name: 'Grade fina' })
   const checkerButton = patternGroup.getByRole('button', { name: 'Xadrez' })
-  const blackButton = patternGroup.getByRole('button', { name: 'Preto absoluto' })
   await expect(checkerButton).toHaveAttribute('aria-pressed', 'true')
-  await expect(blackButton).toHaveAttribute('aria-pressed', 'false')
+  await expect(gridButton).toHaveAttribute('aria-pressed', 'false')
 
-  await blackButton.click()
-  await expect(blackButton).toHaveAttribute('aria-pressed', 'true')
+  await gridButton.click()
+  await expect(gridButton).toHaveAttribute('aria-pressed', 'true')
   await expect(checkerButton).toHaveAttribute('aria-pressed', 'false')
   expect(
     await patternButtons.evaluateAll((buttons) =>

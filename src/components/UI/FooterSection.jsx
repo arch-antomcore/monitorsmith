@@ -18,7 +18,11 @@ export function FooterSection({ onLaunch }) {
         const saved = localStorage.getItem("ms_studio_theme");
         if (saved) return saved === "dark";
       } catch {
-        return true;
+        /* ignore */
+      }
+      // Fallback: respect OS-level color scheme preference
+      if (typeof window.matchMedia === "function") {
+        return !window.matchMedia("(prefers-color-scheme: light)").matches;
       }
     }
     return true;

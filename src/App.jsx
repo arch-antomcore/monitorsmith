@@ -16,12 +16,14 @@ const MessageOverlayMode = lazy(() => import('./components/Modes/MessageOverlayM
 const ScreenCleanerMode = lazy(() => import('./components/Modes/ScreenCleanerMode'));
 const SponsorLoopMode = lazy(() => import('./components/Modes/SponsorLoopMode'));
 
+const OnboardingOverlay = lazy(() => import('./components/UI/OnboardingOverlay'));
+
 import RadialMenu from './components/UI/RadialMenu';
 import ShortcutToast from './components/UI/ShortcutToast';
 import ToolTransitionOverlay from './components/UI/ToolTransitionOverlay';
 
-import { DEFAULT_DOCK_MODES, SHORTCUTS, isDisplayMode, MODE_IDS as MODES } from './constants/shortcuts';
-import { getToolById, resolveToolLaunch, TOOLS_REGISTRY } from './constants/tools';
+import { DEFAULT_DOCK_MODES, SHORTCUTS, MODE_IDS as MODES } from './constants/shortcuts';
+import { getToolById, resolveToolLaunch } from './constants/tools';
 
 import { useThemeSync } from './hooks/useThemeSync';
 import { useFullscreen } from './hooks/useFullscreen';
@@ -52,7 +54,7 @@ function getModeTitle(mode) {
 }
 
 function DisplaySuite() {
-  const { activeMode, activeToolId, activateMode } = useToolStore();
+  const { activeMode, activeToolId, activePreset, activateMode } = useToolStore();
   const {
     isDockOpen,
     isHelpOpen,
@@ -65,6 +67,7 @@ function DisplaySuite() {
     showToast,
   } = useUIStore();
 
+  const [showOnboarding, setShowOnboarding] = useState(() => typeof window !== 'undefined' && !localStorage.getItem('ms_onboarding_done'));
   const [homeFocusRequest, setHomeFocusRequest] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const previousModeRef = useRef(activeMode);
@@ -75,11 +78,9 @@ function DisplaySuite() {
 
   const {
     isFullscreen,
-    isSupported: fullscreenSupported,
     error: fullscreenError,
     exitFullscreen: leaveFullscreen,
     toggleFullscreen: toggleNativeFullscreen,
-    clearError: clearFullscreenError,
   } = useFullscreen();
 
   const isDisplayModeActive = activeMode !== MODES.HOME;
@@ -97,7 +98,6 @@ function DisplaySuite() {
     releaseWakeLock,
     toggleWakeLock,
     error: wakeLockError,
-    clearError: clearWakeLockError,
   } = useWakeLock();
 
   const resetIdleTimer = useCallback(() => {
@@ -144,7 +144,7 @@ function DisplaySuite() {
 
   useAppRouting();
   useAppKeyboard(toggleFullscreen, restoreInterface);
-  const swipeHandlers = useAppSwipe();
+  const swipeHandlers = useAppSwipe({ onActivity: resetIdleTimer });
 
   useEffect(() => {
     if (typeof document === 'undefined') return undefined;
@@ -276,6 +276,7 @@ function DisplaySuite() {
     autoFocus: true,
     onExit: handleExitMode,
     showControls,
+    ...activePreset,
   };
 
   const renderActiveMode = () => {
@@ -292,6 +293,7 @@ function DisplaySuite() {
         return (
           <WhiteLightingMode
             {...commonModeProps}
+            brightness={activePreset?.ambientBrightness}
           />
         );
       case MODES.CLEANER:
@@ -340,6 +342,7 @@ function DisplaySuite() {
           <WhiteLightingMode
             {...commonModeProps}
             variant="color"
+            brightness={activePreset?.ambientBrightness}
             ariaLabel={isGreenScreen ? 'Tela verde para chroma' : 'Estúdio de cor'}
             title={isGreenScreen ? 'Tela verde para chroma' : 'Estúdio de cor'}
           />
@@ -357,6 +360,7 @@ function DisplaySuite() {
       className={`app-shell ${activeMode === MODES.HOME ? 'is-library' : ''} ${isFullscreen ? 'is-fullscreen' : ''} ${shouldHideUi ? 'is-ui-idle' : ''}`}
       onPointerMove={shouldHideUi ? resetIdleTimer : undefined}
       onPointerDown={shouldHideUi ? resetIdleTimer : undefined}
+      onTouchStart={shouldHideUi ? resetIdleTimer : undefined}
       {...swipeHandlers}
     >
       <a className="ms-skip-link" href="#main-content">
@@ -425,6 +429,11 @@ function DisplaySuite() {
         isTransitioning={isTransitioning}
         onTransitionComplete={handleTransitionComplete}
       />
+      {showOnboarding && activeMode === MODES.HOME && (
+        <Suspense fallback={null}>
+          <OnboardingOverlay onComplete={() => setShowOnboarding(false)} />
+        </Suspense>
+      )}
     </div>
   );
 }

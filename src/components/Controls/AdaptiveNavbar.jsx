@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { motion, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import BrandLogo from '../UI/BrandLogo';
 import { ControlIcon } from './Navbar';
 import { getModePresentation } from '../../constants/shortcuts';
@@ -82,6 +82,7 @@ export default React.memo(function AdaptiveNavbar({
   const mode = getModePresentation(currentMode ?? activeMode);
   const showModeContext = mode.id !== 'home';
 
+  const shouldReduceMotion = useReducedMotion();
   const [isExpanded, setExpanded] = useState(true);
   
   const { scrollY } = useScroll();
@@ -128,8 +129,8 @@ export default React.memo(function AdaptiveNavbar({
         initial={false}
         animate={isExpanded ? "expanded" : "collapsed"}
         variants={containerVariants}
-        whileHover={!isExpanded ? { scale: 1.1 } : {}}
-        whileTap={!isExpanded ? { scale: 0.95 } : {}}
+        whileHover={!isExpanded && !shouldReduceMotion ? { scale: 1.1 } : {}}
+        whileTap={!isExpanded && !shouldReduceMotion ? { scale: 0.95 } : {}}
         onClick={handleNavClick}
         aria-hidden={!visible}
         className={cn(
@@ -138,6 +139,7 @@ export default React.memo(function AdaptiveNavbar({
         )}
       >
         <motion.div
+          transition={shouldReduceMotion ? { duration: 0 } : undefined}
           variants={logoVariants}
           className="flex-shrink-0 flex items-center font-semibold pl-4 pr-2 text-foreground"
         >
@@ -148,13 +150,13 @@ export default React.memo(function AdaptiveNavbar({
               title="Voltar às ferramentas (H)"
               aria-label="Voltar às ferramentas"
             >
-              <BrandLogo size={10} />
-              <span className="hidden sm:inline-block">MonitorSmith</span>
+              <BrandLogo size={20} className="translate-y-[1px]" />
+              <span className="hidden sm:inline-block text-[0.95rem] font-bold tracking-wide">MonitorSmith</span>
             </button>
           ) : (
             <div className="flex items-center gap-2">
-              <BrandLogo size={10} />
-              <span className="hidden sm:inline-block">MonitorSmith</span>
+              <BrandLogo size={20} className="translate-y-[1px]" />
+              <span className="hidden sm:inline-block text-[0.95rem] font-bold tracking-wide">MonitorSmith</span>
             </div>
           )}
         </motion.div>
@@ -166,31 +168,31 @@ export default React.memo(function AdaptiveNavbar({
           )}
         >
           {showModeContext && onBrandClick && (
-            <motion.button variants={itemVariants} onClick={onBrandClick} aria-label="Voltar às ferramentas" title="Voltar às ferramentas (H)" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
+            <motion.button transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onBrandClick} aria-label="Voltar às ferramentas" title="Voltar às ferramentas (H)" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
               <ControlIcon name="home" size={20} />
             </motion.button>
           )}
 
           {onToggleFullscreen && (
-            <motion.button variants={itemVariants} onClick={onToggleFullscreen} aria-label={fullscreenLabel} title={fullscreenLabel} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
+            <motion.button transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onToggleFullscreen} aria-label={fullscreenLabel} title={fullscreenLabel} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
               <ControlIcon name={isFullscreen ? 'minimize' : 'fullscreen'} size={20} />
             </motion.button>
           )}
 
           {showModeContext && onToggleWakeLock && (
-            <motion.button variants={itemVariants} onClick={onToggleWakeLock} aria-label={wakeLockLabel} title={wakeLockLabel} aria-pressed={isWakeLockActive} className={cn("text-sm font-medium transition-colors px-2 py-1 flex items-center justify-center", isWakeLockActive ? "text-amber-500" : "text-muted-foreground hover:text-foreground")}>
+            <motion.button transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onToggleWakeLock} aria-label={wakeLockLabel} title={wakeLockLabel} aria-pressed={isWakeLockActive} className={cn("text-sm font-medium transition-colors px-2 py-1 flex items-center justify-center", isWakeLockActive ? "text-amber-500" : "text-muted-foreground hover:text-foreground")}>
               <ControlIcon name="wake" size={20} />
             </motion.button>
           )}
 
           {showModeContext && onHideUi && (
-            <motion.button variants={itemVariants} onClick={onHideUi} aria-label="Ocultar barras e interface (Modo imersivo)" title="Ocultar barras e controles (×)" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
+            <motion.button transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onHideUi} aria-label="Ocultar barras e interface (Modo imersivo)" title="Ocultar barras e controles (×)" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
               <ControlIcon name="x" size={20} />
             </motion.button>
           )}
 
           {onOpenHelp && (
-            <motion.button variants={itemVariants} onClick={onOpenHelp} aria-label="Abrir atalhos de teclado" title="Atalhos de teclado (? / K)" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
+            <motion.button transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onOpenHelp} aria-label="Abrir atalhos de teclado" title="Atalhos de teclado (? / K)" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
               <ControlIcon name="help" size={20} />
             </motion.button>
           )}
@@ -198,6 +200,7 @@ export default React.memo(function AdaptiveNavbar({
         
         <div className="!absolute inset-0 flex items-center justify-center pointer-events-none">
           <motion.div
+            transition={shouldReduceMotion ? { duration: 0 } : undefined}
             variants={collapsedIconVariants}
             animate={isExpanded ? "expanded" : "collapsed"}
           >

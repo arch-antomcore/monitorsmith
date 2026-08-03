@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import DisplayToolShell from "./DisplayToolShell";
 
 const classNames = (...names) => names.filter(Boolean).join(" ");
@@ -120,6 +120,7 @@ export default function FocusTimerMode({
   title = "Foco profundo",
   totalDuration,
 }) {
+  const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef(null);
   const normalizedInitialDuration = clampSeconds(initialDuration) || 25 * 60;
   const [internalSeconds, setInternalSeconds] = useState(
@@ -343,7 +344,7 @@ export default function FocusTimerMode({
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
             >
               {resolvedRunning ? "Pausar" : resolvedSeconds === 0 ? "Recomeçar" : "Iniciar"}
             </motion.span>
@@ -447,7 +448,7 @@ export default function FocusTimerMode({
             "--focus-progress": `${Math.round(progress * 360)}deg`,
             scale: resolvedSeconds === 0 ? [1, 1.05, 1] : 1
           }}
-          transition={{
+          transition={shouldReduceMotion ? { duration: 0 } : {
             "--focus-progress": { type: "spring", stiffness: 350, damping: 28 },
             scale: { repeat: resolvedSeconds === 0 ? Infinity : 0, duration: 1.5 }
           }}

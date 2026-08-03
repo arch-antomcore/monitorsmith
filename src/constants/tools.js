@@ -326,7 +326,7 @@ export function resolveToolLaunch(value) {
   return {
     toolId: tool.id,
     mode: tool.mode,
-    preset: { ...(tool.launchPreset || {}) },
+    preset: tool.launchPreset || tool.preset || {},
   };
 }
 

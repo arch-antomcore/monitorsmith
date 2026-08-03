@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { useToolStore } from '../store/toolStore';
 import { MODE_IDS as MODES, DEFAULT_DOCK_MODES } from '../constants/shortcuts';
 
@@ -23,11 +23,13 @@ function getModeId(mode) {
   return typeof mode === 'string' ? mode : mode?.id;
 }
 
-export function useAppSwipe() {
+export function useAppSwipe(options = {}) {
+  const { onActivity } = options;
   const { activeMode, activateMode } = useToolStore();
   const touchStartRef = useRef(null);
 
   const handleTouchStart = (e) => {
+    if (onActivity) onActivity();
     if (e.touches?.length !== 1 || e.target?.closest?.(SWIPE_EXCLUDED_SELECTOR)) {
       touchStartRef.current = null;
       return;
@@ -53,7 +55,10 @@ export function useAppSwipe() {
         const nextIdx = deltaX < 0
           ? (currIdx + 1) % modeKeys.length
           : (currIdx - 1 + modeKeys.length) % modeKeys.length;
-        activateMode(modeKeys[nextIdx]);
+        const nextTool = DEFAULT_DOCK_MODES[nextIdx];
+        if (nextTool) {
+          activateMode(nextTool.id, nextTool.toolId);
+        }
       }
     }
   };
@@ -62,5 +67,9 @@ export function useAppSwipe() {
     touchStartRef.current = null;
   };
 
-  return { handleTouchStart, handleTouchEnd, handleTouchCancel };
+  return { 
+    onTouchStart: handleTouchStart, 
+    onTouchEnd: handleTouchEnd, 
+    onTouchCancel: handleTouchCancel 
+  };
 }
