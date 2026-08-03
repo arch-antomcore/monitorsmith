@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   color-scheme: dark;
   --void: #050506;
   --void-soft: #0a0a0e;
@@ -32,9 +32,9 @@
 }
 
 *:focus-visible {
-  outline: 2px solid #F59E0B !important;
-  outline-offset: 3px !important;
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.45) !important;
+  outline: 2px solid #F59E0B;
+  outline-offset: 3px;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
 }
 
 @media (color-gamut: p3) {
@@ -101,11 +101,6 @@ input:disabled {
 ::selection {
   background: rgba(245, 158, 11, 0.22);
   color: #fff;
-}
-
-:focus-visible {
-  outline: 3px solid rgba(245, 158, 11, 0.9);
-  outline-offset: 3px;
 }
 
 .ms-skip-link {
@@ -187,7 +182,7 @@ input:disabled {
   text-transform: uppercase;
 }
 
-/* UI primitives — Subtle, organic button micro-interactions */
+/* UI primitives â€” Subtle, organic button micro-interactions */
 .wbp-button {
   display: inline-flex;
   min-height: 40px;
@@ -281,7 +276,7 @@ input:disabled {
   inset: 0;
   display: grid;
   place-items: center;
-  padding: 20px;
+  padding: 20px;
 }
 
 .wbp-modal {
@@ -289,7 +284,7 @@ input:disabled {
   max-height: min(720px, calc(100dvh - 40px));
   overflow: auto;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 23px;
+  border-radius: 23px;
 }
 
 .wbp-modal__header {
@@ -363,7 +358,7 @@ input:disabled {
   min-height: 54px;
   padding: 6px 7px 6px 16px;
   border: 1px solid rgba(255, 255, 255, 0.095);
-  border-radius: 17px;
+  border-radius: 17px;
 }
 
 .wbp-dock {
@@ -378,7 +373,7 @@ input:disabled {
   padding: 6px 10px;
   transform: translateX(-50%);
   border: 1px solid rgba(255, 255, 255, 0.11);
-  border-radius: 24px;
+  border-radius: 24px;
   overflow: hidden;
   transition: opacity 220ms ease, transform 220ms ease;
 }
@@ -514,7 +509,7 @@ input:disabled {
   margin: 0;
   padding: 18px 20px;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 20px;
+  border-radius: 20px;
   transition: opacity 240ms ease, transform 240ms ease;
 }
 
@@ -527,13 +522,13 @@ input:disabled {
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  border-radius: 9999px;
+  border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   color: var(--text);
   font-size: 0.78rem;
   font-weight: 500;
-  cursor: pointer;
-  transition: all 200ms ease;
+  cursor: pointer;
+  transition: all 200ms ease;
 }
 
 .display-mode__reopen-panel-btn:hover {
@@ -849,14 +844,14 @@ input:disabled {
   }
 }
 
-/* Reduced motion — keep essential smooth scroll control without blocking UI transitions */
+/* Reduced motion â€” keep essential smooth scroll control without blocking UI transitions */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 }
 
-/* Component contracts — detailed states used by the React primitives. */
+/* Component contracts â€” detailed states used by the React primitives. */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -930,12 +925,6 @@ input:disabled {
   color: var(--text-faint);
   font-size: 0.77rem;
   line-height: 1.5;
-}
-
-.wbp-modal__close {
-  width: 30px;
-  min-height: 30px;
-  padding: 0;
 }
 
 .wbp-modal__close-mark {
@@ -1187,11 +1176,11 @@ input:disabled {
   gap: 9px;
   padding: 8px 13px;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 999px;
+  border-radius: 999px;
   color: rgba(255, 255, 255, 0.92);
   font-size: 0.76rem;
   line-height: 1.25;
-  pointer-events: none;
+  pointer-events: none;
 }
 
 .ms-shortcut-toast__key {
@@ -1482,7 +1471,7 @@ input:disabled {
 }
 
 /* Display-mode panels: each mode owns a compact, readable control surface. */
-.display-mode__controls--light,
+.display-mode__controls--white,
 .display-mode__controls--dead-pixel,
 .display-mode__controls--cleaner,
 .display-mode__controls--focus,
@@ -2130,7 +2119,7 @@ p.display-mode__instructions {
   }
 }
 
-/* MonitorSmith library — discovery and guidance before the immersive canvas. */
+/* MonitorSmith library â€” discovery and guidance before the immersive canvas. */
 .app-shell.is-library {
   min-height: 100dvh;
   overflow-x: hidden;
@@ -2141,29 +2130,6 @@ p.display-mode__instructions {
   min-height: 100dvh;
 }
 
-.ms-library__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin: 0;
-  color: var(--text-faint);
-  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.105em;
-  line-height: 1.3;
-  text-transform: uppercase;
-}
-
-.ms-library__eyebrow::before {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 12px rgba(182, 255, 226, 0.75);
-  content: '';
-}
-
 .ms-library h2 {
   margin: 17px 0 20px;
   color: var(--text);
@@ -2171,34 +2137,7 @@ p.display-mode__instructions {
   letter-spacing: -0.066em;
 }
 
-.ms-library__section {
-  padding: 4px 0 82px;
-}
-
-.ms-library__section-heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 30px;
-  margin-bottom: 23px;
-}
-
-.ms-library__section-heading h2 {
-  margin: 9px 0 0;
-  font-size: clamp(1.8rem, 3vw, 2.75rem);
-  line-height: 0.98;
-}
-
-.ms-library__section-heading > p {
-  max-width: 375px;
-  margin: 0;
-  color: var(--text-faint);
-  font-size: 0.83rem;
-  line-height: 1.58;
-  text-align: right;
-}
-
-/* ── Tool Grid (Enterprise Feature Cards) ── */
+/* â”€â”€ Tool Grid (Enterprise Feature Cards) â”€â”€ */
 
 .ms-tool-grid {
   display: grid;
@@ -2238,9 +2177,9 @@ p.display-mode__instructions {
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* ── Unified Card Internals (.ms-card__*) — shared by both grids ── */
+/* â”€â”€ Unified Card Internals (.ms-card__*) â€” shared by both grids â”€â”€ */
 
-/* Head row: icon · titles · meta */
+/* Head row: icon Â· titles Â· meta */
 .ms-card__head {
   position: relative;
   z-index: 1;
@@ -2250,7 +2189,7 @@ p.display-mode__instructions {
   gap: 12px;
 }
 
-/* Icon area — standalone icon without card container background */
+/* Icon area â€” standalone icon without card container background */
 .ms-card__icon-area {
   display: inline-flex;
   align-items: center;
@@ -2274,7 +2213,6 @@ p.display-mode__instructions {
   box-shadow: none !important;
 }
 
-/* Per-tone icon colors removed for monochrome look */
 /* Titles container */
 .ms-card__titles {
   display: flex;
@@ -2311,7 +2249,6 @@ p.display-mode__instructions {
   border-radius: 50%;
   background: #F59E0B;
   box-shadow: 0 0 8px #F59E0B;
-  /* NOTE: pulse animation handled by Framer Motion ledMotionVariants */
 }
 
 /* Keyboard shortcut badge */
@@ -2335,7 +2272,7 @@ p.display-mode__instructions {
   color: var(--text-muted);
 }
 
-/* Content layer — sits above the decorative floating icon */
+/* Content layer â€” sits above the decorative floating icon */
 .ms-card__content {
   position: relative;
   z-index: 2;
@@ -2352,7 +2289,7 @@ p.display-mode__instructions {
   color: rgba(255, 255, 255, 0.68);
 }
 
-/* CTA link — "ABRIR" + bouncing arrow (like "LEARN MORE" in reference) */
+/* CTA link â€” "ABRIR" + bouncing arrow */
 .ms-card__cta {
   display: flex;
   align-items: center;
@@ -2381,7 +2318,7 @@ p.display-mode__instructions {
   font-weight: 700;
 }
 
-/* Decorative floating icon — large, bottom-right corner (like reference imgSrc) */
+/* Decorative floating icon â€” large, bottom-right corner */
 .ms-card__decor {
   position: absolute;
   right: -10px;
@@ -2402,13 +2339,7 @@ p.display-mode__instructions {
   opacity: 0.18;
 }
 
-/* Per-tone decorative icon colors removed for monochrome look */
 /* New inspection and presence tools. */
-.display-mode--calibration {
-  place-items: center;
-  background: #070708;
-}
-
 .display-mode--calibration {
   position: absolute;
   inset: 0;
@@ -2500,7 +2431,9 @@ p.display-mode__instructions {
   z-index: 1;
   padding: 6px 12px;
   border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 8px;
+  border-radius: 8px;
+
+
   color: rgba(255, 255, 255, 0.95);
   font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
   font-size: 0.72rem;
@@ -2531,7 +2464,9 @@ p.display-mode__instructions {
   bottom: clamp(96px, 13vh, 120px);
   left: 24px;
   padding: 6px 12px;
-  border-radius: 6px;
+  border-radius: 6px;
+
+
   color: #fff;
   font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
   font-size: 0.7rem;
@@ -2565,7 +2500,9 @@ p.display-mode__instructions {
   left: 50%;
   padding: 6px 12px;
   transform: translateX(-50%);
-  border-radius: 6px;
+  border-radius: 6px;
+
+
   color: #fff;
   font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
   font-size: 0.68rem;
@@ -2579,8 +2516,12 @@ p.display-mode__instructions {
   z-index: 10;
   max-width: 340px;
   padding: 18px 22px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+
+
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
   pointer-events: auto;
 }
 
@@ -2590,7 +2531,10 @@ p.display-mode__instructions {
   padding: 0 0 13px;
   border: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0;
+  border-radius: 0;
+
+
+
 }
 .calibration-lab__eyebrow { margin: 0; color: rgba(245, 158, 11, 0.7); font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; }
 .calibration-lab__title { margin: 6px 0 8px; font-size: 1.25rem; font-weight: 550; letter-spacing: -0.035em; color: #ffffff; }
@@ -2761,7 +2705,9 @@ p.display-mode__instructions {
   }
 
   .wbp-dock,
-  .display-mode__controls {
+  .display-mode__controls {
+
+
   }
 }
 
@@ -2907,8 +2853,8 @@ p.display-mode__instructions {
     background-color: CanvasText !important;
   }
 
-  /* A cor é o resultado medido nestas superfícies; permitir a substituição do
-     sistema destruiria a função do teste. O chrome continua adaptativo. */
+  /* A cor Ã© o resultado medido nestas superfÃ­cies; permitir a substituiÃ§Ã£o do
+     sistema destruiria a funÃ§Ã£o do teste. O chrome continua adaptativo. */
   .display-mode__canvas,
   .calibration-lab__canvas,
   .sponsor-loop__stage,
@@ -2919,7 +2865,7 @@ p.display-mode__instructions {
 
 
 
-/* MonitorSmith tool library — Unified Design System */
+/* MonitorSmith tool library â€” Unified Design System */
 .ms-library__eyebrow {
   display: inline-flex;
   align-items: center;
@@ -3008,16 +2954,16 @@ p.display-mode__instructions {
   }
 }
 
-/* MonitorSmith home — full viewport surface */
+/* MonitorSmith home â€” full viewport surface */
 .ms-library {
   width: 100%;
   margin: 0;
   padding: 0 0 76px;
 }
 
-/* ═══════════════════════════════════════════════
-   Hero — Fluid Centralized + Full Width Background
-   ═══════════════════════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   Hero â€” Fluid Centralized + Full Width Background
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 .ms-hero {
   position: relative;
@@ -3032,7 +2978,7 @@ p.display-mode__instructions {
   background: radial-gradient(ellipse 100% 80% at 50% -20%, #0d0f15 0%, #060709 100%);
 }
 
-/* Ambient Aurora Glow — Soft diffuse emerald/indigo flare */
+/* Ambient Aurora Glow â€” Soft diffuse emerald/indigo flare */
 .ms-hero::before {
   content: '';
   position: absolute;
@@ -3114,7 +3060,7 @@ p.display-mode__instructions {
   max-width: 64ch;
 }
 
-/* ── Hero Grid (Dark Cards with Corner Squares) ── */
+/* â”€â”€ Hero Grid (Dark Cards with Corner Squares) â”€â”€ */
 
 .ms-hero__grid {
   position: relative;
@@ -3199,7 +3145,7 @@ p.display-mode__instructions {
   transform: translateY(2px);
 }
 
-/* ── Hero Grid Responsive ── */
+/* â”€â”€ Hero Grid Responsive â”€â”€ */
 
 @media (max-width: 900px) {
   .ms-hero__grid {
@@ -3253,7 +3199,7 @@ p.display-mode__instructions {
   margin: 24px auto 0;
 }
 
-/* Motion Button — Expanding Circle Install CTA */
+/* Motion Button â€” Expanding Circle Install CTA */
 .ms-motion-btn {
   position: relative;
   display: inline-flex;
@@ -3263,14 +3209,16 @@ p.display-mode__instructions {
   min-width: 240px;
   padding: 4px 28px 4px 6px;
   border-radius: 999px;
-  border: 1.5px solid rgba(245, 158, 11, 0.38);
+  border: 1.5px solid rgba(245, 158, 11, 0.38);
+
   color: #ffffff;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   outline: none;
   overflow: hidden;
-  user-select: none;
+  user-select: none;
+
   transition: border-color 400ms ease, box-shadow 400ms ease, transform 150ms ease;
   z-index: 1;
 }
@@ -3503,7 +3451,9 @@ p.display-mode__instructions {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.72rem;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.45);
+
+
   padding: 4px 14px;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -3521,7 +3471,9 @@ p.display-mode__instructions {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
   font-size: 0.68rem;
   letter-spacing: 0.06em;
-  color: rgba(52, 211, 153, 0.85);
+  color: rgba(52, 211, 153, 0.85);
+
+
   padding: 4px 10px;
   border-radius: 8px;
   border: 1px solid rgba(52, 211, 153, 0.25);
@@ -3543,7 +3495,9 @@ p.display-mode__instructions {
 .sponsor-loop__drop-overlay {
   position: fixed;
   inset: 0;
-  z-index: 50;
+  z-index: 50;
+
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3852,7 +3806,7 @@ p.display-mode__instructions {
   }
 }
 
-/* ── FAQ Accordion High-Contrast Styling (Dark Mode Default) ── */
+/* â”€â”€ FAQ Accordion High-Contrast Styling (Dark Mode Default) â”€â”€ */
 .ms-faq-question {
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.12);
@@ -3896,7 +3850,7 @@ p.display-mode__instructions {
 }
 
 /* ==========================================================================
-   STUDIO LIGHT MODE (Tema Claro — Off White Acetinado / Warm Studio Fine Art)
+   STUDIO LIGHT MODE (Tema Claro â€” Off White Acetinado / Warm Studio Fine Art)
    ========================================================================== */
 html.ms-studio-light,
 html.ms-studio-light body,
@@ -3907,11 +3861,11 @@ html.ms-studio-light .ms-library,
 html.ms-studio-light .ms-hero,
 html.ms-studio-light .ms-seo-faq {
   --void: #F7F5F0 !important;       /* Off-white principal (Warm Cream / Marfim Acetinado) */
-  --void-soft: #EFECE6 !important;  /* Casca de ovo quente suave para rodapé e transições */
+  --void-soft: #EFECE6 !important;  /* Casca de ovo quente suave para rodapÃ© e transiÃ§Ãµes */
   --surface: rgba(255, 255, 255, 0.88) !important;
   --surface-solid: #FAF9F6 !important;
   --surface-raised: #F5F3EE !important;
-  --line: rgba(87, 83, 78, 0.15) !important;       /* Stone 500 com 15% - bordas quentes nítidas */
+  --line: rgba(87, 83, 78, 0.15) !important;       /* Stone 500 com 15% - bordas quentes nÃ­tidas */
   --line-strong: rgba(87, 83, 78, 0.25) !important;
   --line-bright: rgba(87, 83, 78, 0.35) !important;
   --text: #1C1917 !important;       /* Stone 900 - Marrom chumbo escuro refinado */
@@ -3937,7 +3891,7 @@ html.ms-studio-light .ms-hero::before {
   background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.04) 50%, transparent 75%) !important;
 }
 
-/* Tipografia Universal e Títulos no Modo Claro */
+/* Tipografia Universal e TÃ­tulos no Modo Claro */
 html.ms-studio-light .app-mode-layer--library h1,
 html.ms-studio-light .app-mode-layer--library h2,
 html.ms-studio-light .app-mode-layer--library h3,
@@ -4030,7 +3984,7 @@ html.ms-studio-light .app-shell .wbp-navbar__brand--button:hover {
   border-color: rgba(87, 83, 78, 0.3) !important;
 }
 
-/* Cartões da Grade Principal (HeroGridCard, ToolCard e QuickLaunch) */
+/* CartÃµes da Grade Principal (HeroGridCard, ToolCard e QuickLaunch) */
 html.ms-studio-light .ms-tool-card,
 html.ms-studio-light .ms-hero-grid-card {
   background: #FFFFFF !important;
@@ -4045,7 +3999,7 @@ html.ms-studio-light .ms-hero-grid-card:hover {
   background: #FFFFFF !important;
 }
 
-/* Textos e Ícones internos dos cartões em modo claro */
+/* Textos e Ãcones internos dos cartÃµes em modo claro */
 html.ms-studio-light .ms-card__titles,
 html.ms-studio-light .ms-card__titles strong {
   color: #1C1917 !important;
@@ -4112,7 +4066,7 @@ html.ms-studio-light .ms-faq-answer * {
   color: #1C1917 !important;
 }
 
-/* Botões de Ação, CTA e MotionButton em modo claro */
+/* BotÃµes de AÃ§Ã£o, CTA e MotionButton em modo claro */
 html.ms-studio-light .ms-hero__scroll-btn,
 html.ms-studio-light button[class*="scroll-btn"] {
   background: #FFFFFF !important;
@@ -4147,7 +4101,7 @@ html.ms-studio-light .ms-motion-btn:hover .ms-motion-btn__text {
 html.ms-studio-light footer,
 html.ms-studio-light .FooterSection,
 html.ms-studio-light [class*="FooterSection"] {
-  background-color: #EFECE6 !important; /* Semi hot off white secundário */
+  background-color: #EFECE6 !important; /* Semi hot off white secundÃ¡rio */
   border-top-color: rgba(87, 83, 78, 0.15) !important;
   color: #44403C !important;
 }

@@ -229,7 +229,6 @@ export default function Navbar({
               type="button"
               onClick={onBrandClick}
               tabIndex={showModeContext ? -1 : hiddenTabIndex}
-              aria-hidden={showModeContext ? true : undefined}
               aria-label="Voltar às ferramentas"
             >
               <BrandLogo size={18} className="translate-y-[1px]" />
@@ -333,7 +332,7 @@ export default function Navbar({
 
       {/* Mobile Menu Overlay Drawer */}
       {open ? (
-        <div className="fixed top-14 right-0 bottom-0 left-0 z-50 flex flex-col overflow-y-auto border-t border-white/10 bg-slate-950/95 backdrop-blur-2xl md:hidden transition-all">
+        <div className="fixed top-14 right-0 bottom-0 left-0 z-[60] flex flex-col overflow-y-auto border-t border-white/10 bg-slate-950/95 backdrop-blur-2xl md:hidden transition-all">
           <div className="flex h-full w-full flex-col justify-between gap-y-4 p-6">
             <div className="grid gap-y-3">
               <button

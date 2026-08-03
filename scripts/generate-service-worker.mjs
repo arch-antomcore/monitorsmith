@@ -19,7 +19,7 @@ async function walk(directory) {
 
 function toPublicUrl(file) {
   const relative = path.relative(distDir, file).split(path.sep).join('/')
-  if (relative === 'index.html') return '/index.html'
+  if (relative === 'index.html') return '/'
   if (relative.endsWith('/index.html')) return `/${relative.slice(0, -'index.html'.length)}`
   return `/${relative}`
 }

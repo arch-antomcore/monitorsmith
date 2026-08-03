@@ -764,6 +764,7 @@ export default function CalibrationLabMode({
                 className={classNames("display-mode__preset-button", activeCategory === cat.id && "display-mode__preset-button--active")}
                 style={{ padding: '4px 8px', fontSize: '0.75rem', backgroundColor: activeCategory === cat.id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.05)' }}
                 onClick={() => setActiveCategory(cat.id)}
+                aria-pressed={activeCategory === cat.id}
               >
                 {cat.label}
               </button>

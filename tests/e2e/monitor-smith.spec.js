@@ -92,6 +92,7 @@ for (const toolId of TOOL_IDS) {
       await expect(controls).toHaveCSS('opacity', '1')
     }
 
+    await page.waitForTimeout(600) // Wait for framer-motion spring to settle
     const geometry = await readToolChromeGeometry(page)
     expect(geometry.hudCount).toBe(0)
     expect(geometry.hasHorizontalOverflow).toBe(false)
@@ -451,7 +452,7 @@ test('shell permanece contido nos viewports mínimos portrait e landscape', asyn
     for (const toolId of TOOL_IDS) {
       await page.goto(`/?tool=${toolId}`)
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-
+      await page.waitForTimeout(600) // Wait for framer-motion spring to settle
       const geometry = await readToolChromeGeometry(page)
       expect(geometry.hudCount).toBe(0)
       expect(geometry.hasHorizontalOverflow).toBe(false)

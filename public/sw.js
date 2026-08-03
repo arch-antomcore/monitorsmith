@@ -5,7 +5,6 @@ const CACHE_PREFIX = 'monitorsmith-'
 const CACHE_VERSION = 'monitorsmith-dev'
 const PRECACHE_URLS = /*__PRECACHE_URLS__*/ [
   '/',
-  '/index.html',
   '/manifest.webmanifest',
   '/logo-transparent.png',
 ]
