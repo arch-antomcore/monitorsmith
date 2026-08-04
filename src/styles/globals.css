@@ -4255,6 +4255,14 @@ html.ms-studio-light .wbp-modal .wbp-modal__close:hover {
     background: #D97706 !important;
   }
   
+  
+  /* Light Mode Overrides for Glass3D */
+  html.ms-studio-light :where(.glass3d, .wbp-modal-backdrop, .wbp-modal, .wbp-navbar--tool, .wbp-dock, .display-mode__controls, .display-mode__reopen-panel-btn, .ms-shortcut-toast, .ms-motion-btn, .sponsor-loop__counter, .sponsor-loop__oled-badge, .sponsor-loop__drop-overlay) {
+    --filter-glass3d: blur(32px) saturate(2.0);
+    --color-glass3d: rgba(255, 255, 255, 0.55);
+    --noise-glass3d: none;
+  }
+
   /* --- STANDARD GLASS3D EFFECT --- */
 :where(.glass3d, .wbp-modal-backdrop, .wbp-modal, .wbp-navbar--tool, .wbp-dock, .display-mode__controls, .display-mode__reopen-panel-btn, .ms-shortcut-toast, .ms-motion-btn, .sponsor-loop__counter, .sponsor-loop__oled-badge, .sponsor-loop__drop-overlay) { 
   --filter-glass3d: blur(32px) brightness(0.85) saturate(2.5); 
