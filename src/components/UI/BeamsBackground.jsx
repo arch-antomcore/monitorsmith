@@ -147,6 +147,18 @@ export default function BeamsBackground({
     function animate() {
       if (!(canvas && ctx)) return;
 
+      // Disable heavy blur and animation loops in test environments (Playwright) 
+      // or when prefers-reduced-motion is enabled to save CPU.
+      const isTestEnv = typeof navigator !== 'undefined' && navigator.webdriver;
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      if (isTestEnv || prefersReducedMotion) {
+        // Just draw the beams statically without blur
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        beamsRef.current.forEach((beam) => drawBeam(ctx, beam));
+        return; 
+      }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.filter = "blur(35px)";
 
@@ -177,6 +189,12 @@ export default function BeamsBackground({
     };
   }, [intensity]);
 
+  // Disable heavy blur styles in test environments (Playwright) 
+  // or when prefers-reduced-motion is enabled to save CPU.
+  const isTestEnv = typeof navigator !== 'undefined' && navigator.webdriver;
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const filterStyle = isTestEnv || prefersReducedMotion ? "none" : "blur(15px)";
+
   return (
     <motion.div
       className={cn(
@@ -188,7 +206,7 @@ export default function BeamsBackground({
       <canvas
         className="absolute inset-0"
         ref={canvasRef}
-        style={{ filter: "blur(15px)" }}
+        style={{ filter: filterStyle }}
       />
 
       <motion.div
@@ -202,7 +220,7 @@ export default function BeamsBackground({
         transition={{
           duration: 10,
           ease: "easeInOut",
-          repeat: Number.POSITIVE_INFINITY,
+          repeat: isTestEnv || prefersReducedMotion ? 0 : Number.POSITIVE_INFINITY,
         }}
       />
     </motion.div>
