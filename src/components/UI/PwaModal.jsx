@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import ArrowClockwiseRegular from '../Icons/ArrowClockwiseRegular';
 import DeviceMobileFill from '../Icons/DeviceMobileFill';
 import HardDrivesRegular from '../Icons/HardDrivesRegular';
@@ -148,7 +149,10 @@ export default function PwaModal({ label = 'Instalar app e usar offline', classN
 
   return (
     <>
-      <button
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
         type="button"
         onClick={() => setIsOpen(true)}
         className={className}
@@ -156,7 +160,7 @@ export default function PwaModal({ label = 'Instalar app e usar offline', classN
         aria-haspopup="dialog"
       >
         {label}
-      </button>
+      </motion.button>
 
       <Modal
         open={isOpen}

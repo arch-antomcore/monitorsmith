@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import ArrowRightBold from '../Icons/ArrowRightBold';
 import BrandLogo from './BrandLogo';
 import Modal from './Modal';
@@ -111,7 +112,10 @@ export default function FlowButton({ text = 'Instalar MonitorSmith', onClick }) 
 
   return (
     <>
-      <button
+      <motion.button
+        whileHover={{ scale: 1.025 }}
+        whileTap={{ scale: 0.975 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
         type="button"
         className="ms-motion-btn group"
         onClick={handleInstall}
@@ -123,7 +127,7 @@ export default function FlowButton({ text = 'Instalar MonitorSmith', onClick }) 
           <ArrowRightBold width={20} height={20} />
         </div>
         <span className="ms-motion-btn__text">{text}</span>
-      </button>
+      </motion.button>
 
       <Modal
         open={showModal}

@@ -449,7 +449,12 @@ export default function App() {
       {prefersReducedMotion ? (
         <DisplaySuite />
       ) : (
-        <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>
+        <ReactLenis root options={{ 
+          lerp: 0.08, 
+          duration: 1.2, 
+          wheelMultiplier: 1.1, 
+          smoothWheel: true 
+        }}>
           <DisplaySuite />
         </ReactLenis>
       )}
