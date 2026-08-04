@@ -122,7 +122,7 @@ export default React.memo(function DockMenu({
             title="Ferramenta anterior (←)"
           >
             <CaretLeftBold width={16} height={16} />
-          </button>
+          </motion.button>
 
           <div ref={modesRef} className="wbp-dock__modes" role="tablist" aria-label="Modos de exibição">
             {modes.map((mode, index) => {
