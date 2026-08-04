@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 import DotPattern from '../UI/DotPattern';
+import BeamsBackground from '../UI/BeamsBackground';
 import FlowButton from '../UI/FlowButton';
 import AdSenseUnit from '../UI/AdSenseUnit';
 import { FooterSection } from '../UI/FooterSection';
@@ -270,13 +271,16 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
       <AdSenseUnit placement="sidebar" format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--right" style={{ width: '160px', minHeight: '600px' }} />
 
       <section className="ms-hero" aria-describedby="library-description">
+        {/* Animated Beams Background with Parallax */}
+        <BeamsBackground style={{ y: patternY }} intensity="medium" className="opacity-80" />
+
         {/* SVG Dot Pattern Background */}
         <DotPattern
           y={patternY}
           cy={1}
           cr={1}
           cx={1}
-          className="[mask-image:radial-gradient(700px_circle_at_50%_40%,white_20%,transparent_85%)]"
+          className="[mask-image:radial-gradient(700px_circle_at_50%_40%,white_20%,transparent_85%)] opacity-50"
         />
 
         <motion.div
