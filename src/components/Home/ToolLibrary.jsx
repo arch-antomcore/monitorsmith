@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 
 import FlowButton from '../UI/FlowButton';
@@ -247,8 +247,6 @@ function HeroGridCard({ tool, index, onLaunch }) {
 }
 
 export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturnFocus }) {
-  const { scrollY } = useScroll();
-  const patternY = useTransform(scrollY, (val) => -val * 0.4);
 
   useEffect(() => {
     if (returnFocusRequest > 0) {
