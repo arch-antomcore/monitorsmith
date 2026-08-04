@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import { ReactLenis } from 'lenis/react';
 
 import AdaptiveNavbar from './components/Controls/AdaptiveNavbar';
 import DockMenu from './components/Controls/DockMenu';
@@ -439,9 +440,19 @@ function DisplaySuite() {
 }
 
 export default function App() {
+  const prefersReducedMotion = typeof window !== 'undefined' 
+    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches 
+    : false;
+
   return (
     <MotionConfig reducedMotion="never">
-      <DisplaySuite />
+      {prefersReducedMotion ? (
+        <DisplaySuite />
+      ) : (
+        <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>
+          <DisplaySuite />
+        </ReactLenis>
+      )}
     </MotionConfig>
   );
 }

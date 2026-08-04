@@ -5,6 +5,7 @@ import '@fontsource-variable/jetbrains-mono'
 import App from './App'
 import ErrorBoundary from './components/UI/ErrorBoundary'
 import './index.css'
+import 'lenis/dist/lenis.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

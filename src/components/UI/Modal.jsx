@@ -139,6 +139,7 @@ export default function Modal({
             aria-describedby={hasDescription ? descriptionId : undefined}
             aria-label={!hasTitle ? ariaLabel || 'Janela de configuração' : undefined}
             tabIndex={-1}
+            data-lenis-prevent="true"
             initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 14, scale: shouldReduceMotion ? 1 : 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 10, scale: shouldReduceMotion ? 1 : 0.99 }}
