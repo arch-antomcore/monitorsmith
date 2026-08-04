@@ -3245,7 +3245,7 @@ p.display-mode__instructions {
   overflow: hidden;
   user-select: none;
 
-  transition: border-color 400ms ease, box-shadow 400ms ease, transform 150ms ease;
+  transition: border-color 400ms ease, box-shadow 400ms ease;
   z-index: 1;
 }
 
@@ -3254,9 +3254,7 @@ p.display-mode__instructions {
   box-shadow: 0 6px 28px rgba(245, 158, 11, 0.28), 0 0 25px rgba(245, 158, 11, 0.15);
 }
 
-.ms-motion-btn:active {
-  transform: scale(0.97);
-}
+
 
 /* Expanding left circle element */
 .ms-motion-btn__circle {
