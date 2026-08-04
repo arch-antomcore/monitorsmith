@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "../../lib/utils";
 
 function createBeam(width, height, isDarkMode) {
@@ -22,12 +22,6 @@ function createBeam(width, height, isDarkMode) {
   };
 }
 
-const opacityMap = {
-  subtle: 0.7,
-  medium: 0.85,
-  strong: 1,
-};
-
 export default function BeamsBackground({
   className,
   intensity = "strong",
@@ -38,8 +32,20 @@ export default function BeamsBackground({
   const animationFrameRef = useRef(0);
   const MINIMUM_BEAMS = 20;
   const isDarkModeRef = useRef(false);
+  const shouldReduceMotion = useReducedMotion();
+  
+  // Disable completely in test environments to save CPU
+  const isTestEnv = typeof navigator !== 'undefined' && navigator.webdriver;
+
+  const opacityMap = {
+    subtle: 0.7,
+    medium: 0.85,
+    strong: 1,
+  };
 
   useEffect(() => {
+    if (isTestEnv) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -47,7 +53,6 @@ export default function BeamsBackground({
     if (!ctx) return;
 
     const updateDarkMode = () => {
-      // In MonitorSmith, light mode is 'ms-studio-light' on html.
       isDarkModeRef.current = !document.documentElement.classList.contains("ms-studio-light");
     };
 
@@ -86,8 +91,7 @@ export default function BeamsBackground({
       const hueRange = 40;
 
       beam.y = canvas.height + 100;
-      beam.x =
-        column * spacing + spacing / 2 + (Math.random() - 0.5) * spacing * 0.5;
+      beam.x = column * spacing + spacing / 2 + (Math.random() - 0.5) * spacing * 0.5;
       beam.width = 100 + Math.random() * 100;
       beam.speed = 0.5 + Math.random() * 0.4;
       beam.hue = hueBase + (index * hueRange) / totalBeams;
@@ -100,44 +104,17 @@ export default function BeamsBackground({
       ctx.translate(beam.x, beam.y);
       ctx.rotate((beam.angle * Math.PI) / 180);
 
-      const pulsingOpacity =
-        beam.opacity *
-        (0.8 + Math.sin(beam.pulse) * 0.2) *
-        opacityMap[intensity];
-
+      const pulsingOpacity = beam.opacity * (0.8 + Math.sin(beam.pulse) * 0.2) * opacityMap[intensity];
       const gradient = ctx.createLinearGradient(0, 0, 0, beam.length);
-
       const saturation = isDarkModeRef.current ? "85%" : "75%";
       const lightness = isDarkModeRef.current ? "65%" : "45%";
 
-      gradient.addColorStop(
-        0,
-        `hsla(${beam.hue}, ${saturation}, ${lightness}, 0)`
-      );
-      gradient.addColorStop(
-        0.1,
-        `hsla(${beam.hue}, ${saturation}, ${lightness}, ${
-          pulsingOpacity * 0.5
-        })`
-      );
-      gradient.addColorStop(
-        0.4,
-        `hsla(${beam.hue}, ${saturation}, ${lightness}, ${pulsingOpacity})`
-      );
-      gradient.addColorStop(
-        0.6,
-        `hsla(${beam.hue}, ${saturation}, ${lightness}, ${pulsingOpacity})`
-      );
-      gradient.addColorStop(
-        0.9,
-        `hsla(${beam.hue}, ${saturation}, ${lightness}, ${
-          pulsingOpacity * 0.5
-        })`
-      );
-      gradient.addColorStop(
-        1,
-        `hsla(${beam.hue}, ${saturation}, ${lightness}, 0)`
-      );
+      gradient.addColorStop(0, `hsla(${beam.hue}, ${saturation}, ${lightness}, 0)`);
+      gradient.addColorStop(0.1, `hsla(${beam.hue}, ${saturation}, ${lightness}, ${pulsingOpacity * 0.5})`);
+      gradient.addColorStop(0.4, `hsla(${beam.hue}, ${saturation}, ${lightness}, ${pulsingOpacity})`);
+      gradient.addColorStop(0.6, `hsla(${beam.hue}, ${saturation}, ${lightness}, ${pulsingOpacity})`);
+      gradient.addColorStop(0.9, `hsla(${beam.hue}, ${saturation}, ${lightness}, ${pulsingOpacity * 0.5})`);
+      gradient.addColorStop(1, `hsla(${beam.hue}, ${saturation}, ${lightness}, 0)`);
 
       ctx.fillStyle = gradient;
       ctx.fillRect(-beam.width / 2, 0, beam.width, beam.length);
@@ -147,25 +124,15 @@ export default function BeamsBackground({
     function animate() {
       if (!(canvas && ctx)) return;
 
-      // Disable heavy blur and animation loops in test environments (Playwright) 
-      // or when prefers-reduced-motion is enabled to save CPU.
-      const isTestEnv = typeof navigator !== 'undefined' && navigator.webdriver;
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      
-      if (isTestEnv || prefersReducedMotion) {
-        // Just draw the beams statically without blur
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        beamsRef.current.forEach((beam) => drawBeam(ctx, beam));
-        return; 
-      }
-
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.filter = "blur(35px)";
 
       const totalBeams = beamsRef.current.length;
       beamsRef.current.forEach((beam, index) => {
-        beam.y -= beam.speed;
-        beam.pulse += beam.pulseSpeed;
+        if (!shouldReduceMotion) {
+          beam.y -= beam.speed;
+          beam.pulse += beam.pulseSpeed;
+        }
 
         // Reset beam when it goes off screen
         if (beam.y + beam.length < -100) {
@@ -175,7 +142,9 @@ export default function BeamsBackground({
         drawBeam(ctx, beam);
       });
 
-      animationFrameRef.current = requestAnimationFrame(animate);
+      if (!shouldReduceMotion) {
+        animationFrameRef.current = requestAnimationFrame(animate);
+      }
     }
 
     animate();
@@ -187,13 +156,11 @@ export default function BeamsBackground({
       }
       observer.disconnect();
     };
-  }, [intensity]);
+  }, [intensity, isTestEnv, shouldReduceMotion]);
 
-  // Disable heavy blur styles in test environments (Playwright) 
-  // or when prefers-reduced-motion is enabled to save CPU.
-  const isTestEnv = typeof navigator !== 'undefined' && navigator.webdriver;
-  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const filterStyle = isTestEnv || prefersReducedMotion ? "none" : "blur(15px)";
+  if (isTestEnv) {
+    return <div className="test-env-beams-disabled" />;
+  }
 
   return (
     <motion.div
@@ -206,22 +173,14 @@ export default function BeamsBackground({
       <canvas
         className="absolute inset-0"
         ref={canvasRef}
-        style={{ filter: filterStyle }}
+        style={{ filter: "blur(15px)" }}
       />
 
       <motion.div
-        animate={{
-          opacity: [0.05, 0.15, 0.05],
-        }}
+        animate={!shouldReduceMotion ? { opacity: [0.05, 0.15, 0.05] } : { opacity: 0.1 }}
         className="absolute inset-0"
-        style={{
-          backdropFilter: "blur(50px)",
-        }}
-        transition={{
-          duration: 10,
-          ease: "easeInOut",
-          repeat: isTestEnv || prefersReducedMotion ? 0 : Number.POSITIVE_INFINITY,
-        }}
+        style={{ backdropFilter: "blur(50px)" }}
+        transition={!shouldReduceMotion ? { duration: 10, ease: "easeInOut", repeat: Number.POSITIVE_INFINITY } : undefined}
       />
     </motion.div>
   );
