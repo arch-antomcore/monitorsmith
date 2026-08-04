@@ -1,5 +1,6 @@
 import { useId } from "react";
 import { cn } from "../../lib/utils";
+import { motion } from "framer-motion";
 
 export function DotPattern({
   width = 24,
@@ -24,7 +25,7 @@ export function DotPattern({
       {...props}
     >
       <defs>
-        <pattern
+        <motion.pattern
           id={id}
           width={width}
           height={height}
@@ -34,7 +35,7 @@ export function DotPattern({
           y={y}
         >
           <circle id="pattern-circle" cx={cx} cy={cy} r={cr} />
-        </pattern>
+        </motion.pattern>
       </defs>
       <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${id})`} />
     </svg>

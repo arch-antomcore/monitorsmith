@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 import DotPattern from '../UI/DotPattern';
 import FlowButton from '../UI/FlowButton';
@@ -247,7 +247,8 @@ function HeroGridCard({ tool, index, onLaunch }) {
 }
 
 export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturnFocus }) {
-
+  const { scrollY } = useScroll();
+  const patternY = useTransform(scrollY, (val) => -val * 0.4);
 
   useEffect(() => {
     if (returnFocusRequest > 0) {
@@ -271,6 +272,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
       <section className="ms-hero" aria-describedby="library-description">
         {/* SVG Dot Pattern Background */}
         <DotPattern
+          y={patternY}
           cy={1}
           cr={1}
           cx={1}
