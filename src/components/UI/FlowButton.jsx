@@ -113,8 +113,8 @@ export default function FlowButton({ text = 'Instalar MonitorSmith', onClick }) 
   return (
     <>
       <motion.button
-        whileHover={{ scale: 1.025 }}
-        whileTap={{ scale: 0.975 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         transition={{ type: "spring", stiffness: 400, damping: 25 }}
         type="button"
         className="ms-motion-btn group"
