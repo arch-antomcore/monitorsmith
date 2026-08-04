@@ -1,10 +1,10 @@
 :root {
   color-scheme: dark;
-  --void: #050506;
-  --void-soft: #0a0a0e;
-  --surface: rgba(14, 15, 20, 0.82);
-  --surface-solid: #0e0f14;
-  --surface-raised: #15161d;
+  --void: #000000;
+  --void-soft: #000000;
+  --surface: rgba(0, 0, 0, 0.82);
+  --surface-solid: #000000;
+  --surface-raised: #0a0a0a;
   --line: rgba(255, 255, 255, 0.08);
   --line-strong: rgba(255, 255, 255, 0.18);
   --line-bright: rgba(255, 255, 255, 0.28);
