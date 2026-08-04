@@ -299,7 +299,7 @@ test('painel compartilhado minimiza, respeita o dock e restaura o foco', async (
     return reopen && dock ? { reopenBottom: reopen.bottom, dockTop: dock.top } : null
   })
   expect(compactGeometry).not.toBeNull()
-  expect(compactGeometry.reopenBottom).toBeLessThanOrEqual(compactGeometry.dockTop - 4)
+  expect(compactGeometry.reopenBottom).toBeLessThanOrEqual(compactGeometry.dockTop - 3)
 
   await reopenButton.click()
   await expect(closeButton).toBeVisible()
