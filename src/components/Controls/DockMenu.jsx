@@ -111,7 +111,10 @@ export default React.memo(function DockMenu({
           transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 300, damping: 30 }}
           style={{ x: '-50%' }}
         >
-          <button
+          <motion.button
+            whileHover={!shouldReduceMotion ? { scale: 1.15 } : undefined}
+            whileTap={!shouldReduceMotion ? { scale: 0.95 } : undefined}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
             type="button"
             className="wbp-dock__arrow-btn wbp-dock__arrow-btn--left"
             onClick={handlePrevTool}
@@ -141,7 +144,7 @@ export default React.memo(function DockMenu({
                   onClick={() => onSelectMode?.(mode.id)}
                   onFocus={() => setFocusModeId(mode.id)}
                   onKeyDown={(event) => handleModeKeyDown(event, index)}
-                  whileHover={!mode.disabled && !shouldReduceMotion ? { y: -2 } : {}}
+                  whileHover={!mode.disabled && !shouldReduceMotion ? { scale: 1.15, y: -4 } : {}}
                   whileTap={!mode.disabled && !shouldReduceMotion ? { scale: 0.97 } : {}}
                   transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 28 }}
                 >
@@ -166,7 +169,10 @@ export default React.memo(function DockMenu({
             })}
           </div>
 
-          <button
+          <motion.button
+            whileHover={!shouldReduceMotion ? { scale: 1.15 } : undefined}
+            whileTap={!shouldReduceMotion ? { scale: 0.95 } : undefined}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
             type="button"
             className="wbp-dock__arrow-btn wbp-dock__arrow-btn--right"
             onClick={handleNextTool}
@@ -174,7 +180,7 @@ export default React.memo(function DockMenu({
             title="Próxima ferramenta (→)"
           >
             <CaretRightBold width={16} height={16} />
-          </button>
+          </motion.button>
 
         </motion.nav>
       ) : null}

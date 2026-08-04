@@ -52,11 +52,11 @@ const Button = forwardRef(function Button(
       aria-busy={loading || undefined}
       whileHover={
         !isDisabled && !shouldReduceMotion
-          ? { y: -1, transition: { duration: 0.16 } }
+          ? { scale: 1.025 }
           : undefined
       }
       whileTap={!isDisabled && !shouldReduceMotion ? { scale: 0.98 } : undefined}
-      transition={{ type: 'spring', stiffness: 360, damping: 26 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       {...buttonProps}
       {...motionProps}
     >

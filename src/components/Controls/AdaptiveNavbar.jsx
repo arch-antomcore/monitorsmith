@@ -168,31 +168,31 @@ export default React.memo(function AdaptiveNavbar({
           )}
         >
           {showModeContext && onBrandClick && (
-            <motion.button transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onBrandClick} aria-label="Voltar às ferramentas" title="Voltar às ferramentas (H)" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
+            <motion.button whileHover={!shouldReduceMotion ? { scale: 1.15, transition: { type: "spring", stiffness: 400, damping: 17 } } : undefined} whileTap={!shouldReduceMotion ? { scale: 0.95 } : undefined} transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onBrandClick} aria-label="Voltar às ferramentas" title="Voltar às ferramentas (H)" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
               <ControlIcon name="home" size={20} />
             </motion.button>
           )}
 
           {onToggleFullscreen && (
-            <motion.button transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onToggleFullscreen} aria-label={fullscreenLabel} title={fullscreenLabel} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
+            <motion.button whileHover={!shouldReduceMotion ? { scale: 1.15, transition: { type: "spring", stiffness: 400, damping: 17 } } : undefined} whileTap={!shouldReduceMotion ? { scale: 0.95 } : undefined} transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onToggleFullscreen} aria-label={fullscreenLabel} title={fullscreenLabel} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
               <ControlIcon name={isFullscreen ? 'minimize' : 'fullscreen'} size={20} />
             </motion.button>
           )}
 
           {showModeContext && onToggleWakeLock && (
-            <motion.button transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onToggleWakeLock} aria-label={wakeLockLabel} title={wakeLockLabel} aria-pressed={isWakeLockActive} className={cn("text-sm font-medium transition-colors px-2 py-1 flex items-center justify-center", isWakeLockActive ? "text-amber-500" : "text-muted-foreground hover:text-foreground")}>
+            <motion.button whileHover={!shouldReduceMotion ? { scale: 1.15, transition: { type: "spring", stiffness: 400, damping: 17 } } : undefined} whileTap={!shouldReduceMotion ? { scale: 0.95 } : undefined} transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onToggleWakeLock} aria-label={wakeLockLabel} title={wakeLockLabel} aria-pressed={isWakeLockActive} className={cn("text-sm font-medium transition-colors px-2 py-1 flex items-center justify-center", isWakeLockActive ? "text-amber-500" : "text-muted-foreground hover:text-foreground")}>
               <ControlIcon name="wake" size={20} />
             </motion.button>
           )}
 
           {showModeContext && onHideUi && (
-            <motion.button transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onHideUi} aria-label="Ocultar barras e interface (Modo imersivo)" title="Ocultar barras e controles (×)" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
+            <motion.button whileHover={!shouldReduceMotion ? { scale: 1.15, transition: { type: "spring", stiffness: 400, damping: 17 } } : undefined} whileTap={!shouldReduceMotion ? { scale: 0.95 } : undefined} transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onHideUi} aria-label="Ocultar barras e interface (Modo imersivo)" title="Ocultar barras e controles (×)" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
               <ControlIcon name="x" size={20} />
             </motion.button>
           )}
 
           {onOpenHelp && (
-            <motion.button transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onOpenHelp} aria-label="Abrir atalhos de teclado" title="Atalhos de teclado (? / K)" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
+            <motion.button whileHover={!shouldReduceMotion ? { scale: 1.15, transition: { type: "spring", stiffness: 400, damping: 17 } } : undefined} whileTap={!shouldReduceMotion ? { scale: 0.95 } : undefined} transition={shouldReduceMotion ? { duration: 0 } : undefined} variants={itemVariants} onClick={onOpenHelp} aria-label="Abrir atalhos de teclado" title="Atalhos de teclado (? / K)" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
               <ControlIcon name="help" size={20} />
             </motion.button>
           )}

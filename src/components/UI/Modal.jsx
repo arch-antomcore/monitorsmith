@@ -160,6 +160,7 @@ export default function Modal({
                     aria-label={closeLabel}
                     title={closeLabel}
                     onClick={() => onCloseRef.current?.()}
+                    motionProps={{ whileHover: { scale: 1.1, rotate: 90, transition: { type: 'spring', stiffness: 400, damping: 20 } } }}
                   >
                     <span className="wbp-modal__close-mark" aria-hidden="true">
                       ×

@@ -108,9 +108,9 @@ function ToolCard({ tool, index, onLaunch }) {
       },
     },
     hover: {
-      scale: 1.025,
+      scale: 1.03,
       y: -4,
-      transition: { duration: 0.3, ease: 'easeInOut' },
+      transition: { type: 'spring', stiffness: 350, damping: 25 },
     },
   };
 
@@ -187,9 +187,9 @@ function HeroGridCard({ tool, index, onLaunch }) {
       },
     },
     hover: {
-      scale: 1.025,
+      scale: 1.03,
       y: -4,
-      transition: { duration: 0.3, ease: 'easeInOut' },
+      transition: { type: 'spring', stiffness: 350, damping: 25 },
     },
   };
 
@@ -321,9 +321,9 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.4 }}
         >
-          <button className="ms-hero__scroll-btn" type="button" onClick={scrollToTools}>
+          <motion.button className="ms-hero__scroll-btn" type="button" onClick={scrollToTools} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
             Ver todas as {TOOL_LIBRARY.length} ferramentas <span aria-hidden="true">↓</span>
-          </button>
+          </motion.button>
         </motion.div>
       </section>
 
