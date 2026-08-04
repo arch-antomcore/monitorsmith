@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
-
+import RisingLines from '../UI/RisingLines';
 import FlowButton from '../UI/FlowButton';
 import AdSenseUnit from '../UI/AdSenseUnit';
 import { FooterSection } from '../UI/FooterSection';
@@ -247,6 +247,8 @@ function HeroGridCard({ tool, index, onLaunch }) {
 }
 
 export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturnFocus }) {
+  const { scrollY } = useScroll();
+  const heroParallaxY = useTransform(scrollY, [0, 800], [0, 220]);
 
   useEffect(() => {
     if (returnFocusRequest > 0) {
@@ -268,7 +270,22 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
       <AdSenseUnit placement="sidebar" format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--right" style={{ width: '160px', minHeight: '600px' }} />
 
       <section className="ms-hero" aria-describedby="library-description">
-        {/* No background - pure black as requested */}
+        {/* Parallax Rising Lines Background */}
+        <motion.div
+          style={{ y: heroParallaxY }}
+          className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
+        >
+          <RisingLines
+            particles={400}
+            color="#DF44F8"
+            horizonColor="#C918F8"
+            riseSpeed={25}
+            opacity={85}
+            scale={7}
+            showHorizon={true}
+            horizonOpacity={85}
+          />
+        </motion.div>
 
         <motion.div
           className="ms-hero__content"
