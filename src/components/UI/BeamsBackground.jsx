@@ -22,6 +22,12 @@ function createBeam(width, height, isDarkMode) {
   };
 }
 
+const opacityMap = {
+  subtle: 0.7,
+  medium: 0.85,
+  strong: 1,
+};
+
 export default function BeamsBackground({
   className,
   intensity = "strong",
@@ -36,12 +42,6 @@ export default function BeamsBackground({
   
   // Disable completely in test environments to save CPU
   const isTestEnv = typeof navigator !== 'undefined' && navigator.webdriver;
-
-  const opacityMap = {
-    subtle: 0.7,
-    medium: 0.85,
-    strong: 1,
-  };
 
   useEffect(() => {
     if (isTestEnv) return;
