@@ -214,7 +214,7 @@ export default function ScreenCleanerMode({
                   {isActive && (
                     <motion.div
                       layoutId="activeCleanPattern"
-                      transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
+                      transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }}
                       style={{ position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.1)', borderRadius: 'inherit', zIndex: 0 }}
                     />
                   )}
@@ -261,7 +261,7 @@ export default function ScreenCleanerMode({
         aria-label={ariaLabel}
         className={classNames("display-mode__canvas", "display-mode__canvas--cleaner", className)}
         animate={canvasStyle}
-        transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
+        transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }}
         tabIndex="0"
       />
       {typeof document !== "undefined"
@@ -272,7 +272,7 @@ export default function ScreenCleanerMode({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
+              transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }}
               data-ms-shortcuts-disabled="true"
               role="dialog"
               aria-modal="true"

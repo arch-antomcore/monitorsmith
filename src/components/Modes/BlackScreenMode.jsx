@@ -50,7 +50,7 @@ export default function BlackScreenMode({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
+        transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }}
       />
 
       <AnimatePresence>
@@ -59,7 +59,7 @@ export default function BlackScreenMode({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
+            transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }}
             className="display-mode__hint display-mode__hint--inverse"
           >
             {hint}

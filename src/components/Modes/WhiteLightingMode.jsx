@@ -235,7 +235,7 @@ export default function WhiteLightingMode({
                 {isActive && (
                   <motion.div
                     layoutId="activeColorSwatch"
-                    transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
+                    transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }}
                     style={{ position: "absolute", inset: 0, border: "2px solid currentColor", borderRadius: "inherit", zIndex: 0 }}
                   />
                 )}
@@ -316,7 +316,7 @@ export default function WhiteLightingMode({
         style={{ forcedColorAdjust: "none" }}
         animate={{ opacity: 1, backgroundColor: displayColor }}
         initial={{ opacity: 0, backgroundColor: displayColor }}
-        transition={shouldReduceMotion ? { duration: 0 } : { 
+        transition={shouldReduceMotion ? { duration: 0.001 } : { 
           opacity: { duration: 0.8, ease: "easeOut" },
           backgroundColor: { type: "spring", stiffness: 350, damping: 28 } 
         }}

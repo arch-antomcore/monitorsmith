@@ -108,7 +108,7 @@ export default React.memo(function DockMenu({
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.985 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 300, damping: 30 }}
+          transition={shouldReduceMotion ? { duration: 0.001 } : { type: 'spring', stiffness: 300, damping: 30 }}
           style={{ x: '-50%' }}
         >
           <motion.button
@@ -146,7 +146,7 @@ export default React.memo(function DockMenu({
                   onKeyDown={(event) => handleModeKeyDown(event, index)}
                   whileHover={!mode.disabled && !shouldReduceMotion ? { scale: 1.15, y: -4 } : {}}
                   whileTap={!mode.disabled && !shouldReduceMotion ? { scale: 0.97 } : {}}
-                  transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 28 }}
+                  transition={shouldReduceMotion ? { duration: 0.001 } : { type: 'spring', stiffness: 380, damping: 28 }}
                 >
                   {isActive && (
                     <motion.span

@@ -280,7 +280,7 @@ export default function MessageOverlayMode({
         aria-hidden="true"
         className="display-mode__canvas display-mode__canvas--message"
         animate={{ backgroundColor: resolvedBackgroundColor }}
-        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
+        transition={shouldReduceMotion ? { duration: 0.001 } : { duration: 0.5 }}
         style={{ backgroundColor: resolvedBackgroundColor }}
       />
 
@@ -322,7 +322,7 @@ export default function MessageOverlayMode({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
+            transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }}
             className="message-overlay__qr"
           >
             {normalizedQrContent ? (
@@ -357,7 +357,7 @@ export default function MessageOverlayMode({
           initial={{ opacity: 0, scale: 0.96, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 10 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
+          transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }}
           aria-label="Editor de mensagem"
           className="display-mode__controls display-mode__controls--message"
         >

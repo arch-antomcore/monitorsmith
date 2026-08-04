@@ -79,7 +79,7 @@ export function DisplayToolShell({
             initial={{ opacity: 0, scale: 0.96, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 10 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 350, damping: 28, staggerChildren: 0.05 }}
+            transition={shouldReduceMotion ? { duration: 0.001 } : { type: 'spring', stiffness: 350, damping: 28, staggerChildren: 0.05 }}
           >
             <div className="display-mode__panel-header">
               <div>
@@ -133,7 +133,7 @@ export function DisplayToolShell({
             exit={{ opacity: 0, scale: 0.9, y: 10 }}
             whileHover={!shouldReduceMotion ? { scale: 1.02 } : {}}
             whileTap={!shouldReduceMotion ? { scale: 0.98 } : {}}
-            transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 350, damping: 28 }}
+            transition={shouldReduceMotion ? { duration: 0.001 } : { type: 'spring', stiffness: 350, damping: 28 }}
           >
             {customOptionsLabel || `Opções de ${title || 'ajuste'}`}
           </motion.button>

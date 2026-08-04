@@ -269,7 +269,7 @@ export default function FullScreenClockMode({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
+            transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }}
           >
             <svg aria-hidden="true" focusable="false" width="260" height="260" viewBox="0 0 200 200">
               <circle cx="100" cy="100" r="94" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)" strokeWidth="2.5" />
@@ -281,10 +281,10 @@ export default function FullScreenClockMode({
                 const y2 = 100 - 90 * Math.cos(rad);
                 return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(255,255,255,0.3)" strokeWidth="2" />;
               })}
-              <motion.line x1="100" y1="100" animate={{ x2: 100 + 52 * Math.sin((hoursAngle * Math.PI) / 180), y2: 100 - 52 * Math.cos((hoursAngle * Math.PI) / 180) }} transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }} stroke="#ededed" strokeWidth="4.5" strokeLinecap="round" />
-              <motion.line x1="100" y1="100" animate={{ x2: 100 + 72 * Math.sin((minutesAngle * Math.PI) / 180), y2: 100 - 72 * Math.cos((minutesAngle * Math.PI) / 180) }} transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }} stroke="#afe3d4" strokeWidth="3" strokeLinecap="round" />
+              <motion.line x1="100" y1="100" animate={{ x2: 100 + 52 * Math.sin((hoursAngle * Math.PI) / 180), y2: 100 - 52 * Math.cos((hoursAngle * Math.PI) / 180) }} transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }} stroke="#ededed" strokeWidth="4.5" strokeLinecap="round" />
+              <motion.line x1="100" y1="100" animate={{ x2: 100 + 72 * Math.sin((minutesAngle * Math.PI) / 180), y2: 100 - 72 * Math.cos((minutesAngle * Math.PI) / 180) }} transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }} stroke="#afe3d4" strokeWidth="3" strokeLinecap="round" />
               {resolvedShowSeconds ? (
-                <motion.line x1="100" y1="100" animate={{ x2: 100 + 82 * Math.sin((secondsAngle * Math.PI) / 180), y2: 100 - 82 * Math.cos((secondsAngle * Math.PI) / 180) }} transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }} stroke="#ff5252" strokeWidth="1.5" strokeLinecap="round" />
+                <motion.line x1="100" y1="100" animate={{ x2: 100 + 82 * Math.sin((secondsAngle * Math.PI) / 180), y2: 100 - 82 * Math.cos((secondsAngle * Math.PI) / 180) }} transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }} stroke="#ff5252" strokeWidth="1.5" strokeLinecap="round" />
               ) : null}
               <circle cx="100" cy="100" r="4" fill="#afe3d4" />
             </svg>
@@ -298,7 +298,7 @@ export default function FullScreenClockMode({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
+            transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }}
             aria-atomic="true"
             aria-label={clockParts.spoken}
             aria-live="off"
@@ -334,7 +334,7 @@ export default function FullScreenClockMode({
           initial={{ opacity: 0, scale: 0.96, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 10 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 28 }}
+          transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }}
           aria-label="Controles do relógio"
           className="display-mode__controls display-mode__controls--clock"
         >

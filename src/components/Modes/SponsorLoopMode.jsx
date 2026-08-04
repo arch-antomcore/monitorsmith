@@ -465,7 +465,7 @@ export default function SponsorLoopMode({
             initial={{ opacity: 0, scale: resolvedTransition === 'zoom' ? 0.9 : 1, x: resolvedTransition === 'slide' ? 100 : 0 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: resolvedTransition === 'zoom' ? 1.1 : 1, x: resolvedTransition === 'slide' ? -100 : 0 }}
-            transition={resolvedTransition === 'none' ? { duration: 0 } : { duration: transitionSpeed / 1000 }}
+            transition={resolvedTransition === 'none' ? { duration: 0.001 } : { duration: transitionSpeed / 1000 }}
             className={join('sponsor-loop__slide', transitionClass)}
             style={{
               '--sponsor-transition-ms': `${transitionSpeed}ms`,
