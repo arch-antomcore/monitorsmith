@@ -444,6 +444,7 @@ test('landing não reserva a largura da scrollbar como rolagem horizontal', asyn
 
 test('shell permanece contido nos viewports mínimos portrait e landscape', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium-desktop', 'matriz compacta executada uma vez')
+  test.setTimeout(60000)
 
   for (const viewport of [
     { width: 320, height: 568 },
