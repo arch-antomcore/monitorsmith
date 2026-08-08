@@ -8,7 +8,7 @@ export default defineConfig({
   },
   fullyParallel: true,
   retries: 0,
-  workers: process.env.CI ? 2 : undefined,
+  workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? [['line'], ['html', { open: 'never' }]] : 'list',
   webServer: {
     command: 'npm run preview',
@@ -18,10 +18,18 @@ export default defineConfig({
   },
   use: {
     baseURL: 'http://127.0.0.1:4173',
-    trace: 'retain-on-failure',
+    trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     reducedMotion: 'reduce',
     colorScheme: 'dark',
+    launchOptions: {
+      args: [
+        '--disable-gpu',
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+      ],
+    },
   },
   projects: [
     { name: 'chromium-desktop', use: { ...devices['Desktop Chrome'] } },
