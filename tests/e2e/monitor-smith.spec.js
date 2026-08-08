@@ -242,7 +242,9 @@ test('URL, histórico e identidade da ferramenta permanecem sincronizados', asyn
   await expect(page).toHaveURL(/#dead-pixel$/)
 
   await page.mouse.move(100, 100)
-  await page.getByRole('tab', { name: /^Inspeção/ }).click()
+  const inspectionTab = page.getByRole('tab', { name: /^Inspeção/ })
+  await inspectionTab.scrollIntoViewIfNeeded()
+  await inspectionTab.click({ force: true })
   await expect(page).toHaveURL(/#cleaner$/)
 
   await page.goBack()
