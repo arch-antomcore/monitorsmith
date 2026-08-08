@@ -58,7 +58,7 @@ export const HeroContent = ({ onGetStarted }: HeroContentProps) => {
   });
 
   return (
-    <div className="relative z-20 flex w-full max-w-[380px] flex-col items-center gap-6 text-center desktop-sm:items-start desktop-sm:gap-8 desktop-sm:text-left">
+    <div className="relative z-20 flex w-full max-w-[560px] desktop-sm:max-w-[620px] flex-col items-center gap-6 text-center desktop-sm:items-start desktop-sm:gap-8 desktop-sm:text-left">
       <div className="flex w-full flex-col items-center gap-4 text-white desktop-sm:items-start desktop-sm:gap-5">
         {/* Status Badge Chip */}
         <motion.div
@@ -72,14 +72,14 @@ export const HeroContent = ({ onGetStarted }: HeroContentProps) => {
         <div className="flex w-full flex-col items-center gap-3 desktop-sm:items-start desktop-sm:gap-5">
           <h1
             ref={titleRef}
-            className="w-full max-w-[320px] ipad:max-w-[440px] font-sans font-extrabold text-[44px] ipad:text-[56px] leading-[1.06] tracking-[-0.035em] text-pretty text-white desktop-sm:max-w-none desktop-sm:text-[58px] desktop-sm:leading-[1.04] drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]"
+            className="w-full max-w-[540px] ipad:max-w-[600px] font-sans font-extrabold text-[40px] sm:text-[48px] ipad:text-[56px] leading-[1.08] tracking-[-0.035em] text-pretty text-white desktop-sm:max-w-none desktop-sm:text-[58px] desktop-sm:leading-[1.04] drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]"
           >
             Ferramentas visuais para seus monitores.
           </h1>
 
           <motion.p
             {...reveal(0.24)}
-            className="max-w-[310px] font-sans text-[15px] ipad:text-[17px] ipad:max-w-[350px] font-normal leading-[1.55] tracking-[-0.01em] text-white/80 desktop-sm:max-w-[370px] desktop-sm:text-[16.5px]"
+            className="max-w-[460px] ipad:max-w-[500px] font-sans text-[15px] ipad:text-[17px] font-normal leading-[1.55] tracking-[-0.01em] text-white/80 desktop-sm:max-w-[540px] desktop-sm:text-[16.5px]"
           >
             Diagnóstico de pixels, teste de vazamento de luz, iluminação de apoio, chroma key e utilitários focados em desempenho e qualidade de imagem.
           </motion.p>

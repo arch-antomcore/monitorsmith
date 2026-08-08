@@ -115,6 +115,8 @@ export default React.memo(function AdaptiveNavbar({
   const wakeLockLabel = isWakeLockActive ? 'Tela sempre ligada (clique para desativar)' : 'Evitar que a tela apague (Manter tela ligada)';
   const fullscreenLabel = isFullscreen ? 'Sair da tela cheia (Esc ou F)' : 'Ocupar 100% da tela / Tela cheia (F)';
 
+  if (mode.id === 'home') return null;
+
   return (
     <div 
       className="fixed z-50 flex justify-center pointer-events-none transition-all duration-300 ease-out"
