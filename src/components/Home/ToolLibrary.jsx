@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
-import RisingLines from '../UI/RisingLines';
-import FlowButton from '../UI/FlowButton';
 import AdSenseUnit from '../UI/AdSenseUnit';
 import { FooterSection } from '../UI/FooterSection';
 import { FaqAccordion } from '../UI/FaqAccordion';
 import { ControlIcon } from '../Controls/Navbar';
-import { HERO_GRID_TOOLS, TOOL_LIBRARY } from '../../constants/tools';
+import { TOOL_LIBRARY } from '../../constants/tools';
+import Hero11 from '../originkit/hero-11';
 
 const FAQ_DATA = [
   {
@@ -47,7 +46,7 @@ const FAQ_DATA = [
   },
 ];
 
-export { HERO_GRID_TOOLS, TOOL_LIBRARY };
+export { TOOL_LIBRARY };
 
 
 function ToolPreview({ tool }) {
@@ -170,98 +169,12 @@ function ToolCard({ tool, index, onLaunch }) {
   );
 }
 
-/* ── HeroGridCard (Hero Section — top 6 featured) ── */
-
-function HeroGridCard({ tool, index, onLaunch }) {
-  const variants = {
-    initial: { opacity: 0, y: 18 },
-    animate: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 280,
-        damping: 26,
-        delay: 0.12 + index * 0.055,
-      },
-    },
-    hover: {
-      scale: 1.03,
-      y: -4,
-      transition: { type: 'spring', stiffness: 350, damping: 25 },
-    },
-  };
-
-  return (
-    <motion.button
-      type="button"
-      className="ms-hero-grid-card"
-      id={`monitor-tool-hero-${tool.id}`}
-      onClick={() => onLaunch(tool.id, `monitor-tool-hero-${tool.id}`)}
-      aria-label={`Abrir ${tool.title}`}
-      variants={variants}
-      initial="initial"
-      animate="animate"
-      whileHover="hover"
-      whileTap={{ scale: 0.97 }}
-    >
-      {/* Content layer */}
-      <div className="ms-card__content">
-        <span className="ms-card__head">
-          <motion.span className="ms-card__icon-area" variants={iconMotionVariants}>
-            <ControlIcon name={tool.icon} size={24} />
-          </motion.span>
-          <span className="ms-card__titles">
-            <strong>{tool.title}</strong>
-            {tool.badge ? (
-              <span className="ms-hero-grid-card__badge">{tool.badge}</span>
-            ) : null}
-          </span>
-          <span className="ms-card__meta">
-            <span className="ms-card__led" title="Disponível no navegador" />
-            <kbd className="ms-card__kbd">{tool.shortcut}</kbd>
-          </span>
-        </span>
-
-        <span className="ms-card__desc">{tool.desc}</span>
-
-        <span className="ms-card__cta">
-          ABRIR
-          <motion.span className="ms-card__cta-arrow" variants={arrowAnimation}>
-            →
-          </motion.span>
-        </span>
-      </div>
-
-      {/* Decorative floating icon */}
-      <motion.span
-        className="ms-card__decor"
-        variants={imageAnimation}
-        aria-hidden="true"
-      >
-        <ControlIcon name={tool.icon} size={72} />
-      </motion.span>
-    </motion.button>
-  );
-}
-
 export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturnFocus }) {
-  const { scrollY } = useScroll();
-  const heroParallaxY = useTransform(scrollY, [0, 800], [0, 220]);
-
   useEffect(() => {
     if (returnFocusRequest > 0) {
       onReturnFocus?.(returnFocusRequest);
     }
   }, [onReturnFocus, returnFocusRequest]);
-
-  const scrollToTools = () => {
-    document.getElementById('monitor-tools')?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  };
 
   return (
     <main id="monitor-tools-home" className="ms-library" tabIndex={-1}>
@@ -269,73 +182,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
       <AdSenseUnit placement="sidebar" format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--left" style={{ width: '160px', minHeight: '600px' }} />
       <AdSenseUnit placement="sidebar" format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--right" style={{ width: '160px', minHeight: '600px' }} />
 
-      <section className="ms-hero" aria-describedby="library-description">
-        {/* Parallax Rising Lines Background */}
-        <motion.div
-          style={{ y: heroParallaxY }}
-          className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
-        >
-          <RisingLines
-            particles={400}
-            color="#DF44F8"
-            horizonColor="#C918F8"
-            riseSpeed={25}
-            opacity={85}
-            scale={7}
-            showHorizon={true}
-            horizonOpacity={85}
-          />
-        </motion.div>
-
-        <motion.div
-          className="ms-hero__content"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        >
-          <div className="ms-hero__eyebrow">
-            <span className="ms-hero__brand-tag">EXVORN.TECH</span>
-            <span className="ms-hero__dot" aria-hidden="true" />
-            <span>INSPEÇÃO · ILUMINAÇÃO · FOCO · TELA</span>
-          </div>
-
-          <h1 id="library-title" className="ms-hero__title">
-            Ferramentas para testar e usar melhor <span className="ms-hero__title-gradient">seu monitor.</span>
-          </h1>
-
-          <p id="library-description" className="ms-hero__subtitle">
-            Inspecione pixels e uniformidade, ilumine chamadas, exiba mensagens e organize o foco — direto no navegador, sem cadastro.
-          </p>
-        </motion.div>
-
-        <div className="ms-hero__grid">
-          {HERO_GRID_TOOLS.map((tool, index) => (
-            <HeroGridCard
-              key={tool.id}
-              tool={tool}
-              index={index}
-              onLaunch={onLaunch}
-            />
-          ))}
-        </div>
-
-        <div className="ms-flow-btn-wrapper">
-          <FlowButton text="Instalar MonitorSmith" />
-        </div>
-
-        <AdSenseUnit placement="hero" format="auto" className="ms-ad-slot--hero" style={{ maxWidth: '780px', marginTop: '32px' }} />
-
-        <motion.div
-          className="ms-hero__cta"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.4 }}
-        >
-          <motion.button className="ms-hero__scroll-btn" type="button" onClick={scrollToTools} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
-            Ver todas as {TOOL_LIBRARY.length} ferramentas <span aria-hidden="true">↓</span>
-          </motion.button>
-        </motion.div>
-      </section>
+      <Hero11 />
 
       <section className="ms-library__section" id="monitor-tools" aria-labelledby="tools-title">
         <div className="ms-library__section-heading">

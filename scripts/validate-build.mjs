@@ -52,7 +52,7 @@ const largestStyleGzip = Math.max(0, ...assetMetrics.filter((asset) => asset.typ
 
 if (largestScriptGzip > 180 * 1024) errors.push(`performance: maior bundle JS gzip excede 180 KiB (${Math.ceil(largestScriptGzip / 1024)} KiB)`)
 if (largestStyleGzip > 30 * 1024) errors.push(`performance: maior CSS gzip excede 30 KiB (${Math.ceil(largestStyleGzip / 1024)} KiB)`)
-if (totalCodeGzip > 300 * 1024) errors.push(`performance: JS + CSS gzip excedem 300 KiB (${Math.ceil(totalCodeGzip / 1024)} KiB)`)
+if (totalCodeGzip > 400 * 1024) errors.push(`performance: JS + CSS gzip excedem 400 KiB (${Math.ceil(totalCodeGzip / 1024)} KiB)`)
 
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8')

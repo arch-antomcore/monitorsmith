@@ -1,16 +1,33 @@
+@import 'lenis/dist/lenis.css';
 @import './styles/globals.css';
 @import "tw-animate-css";
 @import "@fontsource-variable/geist";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
+@theme {
+  --color-border: var(--line);
+  --color-ring: var(--accent);
+  --color-background: var(--void);
+  --color-foreground: var(--text);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--text-strong);
+  --color-popover: var(--surface-raised);
+  --color-popover-foreground: var(--text-strong);
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--accent-ink);
+  --color-secondary: rgba(255, 255, 255, 0.05);
+  --color-secondary-foreground: var(--text-strong);
+  --color-muted: rgba(255, 255, 255, 0.03);
+  --color-muted-foreground: var(--text-muted);
+  --color-destructive: var(--danger);
+  --color-input: var(--line);
+}
 
 @layer base {
   .theme {
     --font-heading: var(--font-sans);
-    --font-sans: 'Geist Variable', sans-serif
+    --font-sans: 'Geist Variable', sans-serif;
   }
   :root, .dark {
     --background: var(--void);
@@ -31,28 +48,17 @@
     --border: var(--line);
     --input: var(--line);
     --ring: var(--accent);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
     --radius: var(--radius-md);
-    --sidebar: var(--surface);
-    --sidebar-foreground: var(--text);
-    --sidebar-primary: var(--accent);
-    --sidebar-primary-foreground: var(--accent-ink);
-    --sidebar-accent: rgba(255, 255, 255, 0.05);
-    --sidebar-accent-foreground: var(--text-strong);
-    --sidebar-border: var(--line);
-    --sidebar-ring: var(--accent);
   }
   * {
-    @apply border-border outline-ring;
+    border-color: var(--line);
+    outline-color: var(--accent);
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
   }
   html {
-    @apply font-sans;
+    font-family: 'Outfit', 'Inter', sans-serif;
   }
 }
