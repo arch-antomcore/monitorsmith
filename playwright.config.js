@@ -8,7 +8,7 @@ export default defineConfig({
   },
   fullyParallel: true,
   retries: 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI ? [['line'], ['html', { open: 'never' }]] : 'list',
   webServer: {
     command: 'npm run preview',
