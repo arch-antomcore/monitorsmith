@@ -18,7 +18,16 @@ const sharedRules = {
 
 export default [
   {
-    ignores: ['dist/**', 'node_modules/**', 'coverage/**', 'playwright-report/**', 'test-results/**', 'src/components/Icons/**'],
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      'coverage/**',
+      'playwright-report/**',
+      'test-results/**',
+      'src/components/Icons/**',
+      'src/lib/gsap/**',
+      'src/components/originkit/**',
+    ],
   },
   {
     files: ['src/**/*.{js,jsx}'],

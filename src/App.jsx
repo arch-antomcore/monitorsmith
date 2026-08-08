@@ -368,18 +368,20 @@ function DisplaySuite() {
         Pular para o conteúdo principal
       </a>
 
-      <AdaptiveNavbar
-        activeMode={activeMode}
-        onBrandClick={() => handleSelectMode(MODES.HOME)}
-        onToggleFullscreen={toggleFullscreen}
-        onHideUi={hideUiManually}
-        isFullscreen={isFullscreen}
-        onToggleWakeLock={wakeLockSupported ? toggleWakeLockWithFeedback : undefined}
-        isWakeLockActive={isWakeLockActive}
-        onOpenHelp={() => setIsHelpOpen(true)}
-        visible={showControls}
-        status={status}
-      />
+      {activeMode !== MODES.HOME && (
+        <AdaptiveNavbar
+          activeMode={activeMode}
+          onBrandClick={() => handleSelectMode(MODES.HOME)}
+          onToggleFullscreen={toggleFullscreen}
+          onHideUi={hideUiManually}
+          isFullscreen={isFullscreen}
+          onToggleWakeLock={wakeLockSupported ? toggleWakeLockWithFeedback : undefined}
+          isWakeLockActive={isWakeLockActive}
+          onOpenHelp={() => setIsHelpOpen(true)}
+          visible={showControls}
+          status={status}
+        />
+      )}
 
       <AnimatePresence mode="wait" initial={false}>
         <motion.main

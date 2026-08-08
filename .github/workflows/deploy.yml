@@ -38,8 +38,25 @@ jobs:
       - name: Install Chromium for end-to-end tests
         run: npx playwright install --with-deps chromium
 
-      - name: Validate code, build, end-to-end flows and accessibility
-        run: npm run validate
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run Unit Tests
+        run: npm run test
+
+      - name: Build Project and SEO Pages
+        run: npm run build
+
+      - name: Run End-to-End Tests
+        run: npm run test:e2e
+
+      - name: Upload Playwright Report Artifact
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
 
       - name: Setup Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
