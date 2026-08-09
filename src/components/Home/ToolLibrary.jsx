@@ -1,13 +1,37 @@
 import { useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { gsap } from 'gsap';
 
-import RisingLines from '../UI/RisingLines';
 import FlowButton from '../UI/FlowButton';
 import AdSenseUnit from '../UI/AdSenseUnit';
 import { FooterSection } from '../UI/FooterSection';
 import { FaqAccordion } from '../UI/FaqAccordion';
 import { ControlIcon } from '../Controls/Navbar';
 import { HERO_GRID_TOOLS, TOOL_LIBRARY } from '../../constants/tools';
+
+const handleCardMouseMove = (e) => {
+  const card = e.currentTarget;
+  const rect = card.getBoundingClientRect();
+  const x = e.clientX - rect.left - rect.width / 2;
+  const y = e.clientY - rect.top - rect.height / 2;
+
+  gsap.to(card, {
+    rotationY: x * 0.035,
+    rotationX: -y * 0.035,
+    transformPerspective: 800,
+    ease: 'power2.out',
+    duration: 0.35,
+  });
+};
+
+const handleCardMouseLeave = (e) => {
+  gsap.to(e.currentTarget, {
+    rotationY: 0,
+    rotationX: 0,
+    ease: 'power3.out',
+    duration: 0.5,
+  });
+};
 
 const FAQ_DATA = [
   {
@@ -120,6 +144,8 @@ function ToolCard({ tool, index, onLaunch }) {
       className={`ms-tool-card ms-tool-card--${tool.tone}`}
       id={`monitor-tool-grid-${tool.id}`}
       onClick={() => onLaunch(tool.id, `monitor-tool-grid-${tool.id}`)}
+      onMouseMove={handleCardMouseMove}
+      onMouseLeave={handleCardMouseLeave}
       aria-label={`Abrir ${tool.title}. ${tool.description}`}
       variants={variants}
       initial="initial"
@@ -199,6 +225,8 @@ function HeroGridCard({ tool, index, onLaunch }) {
       className="ms-hero-grid-card"
       id={`monitor-tool-hero-${tool.id}`}
       onClick={() => onLaunch(tool.id, `monitor-tool-hero-${tool.id}`)}
+      onMouseMove={handleCardMouseMove}
+      onMouseLeave={handleCardMouseLeave}
       aria-label={`Abrir ${tool.title}`}
       variants={variants}
       initial="initial"
@@ -247,9 +275,6 @@ function HeroGridCard({ tool, index, onLaunch }) {
 }
 
 export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturnFocus }) {
-  const { scrollY } = useScroll();
-  const heroParallaxY = useTransform(scrollY, [0, 800], [0, 220]);
-
   useEffect(() => {
     if (returnFocusRequest > 0) {
       onReturnFocus?.(returnFocusRequest);
@@ -270,23 +295,6 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
       <AdSenseUnit placement="sidebar" format="vertical" className="ms-side-ad-gutter ms-side-ad-gutter--right" style={{ width: '160px', minHeight: '600px' }} />
 
       <section className="ms-hero" aria-describedby="library-description">
-        {/* Parallax Rising Lines Background */}
-        <motion.div
-          style={{ y: heroParallaxY }}
-          className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
-        >
-          <RisingLines
-            particles={400}
-            color="#DF44F8"
-            horizonColor="#C918F8"
-            riseSpeed={25}
-            opacity={85}
-            scale={7}
-            showHorizon={true}
-            horizonOpacity={85}
-          />
-        </motion.div>
-
         <motion.div
           className="ms-hero__content"
           initial={{ opacity: 0, y: 18 }}

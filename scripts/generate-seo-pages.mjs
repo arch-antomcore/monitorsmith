@@ -241,14 +241,15 @@ const LEGAL_PAGES = Object.freeze([
   {
     slug: 'privacidade',
     title: 'Política de Privacidade — MonitorSmith',
-    description: 'Dados locais e serviços externos envolvidos na operação do MonitorSmith.',
+    description: 'Dados locais, uso de cookies e serviços de terceiros como Google AdSense na operação do MonitorSmith.',
     h1: 'Política de Privacidade',
     sections: [
-      ['Resumo', ['As ferramentas visuais do MonitorSmith executam no navegador. Textos, cores e imagens escolhidos dentro das ferramentas não são enviados pela EXVORN.TECH a servidor próprio para processamento.', 'A operação do site pode envolver infraestrutura e publicidade de terceiros. Esta página explica essa diferença.']],
-      ['Dados no dispositivo', ['Preferências, consentimentos e avisos podem ser guardados no armazenamento local. O PWA usa cache técnico para recursos já baixados.', 'Imagens adicionadas ao Loop de Marcas são lidas localmente durante a sessão. Evite arquivos com informações pessoais desnecessárias.']],
-      ['Serviços externos', ['O Google AdSense permanece integrado para validação do domínio e possível publicidade. Conforme região, configuração e consentimento aplicável, Google e parceiros podem tratar IP, identificadores, dados do navegador e interação com anúncios.', 'As fontes tipográficas são distribuídas com a aplicação e não exigem uma solicitação ao Google Fonts. A infraestrutura de hospedagem pode registrar dados técnicos usuais, como endereço IP, horário, agente do navegador e caminho solicitado.']],
-      ['Controle e contato', ['Você pode limpar dados, permissões e cache nas configurações do navegador, revogar consentimentos disponíveis e desinstalar o PWA.', `Para solicitações relativas a dados sob responsabilidade direta da EXVORN.TECH, use o canal institucional em ${SITE_METADATA.contactUrl}. Poderemos pedir informações mínimas para verificar e responder ao pedido.`]],
-      ['Atualizações', [`Revisão de ${SITE_METADATA.contentLastModified}. Alterações materiais serão refletidas nesta página, que deve receber revisão jurídica periódica compatível com a operação do produto.`]],
+      ['Resumo', ['As ferramentas visuais do MonitorSmith executam localmente no seu navegador. Textos, cores e imagens escolhidos dentro das ferramentas não são enviados pela EXVORN.TECH a servidor próprio para processamento.', 'A operação do site envolve infraestrutura de hospedagem e exibição de publicidade de terceiros. Esta página detalha como cookies e dados técnicos são tratados.']],
+      ['Dados no dispositivo', ['Preferências de interface, consentimento e avisos são armazenados localmente no navegador (localStorage). O PWA utiliza cache técnico para funcionamento offline dos recursos visuais.', 'Imagens adicionadas ao Loop de Marcas permanecem exclusivamente na memória da aba aberta e são descartadas ao encerrar o uso.']],
+      ['Google AdSense e cookies de terceiros', ['Fornecedores de terceiros, incluindo o Google AdSense, usam cookies para veicular anúncios com base em visitas anteriores dos usuários a este site ou a outros sites na internet.', 'O uso de cookies de publicidade pelo Google e por seus parceiros permite veicular anúncios para os usuários com base nas visitas feitas a seus sites e/ou a outros sites na internet.', 'Para saber mais sobre como o Google coleta e processa dados em sites parceiros, consulte a página oficial em https://policies.google.com/technologies/partner-sites.']],
+      ['Seus controles e desativação de anúncios', ['Os usuários podem optar por desativar a publicidade personalizada acessando as Configurações de Anúncios do Google (https://www.google.com/settings/ads).', 'Alternativamente, você pode desativar o uso de cookies de publicidade personalizada de fornecedores de terceiros acessando www.aboutads.info ou ajustando a Central de Privacidade na sua região.']],
+      ['Controle e contato sob a LGPD', ['Você pode limpar dados de navegação, cookies e cache nas configurações do seu navegador a qualquer momento.', `Para solicitações relativas a dados sob responsabilidade direta da EXVORN.TECH sob a LGPD, utilize o canal institucional publicado em ${SITE_METADATA.contactUrl}.`]],
+      ['Atualizações', [`Última atualização: ${SITE_METADATA.contentLastModified}. Alterações materiais serão refletidas nesta página.`]],
     ],
   },
   {
@@ -363,6 +364,19 @@ function renderToolPage(route, locale) {
       '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer },
     })),
   };
+  const techArticleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    '@id': `${pageUrl}#article`,
+    headline: metadata.h1,
+    description: metadata.description,
+    inLanguage: isEn ? 'en-US' : 'pt-BR',
+    datePublished: '2026-08-04',
+    dateModified: SITE_METADATA.contentLastModified,
+    author: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
+    publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
+    mainEntityOfPage: pageUrl,
+  };
   const labels = isEn
     ? { back: 'All tools', open: 'Open tool', how: 'How to use', when: 'When to use', limits: 'Limitations', faq: 'Questions', related: 'Related guides', privacy: 'Privacy', terms: 'Terms', contact: 'Contact', interfaceNote: 'The interactive application currently uses a Portuguese interface.' }
     : { back: 'Todas as ferramentas', open: 'Abrir ferramenta', how: 'Como usar', when: 'Quando usar', limits: 'Limitações', faq: 'Perguntas', related: 'Guias relacionados', privacy: 'Privacidade', terms: 'Termos de uso', contact: 'Contato', interfaceNote: '' };
@@ -371,11 +385,12 @@ function renderToolPage(route, locale) {
 <html lang="${lang}">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>${escapeHtml(documentTitle)}</title>
   <meta name="description" content="${escapeHtml(metadata.description)}">
   <meta name="theme-color" content="#030304">
-  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="author" content="EXVORN.TECH">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="${pageUrl}">
   <link rel="alternate" hreflang="pt-BR" href="${ptUrl}">
   <link rel="alternate" hreflang="en" href="${enUrl}">
@@ -386,7 +401,7 @@ function renderToolPage(route, locale) {
   <meta property="og:title" content="${escapeHtml(documentTitle)}">
   <meta property="og:description" content="${escapeHtml(metadata.description)}">
   <meta property="og:url" content="${pageUrl}">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
   <meta property="og:site_name" content="MonitorSmith">
   <meta property="og:locale" content="${isEn ? 'en_US' : 'pt_BR'}">
   <meta property="og:locale:alternate" content="${isEn ? 'pt_BR' : 'en_US'}">
@@ -401,12 +416,13 @@ function renderToolPage(route, locale) {
   <meta name="twitter:description" content="${escapeHtml(metadata.description)}">
   <meta name="twitter:image" content="${BASE_URL}/og-image.jpg">
   <meta name="twitter:image:alt" content="${escapeHtml(imageAlt)}">
-  <script type="application/ld+json">${safeJson([webPageSchema, breadcrumbSchema, faqSchema])}</script>
+  <script type="application/ld+json">${safeJson([webPageSchema, techArticleSchema, breadcrumbSchema, faqSchema])}</script>
   <style>
     :root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif}a{color:#fbbf24;text-underline-offset:.2em}
     header,main,footer{width:min(820px,calc(100% - 2rem));margin-inline:auto}header{padding:1.1rem 0;display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--line)}header a{text-decoration:none;font-weight:700}
     main{padding:clamp(2rem,6vw,4rem) 0}h1{font-size:clamp(2rem,7vw,3.5rem);line-height:1.04;letter-spacing:-.04em;margin:0 0 1rem}h2{font-size:1.25rem;margin:0 0 .7rem}.intro{font-size:1.1rem;color:var(--muted)}
+    .editorial-byline{display:flex;gap:.75rem;align-items:center;font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--line)}
     .cta{display:inline-flex;margin:1rem 0 2rem;padding:.85rem 1.15rem;border-radius:.7rem;background:var(--accent);color:#171006;font-weight:800;text-decoration:none}.note{color:var(--muted);font-size:.9rem}
     section{margin:1rem 0;padding:1.4rem;background:var(--surface);border:1px solid var(--line);border-radius:1rem}li,p{color:var(--muted)}.faq dt{font-weight:750;margin-top:1rem}.faq dd{color:var(--muted);margin:.25rem 0 0}
     footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:1rem;flex-wrap:wrap}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
@@ -417,6 +433,11 @@ function renderToolPage(route, locale) {
   <header><a href="/">MonitorSmith · EXVORN.TECH</a><a href="/">← ${labels.back}</a></header>
   <main>
     <h1>${escapeHtml(metadata.h1)}</h1>
+    <div class="editorial-byline">
+      <span>Por <strong>EXVORN.TECH — Análise Técnica de Displays</strong></span>
+      <span>•</span>
+      <time datetime="${SITE_METADATA.contentLastModified}">Atualizado em 4 de agosto de 2026</time>
+    </div>
     <p class="intro">${escapeHtml(content.intro)}</p>
     <a class="cta" href="/?tool=${encodeURIComponent(route.toolId)}">${labels.open}</a>
     ${labels.interfaceNote ? `<p class="note">${labels.interfaceNote}</p>` : ''}

@@ -845,18 +845,10 @@ input:disabled {
   }
 }
 
-/* Reduced motion â€” keep essential smooth scroll control without blocking UI transitions */
+/* Motion preferences — preserve smooth animations and transitions */
 @media (prefers-reduced-motion: reduce) {
   html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+    scroll-behavior: smooth;
   }
 }
 

@@ -70,37 +70,27 @@ export default function PrivacyModal({ label = 'Política de Privacidade', class
           </section>
 
           <section aria-labelledby="privacy-third-parties-title">
-            <h3 id="privacy-third-parties-title" style={headingStyle}>2. Fontes locais e Google AdSense</h3>
+            <h3 id="privacy-third-parties-title" style={headingStyle}>2. Fornecedores de terceiros e Google AdSense</h3>
             <p style={{ margin: 0 }}>
-              As fontes Outfit e JetBrains Mono são entregues pela própria aplicação. O
-              script de validação e, quando aprovado, os anúncios do Google AdSense podem
-              transmitir dados técnicos, como endereço IP, navegador e identificadores
-              definidos pelo provedor. Anúncios personalizados também podem usar cookies
-              quando permitidos. O tratamento feito pelo Google segue suas próprias políticas
-              e os controles de consentimento aplicáveis à sua região.
+              Fornecedores de terceiros, incluindo o <strong>Google AdSense</strong>, usam cookies para veicular anúncios com base em visitas anteriores dos usuários a este site ou a outros sites na internet. O uso de cookies de publicidade pelo Google e por seus parceiros permite veicular anúncios para os usuários com base nas visitas feitas a seus sites e/ou a outros sites na internet.
+            </p>
+            <p style={{ margin: '8px 0 0' }}>
+              Para mais detalhes sobre como o Google coleta e processa dados ao utilizar sites parceiros, consulte a página <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer" style={linkStyle}>Como o Google usa dados quando você usa sites ou aplicativos dos nossos parceiros</a>.
             </p>
           </section>
 
           <section aria-labelledby="privacy-controls-title">
-            <h3 id="privacy-controls-title" style={headingStyle}>3. Seus controles</h3>
+            <h3 id="privacy-controls-title" style={headingStyle}>3. Seus controles e desativação de anúncios</h3>
             <p style={{ margin: 0 }}>
-              Você pode recusar publicidade personalizada quando essa opção for apresentada,
-              bloquear cookies no navegador e ajustar anúncios nas{' '}
-              <a href="https://myadcenter.google.com/" target="_blank" rel="noopener noreferrer" style={linkStyle}>
-                configurações Minha Central de Anúncios do Google
-              </a>. Bloqueios podem afetar anúncios, mas não devem impedir o uso das
-              ferramentas principais.
+              Os usuários podem optar por desativar a publicidade personalizada acessando as <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" style={linkStyle}>Configurações de Anúncios do Google</a>. Alternativamente, você pode desativar o uso de cookies de publicidade personalizada de fornecedores de terceiros acessando <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" style={linkStyle}>www.aboutads.info</a> ou ajustando a Central de Privacidade da sua região.
             </p>
           </section>
 
           <section aria-labelledby="privacy-rights-title">
             <h3 id="privacy-rights-title" style={headingStyle}>4. Direitos e contato</h3>
             <p style={{ margin: 0 }}>
-              Para dúvidas, solicitações de acesso, correção, oposição ou eliminação de dados
-              sob a LGPD, utilize o canal de contato publicado em{' '}
-              <a href="https://exvorn.tech/" target="_blank" rel="noopener noreferrer" style={linkStyle}>exvorn.tech</a>.
-              Como as ferramentas não criam uma conta, talvez seja necessário informar o
-              contexto da solicitação para verificarmos se existe algum dado associado.
+              Para dúvidas, solicitações de acesso, correção, oposição ou eliminação de dados sob a LGPD, utilize o canal de contato publicado em{' '}
+              <a href="https://exvorn.tech/" target="_blank" rel="noopener noreferrer" style={linkStyle}>exvorn.tech</a>. Como as ferramentas rodam localmente no navegador sem cadastro, nenhuma informação pessoal identificável é armazenada em nossos servidores.
             </p>
           </section>
 
