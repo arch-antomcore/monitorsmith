@@ -8,13 +8,7 @@ function asset(file) {
   return `/originkit/hero-11/${file}`;
 }
 
-const PORTRAIT_MASK = asset("portrait-mask.svg");
 const BACKGROUND_MASK = asset("background-mask.svg");
-
-const portraitMaskStyle = {
-  WebkitMaskImage: `url(${PORTRAIT_MASK})`,
-  maskImage: `url(${PORTRAIT_MASK})`,
-};
 
 const backgroundMaskStyle = {
   WebkitMaskImage: `url(${BACKGROUND_MASK})`,

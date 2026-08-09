@@ -53,7 +53,9 @@ export default function SpinCursor({
   }, [enableGlow, glowColor, glowIntensity]);
 
   const live = useRef({ cursorSize, enableStretch });
-  live.current = { cursorSize, enableStretch };
+  useEffect(() => {
+    live.current = { cursorSize, enableStretch };
+  }, [cursorSize, enableStretch]);
 
   const resolvedLabelFont = { ...DEFAULT_LABEL_FONT, ...labelFont };
 
