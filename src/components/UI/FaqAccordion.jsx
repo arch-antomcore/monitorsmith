@@ -46,10 +46,10 @@ export function FaqAccordion({
               >
                 <span
                   className={cn(
-                    'relative flex items-center space-x-3 rounded-2xl px-5 py-3.5 transition-all duration-300 border ms-faq-question',
+                    'relative flex items-center space-x-3 rounded-2xl px-5 py-3.5 transition-all duration-300 border backdrop-blur-sm',
                     isOpen
-                      ? 'ms-faq-question--open'
-                      : 'ms-faq-question--closed',
+                      ? 'border-amber-400/30 bg-amber-400/[0.03] shadow-[0_4px_24px_rgba(245,158,11,0.08)] text-white'
+                      : 'border-white/10 bg-white/[0.02] hover:bg-white/[0.04] hover:border-amber-400/20 text-white/90 hover:text-white',
                     questionClassName,
                   )}
                 >
@@ -97,7 +97,7 @@ export function FaqAccordion({
                   <div className="ml-4 mt-2.5 md:ml-8">
                     <div
                       className={cn(
-                        'ms-faq-answer relative max-w-[580px] rounded-2xl px-5 py-4 text-[0.94rem] leading-relaxed backdrop-blur-md',
+                        'ms-faq-answer relative max-w-[580px] rounded-2xl px-5 py-4 text-[0.94rem] leading-relaxed backdrop-blur-md bg-black/20 border border-white/5 shadow-inner',
                         answerClassName,
                       )}
                     >

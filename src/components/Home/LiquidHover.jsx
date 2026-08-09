@@ -49,6 +49,7 @@ export default function LiquidHover({
     let imgRatio = 1;
     const isPreview = false;
     let isHovering = false;
+    let isVisible = true;
 
     const VERT = `
 precision highp float;
@@ -434,7 +435,6 @@ void main () {
       };
       const onTouchMove = (e) => {
         isHovering = true;
-        e.preventDefault();
         const t = e.targetTouches[0];
         const rect = container.getBoundingClientRect();
         updatePointerPosition(t.clientX - rect.left, t.clientY - rect.top);
@@ -457,12 +457,24 @@ void main () {
       canvas.addEventListener("mousemove", onMove);
       canvas.addEventListener("touchstart", onTouchStart, { passive: true });
       canvas.addEventListener("touchend", onTouchEnd, { passive: true });
-      canvas.addEventListener("touchmove", onTouchMove, { passive: false });
+      canvas.addEventListener("touchmove", onTouchMove, { passive: true });
       window.addEventListener("resize", onResize);
       const resizeObserver = new ResizeObserver(() => {
         onResize();
       });
       resizeObserver.observe(container);
+
+      const intersectionObserver = new IntersectionObserver(([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          if (rafRef.current) cancelAnimationFrame(rafRef.current);
+          rafRef.current = requestAnimationFrame(render);
+        } else {
+          if (rafRef.current) cancelAnimationFrame(rafRef.current);
+        }
+      });
+      intersectionObserver.observe(container);
+
       return () => {
         canvas.removeEventListener("mouseenter", onEnter);
         canvas.removeEventListener("mouseleave", onLeave);
@@ -473,6 +485,7 @@ void main () {
         canvas.removeEventListener("touchmove", onTouchMove);
         window.removeEventListener("resize", onResize);
         resizeObserver.disconnect();
+        intersectionObserver.disconnect();
       };
     }
     function resizeCanvas() {
@@ -524,6 +537,7 @@ void main () {
       };
     }
     function render(_t) {
+      if (!isVisible) return;
       const dt = 1 / 60;
       if (pointer.moved) {
         if (!isPreview) pointer.moved = false;

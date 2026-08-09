@@ -128,8 +128,22 @@ export default function SpinCursor({
 
     let raf = 0;
     let last = performance.now();
+    let isVisible = true;
+
+    const io = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible) {
+        last = performance.now();
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(frame);
+      } else {
+        if (raf) cancelAnimationFrame(raf);
+      }
+    });
+    io.observe(frameEl);
 
     const frame = (now) => {
+      if (!isVisible) return;
       const dt = Math.min(0.05, Math.max(0, (now - last) / 1000));
       last = now;
       const p = live.current;
@@ -173,6 +187,7 @@ export default function SpinCursor({
 
     return () => {
       cancelAnimationFrame(raf);
+      io.disconnect();
       hideNativeCursor(false);
       window.removeEventListener("pointermove", onMove);
       document.documentElement.removeEventListener("pointerleave", onWindowLeave);

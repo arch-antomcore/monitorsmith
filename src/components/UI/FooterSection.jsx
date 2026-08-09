@@ -69,7 +69,7 @@ export function FooterSection({ onLaunch }) {
   return (
     <footer className="FooterSection relative border-t border-white/[0.08] bg-[#050506] text-white/80 transition-colors duration-300 overflow-hidden font-sans">
       {/* Subtle background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-gradient-to-b from-amber-500/[0.03] to-transparent blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-gradient-to-b from-amber-400/[0.08] to-transparent blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 py-16 lg:py-20 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12 mb-16">
@@ -114,7 +114,7 @@ export function FooterSection({ onLaunch }) {
                   </>
                 ) : (
                   <>
-                    <SunDuotone width={18} height={18} className="text-amber-500" />
+                    <SunDuotone width={18} height={18} className="text-amber-400" />
                     <span>Modo Claro</span>
                   </>
                 )}
@@ -145,7 +145,7 @@ export function FooterSection({ onLaunch }) {
                   className="block transition-colors hover:text-amber-400 flex items-center gap-1.5"
                 >
                   <span>Loop de Marcas</span>
-                  <span className="text-[10px] px-1.5 py-0.2 bg-amber-500/20 text-amber-300 rounded font-mono">Novo</span>
+                  <span className="text-[10px] px-1.5 py-0.2 bg-amber-400/20 text-amber-300 rounded font-mono">Novo</span>
                 </a>
               </li>
               <li>
@@ -243,7 +243,7 @@ export function FooterSection({ onLaunch }) {
             </p>
             <a
               href="#monitor-tools"
-              className="w-full py-2 px-3 rounded-lg bg-white/[0.08] hover:bg-amber-500 hover:text-black border border-white/[0.08] hover:border-transparent text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center gap-2"
+              className="w-full py-2 px-3 rounded-lg bg-white/[0.08] hover:bg-amber-400 hover:text-black border border-white/[0.08] hover:border-transparent text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center gap-2"
             >
               <SparkleDuotone width={16} height={16} aria-hidden="true" />
               Explorar ferramentas
@@ -264,7 +264,7 @@ export function FooterSection({ onLaunch }) {
               target="_blank" 
               rel="noreferrer"
               title="Site institucional da EXVORN.TECH"
-              className="text-white hover:text-amber-400 transition-colors font-semibold underline underline-offset-4 decoration-amber-500/40"
+              className="text-white hover:text-amber-400 transition-colors font-semibold underline underline-offset-4 decoration-amber-400/40"
             >
               EXVORN.TECH
             </a>

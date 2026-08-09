@@ -275,7 +275,7 @@ function createDoubleFBO(gl, w, h, internalFormat, format, type, filter) {
 
 export default function FluidTrail({
     fade = "inside",
-    color = "#EC1223",
+    color = "#f59e0b",
     mouseRadius = 3,
     trailDuration = 1.5,
     style
@@ -692,9 +692,23 @@ export default function FluidTrail({
             blit(null)
         }
 
+        let isVisible = true;
+        const io = new IntersectionObserver(([entry]) => {
+            isVisible = entry.isIntersecting;
+            if (isVisible) {
+                lastTime = performance.now();
+                cancelAnimationFrame(raf);
+                raf = requestAnimationFrame(loop);
+            } else {
+                cancelAnimationFrame(raf);
+            }
+        });
+        io.observe(canvasElement);
+
         let raf = 0
         let lastTime = performance.now()
         const loop = (now) => {
+            if (!isVisible) return;
             const dt = Math.min(0.0166, (now - lastTime) / 1000)
             lastTime = now
             applyPointerInput()
@@ -707,6 +721,7 @@ export default function FluidTrail({
         return () => {
             cancelAnimationFrame(raf)
             ro.disconnect()
+            io.disconnect()
             window.removeEventListener("pointermove", onMove)
             window.removeEventListener("pointerdown", onDown)
             window.removeEventListener("pointerup", onUp)

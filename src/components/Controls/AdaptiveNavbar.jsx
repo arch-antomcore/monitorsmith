@@ -117,7 +117,7 @@ export default React.memo(function AdaptiveNavbar({
 
   return (
     <div 
-      className="fixed z-50 flex justify-center pointer-events-none transition-all duration-300 ease-out"
+      className="fixed z-50 flex justify-center pointer-events-none transition-opacity duration-300 ease-out"
       style={{ 
         top: 'calc(24px + env(safe-area-inset-top))',
         left: '50%',
@@ -129,13 +129,16 @@ export default React.memo(function AdaptiveNavbar({
         initial={false}
         animate={isExpanded ? "expanded" : "collapsed"}
         variants={containerVariants}
-        whileHover={!isExpanded && !shouldReduceMotion ? { scale: 1.1 } : {}}
+        style={{ willChange: 'width, transform' }}
+        whileHover={!isExpanded && !shouldReduceMotion ? { scale: 1.08, boxShadow: "0 4px 24px rgba(251, 191, 36, 0.4), inset 0 0 10px rgba(251, 191, 36, 0.15)" } : {}}
         whileTap={!isExpanded && !shouldReduceMotion ? { scale: 0.95 } : {}}
         onClick={handleNavClick}
         aria-hidden={!visible}
         className={cn(
-          "wbp-navbar flex items-center overflow-hidden rounded-full h-12 pointer-events-auto glass3d border border-border shadow-sm",
-          !isExpanded && "cursor-pointer justify-center"
+          "wbp-navbar flex items-center overflow-hidden rounded-full h-12 pointer-events-auto shadow-sm transition-colors duration-300",
+          isExpanded 
+            ? "glass3d border border-border/40 bg-black/40 backdrop-blur-md" 
+            : "cursor-pointer justify-center border border-amber-400/40 bg-black/60 backdrop-blur-lg shadow-[0_0_15px_rgba(251,191,36,0.2)] hover:border-amber-400/60"
         )}
       >
         <motion.div
@@ -180,7 +183,7 @@ export default React.memo(function AdaptiveNavbar({
           )}
 
           {showModeContext && onToggleWakeLock && (
-            <motion.button whileHover={!shouldReduceMotion ? { scale: 1.15, transition: { type: "spring", stiffness: 400, damping: 17 } } : undefined} whileTap={!shouldReduceMotion ? { scale: 0.95 } : undefined} transition={shouldReduceMotion ? { duration: 0.001 } : undefined} variants={itemVariants} onClick={onToggleWakeLock} aria-label={wakeLockLabel} title={wakeLockLabel} aria-pressed={isWakeLockActive} className={cn("text-sm font-medium transition-colors px-2 py-1 flex items-center justify-center", isWakeLockActive ? "text-amber-500" : "text-muted-foreground hover:text-foreground")}>
+            <motion.button whileHover={!shouldReduceMotion ? { scale: 1.15, transition: { type: "spring", stiffness: 400, damping: 17 } } : undefined} whileTap={!shouldReduceMotion ? { scale: 0.95 } : undefined} transition={shouldReduceMotion ? { duration: 0.001 } : undefined} variants={itemVariants} onClick={onToggleWakeLock} aria-label={wakeLockLabel} title={wakeLockLabel} aria-pressed={isWakeLockActive} className={cn("text-sm font-medium transition-colors px-2 py-1 flex items-center justify-center", isWakeLockActive ? "text-amber-400" : "text-muted-foreground hover:text-foreground")}>
               <ControlIcon name="wake" size={20} />
             </motion.button>
           )}

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import LiquidHover from './LiquidHover';
 import SpinCursor from './SpinCursor';
 import FlowButton from '../UI/FlowButton';
@@ -23,7 +23,7 @@ function keepLastWordsTogether(text, count = 2) {
   return `${words.slice(0, -count).join(" ")} ${words.slice(-count).join("\u00a0")}`;
 }
 
-function BackgroundArtwork() {
+function BackgroundArtwork({ yBehind }) {
   return (
     <>
       <div className="ok-h11-background">
@@ -62,20 +62,40 @@ function BackgroundArtwork() {
             src={asset("background-layer-5.svg")}
           />
         </div>
-        <div className="ok-h11-backgroundLayer ok-h11-backgroundLayer6">
-          <img
-            alt=""
-            className="ok-h11-layerImage"
-            src={asset("background-layer-6.svg")}
-          />
-        </div>
+      <div className="ok-h11-backgroundLayer ok-h11-backgroundLayer6">
+        <img
+          alt=""
+          className="ok-h11-layerImage"
+          src={asset("background-layer-6.svg")}
+        />
       </div>
+    </div>
 
-      <div className="ok-h11-portrait">
-        <LiquidHover imageSrc={asset("hero-portrait.png")} style={{ width: '100%', height: '100%' }} intensity={12} />
-      </div>
-      <SpinCursor fillColor="#FFFFFF" enableGlow={false} />
-    </>
+    {/* BACKGROUND PARALLAX TEXT (BEHIND PORTRAIT) */}
+    <motion.div 
+      className="ok-h11-title"
+      style={{ 
+        position: 'absolute', 
+        top: '25%', 
+        left: '50%', 
+        x: '-50%',
+        y: yBehind,
+        zIndex: 1, 
+        fontSize: 'clamp(80px, 12vw, 180px)', 
+        opacity: 0.15, 
+        whiteSpace: 'nowrap',
+        pointerEvents: 'none',
+        willChange: 'transform'
+      }}
+    >
+      FERRAMENTAS
+    </motion.div>
+
+    <div className="ok-h11-portrait">
+      <LiquidHover imageSrc={asset("hero-portrait.png")} style={{ width: '100%', height: '100%' }} intensity={12} />
+    </div>
+    <SpinCursor fillColor="#FFFFFF" enableGlow={false} />
+  </>
   );
 }
 
@@ -97,8 +117,11 @@ function CapsuleButton({ onClick, label }) {
 
 export default function HeroSection({ onScrollToTools }) {
   const eyebrow = "EXVORN.TECH · Inspeção · Iluminação · Foco";
-  const title = "Ferramentas para usar melhor seu monitor.";
   const description = "Inspecione pixels, ilumine chamadas, exiba mensagens e organize o foco — direto no navegador.";
+
+  const { scrollY } = useScroll();
+  const yBehind = useTransform(scrollY, [0, 800], [0, 250]);
+  const yFront = useTransform(scrollY, [0, 800], [0, -80]);
 
   return (
     <motion.section
@@ -108,10 +131,9 @@ export default function HeroSection({ onScrollToTools }) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      <BackgroundArtwork />
+      <BackgroundArtwork yBehind={yBehind} />
 
-
-      <div className="ok-h11-copy">
+      <motion.div className="ok-h11-copy" style={{ y: yFront, willChange: 'transform' }}>
         <motion.div 
           className="ok-h11-headingGroup"
           initial={{ y: 20, opacity: 0 }}
@@ -119,7 +141,9 @@ export default function HeroSection({ onScrollToTools }) {
           transition={{ delay: 0.2, duration: 0.6 }}
         >
           <p className="ok-h11-eyebrow">{keepLastWordsTogether(eyebrow)}</p>
-          <h1 className="ok-h11-title">{keepLastWordsTogether(title, 3)}</h1>
+          <h1 className="ok-h11-title" style={{ fontSize: '62px' }}>
+            Para usar <em>melhor</em> seu monitor.
+          </h1>
         </motion.div>
         
         <motion.p 
@@ -142,7 +166,7 @@ export default function HeroSection({ onScrollToTools }) {
             <FlowButton text="Instalar MonitorSmith" />
           </div>
         </motion.div>
-      </div>
+      </motion.div>
 
       <aside className="ok-h11-details" aria-label="Service details">
         <div>

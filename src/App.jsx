@@ -448,8 +448,8 @@ function DisplaySuite() {
 
 export default function App() {
   useEffect(() => {
-    // Configure GSAP lagSmoothing for 60/120+ FPS visual fluidity
-    gsap.ticker.lagSmoothing(0);
+    // Rely on GSAP's default lag smoothing (500, 33) to prevent stuttering
+    // when the browser drops frames, keeping the UI smooth overall.
   }, []);
 
   return (

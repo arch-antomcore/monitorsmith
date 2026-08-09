@@ -247,11 +247,11 @@ test('URL, histórico e identidade da ferramenta permanecem sincronizados', asyn
 
   await page.goBack()
   await expect(page).toHaveURL(/#dead-pixel$/)
-  await expect(page.getByRole('heading', { level: 1, name: /Teste de pixels/i })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2, name: /Teste de pixels/i })).toBeVisible()
 
   await page.goForward()
   await expect(page).toHaveURL(/#cleaner$/)
-  await expect(page.getByRole('heading', { level: 1, name: /Limpeza/i })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2, name: /Inspeção/i })).toBeVisible()
 
   await page.keyboard.press('Escape')
   await expect(page).not.toHaveURL(/#/)
