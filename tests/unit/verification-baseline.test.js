@@ -48,7 +48,7 @@ describe('baseline de verificação técnica do produto (contrato clínico de qu
     expect(gsapCore).toBe(true)
     expect(gsapScrollTrigger).toBe(true)
     expect(viteConfig).toContain("'gsap': path.resolve(__dirname, './src/vendor/gsap/index.js')")
-    expect(appJsx).toContain('gsap.ticker.lagSmoothing(0)')
+    expect(appJsx).not.toContain('gsap.ticker.lagSmoothing(0)')
     expect(appJsx).toContain('<ReactLenis')
     expect(toolLibrary).toContain('gsap.to')
     expect(toolLibrary).toContain('rotationY')
