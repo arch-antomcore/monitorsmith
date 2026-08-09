@@ -1,0 +1,131 @@
+﻿
+RELATËRIO T╔CNICO E EDITORIAL
+Auditoria de reprovaþÒo Google AdSense
+MonitorSmith ù reposit¾rio, site em produþÒo e os seis vÝdeos oficiais da sÚrie Site Approvals
+Destinatßrio: Responsßvel pelo MonitorSmith / EXVORN.TECH
+Data da auditoria: 7 de agosto de 2026 (America/Sao_Paulo)
+VersÒo auditada: commit e29be9f4c158e9b63d743b9470cd149326277b7a
+Site: https://monitorsmith.app/
+Escopo: aprovaþÒo de site, conte·do, navegaþÒo, propriedade, trßfego, privacidade e implantaþÒo de an·ncios
+Status recomendado: nÒo reaplicar antes de concluir os bloqueadores P0 e confirmar recrawl
+DECIS├O  A versÒo atual estß tecnicamente saudßvel e muito melhor do que a versÒo provavelmente avaliada, mas ainda apresenta risco alto de ôbaixo valorö por causa da pßgina inicial dependente de JavaScript e de 26 guias curtos, uniformes e sem autoria visÝvel. Corrija os itens P0, publique, espere a nova versÒo ser recrawlada e s¾ entÒo solicite outra anßlise.
+1. Sumßrio executivo
+NÒo hß como determinar com certeza o motivo da recusa sem a mensagem exibida em Sites/Policy Center e a data da solicitaþÒo. O diagn¾stico abaixo, portanto, classifica hip¾teses por probabilidade e separa o que pode ter causado a reprovaþÒo anterior do que ainda precisa ser corrigido na versÒo atual.
+A hip¾tese principal Ú uma combinaþÒo de conte·do percebido como pouco aprofundado com defasagem de rastreamento. O site hoje entrega 29 pßginas HTML no build, mas a pßgina inicial bruta contÚm somente 119 palavras dentro de <noscript>; o restante depende do bundle React. Os 26 guias localizados tÛm entre 146 e 212 palavras no conte·do principal, mÚdia de 173,6, todos com a mesma arquitetura editorial. A sÚrie oficial alerta especificamente para pßginas baseadas em template que oferecem pouco valor [V6], enquanto a documentaþÒo atual exige conte·do original, relevante e uma boa experiÛncia [G1ûG4].
+A evidÛncia temporal aumenta essa hip¾tese: o commit auditado Ú de 7 de agosto de 2026 e o servidor informa a mesma data para a ·ltima modificaþÒo do site, enquanto o resultado de busca observado durante a auditoria ainda mostrava trechos da redaþÒo anterior. Isso sugere que a recusa pode ter refletido uma versÒo anterior ou um Ýndice ainda nÒo atualizado. ╔ uma inferÛncia, nÒo uma confirmaþÒo do Google.
+NÒo encontrei conte·do proibido, redirecionamento enganoso, an·ncios ativos em excesso nem falhas de build. O arquivo ads.txt estß correto para o publisher informado, robots.txt permite os crawlers relevantes, HTTPS responde 200 e lint, testes unitßrios e build passam. O principal trabalho restante Ú editorial, de renderizaþÒo estßtica e de conformidade de privacidade/consentimento.
+ClassificaþÒo interna desta auditoria; nÒo Ú uma pontuaþÒo emitida pelo Google.
+2. Escopo, mÚtodo e limitaþ§es
+2.1 EvidÛncias examinadas
+Reposit¾rio p·blico no commit e29be9f4c158e9b63d743b9470cd149326277b7a [R1].
+Build de produþÒo gerado localmente, incluindo os HTML estßticos, sitemap, robots.txt e ads.txt.
+Site em produþÒo em https://monitorsmith.app/, incluindo respostas HTTP da home, de uma pßgina editorial, de robots.txt e de ads.txt [L1].
+Playlist oficial Google AdSense Site Approvals: seis vÝdeos, duraþÒo total de 29min56s [V0].
+Legendas manuais oficiais em portuguÛs do Brasil e inglÛs extraÝdas para todos os vÝdeos: 647 segmentos por idioma, 1.294 segmentos analisados no total.
+PolÝticas e pßginas de ajuda atuais do Google AdSense, Google Publisher Policies e Google Search Central, consultadas em 7 de agosto de 2026 [G1ûG12].
+2.2 MÚtodo de comparaþÒo
+Transformar cada vÝdeo da sÚrie em requisitos verificßveis: propriedade/acesso, trßfego, valor editorial, navegaþÒo e causas comuns de reprovaþÒo.
+Cruzar cada requisito com evidÛncia observßvel no c¾digo, no build e no site publicado.
+Priorizar a documentaþÒo oficial atual quando ela for mais recente ou mais especÝfica do que os vÝdeos.
+Classificar cada achado como causa provßvel da reprovaþÒo, risco atual, requisito antes de exibir an·ncios ou item que depende de dados externos.
+2.3 Limitaþ§es
+A auditoria nÒo teve acesso Ó conta AdSense, ao texto exato da reprovaþÒo, ao Policy Center, ao Search Console, ao Analytics nem Ó data de envio. Esses itens podem alterar a ordem das hip¾teses. O reposit¾rio tambÚm nÒo permite provar se houve trßfego comprado, bots, cliques pr¾prios, autoatualizaþÒo de an·ncios ou mais de uma conta AdSense.
+Os vÝdeos nÒo constituem o texto integral das polÝticas. Eles foram usados como guia oficial de aprovaþÒo; as pßginas de ajuda atuais prevalecem. As legendas foram analisadas e resumidas, sem reproduzir transcriþ§es completas.
+Esta Ú uma auditoria tÚcnica/editorial, nÒo aconselhamento jurÝdico. O Google mantÚm discricionariedade sobre aprovaþÒo e pode considerar sinais que nÒo sÒo p·blicos.
+3. O que a sÚrie oficial exige
+A playlist contÚm seis epis¾dios, nÒo quatro. Abaixo estß a sÝntese derivada das duas faixas de legenda e o ponto que cada epis¾dio cria para o MonitorSmith.
+Timestamps aproximados; links completos no ApÛndice C.
+4. Estado atual do produto e evidÛncias do reposit¾rio
+4.1 Inventßrio tÚcnico
+4.2 ValidaþÒo executada
+O build emitiu avisos de fontes Geist nÒo resolvidas em tempo de build; isso merece limpeza por desempenho/consistÛncia, mas nÒo Ú a causa principal desta anßlise.
+4.3 O que jß estß bem
+Hß utilidade real: testes visuais, superfÝcies de cor, timer, rel¾gio, teleprompter e sinalizaþÒo executam no navegador; nÒo sÒo pßginas que apenas prometem uma funþÒo.
+Cada guia possui tÝtulo, descriþÒo, canonical, hreflang, Open Graph, breadcrumbs, FAQ visÝvel e FAQ estruturada.
+Os guias declaram limitaþ§es importantes; a redaþÒo estßtica sobre OLED e inspeþÒo visual Ú mais cautelosa que vers§es anteriores.
+ads.txt, robots.txt, HTTPS e sitemap estÒo presentes e coerentes.
+O componente de an·ncio rotula ôPublicidadeö, valida IDs e adia a solicitaþÒo atÚ a proximidade da viewport.
+Pßginas legais p·blicas existem em /privacidade/ e /termos/, e o responsßvel institucional Ú identificßvel como EXVORN.TECH.
+5. Diagn¾stico: o que provavelmente causou a reprovaþÒo
+A classificaþÒo a seguir combina aderÛncia Ó sÚrie, evidÛncia tÚcnica e plausibilidade temporal. ôAltaö nÒo significa certeza; significa que o achado explica melhor uma recusa de site do que as alternativas observßveis.
+5.1 Por que os guias ainda parecem fracos
+NÒo existe, nas pßginas oficiais consultadas, um mÝnimo universal de palavras para aprovaþÒo. Portanto, 146û212 palavras nÒo configuram violaþÒo automßtica. O problema Ú qualitativo: cada pßgina repete a mesma sequÛncia ù introduþÒo, trÛs passos, dois usos, uma limitaþÒo, duas perguntas e trÛs links ù e oferece pouca evidÛncia de experiÛncia pr¾pria, metodologia, exemplos ou referÛncias.
+A documentaþÒo do AdSense pede conhecimento especializado, melhorias, anßlises ou opini§es que diferenciem a pßgina [G2]. A polÝtica contra conte·do replicado tambÚm trata como insuficiente o conte·do automatizado ou copiado sem revisÒo/curadoria e valor adicional [G4]. A polÝtica de spam de pesquisa s¾ caracteriza abuso escalado quando o objetivo primßrio Ú manipular rankings; nÒo hß base para atribuir essa intenþÒo ao MonitorSmith. Ainda assim, o padrÒo atual cria a mesma aparÛncia de baixo valor que a sÚrie manda evitar [G12; V6].
+IMPORTANTE  NÒo aumente textos apenas para atingir contagem. Consolide pßginas sobrepostas e publique menos guias, porÚm completos, com experimentos reproduzÝveis, imagens pr¾prias, critÚrios de interpretaþÒo, limites, fontes, autoria e hist¾rico de atualizaþÒo.
+5.2 A home ainda depende demais do cliente
+O arquivo index.html contÚm um contÛiner React vazio e um fallback em <noscript>. Um navegador com JavaScript vÛ uma home rica; uma coleta que nÒo execute, aborte ou limite o bundle recebe s¾ o fallback. O AdSense usa sistemas automßticos e manuais, e a pr¾pria sÚrie destaca que crawlers precisam determinar o conte·do [V1ûV2].
+MitigaþÒo preferida: gerar a home como HTML estßtico no build e hidratar a aplicaþÒo. MitigaþÒo de curto prazo: colocar o conte·do semÔntico completo dentro de #root para ser substituÝdo pelo React, removendo a dependÛncia exclusiva de <noscript>. Valide o HTML publicado com curl e com a inspeþÒo de URL do Search Console.
+5.3 Sinais de confianþa e precisÒo
+Os guias nÒo mostram autor, revisor, data visÝvel ou bibliografia. AlÚm disso, a FAQ da home afirma que ßreas pretas em OLED/AMOLED tÛm consumo ôa zeroö e emissÒo eliminada. Isso Ú absoluto demais: o consumo do dispositivo depende do painel, controladores, brilho, interface e processamento. A versÒo estßtica jß usa formulaþÒo mais cuidadosa. Uniformize o texto para nÒo parecer enganoso [G10].
+6. Lacunas de conformidade atuais
+6.1 Propriedade e c¾digo
+O site oferece ads.txt correto e rastreßvel. Isso pode ser suficiente como mÚtodo de propriedade quando o AdSense o reconhece [G11]. Entretanto, se o mÚtodo escolhido foi ôc¾digo do AdSenseö, a implementaþÒo estß no final do <body>; a ajuda oficial orienta inserir o c¾digo entre as tags <head> [G6].
+RecomendaþÒo: escolha um mÚtodo inequÝvoco. Para a anßlise, mantenha ads.txt e use a meta tag de verificaþÒo do AdSense no <head> ou mova o c¾digo conforme a instruþÒo exibida na conta. Depois da aprovaþÒo, diferencie verificaþÒo de carregamento de an·ncios e faþa o carregamento respeitar o consentimento aplicßvel.
+6.2 PolÝtica de privacidade
+A polÝtica atual explica dados tÚcnicos, cookies e controles, mas nÒo reproduz todas as divulgaþ§es que o Google exige dos editores: uso de cookies por fornecedores terceiros; uso do cookie de publicidade do Google e parceiros com base em visitas a este e a outros sites; opþÒo de desativaþÒo nas configuraþ§es de an·ncios; e identificaþÒo/opþÒo de exclusÒo de outras redes quando usadas [G7].
+Corrija tanto a pßgina estßtica quanto o modal para que nÒo existam duas polÝticas divergentes. Inclua links para as polÝticas/controles do Google, finalidade, base/consentimento aplicßvel, categorias de dados, retenþÒo quando pertinente, contato e data de revisÒo. Faþa revisÒo jurÝdica compatÝvel com LGPD e com as regi§es atendidas.
+6.3 CMP e IAB TCF
+Para an·ncios personalizados no EEE, Reino Unido e SuÝþa, o Google exige CMP certificada integrada ao IAB TCF; desde 1║ de marþo de 2026, novas strings devem usar TCF v2.3 [G8ûG9]. Se nÒo houver consentimento para o Purpose 1, a orientaþÒo Ú nÒo chamar a tag de an·ncio; an·ncios limitados exigem configuraþÒo adequada.
+NÒo foi encontrada implementaþÒo de CMP no reposit¾rio. Como os slots estÒo vazios, isto nÒo prova que an·ncios estejam sendo servidos em desconformidade hoje; Ú, porÚm, um bloqueador antes de ativar inventßrio. A opþÒo mais simples Ú configurar a CMP do pr¾prio Google em Privacy & messaging ou outra CMP certificada e testß-la por regiÒo.
+6.4 Densidade e posicionamento de an·ncios
+O c¾digo prevÛ cinco posiþ§es: duas laterais, hero, biblioteca e rodapÚ. Hoje nenhuma aparece porque os IDs estÒo vazios. Quando ativadas, essas posiþ§es podem superar o conte·do editorial visÝvel, sobretudo em telas menores ou antes da lista de ferramentas. A polÝtica proÝbe pßginas com mais an·ncios/material promocional do que conte·do do editor [G5].
+Comece com uma ou duas unidades, abaixo da primeira entrega de valor, e nunca dentro das telas imersivas de teste, timer, teleprompter ou sinalizaþÒo. Meþa CLS, tempo de carregamento, profundidade de rolagem e proporþÒo an·ncio/conte·do antes de expandir.
+6.5 NavegaþÒo
+A navegaþÒo atual Ú funcional: os guias voltam Ó home e o rodapÚ da home possui links para pßginas editoriais. Para aderÛncia mais forte ao epis¾dio de navegaþÒo [V5], transforme cada cartÒo em link rastreßvel ou ofereþa duas aþ§es claras: ôAbrir ferramentaö e ôLer guiaö. Troque os bot§es de privacidade e termos por links reais para /privacidade/ e /termos/, mantendo o modal apenas como melhoria progressiva.
+7. Plano de correþÒo priorizado
+P0 ù concluir antes de reaplicar
+P1 ù concluir antes de ativar an·ncios
+Implantar CMP certificada e validar comportamento no EEE, Reino Unido e SuÝþa; documentar TCF v2.3.
+Ativar no mßximo uma ou duas unidades inicialmente; nenhuma acima do conte·do principal ou dentro de modos imersivos.
+Converter links legais e de guias em Ôncoras semÔnticas; testar navegaþÒo por teclado, mobile e sem JavaScript.
+Executar Lighthouse/Core Web Vitals e corrigir fontes Geist nÒo resolvidas, CLS de an·ncios e custos de animaþÒo.
+Instalar o navegador de teste no CI e executar os 80 cenßrios E2E para separar regress§es reais de limitaþ§es ambientais.
+P2 ù melhoria contÝnua
+Publicar estudos pr¾prios: fotos de padr§es, diferenþas entre IPS glow e backlight bleed, protocolo de inspeþÒo de dead pixel, limitaþ§es por navegador/painel e resultados reproduzÝveis.
+Criar pßginas institucionais p·blicas de Sobre, Contato e PolÝtica editorial, sem tratar esses itens como substituto de conte·do de qualidade.
+Revisar trimestralmente claims, links, datas e polÝticas; atualizar somente quando houver mudanþa real.
+Monitorar consultas e pßginas no Search Console e aprofundar conte·do conforme perguntas reais, sem gerar pßginas em escala s¾ por palavras-chave.
+8. EspecificaþÒo editorial recomendada
+A meta nÒo deve ser ômais pßginasö. Para cada intenþÒo vßlida, produza uma pßgina que um usußrio conservaria mesmo sem an·ncios. Uma faixa de 600û1.000 palavras pode ser usada internamente como orþamento editorial, nunca como requisito do Google; pßginas podem ser menores ou maiores quando a tarefa justificar.
+8.1 Consolidaþ§es sugeridas
+Unificar ôTela preta OLEDö e ôVazamento de luz/IPS glowö em um guia principal de inspeþÒo em fundo preto, com subt¾picos por tecnologia; manter URLs separadas apenas se entregarem mÚtodos e evidÛncias realmente distintos.
+Diferenciar ôTeste de monitorö de ôVerificaþÒo visualö: um pode ser checklist de compra/triagem; o outro, biblioteca tÚcnica de padr§es com interpretaþÒo.
+Diferenciar ôMensagem em telaö de ôTeleprompterö: a primeira Ú sinalizaþÒo estßtica e acessibilidade; o segundo exige velocidade, espelhamento, distÔncia e roteiro.
+Tratar inglÛs como localizaþÒo editorial revisada, nÒo traduþÒo mecÔnica. Manter hreflang somente quando ambas as vers§es estiverem completas e equivalentes em qualidade.
+9. Checklist de reaplicaþÒo
+Solicite nova anßlise somente quando todos os itens marcados como bloqueadores estiverem verificßveis no site publicado. A sugestÒo de observar 7û14 dias ap¾s o deploy Ú prudencial para recrawl; nÒo Ú um prazo oficial do Google.
+10. Aþ§es especÝficas por arquivo
+11. ConclusÒo
+O MonitorSmith nÒo parece um site sem produto: as ferramentas funcionam e a base tÚcnica Ú competente. O risco estß na forma como o valor Ú apresentado ao revisor. Uma home que depende do React e uma coleþÒo de guias muito curtos e uniformes podem fazer um produto ·til parecer um site criado para capturar consultas e inserir an·ncios.
+A estratÚgia com maior chance de sucesso Ú reduzir a pressa de reaplicar: consolidar e aprofundar o conte·do, tornar a home plenamente visÝvel no HTML, corrigir propriedade/privacidade/CMP, publicar com poucos an·ncios e confirmar o recrawl. Depois disso, use o texto exato da reprovaþÒo como validaþÒo final. Se o aviso indicar algo diferente ù por exemplo, conta duplicada ou trßfego invßlido ù essa evidÛncia deve substituir a prioridade probabilÝstica deste relat¾rio.
+PRËXIMA DECIS├O  Concluir P0, publicar, confirmar a versÒo atual no Search Console e s¾ entÒo pedir nova revisÒo. NÒo ative os cinco slots de an·ncio no primeiro lanþamento.
+ApÛndice A ù Dados das legendas extraÝdas
+As legendas manuais oficiais em pt-BR foram a base da leitura; a faixa em inglÛs foi usada como conferÛncia. Os segmentos foram preservados internamente com timestamp, mas este relat¾rio apresenta sÝntese e pontos de tempo, nÒo a transcriþÒo integral.
+ApÛndice B ù EvidÛncias quantitativas de conte·do
+ApÛndice C ù Fontes
+Playlist e vÝdeos
+[V0] AdSense Site Approvals ù playlist ù seis vÝdeos; consultada em 07/08/2026
+[V1] Welcome to the AdSense Site Approvals series
+[V2] Site Ownership and Basic Checks
+[V3] Good and Bad Traffic
+[V4] Quality Content
+[V5] Navigation
+[V6] Site Rejections and Next Steps
+PolÝticas e ajuda oficial
+[G1] Eligibility requirements for AdSense
+[G2] Make sure your site's pages are ready for AdSense
+[G3] Google-served ads on screens without publisher-content
+[G4] Google-served ads on screens with replicated content
+[G5] More ads or paid promotional material than publisher-content
+[G6] You need to own the site you want to use to participate in AdSense
+[G7] Required content for your privacy policy
+[G8] GoogleÆs CMP requirements for EEA, UK and Switzerland
+[G9] IAB Europe TCF integration ù TCF v2.3
+[G10] Google Publisher Policies
+[G11] Add a new site to your AdSense sites list
+[G12] Spam policies for Google Web Search
+[G13] Google AdSense blog ù announcement of the Site Approvals video series
+Reposit¾rio e site
+[R1] arch-antomcore/monitorsmith ù commit auditado
+[L1] MonitorSmith ù site em produþÒo
+Fim do relat¾rio. Todas as fontes web foram consultadas em 7 de agosto de 2026. Os resultados do reposit¾rio e do build referem-se ao commit identificado na capa.

@@ -51,11 +51,8 @@ export const TOOLS_REGISTRY = Object.freeze([
     pwa: { visible: true, name: 'Tela Preta', shortName: 'Preto' },
     seoPages: [
       seoPage('black-screen',
-        { slug: 'tela-preta-oled', title: 'Tela Preta OLED em Tela Cheia', h1: 'Tela Preta OLED em Tela Cheia', description: 'Abra uma tela preta em fullscreen para reduzir luz e inspecionar pixels claros, IPS glow e vazamento de luz.' },
+        { slug: 'tela-preta-oled', title: 'Tela Preta OLED e Inspeção de Vazamento de Luz', h1: 'Tela Preta OLED e Vazamento de Luz', description: 'Abra uma tela preta em fullscreen para reduzir luz e inspecionar pixels claros, IPS glow e vazamento de luz.' },
         { slug: 'black-screen', title: 'Fullscreen Black Screen for Monitor Inspection', h1: 'Fullscreen Black Screen', description: 'Open a fullscreen black surface to reduce emitted light and visually inspect bright pixels, IPS glow and backlight bleed.' }),
-      seoPage('backlight-bleed',
-        { slug: 'teste-de-vazamento-de-luz', title: 'Teste Visual de Vazamento de Luz', h1: 'Teste de Vazamento de Luz e IPS Glow', description: 'Use uma tela preta em ambiente escuro para observar backlight bleed e IPS glow no monitor.' },
-        { slug: 'backlight-bleed-test', title: 'Backlight Bleed and IPS Glow Visual Test', h1: 'Backlight Bleed and IPS Glow Test', description: 'Use a black screen in a dark room to visually inspect backlight bleed and IPS glow on your monitor.' }),
     ],
   },
   {
@@ -370,6 +367,7 @@ export const TOOL_LIBRARY = Object.freeze(
     ...(typeof tool.launchPreset?.ambientBrightness === 'number'
       ? { brightness: tool.launchPreset.ambientBrightness }
       : {}),
+    ...(tool.seoPages && tool.seoPages.length > 0 ? { seoSlug: tool.seoPages[0].pt.slug } : {}),
   })),
 );
 

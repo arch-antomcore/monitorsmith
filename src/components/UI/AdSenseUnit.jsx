@@ -31,6 +31,8 @@ export default function AdSenseUnit({
   const ref = useRef(null);
   const hasRequestedAdRef = useRef(false);
   const [isVisible, setIsVisible] = useState(() => typeof IntersectionObserver === 'undefined');
+  const [consentStatus, setConsentStatus] = useState('unknown');
+
   const resolvedSlot = useMemo(
     () => resolveSlot(slot, placement),
     [placement, slot],
@@ -38,7 +40,20 @@ export default function AdSenseUnit({
   const isConfigured = isValidClient(DEFAULT_CLIENT) && isValidSlot(resolvedSlot);
 
   useEffect(() => {
-    if (!isConfigured) return undefined;
+    try {
+      const saved = localStorage.getItem('ms_ad_consent');
+      if (saved === 'rejected') {
+        setConsentStatus('denied');
+      } else {
+        setConsentStatus('granted'); // default for now, can be hooked to real CMP
+      }
+    } catch {
+      setConsentStatus('granted');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isConfigured || consentStatus === 'denied') return undefined;
 
     const element = ref.current;
     if (!element) return undefined;
@@ -56,20 +71,26 @@ export default function AdSenseUnit({
 
     observer.observe(element);
     return () => observer.disconnect();
-  }, [isConfigured]);
+  }, [isConfigured, consentStatus]);
 
   useEffect(() => {
-    if (!isConfigured || !isVisible || hasRequestedAdRef.current) return;
+    if (!isConfigured || !isVisible || consentStatus === 'denied' || hasRequestedAdRef.current) return;
 
     try {
       hasRequestedAdRef.current = true;
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch {
+      const ads = window.adsbygoogle || [];
+      // Política de anúncios limitados
+      if (typeof ads.requestNonPersonalizedAds === 'undefined') {
+         ads.requestNonPersonalizedAds = 1;
+      }
+      ads.push({});
+    } catch (error) {
+      console.warn('[AdSense Telemetry] Erro ao carregar anúncio:', error);
       // Retain requested state on exception to prevent infinite retry loop
     }
-  }, [isConfigured, isVisible]);
+  }, [isConfigured, isVisible, consentStatus]);
 
-  if (!isConfigured) {
+  if (!isConfigured || consentStatus === 'denied') {
     return null;
   }
 

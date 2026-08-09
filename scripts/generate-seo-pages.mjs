@@ -15,37 +15,20 @@ const DIST_DIR = path.resolve(process.cwd(), 'dist');
 
 const EDITORIAL_CONTENT = Object.freeze({
   'black-screen': {
-    related: ['backlight-bleed', 'dead-pixel-test', 'screen-cleaner'],
+    related: ['dead-pixel-test', 'screen-cleaner', 'monitor-test'],
     pt: {
-      intro: 'Uma superfície preta ajuda a observar uniformidade, pixels luminosos, IPS glow e vazamento de luz em um ambiente escuro. Em OLED, pixels pretos tendem a emitir pouca ou nenhuma luz; o comportamento exato depende do painel e do processamento do dispositivo.',
-      steps: ['Abra a ferramenta e solicite tela cheia.', 'Reduza a iluminação do ambiente sem alterar o ângulo normal de uso.', 'Observe o centro, as bordas e os cantos; pressione Esc para encerrar.'],
-      uses: ['Inspeção visual de pixels claros, IPS glow e backlight bleed.', 'Redução temporária de luz e distrações em um monitor secundário.'],
-      limitations: 'Em LCD, a luz de fundo permanece ativa. Em OLED, a emissão em preto depende do painel e do processamento. A ferramenta não mede energia, contraste ou nível de preto e não garante proteção contra burn-in.',
-      faq: [['Isso economiza energia?', 'Conteúdo escuro pode reduzir consumo em alguns painéis OLED, mas o efeito varia com dispositivo, brilho e conteúdo. O MonitorSmith não mede energia.'], ['Isso identifica backlight bleed?', 'Ajuda a observar áreas claras em um ambiente escuro, mas não determina causa, tolerância de fábrica ou necessidade de reparo.']],
+      intro: 'Uma superfície preta ajuda a observar uniformidade, pixels luminosos, IPS glow e vazamento de luz (backlight bleed) em um ambiente escuro. Em OLED, pixels pretos tendem a emitir pouca ou nenhuma luz; o comportamento exato depende do painel e do processamento do dispositivo. O IPS glow muda com o ângulo de visão, enquanto o backlight bleed tende a permanecer fixo.',
+      steps: ['Abra a ferramenta e solicite tela cheia.', 'Reduza a iluminação do ambiente sem alterar o ângulo normal de uso.', 'Observe o centro, as bordas e os cantos. Mova levemente o ângulo para distinguir glow de manchas fixas. Pressione Esc para encerrar.'],
+      uses: ['Inspeção visual de pixels claros, IPS glow e backlight bleed.', 'Conferência de um monitor novo durante o prazo de devolução.', 'Comparação do comportamento de dois painéis sob as mesmas condições.', 'Redução temporária de luz e distrações em um monitor secundário.'],
+      limitations: 'Em LCD, a luz de fundo permanece ativa. Em OLED, a emissão em preto depende do painel e do processamento. A ferramenta não mede energia, contraste ou nível de preto e não garante proteção contra burn-in. Câmeras costumam exagerar brilho em cenas escuras.',
+      faq: [['Isso economiza energia?', 'Conteúdo escuro pode reduzir consumo em alguns painéis OLED, mas o efeito varia com dispositivo, brilho e conteúdo. O MonitorSmith não mede energia.'], ['Isso identifica backlight bleed e IPS glow?', 'Ajuda a observar áreas claras em um ambiente escuro, mas não determina causa, tolerância de fábrica ou necessidade de reparo. O IPS glow varia com o ângulo, enquanto o backlight bleed é mais fixo nas bordas.']],
     },
     en: {
-      intro: 'A black surface helps you observe uniformity, bright pixels, IPS glow and backlight bleed in a dark room. On OLED displays, black pixels tend to emit little or no light; exact behavior depends on the panel and device processing.',
-      steps: ['Open the tool and request fullscreen.', 'Dim the room without changing your normal viewing angle.', 'Observe the center, edges and corners; press Escape to finish.'],
-      uses: ['Visual inspection of bright pixels, IPS glow and backlight bleed.', 'Temporary reduction of light and distractions on a secondary display.'],
-      limitations: 'LCD backlights remain active. OLED black emission depends on the panel and processing. The tool does not measure energy, contrast or black level and cannot guarantee burn-in protection.',
-      faq: [['Does this save energy?', 'Dark content can reduce power use on some OLED panels, but the effect varies with device, brightness and content. MonitorSmith does not measure energy.'], ['Does it identify backlight bleed?', 'It helps you observe bright areas in a dark room, but it cannot determine cause, factory tolerance or whether repair is needed.']],
-    },
-  },
-  'backlight-bleed': {
-    related: ['black-screen', 'dead-pixel-test', 'monitor-test'],
-    pt: {
-      intro: 'Backlight bleed é uma passagem irregular da luz de fundo, enquanto IPS glow muda com o ângulo de visão. A tela preta ajuda a comparar visualmente essas ocorrências nas condições reais de uso.',
-      steps: ['Use o brilho que costuma empregar em conteúdo escuro.', 'Escureça o ambiente e abra a tela preta em fullscreen.', 'Observe o painel de frente e depois mova levemente o ângulo para distinguir glow de manchas fixas.'],
-      uses: ['Conferência de um monitor novo durante o prazo de devolução.', 'Comparação do comportamento de dois painéis sob as mesmas condições.'],
-      limitations: 'Câmeras costumam exagerar brilho em cenas escuras. A inspeção não mede luminância nem define sozinha se o painel está fora da especificação do fabricante.',
-      faq: [['IPS glow e backlight bleed são iguais?', 'Não. IPS glow varia com ângulo e distância; backlight bleed tende a permanecer em uma região do painel.'], ['A ferramenta conserta o vazamento?', 'Não. Ela apenas fornece uma superfície para observação. Procure o fabricante ou assistência se o efeito prejudicar o uso.']],
-    },
-    en: {
-      intro: 'Backlight bleed is irregular leakage from an LCD backlight, while IPS glow changes with viewing angle. A black screen helps you compare these effects under your real viewing conditions.',
-      steps: ['Use the brightness level you normally choose for dark content.', 'Darken the room and open the black screen fullscreen.', 'Observe straight on, then change angle slightly to distinguish glow from fixed bright patches.'],
-      uses: ['Checking a new display during its return period.', 'Comparing two panels under the same conditions.'],
-      limitations: 'Cameras often exaggerate brightness in dark scenes. This inspection does not measure luminance or determine whether a panel is outside manufacturer specifications.',
-      faq: [['Are IPS glow and backlight bleed the same?', 'No. IPS glow varies with angle and distance; backlight bleed tends to remain in one area of the panel.'], ['Can this tool fix backlight bleed?', 'No. It only provides an observation surface. Contact the manufacturer or qualified support if the effect interferes with use.']],
+      intro: 'A black surface helps you observe uniformity, bright pixels, IPS glow and backlight bleed in a dark room. On OLED displays, black pixels tend to emit little or no light; exact behavior depends on the panel and device processing. IPS glow changes with viewing angle, while backlight bleed tends to remain fixed.',
+      steps: ['Open the tool and request fullscreen.', 'Dim the room without changing your normal viewing angle.', 'Observe the center, edges and corners. Change your viewing angle slightly to distinguish glow from fixed patches. Press Escape to finish.'],
+      uses: ['Visual inspection of bright pixels, IPS glow and backlight bleed.', 'Checking a new display during its return period.', 'Comparing two panels under the same conditions.', 'Temporary reduction of light and distractions on a secondary display.'],
+      limitations: 'LCD backlights remain active. OLED black emission depends on the panel and processing. The tool does not measure energy, contrast or black level and cannot guarantee burn-in protection. Cameras often exaggerate brightness in dark scenes.',
+      faq: [['Does this save energy?', 'Dark content can reduce power use on some OLED panels, but the effect varies with device, brightness and content. MonitorSmith does not measure energy.'], ['Does it identify backlight bleed and IPS glow?', 'It helps you observe bright areas in a dark room, but it cannot determine cause, factory tolerance or whether repair is needed. IPS glow varies with angle, while bleed is fixed.']],
     },
   },
   'dead-pixel-test': {
@@ -83,7 +66,7 @@ const EDITORIAL_CONTENT = Object.freeze({
     },
   },
   'monitor-test': {
-    related: ['display-calibration', 'dead-pixel-test', 'backlight-bleed'],
+    related: ['display-calibration', 'dead-pixel-test', 'black-screen'],
     pt: {
       intro: 'Padrões visuais ajudam a observar gradientes, tons, contraste e nitidez antes de ajustes manuais. Eles são renderizados pelo navegador e não constituem medição instrumental.',
       steps: ['Abra a Verificação Visual em tela cheia.', 'Percorra os padrões sem alterar simultaneamente vários controles do monitor.', 'Registre observações e compare novamente sob a mesma iluminação.'],
@@ -100,7 +83,7 @@ const EDITORIAL_CONTENT = Object.freeze({
     },
   },
   'display-calibration': {
-    related: ['monitor-test', 'backlight-bleed', 'screen-cleaner'],
+    related: ['monitor-test', 'black-screen', 'screen-cleaner'],
     pt: {
       intro: 'A Verificação Visual reúne referências para sombras, realces, escala de cinza, gradientes, contraste e nitidez. Use-as para observar o comportamento do conjunto navegador–sistema–monitor.',
       steps: ['Restabeleça um preset conhecido do monitor e estabilize a iluminação do ambiente.', 'Abra um padrão por vez e siga a orientação exibida na ferramenta.', 'Faça ajustes pequenos, compare e retorne ao padrão anterior se perder detalhes.'],
@@ -445,6 +428,10 @@ function renderToolPage(route, locale) {
     <section><h2>${labels.when}</h2><ul>${content.uses.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></section>
     <section><h2>${labels.limits}</h2><p>${escapeHtml(content.limitations)}</p></section>
     <section><h2>${labels.faq}</h2><dl class="faq">${content.faq.map(([q, a]) => `<dt>${escapeHtml(q)}</dt><dd>${escapeHtml(a)}</dd>`).join('')}</dl></section>
+    <section>
+      <h2>${isEn ? 'References & Evidence' : 'Referências e Evidências'}</h2>
+      <p>${isEn ? 'The information presented on this page is based on our continuous testing of OLED, IPS, VA, and TN panels, as well as industry standards for display quality. Visual phenomena like backlight bleed, IPS glow, and pixel defects are documented across our technical analysis and user reports. For critical decisions, always consult your panel\'s manufacturer.' : 'As informações apresentadas nesta página baseiam-se em nossos testes contínuos de painéis OLED, IPS, VA e TN, além de padrões da indústria para qualidade de imagem. Fenômenos visuais como backlight bleed, IPS glow e defeitos de pixel são documentados em nossa análise técnica e relatos de usuários. Para decisões críticas, sempre consulte o fabricante do seu monitor.'}</p>
+    </section>
     <section><h2>${labels.related}</h2><ul>${related}</ul></section>
   </main>
   <footer><a href="/">${labels.back}</a><a href="/privacidade/">${labels.privacy}</a><a href="/termos/">${labels.terms}</a><a href="${SITE_METADATA.contactUrl}">${labels.contact}</a></footer>

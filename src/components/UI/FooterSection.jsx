@@ -6,8 +6,6 @@ import MoonDuotone from '../Icons/MoonDuotone';
 import LinkedinLogoRegular from '../Icons/LinkedinLogoRegular';
 import BrandLogo from "./BrandLogo";
 import AboutModal from "./AboutModal";
-import PrivacyModal from "./PrivacyModal";
-import TermsModal from "./TermsModal";
 import PwaModal from "./PwaModal";
 import { resolveToolLaunch } from "../../constants/tools";
 
@@ -273,11 +271,9 @@ export function FooterSection({ onLaunch }) {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-6">
-            <a href="/privacidade/" className="sr-only">Política de Privacidade</a>
-            <a href="/termos/" className="sr-only">Termos de Serviço</a>
             <AboutModal label="Sobre (About)" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />
-            <PrivacyModal label="Política de Privacidade" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />
-            <TermsModal label="Termos de Serviço" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />
+            <a href="/privacidade/" className="hover:text-amber-400 transition-colors text-white/70 underline underline-offset-4 decoration-white/20">Política de Privacidade</a>
+            <a href="/termos/" className="hover:text-amber-400 transition-colors text-white/70 underline underline-offset-4 decoration-white/20">Termos de Serviço</a>
             <PwaModal label="Instalar App & Offline" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />
           </div>
 
