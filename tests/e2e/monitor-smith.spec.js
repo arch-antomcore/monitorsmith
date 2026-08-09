@@ -68,7 +68,7 @@ test('home apresenta o catálogo completo sem violações automáticas WCAG A/AA
 
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   await expect(page.locator('[id^="monitor-tool-grid-"]')).toHaveCount(TOOL_IDS.length)
-  await expect(page.getByRole('button', { name: /11 ferramentas/i })).toBeVisible()
+  await expect(page.getByRole('button', { name: /Explorar Ferramentas/i })).toBeVisible()
   await expect(page.locator('.ms-ad-container')).toHaveCount(0)
   await expect(page.locator('a[href*="github.com"]')).toHaveCount(0)
 

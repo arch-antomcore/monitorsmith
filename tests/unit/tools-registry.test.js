@@ -31,7 +31,7 @@ describe('catálogo central de ferramentas', () => {
 
   it('mantém rotas SEO e atalhos PWA ligados a ferramentas existentes', () => {
     const ids = new Set(TOOLS_REGISTRY.map((tool) => tool.id))
-    expect(SEO_PAGE_ROUTES).toHaveLength(13)
+    expect(SEO_PAGE_ROUTES).toHaveLength(12)
     expect(SEO_PAGE_ROUTES.every((route) => ids.has(route.toolId))).toBe(true)
     expect(PWA_SHORTCUTS.every((shortcut) => ids.has(shortcut.toolId))).toBe(true)
   })

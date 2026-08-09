@@ -139,14 +139,11 @@ function ToolCard({ tool, index, onLaunch }) {
   };
 
   return (
-    <motion.button
-      type="button"
+    <motion.div
       className={`ms-tool-card ms-tool-card--${tool.tone}`}
       id={`monitor-tool-grid-${tool.id}`}
-      onClick={() => onLaunch(tool.id, `monitor-tool-grid-${tool.id}`)}
       onMouseMove={handleCardMouseMove}
       onMouseLeave={handleCardMouseLeave}
-      aria-label={`Abrir ${tool.title}. ${tool.description}`}
       variants={variants}
       initial="initial"
       animate="animate"
@@ -176,16 +173,23 @@ function ToolCard({ tool, index, onLaunch }) {
         <span className="ms-card__desc">{tool.description}</span>
 
         {/* CTA link — "ABRIR" + bouncing arrow */}
-        <span className="ms-card__cta">
+        <button 
+          type="button"
+          onClick={() => onLaunch(tool.id, `monitor-tool-grid-${tool.id}`)}
+          className="ms-card__cta"
+          aria-label={`Abrir ${tool.title}. ${tool.description}`}
+          style={{ background: 'none', border: 'none', color: 'inherit', font: 'inherit', padding: 0, cursor: 'pointer', textAlign: 'left' }}
+        >
+          <span style={{ position: 'absolute', inset: 0, zIndex: 1 }} aria-hidden="true" />
           ABRIR
           <motion.span className="ms-card__cta-arrow" variants={arrowAnimation}>
             →
           </motion.span>
-        </span>
+        </button>
         
         {/* SEO Guide link if available */}
         {tool.seoSlug && (
-          <a href={`/${tool.seoSlug}/`} onClick={(e) => e.stopPropagation()} className="ms-card__guide-link" style={{ fontSize: '0.8rem', color: '#fbbf24', textDecoration: 'underline', marginTop: '4px', display: 'inline-block', position: 'relative', zIndex: 10 }}>
+          <a href={`/${tool.seoSlug}/`} onClick={(e) => e.stopPropagation()} className="ms-card__guide-link" style={{ fontSize: '0.8rem', color: '#fbbf24', textDecoration: 'underline', marginTop: '8px', padding: '4px 0', minHeight: '24px', display: 'inline-flex', alignItems: 'center', position: 'relative', zIndex: 10 }}>
             Ler guia completo
           </a>
         )}
@@ -199,7 +203,7 @@ function ToolCard({ tool, index, onLaunch }) {
       >
         <ControlIcon name={tool.icon} size={72} />
       </motion.span>
-    </motion.button>
+    </motion.div>
   );
 }
 
