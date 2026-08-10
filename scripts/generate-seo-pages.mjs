@@ -534,6 +534,7 @@ function renderBlogArticle(article) {
   <meta name="twitter:title" content="${escapeHtml(documentTitle)}">
   <meta name="twitter:description" content="${escapeHtml(article.description)}">
   <meta name="twitter:image" content="${BASE_URL}/og-image.jpg">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5926952327268950" crossorigin="anonymous"></script>
   <script type="application/ld+json">${safeJson(schemas)}</script>
   <style>
     :root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}
@@ -541,12 +542,12 @@ function renderBlogArticle(article) {
     header,main,footer{width:min(820px,calc(100% - 2rem));margin-inline:auto}header{padding:1.1rem 0;display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--line)}header a{text-decoration:none;font-weight:700}
     main{padding:clamp(2rem,6vw,4rem) 0}h1{font-size:clamp(1.8rem,6vw,3rem);line-height:1.1;letter-spacing:-.03em;margin:0 0 1rem}h2{font-size:1.25rem;margin:2rem 0 .7rem}h3{font-size:1.1rem;margin:1.5rem 0 .5rem}
     .editorial-byline{display:flex;gap:.75rem;align-items:center;font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--line)}
-    .cta-group{display:flex;gap:1rem;margin:1.5rem 0;flex-wrap:wrap}
-    .cta{display:inline-flex;padding:.85rem 1.15rem;border-radius:.7rem;background:var(--accent);color:#171006;font-weight:800;text-decoration:none;transition:transform .15s}.cta:hover{transform:scale(1.03)}
-    .cta.secondary{background:var(--surface);color:var(--text);border:1px solid var(--line)}.cta.secondary:hover{border-color:var(--accent)}
+    .cta-group{display:flex;gap:1.5rem;margin:2.5rem 0;flex-wrap:wrap;justify-content:flex-start}
+    .cta{display:inline-flex;padding:1rem 1.4rem;border-radius:.85rem;background:var(--accent);color:#171006;font-weight:800;text-decoration:none;transition:transform .15s, box-shadow .15s}.cta:hover{transform:scale(1.03);box-shadow:0 0 15px rgba(245,158,11,0.4)}
+    .cta.secondary{background:var(--surface);color:var(--text);border:1px solid var(--line)}.cta.secondary:hover{border-color:var(--accent);box-shadow:0 0 15px rgba(255,255,255,0.05)}
     .blog-body p{color:var(--muted);margin:1rem 0}.blog-body h2{color:var(--text)}.blog-body h3{color:var(--text)}.blog-body ul,.blog-body ol{color:var(--muted);padding-left:1.5rem}.blog-body li{margin:.4rem 0}
-    figure{margin:2rem 0}figure img{width:100%;height:auto;border-radius:.8rem;border:1px solid var(--line)}figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:.5rem;font-style:italic}
-    blockquote.abnt-quote{margin:1.5rem 0 1.5rem 4rem;font-size:.9rem;color:var(--muted);border-left:none;padding-left:0}
+    figure{margin:2.5rem 0}figure img{width:100%;height:auto;border-radius:.8rem;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,0.5)}figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:.75rem;font-style:italic}
+    blockquote.abnt-quote{margin:1.5rem 0 1.5rem 2rem;font-size:.95rem;line-height:1.6;color:var(--muted);border-left:3px solid var(--line);padding-left:1.2rem}
     .abnt-references{margin-top:3rem;padding-top:2rem;border-top:2px solid var(--line)}.abnt-references h2{font-size:1.1rem;margin-bottom:1rem}.abnt-references p{font-size:.9rem;line-height:1.5;margin-bottom:.5rem;padding-left:1.5rem;text-indent:-1.5rem}
     section{margin:1.5rem 0;padding:1.4rem;background:var(--surface);border:1px solid var(--line);border-radius:1rem}li,p{color:var(--muted)}.faq dt{font-weight:750;margin-top:1rem;color:var(--text)}.faq dd{color:var(--muted);margin:.25rem 0 0}
     .related-grid{display:grid;gap:.75rem}.related-grid a{display:block;padding:1rem;background:var(--surface);border:1px solid var(--line);border-radius:.75rem;text-decoration:none;transition:border-color .2s}.related-grid a:hover{border-color:var(--accent)}
@@ -613,15 +614,16 @@ function renderBlogIndex() {
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MonitorSmith">
   <meta property="og:image" content="${BASE_URL}/og-image.jpg">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5926952327268950" crossorigin="anonymous"></script>
   <script type="application/ld+json">${safeJson(schema)}</script>
   <style>
     :root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif}a{color:#fbbf24;text-underline-offset:.2em}
     header,main,footer{width:min(960px,calc(100% - 2rem));margin-inline:auto}header{padding:1.1rem 0;display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--line)}header a{text-decoration:none;font-weight:700}
     main{padding:clamp(2rem,6vw,4rem) 0}h1{font-size:clamp(2rem,7vw,3.5rem);line-height:1.04;letter-spacing:-.04em;margin:0 0 .5rem}.subtitle{color:var(--muted);font-size:1.1rem;margin-bottom:2rem}
-    .grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
-    .card{display:block;padding:1.25rem;background:var(--surface);border:1px solid var(--line);border-radius:1rem;text-decoration:none;transition:border-color .2s,transform .15s}.card:hover{border-color:var(--accent);transform:translateY(-2px)}
-    .card h2{font-size:1.05rem;margin:0 0 .5rem;color:var(--text)}.card p{font-size:.9rem;color:var(--muted);margin:0}
+    .grid{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+    .card{display:flex;flex-direction:column;justify-content:center;padding:1.5rem;background:var(--surface);border:1px solid var(--line);border-radius:1.25rem;text-decoration:none;transition:border-color .2s,transform .15s,box-shadow .2s}.card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.4)}
+    .card h2{font-size:1.15rem;line-height:1.3;margin:0 0 .75rem;color:var(--text)}.card p{font-size:.95rem;color:var(--muted);margin:0;line-height:1.6}
     footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:1rem;flex-wrap:wrap}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
   </style>
 </head>
