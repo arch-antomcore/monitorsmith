@@ -13,7 +13,7 @@ export default [
     ],
     body: `
       <h2>Entendendo o Vazamento de Luz (Backlight Bleed)</h2>
-      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <figure><img src="/images/blog/insp_1.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>O <em>Backlight Bleed</em>, ou vazamento de luz, é um fenômeno muito comum em monitores baseados na tecnologia LCD, especialmente naqueles que utilizam iluminação LED nas bordas (Edge-lit) ou até mesmo em painéis Direct-lit com construção inferior. Em termos simples, ocorre quando a luz de fundo que deveria estar contida atrás do painel de cristal líquido consegue "vazar" pelas bordas ou cantos da tela, criando manchas amareladas ou esbranquiçadas, visíveis principalmente ao exibir imagens muito escuras ou pretas em um ambiente com pouca iluminação.</p>
       
       <blockquote class="abnt-quote">
@@ -59,7 +59,7 @@ export default [
     ],
     body: `
       <h2>A Confusão Entre IPS Glow e Backlight Bleed</h2>
-      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <figure><img src="/images/blog/insp_2.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>Para quem busca fidelidade de cores, edição de fotos ou ângulos de visão amplos, os monitores IPS (In-Plane Switching) são a recomendação padrão. Contudo, novos usuários frequentemente se assustam ao ligarem o monitor pela primeira vez e notarem manchas brilhantes nos cantos da tela em imagens escuras, acreditando imediatamente que a unidade está com defeito. O problema é que, muitas vezes, eles não estão vendo vazamento de luz (Backlight Bleed), mas sim o infame <em>IPS Glow</em>.</p>
       
       <p>Diferenciar esses dois fenômenos é essencial antes de iniciar um frustrante processo de RMA ou devolução em plataformas de e-commerce, pois as fabricantes geralmente não aceitam devoluções por IPS Glow padrão, considerando-o uma característica da tecnologia.</p>
@@ -106,7 +106,7 @@ export default [
     ],
     body: `
       <h2>A Revolução e os Riscos da Tecnologia OLED</h2>
-      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <figure><img src="/images/blog/insp_3.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>Comprar um monitor OLED é investir na qualidade de imagem suprema. Com contraste infinito, pretos verdadeiros (já que cada pixel se desliga independentemente) e tempos de resposta na casa dos 0.03ms, esses displays são o sonho de qualquer entusiasta de tecnologia, gamer ou colorista profissional. Contudo, essa tecnologia traz características únicas que exigem cuidados redobrados na hora da aquisição, principalmente no mercado de monitores usados (OLX, fóruns especializados, etc).</p>
       
       <blockquote class="abnt-quote">
@@ -155,7 +155,7 @@ export default [
     ],
     body: `
       <h2>O Papel da Tela Preta na Longevidade do Seu Setup</h2>
-      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <figure><img src="/images/blog/insp_4.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>Historicamente, protetores de tela com animações 3D foram criados para impedir que os antigos monitores CRT (tubo de raios catódicos) sofressem "burn-in" ou marcas de fósforo irreversíveis. Com o advento das telas planas, o foco mudou, mas a preocupação com a longevidade dos painéis permanece, principalmente com o surgimento de monitores e TVs OLED de alto desempenho no ambiente de trabalho e de jogos.</p>
       
       <p>A prática de utilizar uma tela totalmente preta como modo de descanso para o monitor vai muito além de um mero "screensaver". É uma decisão técnica e fisiológica que beneficia tanto a integridade do hardware quanto o bem-estar visual do usuário que passa dezenas de horas na frente de displays brilhantes.</p>
@@ -195,7 +195,7 @@ export default [
     ],
     body: `
       <h2>A Anatomia de um Pixel e as Falhas do Painel</h2>
-      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <figure><img src="/images/blog/insp_5.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <blockquote class="abnt-quote">
         <p>Com as resoluções dos monitores escalando para 4K e além, as telas em nossas mesas abrigam milhões de minúsculos componentes vitais chamados pixels. Para colocar em perspectiva, um monitor 4K (3840 x 2160) contém mais de 8.2 milhões de pixels e, consequentemente, cerca de 25 milhões de subpixels individuais (vermelho, verde e azul). E, estatisticamente, a fabricação perfeita na escala nanométrica e microscópica é um desafio colossal, o que nos leva ao fenômeno dos pixels defeituosos.</p>
       </blockquote>
@@ -240,7 +240,7 @@ export default [
     ],
     body: `
       <h2>O Risco e a Recompensa do Mercado de Usados</h2>
-      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <figure><img src="/images/blog/insp_6.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>Com os altos preços dos hardwares periféricos no Brasil, comprar um monitor gamer ou uma tela profissional de fotografia no mercado de segunda mão — por meio de plataformas como OLX, Mercado Livre ou grupos de Facebook — é uma excelente maneira de economizar. No entanto, o nível de confiança e a capacidade de diagnóstico determinam se a negociação será o negócio do século ou uma gigantesca dor de cabeça. Diferente da CPU ou da memória RAM, onde ou funcionam ou não funcionam, monitores apresentam nuances graduais de desgaste, danos sutis ao painel e anomalias de display que podem passar despercebidas para o olho destreinado.</p>
 
       <h2>O Checklist Supremo de Inspeção Pessoal</h2>
@@ -282,7 +282,7 @@ export default [
     ],
     body: `
       <h2>Compreendendo o Defeito: Morto ou Apenas Preso?</h2>
-      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <figure><img src="/images/blog/insp_7.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>Ao se deparar com uma anomalia em sua tela, o desespero instantâneo frequentemente leva o usuário a descrever qualquer erro como "Meu monitor veio com pixel morto". No entanto, os defeitos de exibição localizados, especialmente aqueles que envolvem um subpixel desobediente, variam consideravelmente no que tange à severidade, distração visual e, mais importante, nas possibilidades de resolução caseira. Diferenciar rigorosamente o estado de um "Pixel Morto" de um "Pixel Preso" (stuck pixel) pode salvar um equipamento ou definir as bases sólidas de um contato com o serviço de garantia do fabricante.</p>
 
       <h2>O Pixel Morto (Dead Pixel)</h2>
@@ -326,7 +326,7 @@ export default [
     ],
     body: `
       <h2>O Vício das Tolerâncias Comerciais</h2>
-      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <figure><img src="/images/blog/insp_8.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <blockquote class="abnt-quote">
         <p>Um dos momentos mais frustrantes na vida de um entusiasta de hardware é investir uma quantia considerável em um monitor moderno de alta resolução e, após ligá-lo ansiosamente pela primeira vez, enxergar aquele maldito e indiscreto pontinho que não muda de cor. É nesse instante amargo que o consumidor descobre que a frase "Garantia de Painel" é um terreno minado de regulamentações, tabelas de exceções e tolerâncias amparadas pelas infames normas ISO da indústria.</p>
       </blockquote>
@@ -370,7 +370,7 @@ export default [
     ],
     body: `
       <h2>Os Inimigos Invisíveis do Revestimento de Tela</h2>
-      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <figure><img src="/images/blog/insp_9.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <blockquote class="abnt-quote">
         <p>A superfície do seu monitor moderno, não importa quão parrudo seja por trás da engenharia ou no tamanho e preço, é composta, surpreendentemente, de polímeros delicadíssimos de película plástica. Seja um painel fosco anti-reflexivo para reduzir a luminosidade do ambiente em estações de trabalho de programação, ou um vidro polarizado vibrante presente no belo visor OLED do modelo top de linha ou tela de MacBook, ela pode ser destruída por métodos descuidados de higienização de dona de casa.</p>
       </blockquote>
@@ -414,7 +414,7 @@ export default [
     ],
     body: `
       <h2>Os Diferentes Tipos de Painéis Exigem Especialidades</h2>
-      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <figure><img src="/images/blog/insp_10.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>Enquanto as regras de ouro básicas de limpeza (fique longe dos agentes químicos corrosivos de cozinha, não abuse de pressões fortes sobre o painel) são regras perpétuas para toda tecnologia moderna de display com matriz ativa e iluminação, não podemos negar que os acabamentos externos (os revestimentos plásticos que a sua mão e sujeiras atingem diariamente) mudam amplamente entre um monitor LCD focado e simples do escritório doméstico, a tampa de cristal incrivelmente robusta em um laptop, ou o display avançado e sem bordas deslumbrante na tecnologia dos painéis Quantum Dot e as películas que emitem imagem orgânica OLED modernas de sala de estar para consumo multimídia.</p>
 
       <h2>O Complexo Revestimento Anti-Reflexo dos Monitores LCD Desktop</h2>
@@ -452,7 +452,7 @@ export default [
     ],
     body: `
       <h2>As Assustadoras E Imperdoáveis Imperfeições da Imagem Perfeita</h2>
-      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <figure><img src="/images/blog/insp_11.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <blockquote class="abnt-quote">
         <p>Manter equipamentos de imagem em perfeito estado no longo ciclo não depende exclusivamente dos métodos meticulosos e cuidadosos da higiene e limpezas regulares programadas e detalhadas nos manuais pesados de fábrica de plásticos com selos oficiais de garantia corporativa e as regras para o uso; falhas ocorrem constantemente por degradação física intrínseca de temperatura do interior do aparelho que queima plásticos, incidentes acidentais ou montagens originais terríveis vindo nas linhas que produzem na escala das toneladas pelas plantas de empresas mundiais da China ou Ásia, gerando defeitos que são categorizados com amplidão visual sob o diagnóstico assustador na categoria das "manchas indefinidas" que destroem a sanidade do desenhista e trabalhador das cores e impressões focadas perfeitas ou calibradores avançados profissionais de cinema nas estações de produção ou consumidores leigos e gamers em suas casas com dor de cabeça pela estética indesejável que invade suas visões nos momentos que importam, desvalorizando o aparelho severamente caso o vendam nos anúncios nas grandes plataformas de comércio.</p>
       </blockquote>
