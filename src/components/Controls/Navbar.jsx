@@ -18,6 +18,7 @@ import SparkleDuotone from '../Icons/SparkleDuotone';
 import SunDimDuotone from '../Icons/SunDimDuotone';
 import TimerDuotone from '../Icons/TimerDuotone';
 import XBold from '../Icons/XBold';
+import ShareNetworkDuotone from '../Icons/ShareNetworkDuotone';
 import { motion } from 'framer-motion';
 import Button from '../UI/Button';
 import { cn } from '../../lib/utils';
@@ -84,6 +85,9 @@ export function ControlIcon({ name, size = 18, title }) {
       break;
     case 'sponsor':
       IconComponent = SlideshowDuotone;
+      break;
+    case 'share':
+      IconComponent = ShareNetworkDuotone;
       break;
     default:
       IconComponent = SparkleDuotone;

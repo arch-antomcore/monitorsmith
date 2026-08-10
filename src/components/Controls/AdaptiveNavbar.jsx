@@ -4,6 +4,7 @@ import BrandLogo from '../UI/BrandLogo';
 import { ControlIcon } from './Navbar';
 import { getModePresentation } from '../../constants/shortcuts';
 import { cn } from '../../lib/utils';
+import { toast } from 'sonner';
 
 const MenuIcon = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" className={className} fill="currentColor">
@@ -115,6 +116,27 @@ export default React.memo(function AdaptiveNavbar({
   const wakeLockLabel = isWakeLockActive ? 'Tela sempre ligada (clique para desativar)' : 'Evitar que a tela apague (Manter tela ligada)';
   const fullscreenLabel = isFullscreen ? 'Sair da tela cheia (Esc ou F)' : 'Ocupar 100% da tela / Tela cheia (F)';
 
+  const handleShare = async () => {
+    const shareData = {
+      title: 'MonitorSmith',
+      text: 'Ferramentas de inspeção visual, iluminação e foco direto no navegador.',
+      url: 'https://monitorsmith.app/'
+    };
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          navigator.clipboard.writeText(shareData.url);
+          toast.success('Link copiado para a área de transferência!');
+        }
+      }
+    } else {
+      navigator.clipboard.writeText(shareData.url);
+      toast.success('Link copiado para a área de transferência!');
+    }
+  };
+
   return (
     <div 
       className="fixed z-50 flex justify-center pointer-events-none transition-opacity duration-300 ease-out"
@@ -199,6 +221,10 @@ export default React.memo(function AdaptiveNavbar({
               <ControlIcon name="help" size={20} />
             </motion.button>
           )}
+
+          <motion.button whileHover={!shouldReduceMotion ? { scale: 1.15, transition: { type: "spring", stiffness: 400, damping: 17 } } : undefined} whileTap={!shouldReduceMotion ? { scale: 0.95 } : undefined} transition={shouldReduceMotion ? { duration: 0.001 } : undefined} variants={itemVariants} onClick={handleShare} aria-label="Compartilhar MonitorSmith" title="Compartilhar com colegas" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2 py-1 flex items-center justify-center">
+            <ControlIcon name="share" size={20} />
+          </motion.button>
         </motion.div>
         
         <div className="!absolute inset-0 flex items-center justify-center pointer-events-none">
