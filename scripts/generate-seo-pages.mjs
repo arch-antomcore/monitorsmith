@@ -10,8 +10,15 @@ import {
   validateToolsRegistry,
 } from '../src/constants/tools.js';
 
+import blogInspection from './blog-articles-inspection.mjs';
+import blogCalibration from './blog-articles-calibration.mjs';
+import blogProductivity from './blog-articles-productivity.mjs';
+
 const BASE_URL = SITE_METADATA.baseUrl;
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
+
+const BLOG_ARTICLES = [...blogInspection, ...blogCalibration, ...blogProductivity];
+const BLOG_SLUG_SET = new Set(BLOG_ARTICLES.map((a) => a.slug));
 
 const EDITORIAL_CONTENT = Object.freeze({
   'black-screen': {
@@ -460,6 +467,164 @@ function renderLegalPage(page) {
   );
 }
 
+function renderBlogArticle(article) {
+  const pageUrl = `${BASE_URL}/blog/${article.slug}/`;
+  const documentTitle = `${article.title} | ${SITE_METADATA.name}`;
+  const breadcrumbId = `${pageUrl}#breadcrumb`;
+  const relatedHtml = (article.relatedSlugs || []).filter((s) => BLOG_SLUG_SET.has(s)).map((s) => {
+    const rel = BLOG_ARTICLES.find((a) => a.slug === s);
+    return rel ? `<li><a href="/blog/${rel.slug}/">${escapeHtml(rel.h1)}</a></li>` : '';
+  }).join('');
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': `${pageUrl}#article`,
+    headline: article.h1,
+    description: article.description,
+    inLanguage: 'pt-BR',
+    datePublished: '2026-08-10',
+    dateModified: SITE_METADATA.contentLastModified,
+    author: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
+    publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
+    mainEntityOfPage: pageUrl,
+  };
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': breadcrumbId,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'MonitorSmith', item: `${BASE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${BASE_URL}/blog/` },
+      { '@type': 'ListItem', position: 3, name: article.h1, item: pageUrl },
+    ],
+  };
+  const faqSchema = article.faq?.length ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: article.faq.map(([question, answer]) => ({
+      '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  } : null;
+  const schemas = [articleSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])];
+  const faqHtml = article.faq?.length ? `<section><h2>Perguntas Frequentes</h2><dl class="faq">${article.faq.map(([q, a]) => `<dt>${escapeHtml(q)}</dt><dd>${escapeHtml(a)}</dd>`).join('')}</dl></section>` : '';
+  return `<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>${escapeHtml(documentTitle)}</title>
+  <meta name="description" content="${escapeHtml(article.description)}">
+  <meta name="theme-color" content="#030304">
+  <meta name="author" content="EXVORN.TECH">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="${pageUrl}">
+  <link rel="icon" href="/logo-transparent.png" type="image/png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta property="og:title" content="${escapeHtml(documentTitle)}">
+  <meta property="og:description" content="${escapeHtml(article.description)}">
+  <meta property="og:url" content="${pageUrl}">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="MonitorSmith">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:image" content="${BASE_URL}/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(documentTitle)}">
+  <meta name="twitter:description" content="${escapeHtml(article.description)}">
+  <meta name="twitter:image" content="${BASE_URL}/og-image.jpg">
+  <script type="application/ld+json">${safeJson(schemas)}</script>
+  <style>
+    :root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif}a{color:#fbbf24;text-underline-offset:.2em}
+    header,main,footer{width:min(820px,calc(100% - 2rem));margin-inline:auto}header{padding:1.1rem 0;display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--line)}header a{text-decoration:none;font-weight:700}
+    main{padding:clamp(2rem,6vw,4rem) 0}h1{font-size:clamp(1.8rem,6vw,3rem);line-height:1.1;letter-spacing:-.03em;margin:0 0 1rem}h2{font-size:1.25rem;margin:2rem 0 .7rem}h3{font-size:1.1rem;margin:1.5rem 0 .5rem}
+    .editorial-byline{display:flex;gap:.75rem;align-items:center;font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--line)}
+    .cta{display:inline-flex;margin:1.5rem 0;padding:.85rem 1.15rem;border-radius:.7rem;background:var(--accent);color:#171006;font-weight:800;text-decoration:none;transition:transform .15s}.cta:hover{transform:scale(1.03)}
+    .blog-body p{color:var(--muted);margin:1rem 0}.blog-body h2{color:var(--text)}.blog-body h3{color:var(--text)}.blog-body ul,.blog-body ol{color:var(--muted);padding-left:1.5rem}.blog-body li{margin:.4rem 0}
+    section{margin:1.5rem 0;padding:1.4rem;background:var(--surface);border:1px solid var(--line);border-radius:1rem}li,p{color:var(--muted)}.faq dt{font-weight:750;margin-top:1rem;color:var(--text)}.faq dd{color:var(--muted);margin:.25rem 0 0}
+    .related-grid{display:grid;gap:.75rem}.related-grid a{display:block;padding:1rem;background:var(--surface);border:1px solid var(--line);border-radius:.75rem;text-decoration:none;transition:border-color .2s}.related-grid a:hover{border-color:var(--accent)}
+    footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:1rem;flex-wrap:wrap}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <header><a href="/">MonitorSmith · EXVORN.TECH</a><a href="/">← Todas as ferramentas</a></header>
+  <main>
+    <h1>${escapeHtml(article.h1)}</h1>
+    <div class="editorial-byline">
+      <span>Por <strong>EXVORN.TECH — Display Analysis</strong></span>
+      <span>•</span>
+      <time datetime="${SITE_METADATA.contentLastModified}">Atualizado em 10 de agosto de 2026</time>
+    </div>
+    <div class="blog-body">${article.body}</div>
+    <a class="cta" href="/?tool=${encodeURIComponent(article.toolId)}">Experimentar Ferramenta →</a>
+    ${faqHtml}
+    ${relatedHtml ? `<section><h2>Leia também</h2><div class="related-grid"><ul>${relatedHtml}</ul></div></section>` : ''}
+  </main>
+  <footer><a href="/">Todas as ferramentas</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a><a href="${SITE_METADATA.contactUrl}">Contato</a></footer>
+</body>
+</html>`;
+}
+
+function renderBlogIndex() {
+  const pageUrl = `${BASE_URL}/blog/`;
+  const documentTitle = `Blog — Guias e Artigos sobre Monitores | ${SITE_METADATA.name}`;
+  const description = 'Artigos técnicos, guias práticos e dicas sobre monitores, displays, calibração, limpeza, produtividade e muito mais.';
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: documentTitle,
+    description,
+    url: pageUrl,
+    inLanguage: 'pt-BR',
+    isPartOf: { '@type': 'WebSite', name: SITE_METADATA.name, url: `${BASE_URL}/` },
+    publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
+  };
+  const cards = BLOG_ARTICLES.map((article) => `<a href="/blog/${article.slug}/" class="card"><h2>${escapeHtml(article.h1)}</h2><p>${escapeHtml(article.description)}</p></a>`).join('');
+  return `<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>${escapeHtml(documentTitle)}</title>
+  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="theme-color" content="#030304">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="${pageUrl}">
+  <link rel="icon" href="/logo-transparent.png" type="image/png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta property="og:title" content="${escapeHtml(documentTitle)}">
+  <meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:url" content="${pageUrl}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MonitorSmith">
+  <meta property="og:image" content="${BASE_URL}/og-image.jpg">
+  <script type="application/ld+json">${safeJson(schema)}</script>
+  <style>
+    :root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif}a{color:#fbbf24;text-underline-offset:.2em}
+    header,main,footer{width:min(960px,calc(100% - 2rem));margin-inline:auto}header{padding:1.1rem 0;display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--line)}header a{text-decoration:none;font-weight:700}
+    main{padding:clamp(2rem,6vw,4rem) 0}h1{font-size:clamp(2rem,7vw,3.5rem);line-height:1.04;letter-spacing:-.04em;margin:0 0 .5rem}.subtitle{color:var(--muted);font-size:1.1rem;margin-bottom:2rem}
+    .grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+    .card{display:block;padding:1.25rem;background:var(--surface);border:1px solid var(--line);border-radius:1rem;text-decoration:none;transition:border-color .2s,transform .15s}.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .card h2{font-size:1.05rem;margin:0 0 .5rem;color:var(--text)}.card p{font-size:.9rem;color:var(--muted);margin:0}
+    footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:1rem;flex-wrap:wrap}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+  </style>
+</head>
+<body>
+  <header><a href="/">MonitorSmith · EXVORN.TECH</a><a href="/">← Todas as ferramentas</a></header>
+  <main>
+    <h1>Blog</h1>
+    <p class="subtitle">Guias técnicos, dicas práticas e artigos sobre monitores, displays e produtividade.</p>
+    <div class="grid">${cards}</div>
+  </main>
+  <footer><a href="/">Todas as ferramentas</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a><a href="${SITE_METADATA.contactUrl}">Contato</a></footer>
+</body>
+</html>`;
+}
+
 function generateManifest() {
   const manifest = {
     id: '/', name: 'MonitorSmith — Ferramentas para Monitores', short_name: 'MonitorSmith',
@@ -570,6 +735,12 @@ function generateSitemap() {
     entries.push({ loc: en, pt, en, lastModified: route.lastModified, priority: '0.7' });
   }
   for (const page of LEGAL_PAGES) entries.push({ loc: `${BASE_URL}/${page.slug}/`, lastModified: SITE_METADATA.contentLastModified, priority: '0.3' });
+  // Blog index
+  entries.push({ loc: `${BASE_URL}/blog/`, lastModified: SITE_METADATA.contentLastModified, priority: '0.7' });
+  // Blog articles
+  for (const article of BLOG_ARTICLES) {
+    entries.push({ loc: `${BASE_URL}/blog/${article.slug}/`, lastModified: SITE_METADATA.contentLastModified, priority: '0.6' });
+  }
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
   for (const entry of entries) {
@@ -604,13 +775,26 @@ async function main() {
       await fs.writeFile(path.join(pageDir, 'index.html'), renderLegalPage(page), 'utf8');
     }
 
+    // Blog: index page
+    const blogDir = path.join(DIST_DIR, 'blog');
+    await fs.mkdir(blogDir, { recursive: true });
+    await fs.writeFile(path.join(blogDir, 'index.html'), renderBlogIndex(), 'utf8');
+
+    // Blog: individual article pages
+    for (const article of BLOG_ARTICLES) {
+      const articleDir = path.join(blogDir, article.slug);
+      await fs.mkdir(articleDir, { recursive: true });
+      await fs.writeFile(path.join(articleDir, 'index.html'), renderBlogArticle(article), 'utf8');
+    }
+
     await fs.writeFile(path.join(DIST_DIR, 'sitemap.xml'), generateSitemap(), 'utf8');
     await fs.writeFile(path.join(DIST_DIR, 'manifest.webmanifest'), generateManifest(), 'utf8');
     await fs.writeFile(path.join(DIST_DIR, 'llms.txt'), generateLlmsText(), 'utf8');
     await fs.writeFile(path.join(DIST_DIR, 'llms-full.txt'), generateLlmsFullText(), 'utf8');
 
-    const urlCount = 1 + (SEO_PAGE_ROUTES.length * 2) + LEGAL_PAGES.length;
-    console.log(`SEO/GEO: ${TOOL_COUNT} ferramentas, ${SEO_PAGE_ROUTES.length * 2} guias localizados e ${urlCount} URLs validadas.`);
+    const blogCount = BLOG_ARTICLES.length;
+    const urlCount = 1 + (SEO_PAGE_ROUTES.length * 2) + LEGAL_PAGES.length + 1 + blogCount;
+    console.log(`SEO/GEO: ${TOOL_COUNT} ferramentas, ${SEO_PAGE_ROUTES.length * 2} guias localizados, ${blogCount} artigos de blog e ${urlCount} URLs validadas.`);
   } catch (error) {
     console.error('Falha na geração SEO/GEO:', error);
     process.exitCode = 1;
