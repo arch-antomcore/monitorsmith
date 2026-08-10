@@ -601,7 +601,7 @@ void main () {
         pressureProgram.uniforms.u_divergence_texture,
         divergence.attach(1)
       );
-      for (let i = 0; i < 16; i++) {
+      for (let i = 0; i < 4; i++) { // Otimizado: era 16
         gl.uniform1i(
           pressureProgram.uniforms.u_pressure_texture,
           pressure.read().attach(2)

@@ -20,10 +20,10 @@ function parseColor(c) {
 }
 
 const SPLAT_FORCE = 6000
-const PRESSURE_ITERATIONS = 20
+const PRESSURE_ITERATIONS = 4 // Otimizado: era 20
 const CURL_STRENGTH = 30
-const SIM_RESOLUTION = 128
-const DYE_RESOLUTION = 1024
+const SIM_RESOLUTION = 64 // Otimizado: era 128
+const DYE_RESOLUTION = 512 // Otimizado: era 1024
 
 const VS = `#version 300 es
 in vec2 a_pos;
