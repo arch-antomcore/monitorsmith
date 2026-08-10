@@ -36,7 +36,7 @@ async function routeExists(route) {
 }
 
 const files = await walk(distDir)
-const htmlFiles = files.filter((file) => file.endsWith('.html'))
+const htmlFiles = files.filter((file) => file.endsWith('.html') && !path.basename(file).startsWith('google'));
 const canonicals = new Map()
 const codeAssets = files.filter((file) => /\.(?:css|js)$/.test(file))
 const assetMetrics = await Promise.all(codeAssets.map(async (file) => {
