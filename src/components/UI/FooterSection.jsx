@@ -242,7 +242,6 @@ export function FooterSection({ onLaunch }) {
             </p>
             <a
               href="/blog/"
-              onClick={(e) => handleToolClick(e, null, '/blog/')}
               className="w-full py-2 px-3 rounded-lg bg-amber-400/10 hover:bg-amber-400 hover:text-black border border-amber-400/20 hover:border-transparent text-amber-400 text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center gap-2 mb-1"
             >
               📚 Acessar o Blog de Artigos
