@@ -80,7 +80,7 @@ describe('baseline de verificação técnica do produto (contrato clínico de qu
 
     // Metadados editoriais e schema TechArticle nos guias
     expect(seoScript).toContain('TechArticle')
-    expect(seoScript).toContain('EXVORN.TECH — Análise Técnica de Displays')
-    expect(seoScript).toContain('Atualizado em 4 de agosto de 2026')
+    expect(seoScript).toContain('EXVORN.TECH — Display Analysis')
+    expect(seoScript).toContain('Atualizado em 10 de agosto de 2026')
   })
 })

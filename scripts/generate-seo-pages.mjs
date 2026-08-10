@@ -417,9 +417,9 @@ function renderToolPage(route, locale) {
   <main>
     <h1>${escapeHtml(metadata.h1)}</h1>
     <div class="editorial-byline">
-      <span>Por <strong>EXVORN.TECH — Análise Técnica de Displays</strong></span>
+      <span>${isEn ? 'By' : 'Por'} <strong>EXVORN.TECH — Display Analysis</strong></span>
       <span>•</span>
-      <time datetime="${SITE_METADATA.contentLastModified}">Atualizado em 4 de agosto de 2026</time>
+      <time datetime="${SITE_METADATA.contentLastModified}">${isEn ? 'Updated August 10, 2026' : 'Atualizado em 10 de agosto de 2026'}</time>
     </div>
     <p class="intro">${escapeHtml(content.intro)}</p>
     <a class="cta" href="/?tool=${encodeURIComponent(route.toolId)}">${labels.open}</a>
@@ -428,10 +428,16 @@ function renderToolPage(route, locale) {
     <section><h2>${labels.when}</h2><ul>${content.uses.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></section>
     <section><h2>${labels.limits}</h2><p>${escapeHtml(content.limitations)}</p></section>
     <section><h2>${labels.faq}</h2><dl class="faq">${content.faq.map(([q, a]) => `<dt>${escapeHtml(q)}</dt><dd>${escapeHtml(a)}</dd>`).join('')}</dl></section>
+    
     <section>
-      <h2>${isEn ? 'References & Evidence' : 'Referências e Evidências'}</h2>
-      <p>${isEn ? 'The information presented on this page is based on our continuous testing of OLED, IPS, VA, and TN panels, as well as industry standards for display quality. Visual phenomena like backlight bleed, IPS glow, and pixel defects are documented across our technical analysis and user reports. For critical decisions, always consult your panel\'s manufacturer.' : 'As informações apresentadas nesta página baseiam-se em nossos testes contínuos de painéis OLED, IPS, VA e TN, além de padrões da indústria para qualidade de imagem. Fenômenos visuais como backlight bleed, IPS glow e defeitos de pixel são documentados em nossa análise técnica e relatos de usuários. Para decisões críticas, sempre consulte o fabricante do seu monitor.'}</p>
+      <h2>${isEn ? 'Technical Methodology & Panel Science' : 'Metodologia Técnica e Ciência dos Painéis'}</h2>
+      <p>${isEn ? 'The evaluation and calibration tools provided by MonitorSmith are grounded in display engineering principles to offer accurate, browser-based visual references. When testing monitors, understanding the underlying panel technology is critical. OLED (Organic Light-Emitting Diode) displays, for instance, excel at absolute black levels because individual pixels can completely power off, virtually eliminating the concept of backlight bleed. However, they remain susceptible to image retention and burn-in, making our screen cleaner and color cycle tools vital for maintenance.' : 'As ferramentas de avaliação e calibração fornecidas pelo MonitorSmith baseiam-se em princípios de engenharia de displays para oferecer referências visuais precisas no navegador. Ao testar monitores, entender a tecnologia do painel subjacente é crítico. Displays OLED (Organic Light-Emitting Diode), por exemplo, se destacam em níveis de preto absolutos porque pixels individuais podem desligar completamente, eliminando praticamente o conceito de vazamento de luz. No entanto, permanecem suscetíveis à retenção de imagem e burn-in, tornando nossas ferramentas de limpeza e ciclo de cores vitais para manutenção.'}</p>
+      
+      <p style="margin-top: 1rem;">${isEn ? 'Conversely, LCD panels (including IPS, VA, and TN variations) rely on a dedicated backlight unit (BLU). This architecture inherently produces phenomena such as IPS glow—a shifting luminescence visible when viewing dark content from off-angles—and edge bleeding, where light escapes from the monitor’s bezel assembly. Our pure black and solid color full-screen utilities isolate these artifacts, allowing users to differentiate between normal technological limitations and manufacturing defects.' : 'Em contrapartida, painéis LCD (incluindo variações IPS, VA e TN) dependem de uma unidade de luz de fundo dedicada (BLU). Essa arquitetura produz inerentemente fenômenos como IPS glow — uma luminescência variável visível ao visualizar conteúdos escuros em ângulos abertos — e vazamento pelas bordas (edge bleeding). Nossos utilitários de tela cheia preta e de cores sólidas isolam esses artefatos, permitindo que usuários diferenciem entre limitações tecnológicas normais e defeitos de fabricação.'}</p>
+      
+      <p style="margin-top: 1rem;">${isEn ? 'For professional workflows, accurate color representation is paramount. While software-based tools cannot replace hardware colorimeters (like X-Rite or Spyder devices), they provide an essential first-line assessment of color banding, gamma tracking, and pixel integrity. We continuously validate these patterns against a wide array of consumer and professional-grade monitors to ensure the patterns scale correctly across different resolutions and aspect ratios without introducing scaling artifacts.' : 'Para fluxos de trabalho profissionais, a representação precisa de cores é fundamental. Embora ferramentas baseadas em software não substituam colorímetros de hardware, elas fornecem uma avaliação essencial de primeira linha de color banding, rastreamento de gama e integridade de pixels. Validamos continuamente esses padrões em uma ampla gama de monitores para garantir que os padrões escalem corretamente em diferentes resoluções e proporções, sem introduzir artefatos de redimensionamento.'}</p>
     </section>
+
     <section><h2>${labels.related}</h2><ul>${related}</ul></section>
   </main>
   <footer><a href="/">${labels.back}</a><a href="/privacidade/">${labels.privacy}</a><a href="/termos/">${labels.terms}</a><a href="${SITE_METADATA.contactUrl}">${labels.contact}</a></footer>

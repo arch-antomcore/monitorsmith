@@ -263,6 +263,9 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
           <p style={{ marginTop: '12px' }}>
             Ideal para quem comprou um monitor novo, quer testar um usado antes de fechar negócio, precisa de uma luz suave para videochamadas, um teleprompter para gravações, ou simplesmente quer um relógio elegante na tela secundária.
           </p>
+          <p style={{ marginTop: '12px' }}>
+            Nossas ferramentas são fundamentadas na engenharia de displays (OLED, IPS, VA e TN). Permitimos que você observe de maneira independente sintomas como retenção de imagem (burn-in), clouding, rastreamento de gama, color banding e defeitos de subpixels. Todas as rotinas visuais operam puramente no lado do cliente (client-side), assegurando privacidade total, preservação dos seus dados locais de cookies e alto desempenho diretamente via APIs web modernas.
+          </p>
         </div>
       </section>
 

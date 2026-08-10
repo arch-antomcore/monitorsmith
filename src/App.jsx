@@ -446,6 +446,8 @@ function DisplaySuite() {
   );
 }
 
+import { ConsentBanner } from './components/UI/ConsentBanner';
+
 export default function App() {
   useEffect(() => {
     // Rely on GSAP's default lag smoothing (500, 33) to prevent stuttering
@@ -456,6 +458,7 @@ export default function App() {
     <MotionConfig reducedMotion="never">
       <ReactLenis root options={{ lerp: 0.08, duration: 1.2, smoothWheel: true, wheelMultiplier: 1.0 }}>
         <DisplaySuite />
+        <ConsentBanner />
       </ReactLenis>
     </MotionConfig>
   );

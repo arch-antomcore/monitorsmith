@@ -40,20 +40,29 @@ export default function AdSenseUnit({
   const isConfigured = isValidClient(DEFAULT_CLIENT) && isValidSlot(resolvedSlot);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('ms_ad_consent');
-      if (saved === 'rejected') {
-        setConsentStatus('denied');
-      } else {
-        setConsentStatus('granted'); // default for now, can be hooked to real CMP
+    const checkConsent = () => {
+      try {
+        const saved = localStorage.getItem('ms_ad_consent');
+        if (saved === 'rejected') {
+          setConsentStatus('denied');
+        } else if (saved === 'granted') {
+          setConsentStatus('granted');
+        } else {
+          setConsentStatus('unknown');
+        }
+      } catch {
+        setConsentStatus('granted');
       }
-    } catch {
-      setConsentStatus('granted');
-    }
+    };
+    checkConsent();
+    
+    const onUpdate = () => checkConsent();
+    window.addEventListener('ms_consent_update', onUpdate);
+    return () => window.removeEventListener('ms_consent_update', onUpdate);
   }, []);
 
   useEffect(() => {
-    if (!isConfigured || consentStatus === 'denied') return undefined;
+    if (!isConfigured || consentStatus !== 'granted') return undefined;
 
     const element = ref.current;
     if (!element) return undefined;
@@ -74,7 +83,7 @@ export default function AdSenseUnit({
   }, [isConfigured, consentStatus]);
 
   useEffect(() => {
-    if (!isConfigured || !isVisible || consentStatus === 'denied' || hasRequestedAdRef.current) return;
+    if (!isConfigured || !isVisible || consentStatus !== 'granted' || hasRequestedAdRef.current) return;
 
     try {
       hasRequestedAdRef.current = true;
@@ -90,7 +99,7 @@ export default function AdSenseUnit({
     }
   }, [isConfigured, isVisible, consentStatus]);
 
-  if (!isConfigured || consentStatus === 'denied') {
+  if (!isConfigured || consentStatus !== 'granted') {
     return null;
   }
 
