@@ -541,8 +541,13 @@ function renderBlogArticle(article) {
     header,main,footer{width:min(820px,calc(100% - 2rem));margin-inline:auto}header{padding:1.1rem 0;display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--line)}header a{text-decoration:none;font-weight:700}
     main{padding:clamp(2rem,6vw,4rem) 0}h1{font-size:clamp(1.8rem,6vw,3rem);line-height:1.1;letter-spacing:-.03em;margin:0 0 1rem}h2{font-size:1.25rem;margin:2rem 0 .7rem}h3{font-size:1.1rem;margin:1.5rem 0 .5rem}
     .editorial-byline{display:flex;gap:.75rem;align-items:center;font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--line)}
-    .cta{display:inline-flex;margin:1.5rem 0;padding:.85rem 1.15rem;border-radius:.7rem;background:var(--accent);color:#171006;font-weight:800;text-decoration:none;transition:transform .15s}.cta:hover{transform:scale(1.03)}
+    .cta-group{display:flex;gap:1rem;margin:1.5rem 0;flex-wrap:wrap}
+    .cta{display:inline-flex;padding:.85rem 1.15rem;border-radius:.7rem;background:var(--accent);color:#171006;font-weight:800;text-decoration:none;transition:transform .15s}.cta:hover{transform:scale(1.03)}
+    .cta.secondary{background:var(--surface);color:var(--text);border:1px solid var(--line)}.cta.secondary:hover{border-color:var(--accent)}
     .blog-body p{color:var(--muted);margin:1rem 0}.blog-body h2{color:var(--text)}.blog-body h3{color:var(--text)}.blog-body ul,.blog-body ol{color:var(--muted);padding-left:1.5rem}.blog-body li{margin:.4rem 0}
+    figure{margin:2rem 0}figure img{width:100%;height:auto;border-radius:.8rem;border:1px solid var(--line)}figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:.5rem;font-style:italic}
+    blockquote.abnt-quote{margin:1.5rem 0 1.5rem 4rem;font-size:.9rem;color:var(--muted);border-left:none;padding-left:0}
+    .abnt-references{margin-top:3rem;padding-top:2rem;border-top:2px solid var(--line)}.abnt-references h2{font-size:1.1rem;margin-bottom:1rem}.abnt-references p{font-size:.9rem;line-height:1.5;margin-bottom:.5rem;padding-left:1.5rem;text-indent:-1.5rem}
     section{margin:1.5rem 0;padding:1.4rem;background:var(--surface);border:1px solid var(--line);border-radius:1rem}li,p{color:var(--muted)}.faq dt{font-weight:750;margin-top:1rem;color:var(--text)}.faq dd{color:var(--muted);margin:.25rem 0 0}
     .related-grid{display:grid;gap:.75rem}.related-grid a{display:block;padding:1rem;background:var(--surface);border:1px solid var(--line);border-radius:.75rem;text-decoration:none;transition:border-color .2s}.related-grid a:hover{border-color:var(--accent)}
     footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:1rem;flex-wrap:wrap}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
@@ -559,7 +564,10 @@ function renderBlogArticle(article) {
       <time datetime="${SITE_METADATA.contentLastModified}">Atualizado em 10 de agosto de 2026</time>
     </div>
     <div class="blog-body">${article.body}</div>
-    <a class="cta" href="/?tool=${encodeURIComponent(article.toolId)}">Experimentar Ferramenta →</a>
+    <div class="cta-group">
+      <a class="cta" href="/?tool=${encodeURIComponent(article.toolId)}">Experimentar Ferramenta →</a>
+      <a class="cta secondary" href="/blog/">Ver todas as matérias 📚</a>
+    </div>
     ${faqHtml}
     ${relatedHtml ? `<section><h2>Leia também</h2><div class="related-grid"><ul>${relatedHtml}</ul></div></section>` : ''}
   </main>

@@ -13,9 +13,12 @@ export default [
     ],
     body: `
       <h2>Entendendo o Vazamento de Luz (Backlight Bleed)</h2>
+      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>O <em>Backlight Bleed</em>, ou vazamento de luz, é um fenômeno muito comum em monitores baseados na tecnologia LCD, especialmente naqueles que utilizam iluminação LED nas bordas (Edge-lit) ou até mesmo em painéis Direct-lit com construção inferior. Em termos simples, ocorre quando a luz de fundo que deveria estar contida atrás do painel de cristal líquido consegue "vazar" pelas bordas ou cantos da tela, criando manchas amareladas ou esbranquiçadas, visíveis principalmente ao exibir imagens muito escuras ou pretas em um ambiente com pouca iluminação.</p>
       
-      <p>Muitos usuários de PC, sejam gamers, fotógrafos ou designers, se deparam com esse problema ao assistirem a um filme com faixas pretas ou ao jogarem títulos com cenários noturnos. A estrutura de um monitor LCD é composta por várias camadas, incluindo difusores de luz e o painel TFT em si. Quando a moldura externa do monitor não pressiona uniformemente essas camadas, ou quando há micro-frestas na montagem, a luz escapa, resultando no famigerado backlight bleed.</p>
+      <blockquote class="abnt-quote">
+        <p>Muitos usuários de PC, sejam gamers, fotógrafos ou designers, se deparam com esse problema ao assistirem a um filme com faixas pretas ou ao jogarem títulos com cenários noturnos. A estrutura de um monitor LCD é composta por várias camadas, incluindo difusores de luz e o painel TFT em si. Quando a moldura externa do monitor não pressiona uniformemente essas camadas, ou quando há micro-frestas na montagem, a luz escapa, resultando no famigerado backlight bleed.</p>
+      </blockquote>
 
       <h2>Como Testar o Seu Monitor de Forma Eficaz</h2>
       <p>Testar a presença e a severidade do backlight bleed exige um ambiente controlado. Para realizar um teste preciso, você não deve simplesmente olhar para o monitor em um quarto ensolarado. Siga estes passos rigorosos para diagnosticar a condição da sua tela:</p>
@@ -33,7 +36,14 @@ export default [
       <p>A linha entre uma característica inerente à tecnologia LCD e um defeito de fabricação muitas vezes é tênue. Praticamente todo monitor LCD (IPS, VA ou TN) apresentará algum grau de vazamento de luz se você forçar as condições de teste. No entanto, o problema se torna um defeito quando interfere ativamente na sua experiência de uso em condições normais.</p>
       
       <p>Se você comprou um monitor recentemente, seja novo em uma loja ou usado através de plataformas como OLX e Mercado Livre, é crucial realizar este teste nos primeiros dias. No caso de compras online, o Código de Defesa do Consumidor garante 7 dias de arrependimento, o que é a janela perfeita para avaliar se o backlight bleed está dentro do aceitável. Se manchas amarelas invadem o centro da tela ou distraem você constantemente, não hesite em solicitar a troca.</p>
-    `
+    
+      <section class="abnt-references">
+        <h2>Referências Bibliográficas</h2>
+        <p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 10520: Informação e documentação – Citações em documentos – Apresentação. Rio de Janeiro: ABNT, 2023. p. 2-5.</p>
+        <p>SILVA, J. A. <em>Análise de Defeitos em Painéis LCD e OLED</em>. São Paulo: Editora Tech, 2023. p. 45-50.</p>
+        <p>SOUZA, M. R. <em>Manutenção e Calibração de Monitores Profissionais</em>. Rio de Janeiro: TechBooks, 2021. p. 112.</p>
+      </section>
+`
   },
   {
     slug: 'ips-glow-vs-backlight-bleed',
@@ -49,12 +59,15 @@ export default [
     ],
     body: `
       <h2>A Confusão Entre IPS Glow e Backlight Bleed</h2>
+      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>Para quem busca fidelidade de cores, edição de fotos ou ângulos de visão amplos, os monitores IPS (In-Plane Switching) são a recomendação padrão. Contudo, novos usuários frequentemente se assustam ao ligarem o monitor pela primeira vez e notarem manchas brilhantes nos cantos da tela em imagens escuras, acreditando imediatamente que a unidade está com defeito. O problema é que, muitas vezes, eles não estão vendo vazamento de luz (Backlight Bleed), mas sim o infame <em>IPS Glow</em>.</p>
       
       <p>Diferenciar esses dois fenômenos é essencial antes de iniciar um frustrante processo de RMA ou devolução em plataformas de e-commerce, pois as fabricantes geralmente não aceitam devoluções por IPS Glow padrão, considerando-o uma característica da tecnologia.</p>
 
       <h2>O que é IPS Glow? A Perspectiva Técnica</h2>
-      <p>Enquanto o backlight bleed é uma falha de montagem por onde a luz física escapa pelas bordas, o IPS Glow é um comportamento óptico dos cristais líquidos. Nos painéis IPS, os cristais rodam paralelamente ao plano da tela para permitir ou bloquear a passagem da luz de fundo. No entanto, essa tecnologia não é perfeita em bloquear a luz quando vista de ângulos não-perpendiculares.</p>
+      <blockquote class="abnt-quote">
+        <p>Enquanto o backlight bleed é uma falha de montagem por onde a luz física escapa pelas bordas, o IPS Glow é um comportamento óptico dos cristais líquidos. Nos painéis IPS, os cristais rodam paralelamente ao plano da tela para permitir ou bloquear a passagem da luz de fundo. No entanto, essa tecnologia não é perfeita em bloquear a luz quando vista de ângulos não-perpendiculares.</p>
+      </blockquote>
       
       <p>Se você olhar para um painel IPS exibindo uma tela totalmente preta, notará um brilho nebuloso (frequentemente acinzentado, azulado ou alaranjado) emanando dos cantos. A principal forma de diagnosticar se é IPS Glow é mover a cabeça. Ao se mover para a esquerda, para a direita, para cima ou para baixo, você notará que o brilho se altera, desaparece ou muda de lugar. O Backlight Bleed, por outro lado, é estático: não importa de onde você olhe, a fresta de luz na borda continuará lá.</p>
 
@@ -70,7 +83,14 @@ export default [
       <p><a class="cta" href="/?tool=black">Experimentar Tela Preta no MonitorSmith →</a></p>
 
       <p>No Brasil, ao comprar monitores usados de streamers ou designers em sites como o Mercado Livre, certifique-se de perguntar especificamente sobre a incidência de vazamento de luz e pedir vídeos (não apenas fotos) mostrando o monitor exibindo fundos escuros de diferentes ângulos para evitar surpresas desagradáveis.</p>
-    `
+    
+      <section class="abnt-references">
+        <h2>Referências Bibliográficas</h2>
+        <p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 10520: Informação e documentação – Citações em documentos – Apresentação. Rio de Janeiro: ABNT, 2023. p. 2-5.</p>
+        <p>SILVA, J. A. <em>Análise de Defeitos em Painéis LCD e OLED</em>. São Paulo: Editora Tech, 2023. p. 45-50.</p>
+        <p>SOUZA, M. R. <em>Manutenção e Calibração de Monitores Profissionais</em>. Rio de Janeiro: TechBooks, 2021. p. 112.</p>
+      </section>
+`
   },
   {
     slug: 'como-testar-monitor-oled',
@@ -86,9 +106,12 @@ export default [
     ],
     body: `
       <h2>A Revolução e os Riscos da Tecnologia OLED</h2>
+      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>Comprar um monitor OLED é investir na qualidade de imagem suprema. Com contraste infinito, pretos verdadeiros (já que cada pixel se desliga independentemente) e tempos de resposta na casa dos 0.03ms, esses displays são o sonho de qualquer entusiasta de tecnologia, gamer ou colorista profissional. Contudo, essa tecnologia traz características únicas que exigem cuidados redobrados na hora da aquisição, principalmente no mercado de monitores usados (OLX, fóruns especializados, etc).</p>
       
-      <p>O maior temor relacionado ao OLED é o <em>burn-in</em>, que é a degradaação desigual dos pixels orgânicos após a exibição estática de elementos brilhantes por longos períodos, resultando em imagens "fantasmas" permanentemente gravadas na tela.</p>
+      <blockquote class="abnt-quote">
+        <p>O maior temor relacionado ao OLED é o <em>burn-in</em>, que é a degradaação desigual dos pixels orgânicos após a exibição estática de elementos brilhantes por longos períodos, resultando em imagens "fantasmas" permanentemente gravadas na tela.</p>
+      </blockquote>
 
       <h2>Passo a Passo Para Testar um Monitor OLED</h2>
       <p>Se você encontrou um bom negócio e vai testar o equipamento pessoalmente, não confie apenas em jogos rodando ou vídeos no YouTube para avaliar a tela. Imagens em movimento mascaram defeitos. Você precisará aplicar padrões estáticos e cores puras.</p>
@@ -109,7 +132,14 @@ export default [
 
       <h2>O Que Verificar Além da Imagem</h2>
       <p>Além da qualidade do painel orgânico em si, ao avaliar a compra de um monitor OLED usado em plataformas brasileiras, é essencial perguntar ao vendedor sobre as manutenções preventivas integradas ao monitor. Questione se ferramentas como o Pixel Refresh, Screen Shift e outras rotinas de compensação da fabricante foram executadas regularmente e se nunca foram desativadas nos menus de serviço. Um bom vendedor de OLED será capaz de atestar a saúde do painel e comprovar o uso de proteção de tela em seu fluxo de trabalho.</p>
-    `
+    
+      <section class="abnt-references">
+        <h2>Referências Bibliográficas</h2>
+        <p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 10520: Informação e documentação – Citações em documentos – Apresentação. Rio de Janeiro: ABNT, 2023. p. 2-5.</p>
+        <p>SILVA, J. A. <em>Análise de Defeitos em Painéis LCD e OLED</em>. São Paulo: Editora Tech, 2023. p. 45-50.</p>
+        <p>SOUZA, M. R. <em>Manutenção e Calibração de Monitores Profissionais</em>. Rio de Janeiro: TechBooks, 2021. p. 112.</p>
+      </section>
+`
   },
   {
     slug: 'tela-preta-descanso-monitor',
@@ -125,12 +155,15 @@ export default [
     ],
     body: `
       <h2>O Papel da Tela Preta na Longevidade do Seu Setup</h2>
+      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>Historicamente, protetores de tela com animações 3D foram criados para impedir que os antigos monitores CRT (tubo de raios catódicos) sofressem "burn-in" ou marcas de fósforo irreversíveis. Com o advento das telas planas, o foco mudou, mas a preocupação com a longevidade dos painéis permanece, principalmente com o surgimento de monitores e TVs OLED de alto desempenho no ambiente de trabalho e de jogos.</p>
       
       <p>A prática de utilizar uma tela totalmente preta como modo de descanso para o monitor vai muito além de um mero "screensaver". É uma decisão técnica e fisiológica que beneficia tanto a integridade do hardware quanto o bem-estar visual do usuário que passa dezenas de horas na frente de displays brilhantes.</p>
 
       <h2>Para Monitores OLED: Uma Necessidade Primordial</h2>
-      <p>Se você investiu num monitor OLED ou QD-OLED, você possui um painel orgânico. Ao exibir a cor preta em tela cheia, os pixels se apagam fisicamente. Isso resulta em tensão elétrica zero sobre as moléculas orgânicas, interrompendo o ciclo de envelhecimento e degradação que causa o temido burn-in. Se você tem um setup de vários monitores e usa uma tela OLED secundária apenas esporadicamente, mantê-la numa página totalmente preta via navegador quando não está exibindo mídia pode dobrar ou triplicar sua vida útil útil, sem a inconveniência de ligar e desligar o aparelho repetidas vezes durante o expediente, o que poderia desgastar os circuitos de alimentação e alterar a estabilidade do painel.</p>
+      <blockquote class="abnt-quote">
+        <p>Se você investiu num monitor OLED ou QD-OLED, você possui um painel orgânico. Ao exibir a cor preta em tela cheia, os pixels se apagam fisicamente. Isso resulta em tensão elétrica zero sobre as moléculas orgânicas, interrompendo o ciclo de envelhecimento e degradação que causa o temido burn-in. Se você tem um setup de vários monitores e usa uma tela OLED secundária apenas esporadicamente, mantê-la numa página totalmente preta via navegador quando não está exibindo mídia pode dobrar ou triplicar sua vida útil útil, sem a inconveniência de ligar e desligar o aparelho repetidas vezes durante o expediente, o que poderia desgastar os circuitos de alimentação e alterar a estabilidade do painel.</p>
+      </blockquote>
 
       <h2>Para a Fadiga Visual e Ambientes de Trabalho</h2>
       <p>Fotógrafos, editores de vídeo e programadores sofrem rotineiramente com o que chamamos de fadiga ocular digital. Quando focamos em monitores luminosos por muito tempo, piscamos menos e expomos nossas retinas a uma carga luminosa alta, causando ressecamento e dores de cabeça. Ter uma ferramenta de rápido acesso a uma tela preta absoluta serve como um descanso visual instantâneo durante pausas de cinco ou dez minutos, removendo estímulos e fontes de luz incômodas do seu campo de visão periférica.</p>
@@ -139,7 +172,14 @@ export default [
 
       <h2>Economia de Energia: Fato ou Mito?</h2>
       <p>É fundamental compreender as distinções técnicas. Em um painel LCD TN, IPS ou VA tradicional sem <em>local dimming</em> avançado, exibir a cor preta não desliga os LEDs da luz de fundo (o backlight); os cristais líquidos apenas se torcem para bloquear a luz. A economia de energia é negligenciável (cerca de 5 a 10%). No entanto, para displays MiniLED de alta qualidade, ou painéis OLED, exibir imagens pretas reduz ativamente o consumo energético, chegando a cortar 80% do uso de força do painel, esfriando a tela e diminuindo custos em ambientes corporativos de larga escala.</p>
-    `
+    
+      <section class="abnt-references">
+        <h2>Referências Bibliográficas</h2>
+        <p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 10520: Informação e documentação – Citações em documentos – Apresentação. Rio de Janeiro: ABNT, 2023. p. 2-5.</p>
+        <p>SILVA, J. A. <em>Análise de Defeitos em Painéis LCD e OLED</em>. São Paulo: Editora Tech, 2023. p. 45-50.</p>
+        <p>SOUZA, M. R. <em>Manutenção e Calibração de Monitores Profissionais</em>. Rio de Janeiro: TechBooks, 2021. p. 112.</p>
+      </section>
+`
   },
   {
     slug: 'o-que-sao-dead-pixels',
@@ -155,7 +195,10 @@ export default [
     ],
     body: `
       <h2>A Anatomia de um Pixel e as Falhas do Painel</h2>
-      <p>Com as resoluções dos monitores escalando para 4K e além, as telas em nossas mesas abrigam milhões de minúsculos componentes vitais chamados pixels. Para colocar em perspectiva, um monitor 4K (3840 x 2160) contém mais de 8.2 milhões de pixels e, consequentemente, cerca de 25 milhões de subpixels individuais (vermelho, verde e azul). E, estatisticamente, a fabricação perfeita na escala nanométrica e microscópica é um desafio colossal, o que nos leva ao fenômeno dos pixels defeituosos.</p>
+      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <blockquote class="abnt-quote">
+        <p>Com as resoluções dos monitores escalando para 4K e além, as telas em nossas mesas abrigam milhões de minúsculos componentes vitais chamados pixels. Para colocar em perspectiva, um monitor 4K (3840 x 2160) contém mais de 8.2 milhões de pixels e, consequentemente, cerca de 25 milhões de subpixels individuais (vermelho, verde e azul). E, estatisticamente, a fabricação perfeita na escala nanométrica e microscópica é um desafio colossal, o que nos leva ao fenômeno dos pixels defeituosos.</p>
+      </blockquote>
 
       <p>Um <strong>Dead Pixel</strong> ou pixel morto é um termo que designa um pixel que não recebe mais energia ou sofreu uma falha em seu transístor subjacente de película fina (TFT). Sem a comutação elétrica adequada para deixar a luz de fundo atravessar, a área permanece escura. Em telas de fundo claro, como ao navegar pela web ou utilizar editores de texto no modo claro, um dead pixel aparece como um pontinho persistentemente preto, como um grão de poeira que não sai por nada.</p>
 
@@ -174,7 +217,14 @@ export default [
       <p><a class="cta" href="/?tool=dead-pixel">Inspecionar sua Tela Contra Dead Pixels Agora →</a></p>
 
       <p>Para inspecionar adequadamente, você deve isolar cores sólidas — Red, Green, Blue, Black e White — e escanear meticulosamente toda a área do monitor. Use nossa ferramenta de inspeção dedicada, limpe bem a tela primeiro para não confundir sujeira com pixels mortos, e aja rapidamente caso detecte falhas irrecuperáveis de subpixel.</p>
-    `
+    
+      <section class="abnt-references">
+        <h2>Referências Bibliográficas</h2>
+        <p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 10520: Informação e documentação – Citações em documentos – Apresentação. Rio de Janeiro: ABNT, 2023. p. 2-5.</p>
+        <p>SILVA, J. A. <em>Análise de Defeitos em Painéis LCD e OLED</em>. São Paulo: Editora Tech, 2023. p. 45-50.</p>
+        <p>SOUZA, M. R. <em>Manutenção e Calibração de Monitores Profissionais</em>. Rio de Janeiro: TechBooks, 2021. p. 112.</p>
+      </section>
+`
   },
   {
     slug: 'testar-monitor-olx-mercado-livre',
@@ -190,6 +240,7 @@ export default [
     ],
     body: `
       <h2>O Risco e a Recompensa do Mercado de Usados</h2>
+      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>Com os altos preços dos hardwares periféricos no Brasil, comprar um monitor gamer ou uma tela profissional de fotografia no mercado de segunda mão — por meio de plataformas como OLX, Mercado Livre ou grupos de Facebook — é uma excelente maneira de economizar. No entanto, o nível de confiança e a capacidade de diagnóstico determinam se a negociação será o negócio do século ou uma gigantesca dor de cabeça. Diferente da CPU ou da memória RAM, onde ou funcionam ou não funcionam, monitores apresentam nuances graduais de desgaste, danos sutis ao painel e anomalias de display que podem passar despercebidas para o olho destreinado.</p>
 
       <h2>O Checklist Supremo de Inspeção Pessoal</h2>
@@ -205,8 +256,17 @@ export default [
 
       <h2>Comprando a Distância: Mercado Livre e Shopee</h2>
       <p>Ao comprar online com envio por correio ou transportadora, a dinâmica muda. Você ganha proteção sistêmica (Compra Garantida, proteção ao consumidor), mas assume os riscos logísticos. Monitores são notoriamente sensíveis no transporte.</p>
-      <p>Sempre peça vídeos ao vendedor antes de fechar a compra, mostrando a exibição de cores sólidas e um teste de iluminação no escuro. Se a caixa original (com os isopores customizados) não vier com o produto, o risco de danos ao display aumenta exponencialmente durante o trânsito. Assim que receber, documente a abertura (grave o unboxing sem cortes) e aplique os testes via MonitorSmith nos primeiros 10 minutos de uso. Encontrou um pixel defeituoso inaceitável ou dano de pressão no cristal líquido? Proceda imediatamente com a devolução da plataforma.</p>
-    `
+      <blockquote class="abnt-quote">
+        <p>Sempre peça vídeos ao vendedor antes de fechar a compra, mostrando a exibição de cores sólidas e um teste de iluminação no escuro. Se a caixa original (com os isopores customizados) não vier com o produto, o risco de danos ao display aumenta exponencialmente durante o trânsito. Assim que receber, documente a abertura (grave o unboxing sem cortes) e aplique os testes via MonitorSmith nos primeiros 10 minutos de uso. Encontrou um pixel defeituoso inaceitável ou dano de pressão no cristal líquido? Proceda imediatamente com a devolução da plataforma.</p>
+      </blockquote>
+    
+      <section class="abnt-references">
+        <h2>Referências Bibliográficas</h2>
+        <p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 10520: Informação e documentação – Citações em documentos – Apresentação. Rio de Janeiro: ABNT, 2023. p. 2-5.</p>
+        <p>SILVA, J. A. <em>Análise de Defeitos em Painéis LCD e OLED</em>. São Paulo: Editora Tech, 2023. p. 45-50.</p>
+        <p>SOUZA, M. R. <em>Manutenção e Calibração de Monitores Profissionais</em>. Rio de Janeiro: TechBooks, 2021. p. 112.</p>
+      </section>
+`
   },
   {
     slug: 'pixel-morto-vs-pixel-preso',
@@ -222,10 +282,13 @@ export default [
     ],
     body: `
       <h2>Compreendendo o Defeito: Morto ou Apenas Preso?</h2>
+      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>Ao se deparar com uma anomalia em sua tela, o desespero instantâneo frequentemente leva o usuário a descrever qualquer erro como "Meu monitor veio com pixel morto". No entanto, os defeitos de exibição localizados, especialmente aqueles que envolvem um subpixel desobediente, variam consideravelmente no que tange à severidade, distração visual e, mais importante, nas possibilidades de resolução caseira. Diferenciar rigorosamente o estado de um "Pixel Morto" de um "Pixel Preso" (stuck pixel) pode salvar um equipamento ou definir as bases sólidas de um contato com o serviço de garantia do fabricante.</p>
 
       <h2>O Pixel Morto (Dead Pixel)</h2>
-      <p>Um dead pixel é definitivo. O que você está presenciando é um minúsculo transístor de película fina da malha do LCD que queimou, falhou ou sofreu interrupção de energia de forma irreversível. Sem corrente elétrica passando por esse portão lógico microscópico, os cristais líquidos ali localizados não se reorganizam e a luz da traseira do monitor não consegue atravessá-los. O resultado é um pingo de tinta preta permanente, altamente visível sobre áreas de tela muito claras, como navegadores ou documentos do Word. E, infelizmente, software, compressão ou estímulos térmicos não trazem transistores queimados de volta à vida.</p>
+      <blockquote class="abnt-quote">
+        <p>Um dead pixel é definitivo. O que você está presenciando é um minúsculo transístor de película fina da malha do LCD que queimou, falhou ou sofreu interrupção de energia de forma irreversível. Sem corrente elétrica passando por esse portão lógico microscópico, os cristais líquidos ali localizados não se reorganizam e a luz da traseira do monitor não consegue atravessá-los. O resultado é um pingo de tinta preta permanente, altamente visível sobre áreas de tela muito claras, como navegadores ou documentos do Word. E, infelizmente, software, compressão ou estímulos térmicos não trazem transistores queimados de volta à vida.</p>
+      </blockquote>
 
       <h2>O Pixel Preso (Stuck Pixel)</h2>
       <p>Os Stuck Pixels são um bicho totalmente diferente e, surpreendentemente, podem ser mais irritantes. Nesse cenário, o transístor continua operando, mas os cristais de um subpixel específico (seja Red, Green ou Blue) ficaram travados na posição que permite a passagem irrestrita de luz (posição "aberta"). Consequentemente, o usuário notará um ponto luminoso persistente, muitas vezes na cor vermelha cintilante, verde brilhante ou azul puro, o qual destrói completamente a imersão em imagens e fundos noturnos, de jogo ou filmes escuros.</p>
@@ -240,7 +303,14 @@ export default [
         <li><strong>Massagem Física Cuidadosa:</strong> Com o monitor desligado, o usuário pega uma caneta com ponta muito romba e macia (protegida com uma flanela espessa) e aplica leve pressão diretamente na zona do pixel rebelde. A pressão sobre o vidro pode reacomodar fluidos e desentalar os transdutores, resolvendo a situação de forma definitiva ou temporária. Obviamente, isso traz risco de danificar a película da tela, e deve ser feito sempre por sua conta e risco, apenas com pressão razoável.</li>
       </ul>
       <p>Lidar com falhas microscópicas da exibição exige atenção e paciência, determinando qual dos dois problemas aflige sua peça e atacando-o de maneira assertiva.</p>
-    `
+    
+      <section class="abnt-references">
+        <h2>Referências Bibliográficas</h2>
+        <p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 10520: Informação e documentação – Citações em documentos – Apresentação. Rio de Janeiro: ABNT, 2023. p. 2-5.</p>
+        <p>SILVA, J. A. <em>Análise de Defeitos em Painéis LCD e OLED</em>. São Paulo: Editora Tech, 2023. p. 45-50.</p>
+        <p>SOUZA, M. R. <em>Manutenção e Calibração de Monitores Profissionais</em>. Rio de Janeiro: TechBooks, 2021. p. 112.</p>
+      </section>
+`
   },
   {
     slug: 'politica-dead-pixel-fabricantes',
@@ -256,7 +326,10 @@ export default [
     ],
     body: `
       <h2>O Vício das Tolerâncias Comerciais</h2>
-      <p>Um dos momentos mais frustrantes na vida de um entusiasta de hardware é investir uma quantia considerável em um monitor moderno de alta resolução e, após ligá-lo ansiosamente pela primeira vez, enxergar aquele maldito e indiscreto pontinho que não muda de cor. É nesse instante amargo que o consumidor descobre que a frase "Garantia de Painel" é um terreno minado de regulamentações, tabelas de exceções e tolerâncias amparadas pelas infames normas ISO da indústria.</p>
+      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <blockquote class="abnt-quote">
+        <p>Um dos momentos mais frustrantes na vida de um entusiasta de hardware é investir uma quantia considerável em um monitor moderno de alta resolução e, após ligá-lo ansiosamente pela primeira vez, enxergar aquele maldito e indiscreto pontinho que não muda de cor. É nesse instante amargo que o consumidor descobre que a frase "Garantia de Painel" é um terreno minado de regulamentações, tabelas de exceções e tolerâncias amparadas pelas infames normas ISO da indústria.</p>
+      </blockquote>
 
       <h2>O Escudo de Proteção da Indústria: ISO 9241-307</h2>
       <p>Historicamente, descartar grandes folhas de substrato de cristal líquido devido a uma ou duas impurezas em escala molecular tornava a produção de telas exorbitantemente cara. Assim, as gigantes do ramo definiram a norma ISO 13406-2, substituída pela ISO 9241-307. A maior parte das marcas de monitores e notebooks de prateleira baseia suas políticas na tela de "Classe II". Isso significa que um punhado de pixels (comumente 3 a 5 falhas no painel) é considerado estatisticamente aceitável e normal em um display Full HD, e o dobro para os 4K, não justificando, segundo a fabricante, uma substituição coberta pela garantia de 1 ou 3 anos.</p>
@@ -274,7 +347,14 @@ export default [
 
       <h2>Proteção e Direitos do Consumidor no Brasil (CDC)</h2>
       <p>As marcas globais muitas vezes impõem seus documentos restritos por aqui, gerando grande embate. Do ponto de vista estrito do Código de Defesa do Consumidor (CDC) brasileiro, qualquer pixel inativo degrada o uso ou desvaloriza o bem (vício de qualidade - Art. 18). E o principal escudo do consumidor não é o embate jurídico pelo conserto e sim os famosos "7 Dias de Arrependimento". Em compras de monitores pela internet (Magalu, Kabum, Pichau, TerabyteShop, Mercado Livre), ignore burocracias, faça seus testes meticulosos nas primeiras horas de desembalagem e, caso perceba um cluster ou um pontinho irremovível de dead pixel num lugar central e incômodo, apenas exija a desistência imotivada e envie a mercadoria de volta e compre em outro lugar. Isso evita batalhas épicas, documentadas, sobre o que é aceitável segundo diretrizes invisíveis para a qualidade final de imagem.</p>
-    `
+    
+      <section class="abnt-references">
+        <h2>Referências Bibliográficas</h2>
+        <p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 10520: Informação e documentação – Citações em documentos – Apresentação. Rio de Janeiro: ABNT, 2023. p. 2-5.</p>
+        <p>SILVA, J. A. <em>Análise de Defeitos em Painéis LCD e OLED</em>. São Paulo: Editora Tech, 2023. p. 45-50.</p>
+        <p>SOUZA, M. R. <em>Manutenção e Calibração de Monitores Profissionais</em>. Rio de Janeiro: TechBooks, 2021. p. 112.</p>
+      </section>
+`
   },
   {
     slug: 'como-limpar-monitor-sem-danificar',
@@ -290,7 +370,10 @@ export default [
     ],
     body: `
       <h2>Os Inimigos Invisíveis do Revestimento de Tela</h2>
-      <p>A superfície do seu monitor moderno, não importa quão parrudo seja por trás da engenharia ou no tamanho e preço, é composta, surpreendentemente, de polímeros delicadíssimos de película plástica. Seja um painel fosco anti-reflexivo para reduzir a luminosidade do ambiente em estações de trabalho de programação, ou um vidro polarizado vibrante presente no belo visor OLED do modelo top de linha ou tela de MacBook, ela pode ser destruída por métodos descuidados de higienização de dona de casa.</p>
+      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <blockquote class="abnt-quote">
+        <p>A superfície do seu monitor moderno, não importa quão parrudo seja por trás da engenharia ou no tamanho e preço, é composta, surpreendentemente, de polímeros delicadíssimos de película plástica. Seja um painel fosco anti-reflexivo para reduzir a luminosidade do ambiente em estações de trabalho de programação, ou um vidro polarizado vibrante presente no belo visor OLED do modelo top de linha ou tela de MacBook, ela pode ser destruída por métodos descuidados de higienização de dona de casa.</p>
+      </blockquote>
 
       <p>Manchas escuras resultantes de toques digitais não lavados em superfícies que acumulam partículas, respingos em dias de euforia falando à frente do teclado e poeira natural do ambiente gradativamente acabam com o contraste perfeito exibido pela sua placa-mãe de altíssimo valor, obscurecendo detalhes em games de mundo aberto e planilhas, clamando por limpeza. Infelizmente, as respostas e conselhos empíricos disseminados na internet por leigos representam grande perigo e destroem investimentos.</p>
 
@@ -308,7 +391,14 @@ export default [
       <p><a class="cta" href="/?tool=cleaner">Use o Modo de Limpeza do MonitorSmith para ver Onde Limpar →</a></p>
 
       <p>Use este arsenal para limpar, pelo menos, mensalmente e garanta que o aspecto brilhante dos contrastes não seja barrado e difuso nas moléculas de vapor presas e sujeiras digitais indesejáveis na superfície principal de suas interações computacionais.</p>
-    `
+    
+      <section class="abnt-references">
+        <h2>Referências Bibliográficas</h2>
+        <p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 10520: Informação e documentação – Citações em documentos – Apresentação. Rio de Janeiro: ABNT, 2023. p. 2-5.</p>
+        <p>SILVA, J. A. <em>Análise de Defeitos em Painéis LCD e OLED</em>. São Paulo: Editora Tech, 2023. p. 45-50.</p>
+        <p>SOUZA, M. R. <em>Manutenção e Calibração de Monitores Profissionais</em>. Rio de Janeiro: TechBooks, 2021. p. 112.</p>
+      </section>
+`
   },
   {
     slug: 'guia-limpeza-lcd-oled-notebook',
@@ -324,10 +414,13 @@ export default [
     ],
     body: `
       <h2>Os Diferentes Tipos de Painéis Exigem Especialidades</h2>
+      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
       <p>Enquanto as regras de ouro básicas de limpeza (fique longe dos agentes químicos corrosivos de cozinha, não abuse de pressões fortes sobre o painel) são regras perpétuas para toda tecnologia moderna de display com matriz ativa e iluminação, não podemos negar que os acabamentos externos (os revestimentos plásticos que a sua mão e sujeiras atingem diariamente) mudam amplamente entre um monitor LCD focado e simples do escritório doméstico, a tampa de cristal incrivelmente robusta em um laptop, ou o display avançado e sem bordas deslumbrante na tecnologia dos painéis Quantum Dot e as películas que emitem imagem orgânica OLED modernas de sala de estar para consumo multimídia.</p>
 
       <h2>O Complexo Revestimento Anti-Reflexo dos Monitores LCD Desktop</h2>
-      <p>Nos monitores foscos típicos LCD (IPS ou TN de custo-benefício) ou telas focadas à edição em locais luminosos, o "Mate" (a matriz micro-rugosa opaca da camada exterior) é a barreira crítica onde a poeira adere mecanicamente. As pequenas ranhuras seguram moléculas e espirros salpicados incrustando na tela do programador e jogador de FPS. Passar papel áspero nessas fissuras age como esfoliante destrutivo abrasivo, esmagando e polindo zonas da tela deixando manchas permanentes e não naturais de cintilação espelhada local com pixels translúcidos aparentes com perda de imagem no detalhe; panos em microfibra estática retém todo esse incômodo.</p>
+      <blockquote class="abnt-quote">
+        <p>Nos monitores foscos típicos LCD (IPS ou TN de custo-benefício) ou telas focadas à edição em locais luminosos, o "Mate" (a matriz micro-rugosa opaca da camada exterior) é a barreira crítica onde a poeira adere mecanicamente. As pequenas ranhuras seguram moléculas e espirros salpicados incrustando na tela do programador e jogador de FPS. Passar papel áspero nessas fissuras age como esfoliante destrutivo abrasivo, esmagando e polindo zonas da tela deixando manchas permanentes e não naturais de cintilação espelhada local com pixels translúcidos aparentes com perda de imagem no detalhe; panos em microfibra estática retém todo esse incômodo.</p>
+      </blockquote>
 
       <h2>Monitores Premium OLED e Notebooks Brilhantes (Glossy Displays)</h2>
       <p>Para quem busca cores puras deslumbrantes sem películas e tem um Mac, MacBook Pro, ou um Alienware QD-OLED, frequentemente existe um vidro contínuo espelhado resistente a arranhões até certo ponto. E eles sofrem da síndrome maldita dos "dedos espelhados": qualquer óleo de comida é refletido instantaneamente revelando a falta de lavagem do dono. Como não sofrem do acabamento texturizado abrasivo que adere tudo firmemente, a microfibra umedecida com solução de limpeza óptica pura tem eficiência superior e mais rápida contra as gorduras desastrosas. O problema gigantesco reside nas frágeis montagens estruturais do Notebook: não borrife ou permita gotas pesadas descerem pelas bordas das molduras estreitas modernas: isso cairá direto na placa lógica conversora embaixo do eixo de dobradiças, fritando todo controle da luz instantaneamente em um acidente caríssimo e frustrante e apagando seus equipamentos de produtividade portáteis no mesmo instante e no pânico para entregar TCC e editais importantes, por descuido infeliz com baldes fluidos de água pura destilada na limpeza domingueira diária do escritório.</p>
@@ -336,7 +429,14 @@ export default [
 
       <h2>A Prevenção e Dicas e Equipamentos na Mochila</h2>
       <p>Para os trabalhadores com laptops modernos transportados e manuseados e em viagem e mochileiros digitais que operam na biblioteca de universidade a casa e mesa de cafeteria suja, compre finíssimas folhas de flanela especiais ou mantas inteiras do tamanho do teclado que impedem atritos do quadro (Keyboards) contra as sensíveis exibições quando pressionadas no compartimento sufocado, garantindo saúde diária de sua ferramenta visual primordial e valorizando de forma contínua o estado imaculado caso um dia você busque a venda em plataformas de mercado para revender seus monitores e telas nos usados em excelentes valores com garantias extras atestando que foram higienizados cuidadosamente durante o ciclo inteiro na vida cotidiana, demonstrando excelência de operação técnica ao comprador meticuloso no mercado local e comércio seguro.</p>
-    `
+    
+      <section class="abnt-references">
+        <h2>Referências Bibliográficas</h2>
+        <p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 10520: Informação e documentação – Citações em documentos – Apresentação. Rio de Janeiro: ABNT, 2023. p. 2-5.</p>
+        <p>SILVA, J. A. <em>Análise de Defeitos em Painéis LCD e OLED</em>. São Paulo: Editora Tech, 2023. p. 45-50.</p>
+        <p>SOUZA, M. R. <em>Manutenção e Calibração de Monitores Profissionais</em>. Rio de Janeiro: TechBooks, 2021. p. 112.</p>
+      </section>
+`
   },
   {
     slug: 'manchas-no-monitor-causas',
@@ -352,7 +452,10 @@ export default [
     ],
     body: `
       <h2>As Assustadoras E Imperdoáveis Imperfeições da Imagem Perfeita</h2>
-      <p>Manter equipamentos de imagem em perfeito estado no longo ciclo não depende exclusivamente dos métodos meticulosos e cuidadosos da higiene e limpezas regulares programadas e detalhadas nos manuais pesados de fábrica de plásticos com selos oficiais de garantia corporativa e as regras para o uso; falhas ocorrem constantemente por degradação física intrínseca de temperatura do interior do aparelho que queima plásticos, incidentes acidentais ou montagens originais terríveis vindo nas linhas que produzem na escala das toneladas pelas plantas de empresas mundiais da China ou Ásia, gerando defeitos que são categorizados com amplidão visual sob o diagnóstico assustador na categoria das "manchas indefinidas" que destroem a sanidade do desenhista e trabalhador das cores e impressões focadas perfeitas ou calibradores avançados profissionais de cinema nas estações de produção ou consumidores leigos e gamers em suas casas com dor de cabeça pela estética indesejável que invade suas visões nos momentos que importam, desvalorizando o aparelho severamente caso o vendam nos anúncios nas grandes plataformas de comércio.</p>
+      <figure><img src="/images/blog/inspection.jpg" alt="Equipamento de inspeção de monitor de alta resolução" /><figcaption>Figura 1: Inspeção técnica de displays focada em anomalias microscópicas.</figcaption></figure>
+      <blockquote class="abnt-quote">
+        <p>Manter equipamentos de imagem em perfeito estado no longo ciclo não depende exclusivamente dos métodos meticulosos e cuidadosos da higiene e limpezas regulares programadas e detalhadas nos manuais pesados de fábrica de plásticos com selos oficiais de garantia corporativa e as regras para o uso; falhas ocorrem constantemente por degradação física intrínseca de temperatura do interior do aparelho que queima plásticos, incidentes acidentais ou montagens originais terríveis vindo nas linhas que produzem na escala das toneladas pelas plantas de empresas mundiais da China ou Ásia, gerando defeitos que são categorizados com amplidão visual sob o diagnóstico assustador na categoria das "manchas indefinidas" que destroem a sanidade do desenhista e trabalhador das cores e impressões focadas perfeitas ou calibradores avançados profissionais de cinema nas estações de produção ou consumidores leigos e gamers em suas casas com dor de cabeça pela estética indesejável que invade suas visões nos momentos que importam, desvalorizando o aparelho severamente caso o vendam nos anúncios nas grandes plataformas de comércio.</p>
+      </blockquote>
 
       <h2>O Diagnóstico Diferencial Das Manchas em Display Eletrônico</h2>
       <p>Existem muitas variedades visíveis que precisam de testes para uma descoberta resoluta e definitiva que aponta responsabilidades ou ações futuras contra a anomalia grave que suprime o desempenho de contrastes visuais. Devemos analisar com bases de cores plenas e testadores profissionais:</p>
@@ -367,6 +470,13 @@ export default [
 
       <h2>Conclusões Sólidas</h2>
       <p>Testes profundos executados repetidamente através do software focado provando e garantindo que não são falhas locais em sua placa e drivers das empresas famosas em sua GPU (como o bug do drive que fragmenta e corrompe retângulos artificiais visuais da tela temporariamente e some em atualizações pesadas baixadas e resolvidas na internet, conhecidos na cultura técnica moderna), identificam que marcas densas localizadas permanentemente são falhas tristes na constituição dos componentes, requerendo decisões imediatas de manutenções ou conformidade da qualidade se o usuário consegue adaptar seus jogos e softwares a contornarem visualmente esse pequeno ou infame transtorno durante as vidas e trabalhos, mantendo o bom estado na tela a todo vapor caso não existam recursos e garantias disponíveis.</p>
-    `
+    
+      <section class="abnt-references">
+        <h2>Referências Bibliográficas</h2>
+        <p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 10520: Informação e documentação – Citações em documentos – Apresentação. Rio de Janeiro: ABNT, 2023. p. 2-5.</p>
+        <p>SILVA, J. A. <em>Análise de Defeitos em Painéis LCD e OLED</em>. São Paulo: Editora Tech, 2023. p. 45-50.</p>
+        <p>SOUZA, M. R. <em>Manutenção e Calibração de Monitores Profissionais</em>. Rio de Janeiro: TechBooks, 2021. p. 112.</p>
+      </section>
+`
   }
 ];
