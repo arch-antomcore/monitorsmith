@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import LiquidHover from './LiquidHover';
 import SpinCursor from './SpinCursor';
 import FlowButton from '../UI/FlowButton';
+import { TOOL_LIBRARY } from '../../constants/tools';
 import '../originkit/hero-11.css';
 
 function asset(file) {
@@ -115,10 +116,14 @@ function CapsuleButton({ onClick, label }) {
   );
 }
 
-export default function HeroSection({ onScrollToTools }) {
-  const eyebrow = "EXVORN.TECH · Inspeção · Iluminação · Foco";
-  const description = "Inspecione pixels, ilumine chamadas, exiba mensagens e organize o foco — direto no navegador.";
-
+export default function HeroSection({ 
+  onScrollToTools,
+  eyebrow = "EXVORN.TECH · Inspeção · Iluminação · Foco",
+  titlePre = "Para usar",
+  titleHighlight = "melhor",
+  titlePost = "seu monitor.",
+  description = "Inspecione pixels, ilumine chamadas, exiba mensagens e organize o foco — direto no navegador."
+}) {
   const { scrollY } = useScroll();
   const yBehind = useTransform(scrollY, [0, 800], [0, 250]);
   const yFront = useTransform(scrollY, [0, 800], [0, -80]);
@@ -142,7 +147,7 @@ export default function HeroSection({ onScrollToTools }) {
         >
           <p className="ok-h11-eyebrow">{keepLastWordsTogether(eyebrow)}</p>
           <h1 className="ok-h11-title" style={{ fontSize: '62px' }}>
-            Para usar <em>melhor</em> seu monitor.
+            {titlePre} <em>{titleHighlight}</em> {titlePost}
           </h1>
         </motion.div>
         
@@ -170,7 +175,7 @@ export default function HeroSection({ onScrollToTools }) {
 
       <aside className="ok-h11-details" aria-label="Service details">
         <div>
-          <p className="ok-h11-detailTitle">11 Ferramentas</p>
+          <p className="ok-h11-detailTitle">{TOOL_LIBRARY.length} Ferramentas</p>
           <p className="ok-h11-detailLabel">Grátis no navegador</p>
         </div>
         <div>
