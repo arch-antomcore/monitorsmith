@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
+import { createPortal } from "react-dom";
 
 const DEFAULT_LABEL_FONT = {
   fontFamily: "Inter, sans-serif",
@@ -98,10 +99,8 @@ export default function SpinCursor({
         inside = false;
         return;
       }
-      const sx = rect.width > 0 ? frameEl.clientWidth / rect.width : 1;
-      const sy = rect.height > 0 ? frameEl.clientHeight / rect.height : 1;
-      targetX = (e.clientX - rect.left) * sx;
-      targetY = (e.clientY - rect.top) * sy;
+      targetX = e.clientX;
+      targetY = e.clientY;
       if (!seen || !inside) {
         x = targetX;
         y = targetY;
@@ -232,6 +231,25 @@ export default function SpinCursor({
     </div>
   ) : null;
 
+  const cursorElement = (
+    <div
+      ref={hostRef}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        zIndex: 99999,
+        transformOrigin: "0 0",
+        opacity: 0,
+        pointerEvents: "none",
+        willChange: "transform",
+        filter: glowFilter,
+      }}
+    >
+      {arrow}
+    </div>
+  );
+
   return (
     <div
       ref={frameRef}
@@ -245,21 +263,7 @@ export default function SpinCursor({
       }}
     >
       {labelNode}
-      <div
-        ref={hostRef}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          transformOrigin: "0 0",
-          opacity: 0,
-          pointerEvents: "none",
-          willChange: "transform",
-          filter: glowFilter,
-        }}
-      >
-        {arrow}
-      </div>
+      {typeof document !== "undefined" ? createPortal(cursorElement, document.body) : null}
     </div>
   );
 }
