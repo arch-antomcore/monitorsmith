@@ -6,7 +6,6 @@ import {
   SEO_PAGE_ROUTES,
   SITE_METADATA,
   TOOL_COUNT,
-  TOOLS_REGISTRY,
   validateToolsRegistry,
 } from '../src/constants/tools.js';
 
