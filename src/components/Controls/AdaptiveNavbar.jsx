@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, useScroll, useMotionValueEvent, useReducedMotion } from 'framer-motion';
-import BrandLogo from '../UI/BrandLogo';
+
 import { ControlIcon } from './Navbar';
 import { getModePresentation } from '../../constants/shortcuts';
 import { cn } from '../../lib/utils';
@@ -175,12 +175,10 @@ export default React.memo(function AdaptiveNavbar({
               title="Voltar às ferramentas (H)"
               aria-label="Voltar às ferramentas"
             >
-              <BrandLogo size={20} className="translate-y-[1px]" />
               <span className="hidden sm:inline-block text-[0.95rem] font-bold tracking-wide">MonitorSmith</span>
             </button>
           ) : (
             <div className="flex items-center gap-2">
-              <BrandLogo size={20} className="translate-y-[1px]" />
               <span className="hidden sm:inline-block text-[0.95rem] font-bold tracking-wide">MonitorSmith</span>
             </div>
           )}

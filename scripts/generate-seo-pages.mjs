@@ -75,35 +75,35 @@ const EDITORIAL_CONTENT = Object.freeze({
   'monitor-test': {
     related: ['display-calibration', 'dead-pixel-test', 'black-screen'],
     pt: {
-      intro: 'Padrões visuais ajudam a observar gradientes, tons, contraste e nitidez antes de ajustes manuais. Eles são renderizados pelo navegador e não constituem medição instrumental.',
-      steps: ['Abra a Verificação Visual em tela cheia.', 'Percorra os padrões sem alterar simultaneamente vários controles do monitor.', 'Registre observações e compare novamente sob a mesma iluminação.'],
-      uses: ['Conferência inicial de um monitor novo.', 'Comparação visual antes e depois de um ajuste manual.'],
-      limitations: 'Escala, zoom, perfil de cor, composição, brilho e iluminação afetam o resultado. Use colorímetro e software apropriado quando fidelidade de cor for requisito.',
-      faq: [['O que é color banding?', 'É a percepção de faixas em uma transição que deveria parecer contínua. O navegador, o conteúdo, o sinal e o painel podem influenciar.'], ['Este teste calibra o monitor?', 'Não. Ele fornece referências visuais; não mede o painel nem cria um perfil ICC.']],
+      intro: 'O Teste de Monitor serve como um checklist de triagem rápida para conferência geral de novos displays ou equipamentos recém-adquiridos. Reúne verificações básicas de geometria, uniformidade geral de cor e resposta do painel.',
+      steps: ['Abra o teste em tela cheia logo após instalar o monitor ou antes de fechar uma compra.', 'Percorra a lista de verificação visual: geometria, uniformidade básica e ausência de distorções evidentes.', 'Anote qualquer inconsistência observada para acionar a garantia ou suporte dentro do prazo legal.'],
+      uses: ['Checklist de triagem e recebimento de monitores novos ou usados.', 'Verificação rápida de integridade geral do display antes de configurações avançadas.'],
+      limitations: 'Este é um teste de triagem visual preliminar para diagnóstico rápido de problemas óbvios. Para análise aprofundada de escala de cinza, curvas de gama e nitidez subpixel, utilize a ferramenta Verificação Visual.',
+      faq: [['Qual a diferença entre o Teste de Monitor e a Verificação Visual?', 'O Teste de Monitor é uma triagem rápida para conferência geral (ideal para compra/recebimento); a Verificação Visual oferece laboratório de padrões técnicos para análise minuciosa de tons e curvas.'], ['Este teste substitui uma assistência técnica?', 'Não. Ele orienta a inspeção humana durante o prazo de devolução ou garantia, sem gerar laudo laboratorial.']],
     },
     en: {
-      intro: 'Visual patterns help you observe gradients, tones, contrast and sharpness before manual adjustments. They are rendered by the browser and are not instrument measurements.',
-      steps: ['Open Visual Check fullscreen.', 'Review patterns without changing several monitor controls at once.', 'Record observations and compare again under the same lighting.'],
-      uses: ['Initial inspection of a new monitor.', 'Visual comparison before and after a manual adjustment.'],
-      limitations: 'Scaling, zoom, color profile, composition, brightness and room lighting affect results. Use a colorimeter and suitable software when color fidelity is required.',
-      faq: [['What is color banding?', 'It is the perception of bands in a transition that should look continuous. Browser, content, signal and panel can all contribute.'], ['Does this test calibrate my monitor?', 'No. It provides visual references; it does not measure the panel or create an ICC profile.']],
+      intro: 'The Monitor Test provides a rapid triage checklist for general inspection of new or recently acquired displays. It aggregates basic checks for geometry, general color uniformity, and panel responsiveness.',
+      steps: ['Open the test fullscreen right after setup or before purchasing a display.', 'Go through the visual checklist: geometry, basic uniformity, and absence of obvious artifacts.', 'Note any inconsistencies to request warranty support within the return window.'],
+      uses: ['Triage checklist when receiving new or used monitors.', 'Quick display health check before advanced software calibration.'],
+      limitations: 'This is a preliminary triage tool designed to spot obvious defects quickly. For granular grayscale ramps, gamma tracking, and subpixel inspection, use the Visual Check tool.',
+      faq: [['What is the difference between Monitor Test and Visual Check?', 'Monitor Test is a rapid triage checklist (great for unboxing/returns); Visual Check is a technical pattern laboratory for evaluating tonal transitions and gamma.'], ['Does this test replace certified repair diagnostics?', 'No. It guides human visual inspection during return windows without producing certified laboratory reports.']],
     },
   },
   'display-calibration': {
     related: ['monitor-test', 'black-screen', 'screen-cleaner'],
     pt: {
-      intro: 'A Verificação Visual reúne referências para sombras, realces, escala de cinza, gradientes, contraste e nitidez. Use-as para observar o comportamento do conjunto navegador–sistema–monitor.',
-      steps: ['Restabeleça um preset conhecido do monitor e estabilize a iluminação do ambiente.', 'Abra um padrão por vez e siga a orientação exibida na ferramenta.', 'Faça ajustes pequenos, compare e retorne ao padrão anterior se perder detalhes.'],
-      uses: ['Identificação de sombras esmagadas ou realces sem detalhe.', 'Comparação visual de dois monitores sob a mesma condição.'],
-      limitations: 'A avaliação é subjetiva. Os padrões não medem gama, luminância, gamut, PWM, resolução física ou taxa de atualização e não substituem instrumentação.',
-      faq: [['Devo alterar brilho ou contraste?', 'Depende do monitor. Consulte o manual, ajuste uma variável por vez e preserve um modo conhecido para comparação.'], ['Posso usar isso em trabalho de cor?', 'Como inspeção preliminar, sim. Para decisões de cor, calibre e perfile o monitor com hardware e software adequados.']],
+      intro: 'A Verificação Visual é um laboratório técnico de padrões de referência: escala de cinza de múltiplos níveis, curvas de gama (2.2 e 2.4), transições de gradiente, nitidez de subpixel (ClearType/font rendering) e contraste dinâmico.',
+      steps: ['Restaure o perfil padrão sRGB do monitor e estabilize a iluminação do ambiente.', 'Analise os padrões de sombra profunda e realce alto para verificar se há detalhes esmagados (crushed shadows) ou estourados (clipped highlights).', 'Examine os padrões de gradiente contínuo e subpixel para avaliar banding e nitidez de renderização.'],
+      uses: ['Avaliação avançada de gradação tonal e rastreamento de gama.', 'Detecção de color banding em gradientes de 8 bits e 10 bits.', 'Verificação de nitidez e alinhamento de subpixels RGB.'],
+      limitations: 'A avaliação visual é subjetiva e depende do perfil de cor do sistema operacional e do navegador. Não gera perfil ICC automatizado nem substitui um colorímetro ou espectrofotômetro dedicado.',
+      faq: [['Como identificar se as sombras estão esmagadas?', 'Nos passos de cinza escuro (0% a 5%), todos os blocos adjacentes devem ser discerníveis do fundo preto absoluto. Se forem indistinguíveis, ajuste o nível de preto ou gama.'], ['Posso usar esta ferramenta para calibração profissional?', 'Serve como excelente referência de validação e verificação antes e depois de calibrar com um sensor de hardware.']],
     },
     en: {
-      intro: 'Visual Check provides references for shadows, highlights, grayscale, gradients, contrast and sharpness. Use them to observe the browser–system–display combination.',
-      steps: ['Restore a known monitor preset and stabilize room lighting.', 'Open one pattern at a time and follow the guidance shown by the tool.', 'Make small adjustments, compare, and return to the previous setting if detail is lost.'],
-      uses: ['Observing crushed shadows or clipped highlights.', 'Visually comparing two displays under the same conditions.'],
-      limitations: 'Evaluation is subjective. Patterns do not measure gamma, luminance, gamut, PWM, physical resolution or refresh rate and do not replace instruments.',
-      faq: [['Should I change brightness or contrast?', 'It depends on the monitor. Read its manual, change one variable at a time, and keep a known preset for comparison.'], ['Can I use this for color work?', 'As a preliminary check, yes. For color decisions, calibrate and profile the monitor with suitable hardware and software.']],
+      intro: 'Visual Check is a technical reference pattern laboratory: multi-step grayscale ramps, gamma curves (2.2 and 2.4), gradient sweeps, subpixel sharpness (ClearType/font rendering), and contrast evaluation.',
+      steps: ['Restore standard sRGB monitor profile and stabilize ambient lighting.', 'Examine deep shadow and high highlight steps to check for crushed shadows or clipped highlights.', 'Inspect continuous gradient sweeps and subpixel targets to assess banding and rendering clarity.'],
+      uses: ['Advanced assessment of tonal gradation and gamma tracking.', 'Detecting color banding across 8-bit and 10-bit gradients.', 'Evaluating sharpness and RGB subpixel font alignment.'],
+      limitations: 'Visual assessment is subjective and depends on operating system color management and browser rendering. It does not generate ICC profiles or replace a hardware colorimeter or spectrophotometer.',
+      faq: [['How do I know if shadows are crushed?', 'On dark gray steps (0% to 5%), each block should remain discernable from pure black. If indistinguishable, adjust black level or gamma.'], ['Can I use this for professional color grading?', 'It serves as a strong validation and verification aid before and after hardware calibration.']],
     },
   },
   'webcam-light': {
@@ -177,35 +177,35 @@ const EDITORIAL_CONTENT = Object.freeze({
   'fullscreen-message': {
     related: ['online-teleprompter', 'fullscreen-clock', 'webcam-light'],
     pt: {
-      intro: 'Crie um aviso curto e legível para recepção, reunião, palco ou comunicação silenciosa. Cores e escala podem ser ajustadas antes de ocultar os controles.',
-      steps: ['Digite uma mensagem curta.', 'Escolha cores com contraste forte e ajuste o tamanho.', 'Abra em fullscreen e posicione a tela para o público.'],
-      uses: ['Aviso de reunião, retorno ou orientação em uma sala.', 'Sinalização temporária em tablet, TV ou monitor.'],
-      limitations: 'Mensagens longas reduzem a legibilidade à distância. O usuário é responsável pelo conteúdo exibido e pelas permissões para uso de marcas ou dados pessoais.',
-      faq: [['A mensagem fica salva?', 'O estado é local à aplicação e pode ser apagado pelo navegador; não use como armazenamento permanente.'], ['O QR é gerado a partir do texto?', 'Quando o modo QR está ativo, o código representa o conteúdo informado. Teste com outro dispositivo antes de exibi-lo ao público.']],
+      intro: 'A ferramenta Mensagem em Tela foi criada para sinalização estática, recados visuais à distância e comunicação em salas de reunião, eventos ou transmissões. Inclui gerador de QR Code dinâmico para compartilhamento rápido.',
+      steps: ['Digite o recado ou URL e selecione cores de alto contraste.', 'Ajuste a escala tipográfica para visualização clara à distância.', 'Ative o modo tela cheia para transformar o monitor em painel de status ou aviso.'],
+      uses: ['Sinalização estática de status de sala de reunião (Ocupado / Livre).', 'Avisos visuais para palcos, recepções e estúdios.', 'Exibição de QR Code para Wi-Fi, links ou contatos.'],
+      limitations: 'Esta ferramenta é voltada para mensagens estáticas e avisos visuais de grande porte. Para leitura de roteiros contínuos em gravação de vídeo, utilize o Teleprompter Online.',
+      faq: [['Como funciona o gerador de QR Code?', 'Ao ativar a opção de QR Code, o texto informado é convertido em um código escaneável diretamente no navegador, sem passar por servidores externos.'], ['A mensagem fica salva?', 'O estado é mantido apenas localmente no navegador enquanto a sessão estiver ativa.']],
     },
     en: {
-      intro: 'Create a short readable notice for reception, meetings, stages or silent communication. Colors and scale can be adjusted before controls are hidden.',
-      steps: ['Enter a short message.', 'Choose high-contrast colors and adjust size.', 'Open fullscreen and position the display for the audience.'],
-      uses: ['Meeting, return-time or room guidance notices.', 'Temporary signage on a tablet, TV or monitor.'],
-      limitations: 'Long messages reduce readability at a distance. The user is responsible for displayed content and permission to use brands or personal data.',
-      faq: [['Is the message permanently saved?', 'State is local to the application and may be cleared by the browser; do not use it as permanent storage.'], ['Is the QR generated from the text?', 'When QR mode is active, the code represents the provided content. Test it with another device before public use.']],
+      intro: 'The Fullscreen Message tool is designed for static signage, large distance notices, and silent communication in meeting rooms, stages, or streams. Includes dynamic QR Code generation for instant sharing.',
+      steps: ['Type your notice or URL and pick high-contrast colors.', 'Adjust typographic scale for clear legibility across the room.', 'Enter fullscreen to turn your display into a clean status or reception board.'],
+      uses: ['Static meeting room status boards (Occupied / Available).', 'Visual cues and notices for stages, receptions, and studios.', 'Displaying high-contrast QR Codes for links or contact info.'],
+      limitations: 'This tool is intended for static signs and large-scale notices. For scrolling speech delivery and mirrored recording setups, use the Online Teleprompter.',
+      faq: [['How does the QR code generator work?', 'When QR mode is toggled, your text is converted into a scannable QR code entirely inside the browser without transmitting data to external servers.'], ['Is my message saved permanently?', 'State is retained locally in your browser session and can be cleared at any time.']],
     },
   },
   'online-teleprompter': {
     related: ['fullscreen-message', 'webcam-light', 'fullscreen-clock'],
     pt: {
-      intro: 'O modo espelhado apresenta texto como apoio simples para gravações com vidro refletor ou leitura próxima à câmera.',
-      steps: ['Cole ou digite o roteiro.', 'Ajuste tamanho, largura e velocidade de rolagem.', 'Ative espelhamento apenas se o equipamento exigir e faça um ensaio.'],
-      uses: ['Gravações de aulas, apresentações e vídeos.', 'Leitura orientada em tablet ou monitor próximo à lente.'],
-      limitations: 'Distância, largura da coluna e posição da câmera influenciam o movimento dos olhos. Faça ensaios; a ferramenta não substitui equipamento dedicado.',
-      faq: [['Preciso instalar um programa?', 'Não. A ferramenta abre no navegador; recursos armazenados pelo PWA podem funcionar offline enquanto o cache existir.'], ['Como reduzir o movimento dos olhos?', 'Use coluna estreita, texto legível e posicione a leitura o mais próximo possível da lente.']],
+      intro: 'O Teleprompter Online é uma ferramenta dinâmica de leitura para gravação de vídeos e discursos. Oferece controle preciso de velocidade de rolagem (palavras por minuto), ajuste de largura de coluna para reduzir o movimento ocular e espelhamento horizontal para uso com vidros semi-refletores (beamsplitter).',
+      steps: ['Cole seu roteiro e ajuste o tamanho da fonte e a largura da coluna de leitura.', 'Defina a velocidade de rolagem compatível com seu ritmo natural de fala.', 'Ative o espelhamento horizontal caso esteja usando uma estrutura com espelho beamsplitter na lente da câmera.'],
+      uses: ['Gravação de videoaulas, apresentações, palestras e vídeos para YouTube.', 'Leitura de roteiros com vidro refletor diante da lente da câmera.', 'Treinamento de oratória com ritmo constante de fala.'],
+      limitations: 'Ao contrário da ferramenta de Mensagem em Tela (que é estática), o teleprompter é dinâmico e requer ensaio prévio para sincronizar o ritmo de fala com a rolagem.',
+      faq: [['Por que usar espelhamento horizontal?', 'Equipamentos de teleprompter profissionais usam um vidro inclinado diante da câmera que inverte a imagem. O espelhamento compensa essa reflexão ótica.'], ['Como evitar que meus olhos pareçam estar lendo?', 'Mantenha a coluna de texto estreita e posicione a tela o mais próximo possível do eixo central da lente da câmera.']],
     },
     en: {
-      intro: 'Mirrored mode presents text as a simple reading aid for recordings with reflector glass or a display near the camera.',
-      steps: ['Paste or type the script.', 'Adjust size, column width and scroll speed.', 'Enable mirroring only when your equipment requires it and rehearse.'],
-      uses: ['Recording lessons, presentations and videos.', 'Guided reading on a tablet or monitor close to the lens.'],
-      limitations: 'Distance, column width and camera position affect eye movement. Rehearse first; this tool does not replace dedicated equipment.',
-      faq: [['Do I need to install a program?', 'No. The tool opens in a browser; PWA-cached resources may work offline while the cache remains available.'], ['How can I reduce visible eye movement?', 'Use a narrow column, readable text and place the reading area as close to the lens as possible.']],
+      intro: 'The Online Teleprompter is a dynamic reading tool for video creators, presenters, and public speakers. It features fine-grained scroll speed control (words per minute), narrow column adjustments to minimize eye movement, and horizontal mirroring for beamsplitter glass setups.',
+      steps: ['Paste your script and adjust font size and column width.', 'Set the scroll speed to match your natural speech cadence.', 'Enable horizontal mirroring if using a beamsplitter glass rig in front of your camera lens.'],
+      uses: ['Recording video courses, keynote presentations, and video content.', 'Reading scripts directly through beamsplitter prompter glass.', 'Public speaking training with timed speech pacing.'],
+      limitations: 'Unlike the static Fullscreen Message tool, the teleprompter is dynamic and benefits from a rehearsal to synchronize speech speed with scroll pace.',
+      faq: [['Why is horizontal mirroring needed?', 'Professional prompter hardware places a reflective glass in front of the lens that flips the image horizontally. Mirroring cancels this optical inversion.'], ['How can I minimize visible eye tracking?', 'Keep the reading column narrow and place the screen as close to the camera lens axis as possible.']],
     },
   },
   'sponsor-loop': {
@@ -231,15 +231,33 @@ const LEGAL_PAGES = Object.freeze([
   {
     slug: 'privacidade',
     title: 'Política de Privacidade — MonitorSmith',
-    description: 'Dados locais, uso de cookies e serviços de terceiros como Google AdSense na operação do MonitorSmith.',
+    description: 'Informações sobre dados locais, uso de cookies e conformidade com fornecedores de terceiros e Google AdSense no MonitorSmith.',
     h1: 'Política de Privacidade',
     sections: [
-      ['Resumo', ['As ferramentas visuais do MonitorSmith executam localmente no seu navegador. Textos, cores e imagens escolhidos dentro das ferramentas não são enviados pela EXVORN.TECH a servidor próprio para processamento.', 'A operação do site envolve infraestrutura de hospedagem e exibição de publicidade de terceiros. Esta página detalha como cookies e dados técnicos são tratados.']],
-      ['Dados no dispositivo', ['Preferências de interface, consentimento e avisos são armazenados localmente no navegador (localStorage). O PWA utiliza cache técnico para funcionamento offline dos recursos visuais.', 'Imagens adicionadas ao Loop de Marcas permanecem exclusivamente na memória da aba aberta e são descartadas ao encerrar o uso.']],
-      ['Google AdSense e cookies de terceiros', ['Fornecedores de terceiros, incluindo o Google AdSense, usam cookies para veicular anúncios com base em visitas anteriores dos usuários a este site ou a outros sites na internet.', 'O uso de cookies de publicidade pelo Google e por seus parceiros permite veicular anúncios para os usuários com base nas visitas feitas a seus sites e/ou a outros sites na internet.', 'Para saber mais sobre como o Google coleta e processa dados em sites parceiros, consulte a página oficial em https://policies.google.com/technologies/partner-sites.']],
-      ['Seus controles e desativação de anúncios', ['Os usuários podem optar por desativar a publicidade personalizada acessando as Configurações de Anúncios do Google (https://www.google.com/settings/ads).', 'Alternativamente, você pode desativar o uso de cookies de publicidade personalizada de fornecedores de terceiros acessando www.aboutads.info ou ajustando a Central de Privacidade na sua região.']],
-      ['Controle e contato sob a LGPD', ['Você pode limpar dados de navegação, cookies e cache nas configurações do seu navegador a qualquer momento.', `Para solicitações relativas a dados sob responsabilidade direta da EXVORN.TECH sob a LGPD, utilize o canal institucional publicado em ${SITE_METADATA.contactUrl}.`]],
-      ['Atualizações', [`Última atualização: ${SITE_METADATA.contentLastModified}. Alterações materiais serão refletidas nesta página.`]],
+      ['1. Resumo e Operação Local', [
+        'O MonitorSmith reúne utilitários e superfícies visuais para monitores desenvolvidos pela EXVORN.TECH. As ferramentas executam inteiramente no navegador do usuário: textos, cores, temporizadores e imagens importadas são processados localmente no seu dispositivo e nunca são enviados a servidores próprios para armazenamento ou perfilamento.',
+        'A operação do site envolve infraestrutura de hospedagem e exibição de publicidade de terceiros. Esta política descreve o tratamento de dados técnicos, cookies e as opções de controle disponíveis.',
+      ]],
+      ['2. Dados Armazenados no Dispositivo', [
+        'O navegador pode utilizar recursos locais como localStorage, Cache Storage e Service Worker exclusivamente para salvar tema visual, preferências de interface e arquivos necessários ao funcionamento offline do Progressive Web App (PWA).',
+        'Imagens adicionadas ao Loop de Marcas permanecem apenas na memória temporária da aba aberta e são automaticamente descartadas ao encerrar ou recarregar a ferramenta. O usuário pode limpar dados de navegação, cookies e cache a qualquer momento nas configurações do seu navegador.',
+      ]],
+      ['3. Fornecedores de Terceiros e Google AdSense', [
+        'Fornecedores de terceiros, incluindo o Google, utilizam cookies para veicular anúncios com base em visitas anteriores dos usuários a este site ou a outros sites na internet.',
+        'O uso de cookies de publicidade pelo Google e por seus parceiros permite veicular anúncios para os usuários com base nas visitas feitas ao MonitorSmith e/ou a outros sites na internet.',
+        'Para entender detalhadamente como o Google coleta e processa dados ao utilizar sites parceiros, consulte a documentação oficial em https://policies.google.com/technologies/partner-sites.',
+      ]],
+      ['4. Seus Controles e Desativação de Anúncios', [
+        'Os usuários podem optar por desativar a publicidade personalizada acessando as Configurações de Anúncios do Google em https://www.google.com/settings/ads.',
+        'Alternativamente, você pode desativar o uso de cookies de publicidade personalizada de terceiros acessando www.aboutads.info ou ajustando os controles de privacidade do seu navegador ou região.',
+      ]],
+      ['5. Direitos sob a LGPD e Contato', [
+        'Como as ferramentas operam no modelo client-side sem cadastro obrigatório, nenhuma informação pessoal identificável é mantida em bases de dados da EXVORN.TECH.',
+        `Para esclarecimentos sobre privacidade, solicitações institucionais ou exercício de direitos sob a Lei Geral de Proteção de Dados (LGPD), utilize o canal institucional em ${SITE_METADATA.contactUrl}.`,
+      ]],
+      ['6. Atualizações desta Política', [
+        `Esta política foi revisada em 10 de agosto de 2026 e reflete a operação atual da plataforma. Alterações materiais serão publicadas nesta mesma URL.`,
+      ]],
     ],
   },
   {
@@ -248,11 +266,11 @@ const LEGAL_PAGES = Object.freeze([
     description: 'Condições e limitações de uso das ferramentas visuais do MonitorSmith.',
     h1: 'Termos de Uso',
     sections: [
-      ['Uso', ['O MonitorSmith fornece superfícies, padrões visuais e utilitários executados no navegador. O uso é voluntário e deve respeitar leis, direitos de terceiros e orientações do fabricante.', 'Não use o produto para conteúdo ilícito, violação de direitos, comprometimento do site ou para apresentar uma inspeção visual como laudo técnico.']],
-      ['Limites técnicos', ['Os resultados são observacionais. O MonitorSmith não mede diretamente eletrônica do painel, não certifica resolução, taxa de atualização, fidelidade de cor, cabo, GPU ou ausência de defeitos.', 'Navegador, sistema, escala, gerenciamento de cor, brilho, iluminação e percepção influenciam o resultado. Use instrumentos e assistência qualificada em decisões relevantes.']],
-      ['Segurança', ['Interrompa o uso se luz, contraste, som ou movimento causarem desconforto. Siga as orientações de limpeza e ergonomia do fabricante.', 'Fullscreen, Wake Lock, áudio, instalação e offline dependem de suporte, permissão e políticas do navegador.']],
-      ['Conteúdo e direitos', ['Você é responsável por imagens, marcas e mensagens inseridas e deve ter autorização para exibi-las.', 'Marca, identidade, interface e conteúdo editorial pertencem aos respectivos titulares. Permissões não concedidas expressamente permanecem reservadas.']],
-      ['Terceiros e contato', ['Links, anúncios e serviços externos seguem os termos dos fornecedores. O produto pode ser atualizado ou interrompido por segurança e evolução.', `Revisão de ${SITE_METADATA.contentLastModified}. O contato institucional está em ${SITE_METADATA.contactUrl}. Estes termos devem receber revisão jurídica periódica.`]],
+      ['1. Uso do Serviço', ['O MonitorSmith fornece superfícies, padrões visuais e utilitários executados no navegador. O uso é gratuito e voluntário, devendo respeitar a legislação aplicável, os direitos de terceiros e as orientações dos fabricantes de monitores.', 'Não utilize o serviço para disseminar conteúdo ilícito, tentar violar medidas de segurança ou apresentar uma inspeção visual simples como laudo pericial ou certificação técnica formal.']],
+      ['2. Limites Técnicos e Operacionais', ['Os padrões visuais oferecem apoio à observação humana. O MonitorSmith não mede diretamente parâmetros elétricos de painéis, não substitui colorímetros de hardware e não garante identificação exata de causas de defeitos.', 'Fatores como gerenciamento de cor do sistema operacional, renderização do navegador, ângulo de visão, iluminação ambiente e brilho influenciam o que é visualizado.']],
+      ['3. Ergonomia e Segurança', ['Interrompa o uso imediatamente caso luzes, contrastes ou frequências visuais causem desconforto ou fadiga ocular.', 'Para limpeza física de telas, siga sempre o manual do fabricante do monitor, utilizando panos de microfibra limpos e sem aplicar líquidos diretamente sobre os circuitos ou painel.']],
+      ['4. Propriedade Intelectual e Conteúdo', ['A marca MonitorSmith, a identidade visual e o código-fonte pertencem à EXVORN.TECH.', 'O usuário é o único responsável pelas imagens e textos que carregar localmente na aplicação, declarando possuir os direitos necessários para sua exibição.']],
+      ['5. Contato e Vigência', [`Revisão vigente desde 10 de agosto de 2026. Para dúvidas e contato institucional, acesse ${SITE_METADATA.contactUrl}.`]],
     ],
   },
 ]);
@@ -385,9 +403,10 @@ function renderToolPage(route, locale) {
   <link rel="alternate" hreflang="pt-BR" href="${ptUrl}">
   <link rel="alternate" hreflang="en" href="${enUrl}">
   <link rel="alternate" hreflang="x-default" href="${ptUrl}">
-  <link rel="icon" href="/logo-transparent.png" type="image/png">
+  <link rel="icon" href="/logo.png" type="image/png">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="describedby" href="/llms.txt" type="text/markdown">
   <meta property="og:title" content="${escapeHtml(documentTitle)}">
   <meta property="og:description" content="${escapeHtml(metadata.description)}">
   <meta property="og:url" content="${pageUrl}">
@@ -453,18 +472,23 @@ function renderToolPage(route, locale) {
   return html;
 }
 
+function formatLegalParagraph(paragraph) {
+  const escaped = escapeHtml(paragraph);
+  return escaped.replace(/(https?:\/\/[^\s)]+|www\.[^\s)]+)/g, (url) => {
+    const href = url.startsWith('http') ? url : `https://${url}`;
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  });
+}
+
 function renderLegalPage(page) {
   const url = `${BASE_URL}/${page.slug}/`;
   const schema = { '@context': 'https://schema.org', '@type': 'WebPage', name: page.title, description: page.description, url, inLanguage: 'pt-BR', dateModified: SITE_METADATA.contentLastModified, isPartOf: { '@type': 'WebSite', name: SITE_METADATA.name, url: `${BASE_URL}/` }, publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' } };
-  const sections = page.sections.map(([heading, paragraphs]) => `<section><h2>${escapeHtml(heading)}</h2>${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</section>`).join('');
+  const sections = page.sections.map(([heading, paragraphs]) => `<section><h2>${escapeHtml(heading)}</h2>${paragraphs.map((paragraph) => `<p>${formatLegalParagraph(paragraph)}</p>`).join('')}</section>`).join('');
   const html = `<!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(page.title)}</title><meta name="description" content="${escapeHtml(page.description)}"><meta name="theme-color" content="#030304"><meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1"><link rel="canonical" href="${url}"><link rel="alternate" hreflang="pt-BR" href="${url}"><link rel="alternate" hreflang="x-default" href="${url}"><link rel="icon" href="/logo-transparent.png" type="image/png"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta property="og:title" content="${escapeHtml(page.title)}"><meta property="og:description" content="${escapeHtml(page.description)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website"><meta property="og:site_name" content="MonitorSmith"><meta property="og:locale" content="pt_BR"><meta property="og:image" content="${BASE_URL}/og-image.jpg"><meta property="og:image:secure_url" content="${BASE_URL}/og-image.jpg"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="MonitorSmith — informações legais e de privacidade"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(page.title)}"><meta name="twitter:description" content="${escapeHtml(page.description)}"><meta name="twitter:image" content="${BASE_URL}/og-image.jpg"><meta name="twitter:image:alt" content="MonitorSmith — informações legais e de privacidade"><script type="application/ld+json">${safeJson(schema)}</script>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>${escapeHtml(page.title)}</title><meta name="description" content="${escapeHtml(page.description)}"><meta name="theme-color" content="#030304"><meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1"><link rel="canonical" href="${url}"><link rel="alternate" hreflang="pt-BR" href="${url}"><link rel="alternate" hreflang="x-default" href="${url}"><link rel="icon" href="/logo.png" type="image/png"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><link rel="describedby" href="/llms.txt" type="text/markdown"><meta property="og:title" content="${escapeHtml(page.title)}"><meta property="og:description" content="${escapeHtml(page.description)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website"><meta property="og:site_name" content="MonitorSmith"><meta property="og:locale" content="pt_BR"><meta property="og:image" content="${BASE_URL}/og-image.jpg"><meta property="og:image:secure_url" content="${BASE_URL}/og-image.jpg"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="MonitorSmith — informações legais e de privacidade"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(page.title)}"><meta name="twitter:description" content="${escapeHtml(page.description)}"><meta name="twitter:image" content="${BASE_URL}/og-image.jpg"><meta name="twitter:image:alt" content="MonitorSmith — informações legais e de privacidade"><script type="application/ld+json">${safeJson(schema)}</script>
 <style>:root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif}header,main,footer{width:min(760px,calc(100% - 2rem));margin-inline:auto}header{padding:1.2rem 0;border-bottom:1px solid var(--line)}a{color:#fbbf24;text-underline-offset:.2em}header a{color:var(--text);font-weight:750;text-decoration:none}main{padding:3rem 0}h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1;letter-spacing:-.035em}h2{font-size:1.2rem;margin:2.2rem 0 .5rem}p{color:var(--muted)}.notice{padding:1rem;background:var(--surface);border:1px solid var(--line);border-radius:.8rem}footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:1rem;flex-wrap:wrap}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}</style></head>
 <body><header><a href="/">MonitorSmith · EXVORN.TECH</a></header><main><h1>${escapeHtml(page.h1)}</h1><p class="notice">Este documento descreve a operação atual do MonitorSmith. Em caso de dúvida, entre em contato antes de continuar o uso.</p>${sections}</main><footer><a href="/">Todas as ferramentas</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a><a href="${SITE_METADATA.contactUrl}">Contato</a></footer></body></html>`;
-  return html.replace(
-    'content="width=device-width,initial-scale=1"',
-    'content="width=device-width,initial-scale=1,viewport-fit=cover"',
-  );
+  return html;
 }
 
 function renderBlogArticle(article) {
@@ -661,86 +685,141 @@ function generateManifest() {
 }
 
 function generateLlmsText() {
-  const tools = TOOLS_REGISTRY.map((tool) => `- **${tool.heroTitle || tool.title}:** ${tool.description} ${tool.when}`).join('\n');
-  const routes = SEO_PAGE_ROUTES.flatMap((route) => [`- ${route.pt.title}: ${BASE_URL}/${route.pt.slug}/`, `- ${route.en.title}: ${BASE_URL}/en/${route.en.slug}/`]).join('\n');
   return `# MonitorSmith
 
-> MonitorSmith é uma suíte de ${TOOL_COUNT} ferramentas web da EXVORN.TECH para inspeção visual de monitores, superfícies de cor, iluminação de apoio e telas secundárias.
+> MonitorSmith é uma suíte web gratuita de ferramentas visuais para monitores: inspeção de pixels, teste de vazamento de luz, iluminação de apoio, chroma key, timer de foco e mais. Funciona no navegador, sem cadastro. Desenvolvido pela EXVORN.TECH.
 
-## Informações oficiais
-- Site: ${BASE_URL}/
-- Empresa: EXVORN.TECH — https://exvorn.tech/
-- Contato institucional: ${SITE_METADATA.contactUrl}
-- Uso gratuito, sem cadastro obrigatório.
+- URL: ${BASE_URL}
+- Idioma principal: pt-BR
+- Instalável como PWA para uso offline
+- Todas as ferramentas processam dados localmente no dispositivo
 
-## Ferramentas
-${tools}
+## Ferramentas de inspeção
 
-## Metodologia e limites
-- Superfícies e padrões são renderizados pelo navegador e servem para observação visual.
-- O MonitorSmith não mede diretamente hardware, não certifica painéis e não substitui colorímetro, osciloscópio, câmera de alta velocidade ou assistência técnica.
-- Resultado varia com navegador, escala, gerenciamento de cor, composição, brilho, iluminação e percepção.
-- Fullscreen, Wake Lock, áudio, instalação e offline dependem de suporte e permissão do navegador.
-- Tela preta não elimina risco de retenção ou burn-in e não substitui proteções do fabricante.
+- [Tela Preta OLED](${BASE_URL}/tela-preta-oled/): Superfície preta (#000000) em tela cheia para inspecionar IPS glow, pixels claros e vazamento de luz (backlight bleed) em ambiente escuro.
+- [Teste de Dead Pixel](${BASE_URL}/teste-de-dead-pixel/): 8 cores sólidas em tela cheia para identificar dead pixels, pixels presos e pontos luminosos.
+- [Inspeção para Limpeza](${BASE_URL}/limpeza-de-monitor/): Fundos de alto contraste que revelam poeira, marcas de dedo e manchas no painel antes da limpeza.
+- [Verificação Visual de Display](${BASE_URL}/teste-de-monitor/): Padrões de referência para observar contraste, escala de cinza, gradientes, nitidez e uniformidade.
 
-## Guias indexáveis
-${routes}
+## Ferramentas de iluminação e cor
 
-## Políticas
-- ${BASE_URL}/privacidade/
-- ${BASE_URL}/termos/
+- [Luz para Videochamada](${BASE_URL}/luz-para-videochamada/): Superfície clara com temperatura e intensidade ajustáveis para usar o monitor como luz de apoio em chamadas e gravações.
+- [Tela Verde para Chroma Key](${BASE_URL}/tela-verde-chroma/): Fundo verde #00B140 em tela cheia para composições de foto e vídeo.
 
-Última revisão editorial: ${SITE_METADATA.contentLastModified}
+## Ferramentas de produtividade
+
+- [Timer de Foco](${BASE_URL}/timer-de-foco/): Timer em tela cheia para ciclos de concentração com presets de tempo e sons ambientes opcionais.
+- [Relógio em Tela Cheia](${BASE_URL}/relogio-em-tela-cheia/): Hora e data em formatos digital e analógico para tela secundária.
+- [Teleprompter Online](${BASE_URL}/teleprompter-online/): Texto em tela cheia com espelhamento horizontal para gravações e apresentações.
+- [Loop de Marcas](${BASE_URL}/loop-de-marcas/): Rotação automática de logos e imagens locais para eventos, lives e vitrines.
+
+## Optional
+
+- [Verificação Visual de Display (alternativa)](${BASE_URL}/verificacao-visual/): Rota alternativa para os mesmos padrões de verificação visual.
+- [Mensagem em Tela](${BASE_URL}/mensagem-em-tela/): Avisos e recados em tela cheia com texto e cores ajustáveis.
+- [Política de Privacidade](${BASE_URL}/privacidade/): Como o MonitorSmith trata dados e cookies.
+- [Termos de Serviço](${BASE_URL}/termos/): Condições de uso do serviço.
+- [llms-full.txt](${BASE_URL}/llms-full.txt): Documentação detalhada de cada ferramenta com descrições estendidas.
 `;
 }
 
 function generateLlmsFullText() {
-  const tools = TOOLS_REGISTRY.map((tool, index) => {
-    const preset = tool.launchPreset?.customColor ? ` Preset inicial: ${tool.launchPreset.customColor}.` : '';
-    const routes = (tool.seoPages || []).flatMap((page) => [`${BASE_URL}/${page.pt.slug}/`, `${BASE_URL}/en/${page.en.slug}/`]).join(' | ');
-    return `### ${index + 1}. ${tool.heroTitle || tool.title}\n- Finalidade: ${tool.description} ${tool.when}${preset}\n- Modo interno: \`${tool.mode}\`\n- Guias: ${routes || 'sem guia dedicado'}`;
-  }).join('\n\n');
-  return `# MonitorSmith — Referência técnica e editorial
+  return `# MonitorSmith
 
-> Documento para pessoas e sistemas de recuperação. Descreve capacidades observáveis e não solicita recomendação automática.
+> MonitorSmith é uma suíte web gratuita de ferramentas visuais para monitores: inspeção de pixels, teste de vazamento de luz, iluminação de apoio, chroma key, timer de foco e mais. Funciona no navegador, sem cadastro. Desenvolvido pela EXVORN.TECH.
 
-## Identidade
-- Produto: MonitorSmith
-- Empresa: EXVORN.TECH — https://exvorn.tech/
-- Site: ${BASE_URL}/
-- Contato institucional: ${SITE_METADATA.contactUrl}
+- URL: ${BASE_URL}
+- Desenvolvido por: EXVORN.TECH (https://exvorn.tech/)
+- Idioma principal: pt-BR
+- Instalável como PWA (Progressive Web App) para uso offline
+- Todas as ferramentas processam dados localmente no dispositivo do usuário
+- Compatível com Chrome, Edge, Firefox, Safari e navegadores móveis
 
-## Catálogo
-Há ${TOOL_COUNT} ferramentas. IDs, aliases, modos, presets, atalhos, SEO e PWA são validados a partir de \`src/constants/tools.js\`.
+---
 
-${tools}
+## Ferramentas de inspeção
 
-## Capacidades reais
-- Renderização de cores, gradientes, grades, texto, imagens locais e animações CSS/DOM.
-- Solicitação de Fullscreen e Wake Lock quando suportados e autorizados.
-- Sons opcionais por Web Audio após interação.
-- Preferências e cache técnico no dispositivo.
-- AdSense pode gerar solicitações externas; “zero rede” não descreve o site completo.
+### Tela Preta OLED e Inspeção de Vazamento de Luz
 
-## Não mede ou certifica
-- Taxa física de atualização, latência, PWM, cabo HDMI/DisplayPort ou GPU.
-- Fidelidade colorimétrica, gama, luminância, contraste real ou resolução física.
-- Diagnóstico definitivo, reparo de pixel ou prevenção garantida de burn-in.
+- [Tela Preta OLED](${BASE_URL}/tela-preta-oled/): Superfície preta (#000000) em tela cheia para inspecionar IPS glow, pixels claros e vazamento de luz (backlight bleed) em ambiente escuro.
 
-## Interpretação
-- \`requestAnimationFrame\` observa a cadência do navegador, não certifica a taxa do painel.
-- Pixel CSS não equivale necessariamente a pixel físico por causa de zoom, escala e densidade.
-- Padrões são aproximações renderizadas, não sinais laboratoriais normativos.
-- A tela verde declara sRGB \`#00B140\`; câmera, brilho, perfil e ambiente alteram a captura.
+Preenche a tela com preto absoluto. Em painéis OLED, reduz a emissão de luz. Em LCDs (IPS, VA, TN), permite observar vazamento de luz nas bordas e cantos. Atalho de teclado: B.
 
-## Segurança e privacidade
-- Interrompa se luz, som, contraste ou movimento causarem desconforto.
-- Siga o fabricante ao limpar o equipamento.
-- Conteúdo das ferramentas é local; publicidade e hospedagem podem gerar rede.
-- ${BASE_URL}/privacidade/
-- ${BASE_URL}/termos/
+### Teste de Dead Pixel Online
 
-Última revisão editorial: ${SITE_METADATA.contentLastModified}
+- [Teste de Dead Pixel](${BASE_URL}/teste-de-dead-pixel/): 8 cores sólidas em tela cheia para identificar visualmente dead pixels, pixels presos e pontos luminosos.
+
+Alterne entre preto, branco, vermelho, verde, azul, ciano, magenta e amarelo. Pixels que não mudam de cor ou permanecem apagados podem indicar defeito. Recomendado para verificar monitores novos ou usados antes da compra.
+
+### Inspeção para Limpeza de Monitor
+
+- [Inspeção para Limpeza](${BASE_URL}/limpeza-de-monitor/): Fundos de alto contraste que revelam poeira, marcas de dedo e manchas no painel antes da limpeza.
+
+Exibe superfícies de contraste para localizar sujeira no painel. Atalho de teclado: C.
+
+### Verificação Visual de Display
+
+- [Verificação Visual de Display](${BASE_URL}/teste-de-monitor/): Padrões de referência para observar contraste, escala de cinza, gradientes, nitidez e uniformidade.
+- [Rota alternativa](${BASE_URL}/verificacao-visual/): Mesmos padrões, URL diferente.
+
+Inclui padrões de gradiente, escala de cinza, grade de escala, nitidez de subpixel e contraste. Atalho de teclado: G.
+
+---
+
+## Ferramentas de iluminação e cor
+
+### Luz para Videochamada
+
+- [Luz para Videochamada](${BASE_URL}/luz-para-videochamada/): Superfície clara com temperatura visual e intensidade ajustáveis para usar o monitor como luz de apoio.
+
+Transforma o monitor em fonte de luz próxima para videochamadas e gravações. Permite ajustar brilho e temperatura de cor. Atalho de teclado: W.
+
+### Estúdio de Cor
+
+Superfície de cor sólida livre ou predefinida. Preencha a tela com qualquer cor usando o seletor ou presets disponíveis. Atalho de teclado: S.
+
+### Tela Verde para Chroma Key
+
+- [Tela Verde para Chroma Key](${BASE_URL}/tela-verde-chroma/): Fundo verde #00B140 em tela cheia para composições de foto e vídeo por chroma key.
+
+Exibe a cor verde padrão de chroma key (#00B140) em tela cheia. Ideal para usar uma tela próxima como fundo uniforme em gravações.
+
+---
+
+## Ferramentas de produtividade
+
+### Timer de Foco
+
+- [Timer de Foco](${BASE_URL}/timer-de-foco/): Timer em tela cheia para ciclos de concentração com presets de tempo e sons ambientes opcionais gerados no navegador.
+
+Permite configurar sessões de trabalho e pausas no estilo Pomodoro. Sons ambientes são gerados localmente via Web Audio API. Atalho de teclado: P.
+
+### Relógio em Tela Cheia
+
+- [Relógio em Tela Cheia](${BASE_URL}/relogio-em-tela-cheia/): Hora e data em formatos digital e analógico para tela secundária.
+
+Exibe hora e data em tela cheia. Dois modos: digital (com segundos) e analógico. Atalho de teclado: T.
+
+### Teleprompter e Mensagem em Tela
+
+- [Teleprompter Online](${BASE_URL}/teleprompter-online/): Texto em tela cheia com espelhamento horizontal para gravações e apresentações.
+- [Mensagem em Tela](${BASE_URL}/mensagem-em-tela/): Avisos e recados em tela cheia com texto e cores ajustáveis.
+
+Exibe texto legível à distância com tamanho, cor e alinhamento configuráveis. Suporte a espelhamento horizontal para uso como teleprompter. Geração de QR Code. Atalho de teclado: M.
+
+### Loop de Marcas
+
+- [Loop de Marcas](${BASE_URL}/loop-de-marcas/): Rotação automática de logos e imagens locais em tela cheia para eventos, lives, estandes e vitrines.
+
+Importe imagens do dispositivo. Elas ficam apenas na memória da aba e não são enviadas a nenhum servidor. Transições e deslocamento configuráveis. Atalho de teclado: L.
+
+---
+
+## Optional
+
+- [Política de Privacidade](${BASE_URL}/privacidade/): Como o MonitorSmith trata dados, cookies e serviços de terceiros.
+- [Termos de Serviço](${BASE_URL}/termos/): Condições de uso, limites das ferramentas e propriedade intelectual.
+- [EXVORN.TECH](https://exvorn.tech/): Site institucional da empresa desenvolvedora.
 `;
 }
 

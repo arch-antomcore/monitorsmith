@@ -22,7 +22,7 @@ import ShareNetworkDuotone from '../Icons/ShareNetworkDuotone';
 import { motion } from 'framer-motion';
 import Button from '../UI/Button';
 import { cn } from '../../lib/utils';
-import BrandLogo from '../UI/BrandLogo';
+
 import { getModePresentation } from '../../constants/shortcuts';
 
 export function ControlIcon({ name, size = 18, title }) {
@@ -236,7 +236,6 @@ export default function Navbar({
               tabIndex={showModeContext ? -1 : hiddenTabIndex}
               aria-label="Voltar às ferramentas"
             >
-              <BrandLogo size={18} className="translate-y-[1px]" />
               <div className={cn("wbp-navbar__title-block flex flex-col leading-none min-w-0 overflow-hidden", showModeContext && "hidden sm:flex")}>
                 <span className="wbp-navbar__brand-name font-bold text-[0.88rem] tracking-wider text-white group-hover:text-amber-400 transition-colors truncate">
                   {brandName}
@@ -248,7 +247,6 @@ export default function Navbar({
             </button>
           ) : (
             <div className="wbp-navbar__brand flex items-center gap-2.5 min-w-0 flex-shrink">
-              <BrandLogo size={18} className="translate-y-[1px]" />
               <div className={cn("wbp-navbar__title-block flex flex-col leading-none min-w-0 overflow-hidden", showModeContext && "hidden sm:flex")}>
                 <span className="wbp-navbar__brand-name font-bold text-[0.88rem] tracking-wider text-white truncate">
                   {brandName}

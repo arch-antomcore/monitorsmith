@@ -174,7 +174,7 @@ export default function ScreenCleanerMode({
       id="cleaner"
       visible={showControls}
       title="Inspeção para limpeza"
-      subtitle="Diagnóstico de painel"
+      subtitle="Limpeza de tela"
       instructions={[
         "Poeira e marcas ficam mais visíveis quando você alterna fundos claros, escuros e reticulados.",
         "Antes de limpar, desligue e desconecte o monitor e consulte as instruções do fabricante.",
@@ -302,7 +302,6 @@ export default function ScreenCleanerMode({
                 userSelect: 'none',
               }}
             >
-              <div aria-hidden="true" style={{ fontSize: '3rem', marginBottom: '16px' }}>🔒</div>
               <h2 id="cleaner-lock-title" style={{ fontSize: '1.6rem', fontWeight: 600, letterSpacing: '-0.04em', margin: '0 0 10px' }}>
                 Bloqueio local ativo
               </h2>

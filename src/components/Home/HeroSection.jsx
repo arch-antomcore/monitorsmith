@@ -122,7 +122,7 @@ export default function HeroSection({
   titlePre = "Para usar",
   titleHighlight = "melhor",
   titlePost = "seu monitor.",
-  description = "Inspecione pixels, ilumine chamadas, exiba mensagens e organize o foco — direto no navegador."
+  description = "Inspecione pixels, ilumine chamadas, exiba mensagens e organize o foco."
 }) {
   const { scrollY } = useScroll();
   const yBehind = useTransform(scrollY, [0, 800], [0, 250]);
@@ -179,8 +179,8 @@ export default function HeroSection({
           <p className="ok-h11-detailLabel">Grátis no navegador</p>
         </div>
         <div>
-          <p className="ok-h11-detailTitle">100% Offline</p>
-          <p className="ok-h11-detailLabel">Funciona sem internet</p>
+          <p className="ok-h11-detailTitle">Funciona Offline</p>
+          <p className="ok-h11-detailLabel">Instalável como app</p>
         </div>
       </aside>
     </motion.section>

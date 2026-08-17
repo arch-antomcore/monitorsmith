@@ -4,16 +4,17 @@
 export default function BrandLogo({ size = 30, className = '', style = {} }) {
   return (
     <img
-      src="/logo-transparent.png"
+      src="/logo.png"
       alt=""
       className={className}
       aria-hidden="true"
       style={{
         display: 'inline-block',
         flexShrink: 0,
-        width: 'auto',
-        height: `${size * 2}px`,
-        filter: 'drop-shadow(0 0 8px rgba(245, 158, 11, 0.4))',
+        width: `${size}px`,
+        height: `${size}px`,
+        borderRadius: '20%',
+        objectFit: 'contain',
         ...style,
       }}
     />

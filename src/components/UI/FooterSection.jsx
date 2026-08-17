@@ -1,6 +1,4 @@
 import React from "react";
-import SparkleDuotone from '../Icons/SparkleDuotone';
-import TerminalWindowDuotone from '../Icons/TerminalWindowDuotone';
 import SunDuotone from '../Icons/SunDuotone';
 import MoonDuotone from '../Icons/MoonDuotone';
 import LinkedinLogoRegular from '../Icons/LinkedinLogoRegular';
@@ -77,7 +75,7 @@ export function FooterSection({ onLaunch }) {
           {/* Coluna 1: Marca & Missão */}
           <div className="lg:col-span-2 space-y-5">
             <div className="flex items-center gap-3">
-              <BrandLogo size={24} className="translate-y-[1px]" />
+              <BrandLogo size={80} className="translate-y-[1px]" />
               <span className="text-xl font-extrabold tracking-tight text-white font-mono">
                 MONITOR<span className="text-amber-400">SMITH</span>
               </span>
@@ -88,7 +86,6 @@ export function FooterSection({ onLaunch }) {
             
             <p className="text-sm text-white/70 leading-relaxed max-w-sm">
               Suíte de padrões para inspeção visual e utilitários de tela.
-              Processamento local no navegador com APIs nativas da Web.
             </p>
 
             <div className="flex items-center gap-3 pt-2">
@@ -124,9 +121,8 @@ export function FooterSection({ onLaunch }) {
 
           {/* Coluna 2: Ferramentas Rápidas */}
           <div className="space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-2">
-              <TerminalWindowDuotone width={16} height={16} className="text-amber-400" />
-              <span>Ferramentas Rápidas</span>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono">
+              Ferramentas Rápidas
             </h3>
             <ul className="space-y-2.5 text-sm text-white/70">
               <li>
@@ -198,9 +194,8 @@ export function FooterSection({ onLaunch }) {
 
           {/* Coluna 3: Estúdio e display */}
           <div className="space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-2">
-              <SparkleDuotone width={16} height={16} className="text-amber-400" />
-              <span>Estúdio & Display</span>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono">
+              Estúdio & Display
             </h3>
             <ul className="space-y-2.5 text-sm text-white/70">
               <li>
@@ -223,39 +218,31 @@ export function FooterSection({ onLaunch }) {
                   Teleprompter & Mensagens
                 </a>
               </li>
-              <li className="pt-1">
-                <span className="text-xs font-mono text-amber-400/80 uppercase tracking-wider block mb-1">Tecnologia</span>
-                <span className="text-xs text-white/50 block">React • CSS • APIs Web nativas</span>
-                <span className="text-xs text-white/50 block">Ferramentas executadas localmente</span>
-              </li>
+
             </ul>
           </div>
 
           {/* Coluna 4: Atualizações do produto */}
           <div className="space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-2">
-              <SparkleDuotone width={16} height={16} className="text-amber-400" />
-              <span>Novidades</span>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-white font-mono">
+              Novidades
             </h3>
             <p className="text-xs text-white/70 leading-relaxed">
-              Novas ferramentas, correções, guias de calibração e artigos detalhados são publicados no nosso hub de conteúdo.
+              Artigos e atualizações do produto.
             </p>
             <a
               href="/blog/"
               className="w-full py-2 px-3 rounded-lg bg-amber-400/10 hover:bg-amber-400 hover:text-black border border-amber-400/20 hover:border-transparent text-amber-400 text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center gap-2 mb-1"
             >
-              📚 Acessar o Blog de Artigos
+              Acessar o Blog de Artigos
             </a>
             <a
               href="#monitor-tools"
               className="w-full py-2 px-3 rounded-lg bg-white/[0.08] hover:bg-amber-400 hover:text-black border border-white/[0.08] hover:border-transparent text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center gap-2"
             >
-              <SparkleDuotone width={16} height={16} aria-hidden="true" />
               Explorar ferramentas
             </a>
-            <span className="text-[10px] text-white/60 block">
-              Uso gratuito e sem cadastro obrigatório.
-            </span>
+
           </div>
 
         </div>
@@ -276,7 +263,7 @@ export function FooterSection({ onLaunch }) {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-6">
-            <AboutModal label="Sobre (About)" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />
+            <AboutModal label="Sobre" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />
             <a href="/privacidade/" className="hover:text-amber-400 transition-colors text-white/70 underline underline-offset-4 decoration-white/20">Política de Privacidade</a>
             <a href="/termos/" className="hover:text-amber-400 transition-colors text-white/70 underline underline-offset-4 decoration-white/20">Termos de Serviço</a>
             <PwaModal label="Instalar App & Offline" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />

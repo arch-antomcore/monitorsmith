@@ -1,7 +1,4 @@
 import { useState } from 'react';
-import CheckCircleFill from '../Icons/CheckCircleFill';
-import GavelFill from '../Icons/GavelFill';
-import WarningFill from '../Icons/WarningFill';
 import BrandLogo from './BrandLogo';
 import Modal from './Modal';
 
@@ -51,7 +48,6 @@ export default function TermsModal({ label = 'Termos de Uso', className }) {
           </div>
 
           <section style={sectionStyle} aria-labelledby="terms-use-title">
-            <CheckCircleFill aria-hidden="true" width={19} height={19} color="#f59e0b" />
             <div>
               <h3 id="terms-use-title" style={titleStyle}>1. Uso do serviço</h3>
               <p style={paragraphStyle}>
@@ -64,7 +60,6 @@ export default function TermsModal({ label = 'Termos de Uso', className }) {
           </section>
 
           <section style={sectionStyle} aria-labelledby="terms-diagnostics-title">
-            <WarningFill aria-hidden="true" width={19} height={19} color="#fbbf24" />
             <div>
               <h3 id="terms-diagnostics-title" style={titleStyle}>2. Limites das ferramentas</h3>
               <p style={paragraphStyle}>
@@ -78,7 +73,6 @@ export default function TermsModal({ label = 'Termos de Uso', className }) {
           </section>
 
           <section style={sectionStyle} aria-labelledby="terms-safety-title">
-            <WarningFill aria-hidden="true" width={19} height={19} color="#fbbf24" />
             <div>
               <h3 id="terms-safety-title" style={titleStyle}>3. Segurança e conforto</h3>
               <p style={paragraphStyle}>
@@ -91,7 +85,6 @@ export default function TermsModal({ label = 'Termos de Uso', className }) {
           </section>
 
           <section style={sectionStyle} aria-labelledby="terms-availability-title">
-            <GavelFill aria-hidden="true" width={19} height={19} color="#f59e0b" />
             <div>
               <h3 id="terms-availability-title" style={titleStyle}>4. Disponibilidade e terceiros</h3>
               <p style={paragraphStyle}>
@@ -105,7 +98,6 @@ export default function TermsModal({ label = 'Termos de Uso', className }) {
           </section>
 
           <section style={sectionStyle} aria-labelledby="terms-ip-title">
-            <GavelFill aria-hidden="true" width={19} height={19} color="#f59e0b" />
             <div>
               <h3 id="terms-ip-title" style={titleStyle}>5. Propriedade intelectual</h3>
               <p style={paragraphStyle}>

@@ -101,7 +101,7 @@ export default function MessageOverlayMode({
   const resolvedFontScale = fontScaleIsControlled
     ? clamp(fontScale, 3, 16)
     : internalFontScale;
-  const visibleMessage = resolvedMessage.trim() || "Sua mensagem aparece aqui.";
+  const visibleMessage = resolvedMessage.trim() || "Mensagem";
   const normalizedQrContent = qrContent.trim().slice(0, 1024);
   const resolvedContrastRatio = useMemo(
     () => contrastRatio(resolvedTextColor, resolvedBackgroundColor),
@@ -335,7 +335,7 @@ export default function MessageOverlayMode({
                   marginSize={1}
                   role="img"
                   aria-label={`QR Code com o conteúdo: ${normalizedQrContent}`}
-                  title="QR Code gerado pelo MonitorSmith"
+                  title="QR Code"
                 />
               </div>
             ) : (
@@ -519,7 +519,7 @@ export default function MessageOverlayMode({
           ) : null}
 
           <p className="display-mode__hint">
-            Mantenha a frase curta para leitura confortável à distância.
+            Frases curtas funcionam melhor.
           </p>
         </motion.aside>
       ) : null}

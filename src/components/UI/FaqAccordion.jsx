@@ -7,7 +7,7 @@ import { cn } from '../../lib/utils';
 export function FaqAccordion({
   data,
   className,
-  timestamp = 'Atualizado diariamente, 24/7',
+  timestamp,
   questionClassName,
   answerClassName,
 }) {

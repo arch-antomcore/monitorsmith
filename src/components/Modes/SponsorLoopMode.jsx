@@ -497,7 +497,7 @@ export default function SponsorLoopMode({
             transition={{ type: "spring", stiffness: 350, damping: 28 }}
             className="sponsor-loop__empty"
           >
-            <p className="sponsor-loop__empty-icon">📺</p>
+            <p className="sponsor-loop__empty-icon">-</p>
             <p className="sponsor-loop__empty-title">Nenhuma imagem carregada</p>
             <p className="sponsor-loop__empty-hint">
               Arraste logos aqui ou use o painel lateral para importar.
@@ -561,7 +561,7 @@ export default function SponsorLoopMode({
         >
           <div className="display-mode__panel-header">
             <div>
-              <p className="display-mode__eyebrow">Signage Studio</p>
+              <p className="display-mode__eyebrow">Loop de Marcas</p>
               <h2 className="display-mode__title">Loop de Marcas</h2>
             </div>
             <button
@@ -651,7 +651,7 @@ export default function SponsorLoopMode({
                 className={join('sponsor-loop__play-btn', isPlaying && 'sponsor-loop__play-btn--active')}
                 onClick={() => setIsPlaying(p => !p)}
               >
-                {isPlaying ? '⏸ Pausar' : '▶ Iniciar'}
+                {isPlaying ? 'Pausar' : 'Iniciar'}
               </button>
             </div>
           )}

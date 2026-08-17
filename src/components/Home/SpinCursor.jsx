@@ -66,7 +66,7 @@ export default function SpinCursor({
     if (!host || !frameEl) return;
 
     const tag = document.createElement("style");
-    tag.textContent = `*, a, button, [role="button"] { cursor: none !important; }`;
+    tag.textContent = `*:not([data-consent-banner]):not([data-consent-banner] *), a:not([data-consent-banner] a), button:not([data-consent-banner] button), [role="button"]:not([data-consent-banner] [role="button"]) { cursor: none !important; }`;
     let cursorHidden = false;
     const hideNativeCursor = (hide) => {
       if (hide === cursorHidden) return;

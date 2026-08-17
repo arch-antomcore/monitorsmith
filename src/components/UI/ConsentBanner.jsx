@@ -44,6 +44,7 @@ export function ConsentBanner() {
     <AnimatePresence>
       {isVisible && (
         <motion.div
+          data-consent-banner
           initial={{ y: '100%' }}
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
@@ -69,8 +70,8 @@ export function ConsentBanner() {
         >
           <div style={{ maxWidth: '840px', width: '100%', display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ flex: '1 1 400px', fontSize: '0.9rem', lineHeight: 1.6, color: '#b9bbc4' }}>
-              <strong style={{ color: '#fff', fontSize: '1rem', display: 'block', marginBottom: '0.25rem' }}>Valorizamos sua privacidade</strong>
-              Nós e nossos parceiros (como o Google AdSense) usamos cookies e tecnologias semelhantes para melhorar sua experiência, personalizar conteúdo e anúncios, e analisar nosso tráfego. Você pode escolher aceitar todos os cookies ou continuar apenas com os estritamente necessários. Leia nossa <a href="/privacidade/" style={{ color: '#fbbf24', textDecoration: 'underline' }}>Política de Privacidade</a> para mais detalhes.
+              <strong style={{ color: '#fff', fontSize: '1rem', display: 'block', marginBottom: '0.25rem' }}>Privacidade e cookies</strong>
+              Este site usa cookies para anúncios (Google AdSense) e preferências locais. Você pode aceitar ou manter apenas os essenciais. Veja a <a href="/privacidade/" style={{ color: '#fbbf24', textDecoration: 'underline' }}>Política de Privacidade</a> para mais detalhes.
             </div>
             
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>

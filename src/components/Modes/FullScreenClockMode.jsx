@@ -375,7 +375,7 @@ export default function FullScreenClockMode({
               onClick={() => setClockStyle("analog")}
               type="button"
             >
-              Analógico Estúdio
+              Analógico
             </button>
           </div>
 

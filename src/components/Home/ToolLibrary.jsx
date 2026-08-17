@@ -37,37 +37,27 @@ const FAQ_DATA = [
   {
     id: 1,
     question: "Como testar se o monitor tem dead pixel ou pixel preso?",
-    answer: "Abra o teste de pixels em tela cheia e alterne entre preto, branco, vermelho, verde e azul. Pixels que não mudam de cor ou permanecem apagados podem estar defeituosos. O MonitorSmith oferece 8 cores sólidas para inspeção completa.",
-    icon: "🎯",
-    iconPosition: "right",
+    answer: "Abra o teste de pixels em tela cheia e alterne entre as cores. Pixels que não mudam ou permanecem apagados podem estar defeituosos.",
   },
   {
     id: 2,
     question: "Este teste funciona em OLED e LCD?",
-    answer: "Sim. Em OLED, os padrões ajudam a observar sinais visuais compatíveis com retenção de imagem. Em LCD (IPS, VA, TN), auxiliam a inspeção de pixels, vazamento de luz e uniformidade. O resultado é visual e não substitui medição técnica.",
-    icon: "🖥️",
-    iconPosition: "left",
+    answer: "Sim, funciona em ambos. Em OLED ajuda a observar retenção de imagem, em LCD ajuda com pixels, vazamento de luz e uniformidade.",
   },
   {
     id: 3,
     question: "Como a ferramenta de tela preta reduz o consumo de energia?",
-    answer: "Conteúdo escuro pode reduzir o consumo de energia em painéis OLED, dependendo do brilho e do processamento do dispositivo, mas o MonitorSmith não mede energia.",
-    icon: "🌙",
-    iconPosition: "right",
+    answer: "Em painéis OLED, conteúdo escuro pode reduzir o consumo de energia. O efeito depende do brilho e do painel.",
   },
   {
     id: 4,
     question: "Preciso instalar algo para usar o MonitorSmith?",
-    answer: "Não. Todas as ferramentas rodam 100% no seu navegador sem cadastro ou download. Você também pode instalar o MonitorSmith como PWA para acesso direto pelo sistema operacional e funcionamento offline.",
-    icon: "⚡",
-    iconPosition: "left",
+    answer: "Não. Funciona direto no navegador. Se preferir, pode instalar como app para acesso offline.",
   },
   {
     id: 5,
     question: "Como verificar vazamento de luz (backlight bleed)?",
     answer: "Em um ambiente escuro, abra o modo de tela preta absoluta em tela cheia (tecla F). Observe as bordas e os cantos da tela em busca de áreas esbranquiçadas, amareladas ou vazamento excessivo da iluminação traseira.",
-    icon: "💡",
-    iconPosition: "right",
   },
 ];
 
@@ -248,7 +238,7 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
 
 
 
-      {/* SEO: Seção "O que é" — texto semântico para Google e LLMs */}
+      {/* Seção Sobre */}
       <section className="ms-library__section ms-seo-about" aria-labelledby="about-title">
         <div className="ms-library__section-heading">
           <div>
@@ -258,18 +248,12 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
         </div>
         <div className="ms-seo-text text-white/80" style={{ maxWidth: '780px', margin: '0 auto', padding: '0 20px', lineHeight: 1.7, fontSize: '0.95rem' }}>
           <p>
-            O <strong>MonitorSmith</strong> é uma suíte web gratuita de padrões e utilitários para inspecionar monitores, observar pixels, uniformidade e vazamento de luz, além de preencher a tela com cores e conteúdos úteis. Desenvolvido pela <strong>EXVORN.TECH</strong>, funciona diretamente no navegador, sem cadastro obrigatório.
-          </p>
-          <p style={{ marginTop: '12px' }}>
-            Ideal para quem comprou um monitor novo, quer testar um usado antes de fechar negócio, precisa de uma luz suave para videochamadas, um teleprompter para gravações, ou simplesmente quer um relógio elegante na tela secundária.
-          </p>
-          <p style={{ marginTop: '12px' }}>
-            Nossas ferramentas são fundamentadas na engenharia de displays (OLED, IPS, VA e TN). Permitimos que você observe de maneira independente sintomas como retenção de imagem (burn-in), clouding, rastreamento de gama, color banding e defeitos de subpixels. Todas as rotinas visuais operam puramente no lado do cliente (client-side), assegurando privacidade total, preservação dos seus dados locais de cookies e alto desempenho diretamente via APIs web modernas.
+            O MonitorSmith reúne ferramentas para inspeção visual de displays, iluminação de apoio e produtividade. Funciona no navegador, sem cadastro.
           </p>
         </div>
       </section>
 
-      {/* SEO: FAQ interativo e animado — corresponde às intenções de busca e ajuda LLMs a extrair respostas */}
+      {/* FAQ */}
       <section className="ms-library__section ms-seo-faq" aria-labelledby="faq-title">
         <div className="ms-library__section-heading">
           <div>
@@ -280,7 +264,6 @@ export default function ToolLibrary({ onLaunch, returnFocusRequest = 0, onReturn
         <div style={{ maxWidth: '780px', margin: '0 auto', padding: '0 12px' }}>
           <FaqAccordion
             data={FAQ_DATA}
-            timestamp="Disponível no navegador e instalável como PWA"
           />
         </div>
       </section>

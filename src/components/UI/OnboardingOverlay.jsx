@@ -5,26 +5,22 @@ const SLIDES = [
   {
     id: 'welcome',
     title: 'Bem-vindo ao MonitorSmith',
-    desc: '11 ferramentas visuais para inspecionar, iluminar e organizar seus monitores.',
-    icon: '🖥️'
+    desc: 'Ferramentas visuais para o seu monitor.'
   },
   {
     id: 'dock',
     title: 'Use o dock para trocar de ferramenta',
-    desc: 'O dock fica na parte inferior da tela. Clique em qualquer ícone para ativar.',
-    icon: '🎯'
+    desc: 'Use o dock na parte inferior para trocar de ferramenta.'
   },
   {
     id: 'radial',
     title: 'Menu rápido com o botão direito',
-    desc: 'Clique com o botão direito do mouse em qualquer ferramenta para abrir o menu radial.',
-    icon: '🖱️'
+    desc: 'Botão direito abre o menu radial.'
   },
   {
     id: 'keyboard',
     title: 'Atalhos de teclado',
-    desc: 'Pressione ? ou K para ver todos os atalhos disponíveis.',
-    icon: '⌨️'
+    desc: 'Pressione ? para ver os atalhos.'
   }
 ];
 

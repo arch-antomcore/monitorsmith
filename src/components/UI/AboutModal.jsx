@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import LinkedinLogoRegular from '../Icons/LinkedinLogoRegular';
-import SparkleFill from '../Icons/SparkleFill';
 import BrandLogo from './BrandLogo';
 import Modal from './Modal';
 
@@ -53,15 +52,11 @@ export default function AboutModal({ label = 'Sobre o MonitorSmith', className }
           </div>
 
           <p style={{ margin: 0 }}>
-            O <strong>MonitorSmith</strong> reúne ferramentas para iluminação de apoio,
-            sinalização, foco e inspeção visual de displays diretamente no navegador.
-            Ele foi criado pela <strong>EXVORN.TECH</strong> para ser rápido, claro e útil
-            tanto em casa quanto em estúdios e bancadas técnicas.
+            Ferramentas de inspeção visual, iluminação e produtividade para monitores. Feito pela EXVORN.TECH.
           </p>
 
           <section style={sectionStyle} aria-labelledby="about-privacy-title">
             <h3 id="about-privacy-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 8px', color: 'inherit', fontSize: '0.95rem' }}>
-              <SparkleFill aria-hidden="true" width={18} height={18} color="#f59e0b" />
               Como a aplicação funciona
             </h3>
             <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.85rem' }}>

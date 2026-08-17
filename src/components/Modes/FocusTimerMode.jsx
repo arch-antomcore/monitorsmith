@@ -117,7 +117,7 @@ export default function FocusTimerMode({
   presets = DEFAULT_PRESETS,
   secondsRemaining,
   showControls = true,
-  title = "Foco profundo",
+  title = "Timer de foco",
   totalDuration,
 }) {
   const shouldReduceMotion = useReducedMotion();
@@ -366,7 +366,7 @@ export default function FocusTimerMode({
         onClick={() => toggleAmbientNoise()}
         aria-pressed={isAmbientNoiseActive}
       >
-        {isAmbientNoiseActive ? "Pausar ruído ambiente sintetizado" : "Ativar ruído ambiente sintetizado"}
+        {isAmbientNoiseActive ? "Pausar ruído" : "Ativar ruído"}
       </button>
 
       <div
@@ -467,8 +467,8 @@ export default function FocusTimerMode({
         <h2 className="focus-timer__title">{title}</h2>
         <p className="focus-timer__caption">
           {resolvedRunning
-            ? "Proteja este intervalo. O resto pode esperar alguns minutos."
-            : "Comece quando estiver pronto para uma única tarefa importante."}
+            ? "Sessão em andamento."
+            : "Pronto para começar."}
         </p>
       </div>
     </DisplayToolShell>
