@@ -3,7 +3,6 @@ import SunDuotone from '../Icons/SunDuotone';
 import MoonDuotone from '../Icons/MoonDuotone';
 import LinkedinLogoRegular from '../Icons/LinkedinLogoRegular';
 import BrandLogo from "./BrandLogo";
-import AboutModal from "./AboutModal";
 import PwaModal from "./PwaModal";
 import { resolveToolLaunch } from "../../constants/tools";
 
@@ -263,7 +262,8 @@ export function FooterSection({ onLaunch }) {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-6">
-            <AboutModal label="Sobre" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />
+            <a href="/sobre/" className="hover:text-amber-400 transition-colors text-white/70 underline underline-offset-4 decoration-white/20">Sobre</a>
+            <a href="/contato/" className="hover:text-amber-400 transition-colors text-white/70 underline underline-offset-4 decoration-white/20">Contato</a>
             <a href="/privacidade/" className="hover:text-amber-400 transition-colors text-white/70 underline underline-offset-4 decoration-white/20">Política de Privacidade</a>
             <a href="/termos/" className="hover:text-amber-400 transition-colors text-white/70 underline underline-offset-4 decoration-white/20">Termos de Serviço</a>
             <PwaModal label="Instalar App & Offline" className="hover:text-amber-400 transition-colors cursor-pointer text-white/70 underline underline-offset-4 decoration-white/20" />

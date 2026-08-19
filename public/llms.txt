@@ -24,6 +24,8 @@
 - [Blog do MonitorSmith](https://monitorsmith.app/blog/): Artigos sobre tecnologia de displays, calibração e produtividade.
 
 ## Informações Institucionais e Legais
+- [Sobre o MonitorSmith](https://monitorsmith.app/sobre/): Propósito, arquitetura client-side e padrões de engenharia de displays da EXVORN.TECH.
+- [Contato e Suporte](https://monitorsmith.app/contato/): Canais oficiais de atendimento, dúvidas técnicas e feedback.
 - [Política de Privacidade](https://monitorsmith.app/privacidade/): Tratamento de dados locais, cookies e diretrizes Google AdSense.
 - [Termos de Uso](https://monitorsmith.app/termos/): Condições de uso e propriedade intelectual.
 

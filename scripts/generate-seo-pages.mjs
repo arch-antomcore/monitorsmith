@@ -419,6 +419,53 @@ const EDITORIAL_CONTENT = Object.freeze({
 
 const LEGAL_PAGES = Object.freeze([
   {
+    slug: 'sobre',
+    title: 'Sobre o MonitorSmith e EXVORN.TECH — Engenharia de Displays',
+    description: 'Conheça o propósito, arquitetura client-side e as diretrizes de engenharia de displays da suíte MonitorSmith, mantida pela EXVORN.TECH.',
+    h1: 'Sobre o MonitorSmith e a EXVORN.TECH',
+    sections: [
+      ['1. Nossa Missão e Filosofia de Produto', [
+        'O MonitorSmith foi desenvolvido para fornecer um conjunto integrado de utilitários de alta precisão para inspeção visual de telas, testes de uniformidade, calibração preliminar de cores e produtividade em múltiplos monitores.',
+        'Ao contrário de utilitários tradicionais que exigem instalação de softwares pesados ou executam telemetria em segundo plano, o MonitorSmith opera 100% no navegador web através de tecnologias modernas de cliente (HTML5, Web Audio API, High Resolution Time API e Service Workers).',
+      ]],
+      ['2. Arquitetura Client-Side e Privacidade Absoluta', [
+        'Todas as operações — desde a sintetização espectral de ruído marrom até a renderização de teleprompter e rotação de logotipos em modo tela cheia — são processadas localmente na GPU e CPU do dispositivo do usuário.',
+        'Nenhum dado pessoal, texto digitado, imagem importada ou informação de hardware é transmitido para servidores da EXVORN.TECH. Essa arquitetura assegura privacidade integral e conformidade com as diretrizes da LGPD (Brasil) e GDPR (Europa).',
+      ]],
+      ['3. Padrões Técnicos e Normas de Referência', [
+        'As ferramentas e publicações técnicas do MonitorSmith fundamentam-se em padrões e normas consolidadas da indústria de displays e acústica:',
+        '• ISO 9241-307:2008: Métodos de análise ergonômica e limites de tolerância para defeitos de subpixels (pixels mortos, presos e luminosos) em painéis LCD (IPS/VA/TN).',
+        '• IEC 61966-2-1: Especificação padrão do espaço de cor sRGB e curva eletro-óptica de Gama 2.2.',
+        '• ITU-R BT.709 e BT.1886: Parâmetros colorimétricos e função de transferência eletro-óptica (Gama 2.4) para produção e exibição de vídeo.',
+        '• W3C Web Audio API & WCAG 2.2 AAA: Síntese de áudio contínuo e contraste de alto nível (razão mínima de 7:1) para máxima acessibilidade e conforto visual.',
+      ]],
+      ['4. Sobre a EXVORN.TECH', [
+        'A EXVORN.TECH é um estúdio de engenharia de software e pesquisa tecnológica focado no desenvolvimento de ferramentas web de alto desempenho, plataformas de computação e soluções digitais acessíveis.',
+        `Para saber mais sobre os projetos e iniciativas da EXVORN.TECH, visite o site oficial em https://exvorn.tech/.`,
+      ]],
+    ],
+  },
+  {
+    slug: 'contato',
+    title: 'Contato e Suporte Técnico — MonitorSmith',
+    description: 'Entre em contato com a equipe técnica do MonitorSmith e EXVORN.TECH para suporte, feedback, sugestões e parcerias.',
+    h1: 'Contato e Suporte Técnico',
+    sections: [
+      ['1. Canais Oficiais de Atendimento', [
+        'Se você tiver dúvidas técnicas sobre o uso das ferramentas, encontrar alguma inconsistência visual em seu monitor ou quiser sugerir novos recursos, estamos à disposição através dos seguintes canais:',
+        '• E-mail institucional de suporte: contato@exvorn.tech',
+        '• Website institucional da desenvolvedora: https://exvorn.tech/',
+      ]],
+      ['2. Suporte ao Desenvolvedor e Sugestões', [
+        'O MonitorSmith é constantemente aprimorado com base no feedback de engenheiros, editores de vídeo, designers e usuários entusiastas de hardware.',
+        'Sugestões de melhorias nas rotinas de calibração, relatórios de compatibilidade com novos tipos de painéis (OLED, QD-OLED, Mini-LED) e requisições de novas funcionalidades podem ser enviadas diretamente pelo e-mail de contato.',
+      ]],
+      ['3. Liderança Técnica e Redes Profissionais', [
+        'Você também pode acompanhar atualizações e conectar-se diretamente com a liderança de desenvolvimento no LinkedIn através de https://www.linkedin.com/in/matheus-peres-da-silva/.',
+      ]],
+    ],
+  },
+  {
     slug: 'privacidade',
     title: 'Política de Privacidade — MonitorSmith',
     description: 'Informações sobre dados locais, uso de cookies e conformidade com fornecedores de terceiros e Google AdSense no MonitorSmith.',
@@ -443,7 +490,7 @@ const LEGAL_PAGES = Object.freeze([
       ]],
       ['5. Direitos sob a LGPD e Contato', [
         'Como as ferramentas operam no modelo client-side sem cadastro obrigatório, nenhuma informação pessoal identificável é mantida em bases de dados da EXVORN.TECH.',
-        `Para esclarecimentos sobre privacidade, solicitações institucionais ou exercício de direitos sob a Lei Geral de Proteção de Dados (LGPD), utilize o canal institucional em ${SITE_METADATA.contactUrl}.`,
+        `Para esclarecimentos sobre privacidade, solicitações institucionais ou exercício de direitos sob a Lei Geral de Proteção de Dados (LGPD), utilize o canal institucional em ${SITE_METADATA.contactUrl} ou envie e-mail para contato@exvorn.tech.`,
       ]],
       ['6. Atualizações desta Política', [
         `Esta política foi revisada em 18 de agosto de 2026 e reflete a operação atual da plataforma. Alterações materiais serão publicadas nesta mesma URL.`,
@@ -460,7 +507,7 @@ const LEGAL_PAGES = Object.freeze([
       ['2. Limites Técnicos e Operacionais', ['Os padrões visuais oferecem apoio à observação humana. O MonitorSmith não mede diretamente parâmetros elétricos de painéis, não substitui colorímetros de hardware e não garante identificação exata de causas de defeitos.', 'Fatores como gerenciamento de cor do sistema operacional, renderização do navegador, ângulo de visão, iluminação ambiente e brilho influenciam o que é visualizado.']],
       ['3. Ergonomia e Segurança', ['Interrompa o uso imediatamente caso luzes, contrastes ou frequências visuais causem desconforto ou fadiga ocular.', 'Para limpeza física de telas, siga sempre o manual do fabricante do monitor, utilizando panos de microfibra limpos e sem aplicar líquidos diretamente sobre os circuitos ou painel.']],
       ['4. Propriedade Intelectual e Conteúdo', ['A marca MonitorSmith, a identidade visual e o código-fonte pertencem à EXVORN.TECH.', 'O usuário é o único responsável pelas imagens e textos que carregar localmente na aplicação, declarando possuir os direitos necessários para sua exibição.']],
-      ['5. Contato e Vigência', [`Revisão vigente desde 18 de agosto de 2026. Para dúvidas e contato institucional, acesse ${SITE_METADATA.contactUrl}.`]],
+      ['5. Contato e Vigência', [`Revisão vigente desde 18 de agosto de 2026. Para dúvidas e contato institucional, acesse ${SITE_METADATA.contactUrl} ou contato@exvorn.tech.`]],
     ],
   },
 ]);
@@ -671,7 +718,7 @@ function renderToolPage(route, locale) {
 
     <section><h2>${labels.related}</h2><ul>${related}</ul></section>
   </main>
-  <footer><a href="/">${labels.back}</a><a href="/blog/">Blog</a><a href="/privacidade/">${labels.privacy}</a><a href="/termos/">${labels.terms}</a><a href="${SITE_METADATA.contactUrl}">${labels.contact}</a></footer>
+  <footer><a href="/">${labels.back}</a><a href="/blog/">Blog</a><a href="/sobre/">${isEn ? 'About' : 'Sobre'}</a><a href="/contato/">${isEn ? 'Contact' : 'Contato'}</a><a href="/privacidade/">${labels.privacy}</a><a href="/termos/">${labels.terms}</a></footer>
 </body>
 </html>`;
   return html;
@@ -692,7 +739,7 @@ function renderLegalPage(page) {
   const html = `<!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>${escapeHtml(page.title)}</title><meta name="description" content="${escapeHtml(page.description)}"><meta name="theme-color" content="#030304"><meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1"><link rel="canonical" href="${url}"><link rel="alternate" hreflang="pt-BR" href="${url}"><link rel="alternate" hreflang="x-default" href="${url}"><link rel="icon" href="/logo.png" type="image/png"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><link rel="describedby" href="/llms.txt" type="text/markdown"><meta property="og:title" content="${escapeHtml(page.title)}"><meta property="og:description" content="${escapeHtml(page.description)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website"><meta property="og:site_name" content="MonitorSmith"><meta property="og:locale" content="pt_BR"><meta property="og:image" content="${BASE_URL}/og-image.jpg"><meta property="og:image:secure_url" content="${BASE_URL}/og-image.jpg"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="MonitorSmith — informações legais e de privacidade"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(page.title)}"><meta name="twitter:description" content="${escapeHtml(page.description)}"><meta name="twitter:image" content="${BASE_URL}/og-image.jpg"><meta name="twitter:image:alt" content="MonitorSmith — informações legais e de privacidade"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5926952327268950" crossorigin="anonymous"></script><script type="application/ld+json">${safeJson(schema)}</script>
 <style>:root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif}header,main,footer{width:min(760px,calc(100% - 2rem));margin-inline:auto}header{padding:1.2rem 0;border-bottom:1px solid var(--line)}a{color:#fbbf24;text-underline-offset:.2em}header a{color:var(--text);font-weight:750;text-decoration:none}main{padding:3rem 0}h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1;letter-spacing:-.035em}h2{font-size:1.2rem;margin:2.2rem 0 .5rem}p{color:var(--muted)}.notice{padding:1rem;background:var(--surface);border:1px solid var(--line);border-radius:.8rem}footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:1rem;flex-wrap:wrap}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}</style></head>
-<body><header><a href="/">MonitorSmith · EXVORN.TECH</a></header><main><h1>${escapeHtml(page.h1)}</h1><p class="notice">Este documento descreve a operação atual do MonitorSmith. Em caso de dúvida, entre em contato antes de continuar o uso.</p>${sections}</main><footer><a href="/">Todas as ferramentas</a><a href="/blog/">Blog</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a><a href="${SITE_METADATA.contactUrl}">Contato</a></footer></body></html>`;
+<body><header><a href="/">MonitorSmith · EXVORN.TECH</a></header><main><h1>${escapeHtml(page.h1)}</h1><p class="notice">Este documento descreve a operação atual do MonitorSmith. Em caso de dúvida, entre em contato antes de continuar o uso.</p>${sections}</main><footer><a href="/">Todas as ferramentas</a><a href="/blog/">Blog</a><a href="/sobre/">Sobre</a><a href="/contato/">Contato</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a></footer></body></html>`;
   return html;
 }
 
@@ -799,7 +846,7 @@ function renderBlogArticle(article) {
     ${faqHtml}
     ${relatedHtml ? `<section><h2>Leia também</h2><div class="related-grid"><ul>${relatedHtml}</ul></div></section>` : ''}
   </main>
-  <footer><a href="/">Todas as ferramentas</a><a href="/blog/">Blog</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a><a href="${SITE_METADATA.contactUrl}">Contato</a></footer>
+  <footer><a href="/">Todas as ferramentas</a><a href="/blog/">Blog</a><a href="/sobre/">Sobre</a><a href="/contato/">Contato</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a></footer>
 </body>
 </html>`;
 }
@@ -858,7 +905,7 @@ function renderBlogIndex() {
     <p class="subtitle">Artigos técnicos, engenharia de displays e guias práticos sobre monitores e produtividade.</p>
     <div class="grid">${cards}</div>
   </main>
-  <footer><a href="/">Todas as ferramentas</a><a href="/blog/">Blog</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a><a href="${SITE_METADATA.contactUrl}">Contato</a></footer>
+  <footer><a href="/">Todas as ferramentas</a><a href="/blog/">Blog</a><a href="/sobre/">Sobre</a><a href="/contato/">Contato</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a></footer>
 </body>
 </html>`;
 }
@@ -936,6 +983,8 @@ function generateLlmsText() {
 - [Blog do MonitorSmith](https://monitorsmith.app/blog/): Artigos sobre tecnologia de displays, calibração e produtividade.
 
 ## Informações Institucionais e Legais
+- [Sobre o MonitorSmith](https://monitorsmith.app/sobre/): Propósito, arquitetura client-side e padrões de engenharia de displays da EXVORN.TECH.
+- [Contato e Suporte](https://monitorsmith.app/contato/): Canais oficiais de atendimento, dúvidas técnicas e feedback.
 - [Política de Privacidade](https://monitorsmith.app/privacidade/): Tratamento de dados locais, cookies e diretrizes Google AdSense.
 - [Termos de Uso](https://monitorsmith.app/termos/): Condições de uso e propriedade intelectual.
 
@@ -963,7 +1012,9 @@ ${toolLines}
 ## Artigos e Guias do Blog
 ${blogLines}
 
-## Legal e Privacidade
+## Institucional e Legal
+- [Sobre o MonitorSmith](https://monitorsmith.app/sobre/): Propósito, arquitetura client-side e padrões de engenharia de displays.
+- [Contato e Suporte](https://monitorsmith.app/contato/): Canais oficiais de atendimento, dúvidas técnicas e feedback.
 - [Política de Privacidade](https://monitorsmith.app/privacidade/): Tratamento de dados locais, cookies e diretrizes Google AdSense.
 - [Termos de Uso](https://monitorsmith.app/termos/): Condições de uso e propriedade intelectual.
 `;

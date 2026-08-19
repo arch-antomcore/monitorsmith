@@ -63,6 +63,8 @@
 - [Vitrine Digital: Como Usar Monitores e Telas no Ponto de Venda (PDV)](https://monitorsmith.app/blog/vitrine-digital-lojas-estandes/): Transforme televisores e monitores em displays comerciais dinâmicos para exibição de ofertas, cardápios e promoções no comércio físico.
 - [MonitorSmith: Guia Geral da Suíte de Utilitários e Testes de Display](https://monitorsmith.app/blog/guia-completo-monitorsmith/): Conheça todas as 11 ferramentas web do MonitorSmith: inspeção de pixels, verificação de gama, iluminação suave, teleprompter, pomodoro e muito mais.
 
-## Legal e Privacidade
+## Institucional e Legal
+- [Sobre o MonitorSmith](https://monitorsmith.app/sobre/): Propósito, arquitetura client-side e padrões de engenharia de displays.
+- [Contato e Suporte](https://monitorsmith.app/contato/): Canais oficiais de atendimento, dúvidas técnicas e feedback.
 - [Política de Privacidade](https://monitorsmith.app/privacidade/): Tratamento de dados locais, cookies e diretrizes Google AdSense.
 - [Termos de Uso](https://monitorsmith.app/termos/): Condições de uso e propriedade intelectual.
