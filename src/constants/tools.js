@@ -307,6 +307,30 @@ export const TOOLS_REGISTRY = Object.freeze([
         { slug: 'ppi-monitor-calculator', title: 'Monitor PPI & Retina Distance Calculator Online', h1: 'Monitor PPI & Pixel Density Calculator', description: 'Calculate PPI (pixels per inch), dot pitch in millimeters and optimal viewing distance for 20/20 Snellen visual acuity.' }),
     ],
   },
+  {
+    id: 'motion-blur',
+    mode: 'motion-blur',
+    aliases: ['ghosting', 'ufo', 'motion', 'response-time', 'mprt', 'gtg', 'motion-test'],
+    category: 'Ver e cuidar',
+    title: 'Teste de ghosting & motion blur',
+    dockLabel: 'Ghosting',
+    heroTitle: 'Teste de Ghosting e Motion Blur',
+    badge: '240Hz+',
+    description: 'Avalie o tempo de resposta GtG, borrão de movimento (MPRT), overshoot e taxa real de FPS.',
+    heroDesc: 'Identifique rastros escuros (ghosting), coronas de overdrive (overshoot) e borrão de movimento em 60Hz a 240Hz+.',
+    when: 'Para testar tempo de resposta, ajustar o overdrive do monitor e verificar fluidez de movimento.',
+    icon: 'motion',
+    tone: 'calibration',
+    keyboard: null,
+    dock: { visible: true, order: 12 },
+    hero: { visible: true, order: 9 },
+    pwa: { visible: true, name: 'Teste de Ghosting', shortName: 'Ghosting' },
+    seoPages: [
+      seoPage('motion-blur',
+        { slug: 'teste-de-ghosting-monitor', title: 'Teste de Ghosting e Motion Blur Online (60Hz a 240Hz+)', h1: 'Teste de Ghosting e Tempo de Resposta', description: 'Teste o tempo de resposta GtG, rastro de desfoque (ghosting) e overshoot de overdrive do seu monitor em tempo real.' },
+        { slug: 'motion-blur-ghosting-test', title: 'Monitor Ghosting & Motion Blur Test (60Hz to 240Hz+)', h1: 'Ghosting & Motion Blur Response Test', description: 'Evaluate pixel response time (GtG), motion blur (MPRT), and overdrive overshoot in real time across 60Hz to 240Hz+.' }),
+    ],
+  },
 ]);
 
 const byOrder = (placement) => (left, right) =>

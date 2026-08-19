@@ -448,6 +448,39 @@ const EDITORIAL_CONTENT = Object.freeze({
       ]
     }
   },
+  'motion-blur': {
+    related: ['monitor-test', 'display-calibration', 'dead-pixel-test'],
+    pt: {
+      intro: 'Teste interativo em tempo real via canvas com sincronização de quadros (VSync) para avaliação de tempo de resposta cinza-para-cinza (GtG), desfoque por perseguição retiniana (MPRT) e artefatos de overdrive (overshoot).',
+      steps: ['Selecione a velocidade de deslocamento (recomendado: 480 ou 960 px/s) e o padrão visual desejado (blocos de contraste, texto ou transição escura).', 'Acompanhe visualmente o objeto em movimento da esquerda para a direita mantendo os olhos fixos na linha central de sincronização.', 'Observe se há rastros escuros trailing (ghosting) ou bordas claras brilhantes invertidas (overshoot por overdrive excessivo).'],
+      uses: ['Ajuste fino do nível de overdrive (Response Time) no menu OSD do monitor para eliminar ghosting sem introduzir overshoot.', 'Verificação de estabilidade de taxa de quadros (FPS) e consistência de tempo de quadro (frame time pacing).', 'Comparação de clareza de movimento em taxas de atualização de 60Hz, 120Hz, 144Hz, 165Hz, 240Hz e 360Hz.'],
+      limitations: 'A observação direta do teste depende da taxa de atualização configurada no sistema operacional. Para fotografias de teste científico, utilize o método de câmera em trilho de perseguição (pursuit camera sincronizada).',
+      faq: [
+        ['Qual a diferença entre GtG e MPRT?', 'GtG (Gray-to-Gray) mede o tempo físico que os cristais líquidos ou diodos levam para mudar de cor. MPRT (Motion Picture Response Time) mede a persistência da imagem na retina decorrente do princípio sample-and-hold.'],
+        ['Como corrigir o rastro brilhante (overshoot)?', 'O overshoot é causado por tensão elétrica excessiva aplicada aos pixels (overdrive agressivo). No menu do seu monitor, reduza o nível de Response Time / Overdrive de "Fastest/Extreme" para "Normal/Fast".']
+      ],
+      methodology: [
+        'A renderização do teste de movimento utiliza um loop contínuo de `window.requestAnimationFrame`, sincronizado com a taxa de varredura vertical (VSync) do hardware de vídeo do navegador.',
+        'A telemetria calcula o intervalo entre quadros consecutivos (`performance.now()`) e o desvio padrão de jitter para assegurar que não haja engasgos (micro-stuttering) causados pelo compositor do sistema operacional.',
+        'Os padrões de contraste em três faixas reproduzem as transições críticas de engenharia de painéis: escuro para cinza (revela black smearing em painéis VA), cinza médio (revela overdrive overshoot) e claro (revela retenção de tempo de resposta em transições simétricas).'
+      ]
+    },
+    en: {
+      intro: 'Real-time interactive canvas motion test with strict VSync frame synchronization for evaluating gray-to-gray (GtG) pixel response time, motion picture response time (MPRT), and overdrive overshoot artifacts.',
+      steps: ['Select motion speed (recommended: 480 or 960 px/s) and your desired visual pattern (high-contrast blocks, readable text, or dark transition).', 'Track the moving object smoothly from left to right, focusing on the central pursuit synchronization mark.', 'Examine trailing dark shadows (ghosting) or bright inverse halos (overshoot caused by aggressive overdrive).'],
+      uses: ['Tuning monitor overdrive / response time settings in the OSD menu to eliminate trailing without introducing inverse ghosting.', 'Verifying frame rate stability and frame time consistency across high-refresh-rate displays.', 'Evaluating dynamic motion clarity across 60Hz, 120Hz, 144Hz, 165Hz, 240Hz, and 360Hz panels.'],
+      limitations: 'Visual inspection depends on the refresh rate configured in your operating system. For laboratory-grade photography, employ a pursuit camera tracking system.',
+      faq: [
+        ['What is the difference between GtG and MPRT?', 'GtG (Gray-to-Gray) measures the physical transition time of liquid crystals or diodes. MPRT (Motion Picture Response Time) measures perceived retinal blur caused by sample-and-hold display persistence.'],
+        ['How do I fix bright halos (overshoot)?', 'Overshoot is caused by excessive voltage applied to accelerate pixel transitions. In your monitor’s OSD menu, reduce the Overdrive / Response Time setting from "Extreme" to "Fast" or "Normal".']
+      ],
+      methodology: [
+        'The motion testing pipeline runs on a dedicated `window.requestAnimationFrame` loop strictly locked to the display compositor’s vertical sync (VSync) refresh pulse.',
+        'Real-time telemetry computes inter-frame timing delta (`performance.now()`) and jitter standard deviation to guarantee zero frame dropping or compositor-induced micro-stuttering.',
+        'Three-tiered background luminance tracks replicate critical display engineering transitions: dark-to-gray (identifies VA black smearing), mid-gray (identifies overdrive corona/overshoot), and high-key (evaluates symmetric rise/fall times).'
+      ]
+    }
+  },
 });
 
 const LEGAL_PAGES = Object.freeze([

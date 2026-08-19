@@ -13,6 +13,8 @@ const TOOL_IDS = [
   'clock',
   'message',
   'sponsor-loop',
+  'ppi-calculator',
+  'motion-blur',
 ]
 
 const PAGE_ERRORS = new WeakMap()

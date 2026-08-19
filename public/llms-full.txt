@@ -29,6 +29,8 @@
 - [Fullscreen Brand Loop](https://monitorsmith.app/sponsor-loop/): Present local logos and images in an automatic rotation for events, streams and displays.
 - [Calculadora de PPI e Densidade de Pixels](https://monitorsmith.app/calculadora-ppi-densidade-monitor/): Calcule o PPI (pixels por polegada), dot pitch em milímetros e a distância ideal de visualização para acuidade Snellen 20/20.
 - [Monitor PPI & Pixel Density Calculator](https://monitorsmith.app/ppi-monitor-calculator/): Calculate PPI (pixels per inch), dot pitch in millimeters and optimal viewing distance for 20/20 Snellen visual acuity.
+- [Teste de Ghosting e Tempo de Resposta](https://monitorsmith.app/teste-de-ghosting-monitor/): Teste o tempo de resposta GtG, rastro de desfoque (ghosting) e overshoot de overdrive do seu monitor em tempo real.
+- [Ghosting & Motion Blur Response Test](https://monitorsmith.app/motion-blur-ghosting-test/): Evaluate pixel response time (GtG), motion blur (MPRT), and overdrive overshoot in real time across 60Hz to 240Hz+.
 
 ## Artigos e Guias do Blog
 - [O que é Backlight Bleed e Como Testar seu Monitor](https://monitorsmith.app/blog/backlight-bleed-como-testar/): Entenda a física do Backlight Bleed (vazamento de luz), como testar seu monitor LCD/IPS em ambiente controlado e quando o comportamento é considerado vício de fabricação.

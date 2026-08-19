@@ -91,6 +91,11 @@ export function ControlIcon({ name, size = 18, title }) {
     case 'calculator':
       IconComponent = DeviceMobileDuotone;
       break;
+    case 'motion':
+    case 'motion-blur':
+    case 'ghosting':
+      IconComponent = SparkleDuotone;
+      break;
     case 'share':
       IconComponent = ShareNetworkDuotone;
       break;
