@@ -138,7 +138,7 @@ test('menu radial é nomeado e realmente troca a ferramenta', async ({ page }) =
   await page.locator('.app-mode-layer').click({ button: 'right', position: { x: 180, y: 220 } })
   const menu = page.getByRole('menu', { name: 'Troca rápida de ferramenta' })
   await expect(menu).toBeVisible()
-  await expect(menu.getByRole('menuitem')).toHaveCount(10)
+  await expect(menu.getByRole('menuitem')).toHaveCount(12)
   await expect(page.locator('#root')).toHaveAttribute('inert', '')
   await expect(page.locator('#root')).toHaveAttribute('aria-hidden', 'true')
 

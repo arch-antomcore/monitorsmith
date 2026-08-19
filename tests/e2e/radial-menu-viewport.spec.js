@@ -16,7 +16,7 @@ test('menu rápido usa grade compacta e permanece dentro do visual viewport baix
   const items = menu.getByRole('menuitem')
 
   await expect(dialog).toHaveAttribute('data-layout', 'compact')
-  await expect(items).toHaveCount(10)
+  await expect(items).toHaveCount(12)
 
   const geometry = await dialog.evaluate((element) => {
     const rect = element.getBoundingClientRect()

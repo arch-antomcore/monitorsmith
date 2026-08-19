@@ -160,11 +160,13 @@ Calculado em https://monitorsmith.app/`;
         {/* Inputs */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-white/[0.03] border border-white/10 rounded-2xl p-4 sm:p-5">
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-amber-400/80 mb-1.5">
+            <label htmlFor="ppi-input-width" className="block text-xs font-mono uppercase tracking-wider text-amber-400/80 mb-1.5">
               Largura (Pixels)
             </label>
             <input
+              id="ppi-input-width"
               type="number"
+              aria-label="Largura em pixels"
               min="100"
               max="16000"
               step="1"
@@ -175,11 +177,13 @@ Calculado em https://monitorsmith.app/`;
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-amber-400/80 mb-1.5">
+            <label htmlFor="ppi-input-height" className="block text-xs font-mono uppercase tracking-wider text-amber-400/80 mb-1.5">
               Altura (Pixels)
             </label>
             <input
+              id="ppi-input-height"
               type="number"
+              aria-label="Altura em pixels"
               min="100"
               max="16000"
               step="1"
@@ -190,11 +194,13 @@ Calculado em https://monitorsmith.app/`;
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-amber-400/80 mb-1.5">
+            <label htmlFor="ppi-input-diagonal" className="block text-xs font-mono uppercase tracking-wider text-amber-400/80 mb-1.5">
               Diagonal (Polegadas)
             </label>
             <input
+              id="ppi-input-diagonal"
               type="number"
+              aria-label="Diagonal em polegadas"
               min="1"
               max="200"
               step="0.1"
