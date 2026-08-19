@@ -1,35 +1,31 @@
 # MonitorSmith
 
-> MonitorSmith é uma suíte web gratuita de ferramentas visuais para monitores: inspeção de pixels, teste de vazamento de luz, iluminação de apoio, chroma key, timer de foco e mais. Funciona no navegador, sem cadastro. Desenvolvido pela EXVORN.TECH.
+> Suíte de utilitários web para inspeção visual de displays, iluminação e produtividade, por EXVORN.TECH.
 
-- URL: https://monitorsmith.app
-- Idioma principal: pt-BR
-- Instalável como PWA para uso offline
-- Todas as ferramentas processam dados localmente no dispositivo
+## Ferramentas de Inspeção e Cuidado de Displays
+- [Tela Preta OLED](https://monitorsmith.app/tela-preta-oled/): Superfície preta em tela cheia para observar uniformidade, pixels claros, IPS glow e vazamento de luz.
+- [Teste de Dead Pixel](https://monitorsmith.app/teste-de-dead-pixel/): Ciclo de 8 cores sólidas para inspecionar pixels mortos, presos e luminosos.
+- [Inspeção para Limpeza](https://monitorsmith.app/limpeza-de-monitor/): Fundos de alto contraste para evidenciar poeira e marcas antes de higienizar o painel.
+- [Teste de Monitor](https://monitorsmith.app/teste-de-monitor/): Checklist de triagem visual rápida para recebimento de displays novos ou usados.
+- [Verificação Visual](https://monitorsmith.app/verificacao-visual/): Padrões de referência para observar contraste, escala de cinza, gama 2.2/2.4 e nitidez.
 
-## Ferramentas de inspeção
+## Ferramentas de Cor e Iluminação
+- [Luz para Videochamada](https://monitorsmith.app/luz-para-videochamada/): Luz suave com temperatura de cor e intensidade ajustáveis.
+- [Tela Verde Chroma Key](https://monitorsmith.app/tela-verde-chroma/): Verde sólido #00B140 para fundos simples de foto e vídeo.
 
-- [Tela Preta OLED](https://monitorsmith.app/tela-preta-oled/): Superfície preta (#000000) em tela cheia para inspecionar IPS glow, pixels claros e vazamento de luz (backlight bleed) em ambiente escuro.
-- [Teste de Dead Pixel](https://monitorsmith.app/teste-de-dead-pixel/): 8 cores sólidas em tela cheia para identificar dead pixels, pixels presos e pontos luminosos.
-- [Inspeção para Limpeza](https://monitorsmith.app/limpeza-de-monitor/): Fundos de alto contraste que revelam poeira, marcas de dedo e manchas no painel antes da limpeza.
-- [Verificação Visual de Display](https://monitorsmith.app/teste-de-monitor/): Padrões de referência para observar contraste, escala de cinza, gradientes, nitidez e uniformidade.
+## Ferramentas de Tempo e Presença
+- [Timer de Foco](https://monitorsmith.app/timer-de-foco/): Temporizador Pomodoro com ruídos ambientes sintetizados localmente.
+- [Relógio em Tela Cheia](https://monitorsmith.app/relogio-em-tela-cheia/): Relógio digital e analógico sincronizado via VSync.
+- [Mensagem em Tela](https://monitorsmith.app/mensagem-em-tela/): Sinalização estática de alto contraste e gerador de QR Code.
+- [Teleprompter Online](https://monitorsmith.app/teleprompter-online/): Leitura dinâmica com controle de WPM e espelhamento horizontal.
+- [Loop de Marcas](https://monitorsmith.app/loop-de-marcas/): Carrossel de patrocinadores e marcas para eventos e vitrines.
 
-## Ferramentas de iluminação e cor
+## Artigos e Guias Técnicos
+- [Blog do MonitorSmith](https://monitorsmith.app/blog/): Artigos sobre tecnologia de displays, calibração e produtividade.
 
-- [Luz para Videochamada](https://monitorsmith.app/luz-para-videochamada/): Superfície clara com temperatura e intensidade ajustáveis para usar o monitor como luz de apoio em chamadas e gravações.
-- [Tela Verde para Chroma Key](https://monitorsmith.app/tela-verde-chroma/): Fundo verde #00B140 em tela cheia para composições de foto e vídeo.
-
-## Ferramentas de produtividade
-
-- [Timer de Foco](https://monitorsmith.app/timer-de-foco/): Timer em tela cheia para ciclos de concentração com presets de tempo e sons ambientes opcionais.
-- [Relógio em Tela Cheia](https://monitorsmith.app/relogio-em-tela-cheia/): Hora e data em formatos digital e analógico para tela secundária.
-- [Teleprompter Online](https://monitorsmith.app/teleprompter-online/): Texto em tela cheia com espelhamento horizontal para gravações e apresentações.
-- [Loop de Marcas](https://monitorsmith.app/loop-de-marcas/): Rotação automática de logos e imagens locais para eventos, lives e vitrines.
+## Informações Institucionais e Legais
+- [Política de Privacidade](https://monitorsmith.app/privacidade/): Tratamento de dados locais, cookies e diretrizes Google AdSense.
+- [Termos de Uso](https://monitorsmith.app/termos/): Condições de uso e propriedade intelectual.
 
 ## Optional
-
-- [Verificação Visual de Display (alternativa)](https://monitorsmith.app/verificacao-visual/): Rota alternativa para os mesmos padrões de verificação visual.
-- [Mensagem em Tela](https://monitorsmith.app/mensagem-em-tela/): Avisos e recados em tela cheia com texto e cores ajustáveis.
-- [Política de Privacidade](https://monitorsmith.app/privacidade/): Como o MonitorSmith trata dados e cookies.
-- [Termos de Serviço](https://monitorsmith.app/termos/): Condições de uso do serviço.
-- [llms-full.txt](https://monitorsmith.app/llms-full.txt): Documentação detalhada de cada ferramenta com descrições estendidas.
+- [Documentação Completa para LLMs](https://monitorsmith.app/llms-full.txt): Índice detalhado com URLs e descrições completas.

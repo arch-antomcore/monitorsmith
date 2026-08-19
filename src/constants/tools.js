@@ -14,7 +14,7 @@ export const SITE_METADATA = Object.freeze({
   contactUrl: 'https://exvorn.tech/',
   locale: 'pt-BR',
   fallbackLocale: 'pt-BR',
-  contentLastModified: '2026-07-28',
+  contentLastModified: '2026-08-18',
 });
 
 export const TOOL_CATEGORIES = Object.freeze([
