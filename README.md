@@ -23,6 +23,8 @@ O MonitorSmith transforma uma aba do navegador em superfícies de inspeção, co
 | Relógio | `clock` | `T` | Mostrar hora e data em uma tela secundária |
 | Mensagem em tela | `message` | `M` | Exibir avisos ou texto espelhado |
 | Loop de marcas | `sponsor-loop` | `L` | Apresentar imagens locais em rotação |
+| Calculadora de PPI | `ppi-calculator` | — | Calcular densidade de pixels (PPI), dot pitch e distância Retina Snellen 20/20 |
+| Teste de Ghosting | `motion-blur` | — | Avaliar tempo de resposta (GtG), MPRT, overshoot e taxa de FPS real a 60–240Hz+ |
 
 Os testes são observacionais. O MonitorSmith não certifica painéis, não mede diretamente taxa física de atualização, PWM, cabo, GPU ou fidelidade colorimétrica e não substitui instrumentos ou assistência técnica.
 

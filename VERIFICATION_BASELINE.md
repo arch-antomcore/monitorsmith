@@ -31,7 +31,7 @@
 
 ## 🧹 3. Limpeza Visual e Verificação de Integridade das Ferramentas
 - **Componente de Linhas Roxas**: Removido do projeto. Arquivo [`src/components/UI/RisingLines.jsx`](file:///c:/Users/Xgm/Desktop/APPWBP/src/components/UI/RisingLines.jsx) deletado.
-- **Catálogo de 11 Ferramentas Ativas (100% Operacionais)**:
+- **Catálogo de 13 Ferramentas Ativas (100% Operacionais)**:
   1. `black` (`BlackScreenMode.jsx`): Tela preta absoluta #000000 para OLED e inspeção de vazamento de luz.
   2. `dead-pixel` (`DeadPixelTestMode.jsx`): 8 cores sólidas com atalhos de navegação e temporizador.
   3. `cleaner` (`ScreenCleanerMode.jsx`): Padrões de alto contraste e trava de tela de 30 segundos.
@@ -42,20 +42,24 @@
   8. `clock` (`FullScreenClockMode.jsx`): Relógio digital e analógico para tela secundária.
   9. `message` (`MessageOverlayMode.jsx`): Mensagem em escala de sala e leitura de teleprompter espelhado.
   10. `sponsor-loop` (`SponsorLoopMode.jsx`): Rotação local de logos e imagens com transições e IndexedDB.
+  11. `ppi-calculator` (`PpiCalculatorMode.jsx`): Calculadora de densidade de pixels (PPI), dot pitch e distância de acuidade visual Retina Snellen 20/20.
+  12. `motion-blur` (`MotionBlurTestMode.jsx`): Teste de ghosting, tempo de resposta (GtG), MPRT e overshoot a 60Hz-240Hz+ com telemetria VSync em tempo real.
 
 ---
 
-## 🛡️ 4. Conformidade do Google AdSense (Relatório de Auditoria 2026-08-07)
+## 🛡️ 4. Conformidade do Google AdSense (Relatório de Auditoria 2026-08-19)
 
 | Requisito do AdSense | Implementação no Código | Status |
 | :--- | :--- | :--- |
 | **Tag no `<head>`** | Presente em [`index.html`](file:///c:/Users/Xgm/Desktop/APPWBP/index.html) (`ca-pub-5926952327268950`) | ✅ Aprovado |
-| **Conteúdo Semântico Prerendered** | Shell `<div id="root">` em [`index.html`](file:///c:/Users/Xgm/Desktop/APPWBP/index.html) contém H1 único, 11 ferramentas, seção Sobre e FAQ | ✅ Aprovado |
-| **H1 Único por Página** | Validados `index.html` e 28 páginas geradas com exatamente 1 tag `<h1>` | ✅ Aprovado |
+| **Conteúdo Semântico Prerendered** | Shell `<div id="root">` em [`index.html`](file:///c:/Users/Xgm/Desktop/APPWBP/index.html) contém H1 único, 13 ferramentas, seção Sobre e FAQ | ✅ Aprovado |
+| **H1 Único por Página** | Validados `index.html` e 69 páginas geradas com exatamente 1 tag `<h1>` | ✅ Aprovado |
+| **Rich Snippets JSON-LD** | Marcação `@type: HowTo`, `@type: SoftwareApplication`, `@type: FAQPage` e `@type: WebSite` em todos os 28 guias técnicos | ✅ Aprovado |
+| **Página de Erro 404 Customizada** | [`public/404.html`](file:///c:/Users/Xgm/Desktop/APPWBP/public/404.html) com navegação de recuperação e sem canonical incorreto | ✅ Aprovado |
 | **Divulgação de Cookies AdSense** | [`PrivacyModal.jsx`](file:///c:/Users/Xgm/Desktop/APPWBP/src/components/UI/PrivacyModal.jsx) contém avisos de cookies de terceiros/DART | ✅ Aprovado |
 | **Links de Opt-out de Anúncios** | Adicionados links para `https://www.google.com/settings/ads` e `https://policies.google.com/technologies/partner-sites` | ✅ Aprovado |
 | **Links Estáticos de Rodapé** | [`FooterSection.jsx`](file:///c:/Users/Xgm/Desktop/APPWBP/src/components/UI/FooterSection.jsx) inclui `<a href="/privacidade/">` e `<a href="/termos/">` | ✅ Aprovado |
-| **Metadados Editoriais e Schema** | `TechArticle` schema, autor (`EXVORN.TECH`) e data de atualização (`4 de agosto de 2026`) gerados em [`scripts/generate-seo-pages.mjs`](file:///c:/Users/Xgm/Desktop/APPWBP/scripts/generate-seo-pages.mjs) | ✅ Aprovado |
+| **Metadados Editoriais e Schema** | `TechArticle` schema, autor (`EXVORN.TECH`) e metodologia técnica detalhada em [`scripts/generate-seo-pages.mjs`](file:///c:/Users/Xgm/Desktop/APPWBP/scripts/generate-seo-pages.mjs) | ✅ Aprovado |
 
 ---
 
