@@ -6,6 +6,7 @@ import ClockDuotone from '../Icons/ClockDuotone';
 import CompassDuotone from '../Icons/CompassDuotone';
 import CornersInBold from '../Icons/CornersInBold';
 import CornersOutBold from '../Icons/CornersOutBold';
+import DeviceMobileDuotone from '../Icons/DeviceMobileDuotone';
 import EyeSlashDuotone from '../Icons/EyeSlashDuotone';
 import GridFourDuotone from '../Icons/GridFourDuotone';
 import HouseDuotone from '../Icons/HouseDuotone';
@@ -85,6 +86,10 @@ export function ControlIcon({ name, size = 18, title }) {
       break;
     case 'sponsor':
       IconComponent = SlideshowDuotone;
+      break;
+    case 'ppi':
+    case 'calculator':
+      IconComponent = DeviceMobileDuotone;
       break;
     case 'share':
       IconComponent = ShareNetworkDuotone;

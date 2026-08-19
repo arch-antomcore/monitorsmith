@@ -10,8 +10,8 @@ import {
 } from '../../src/constants/tools'
 
 describe('catálogo central de ferramentas', () => {
-  it('mantém as 11 ferramentas com IDs, slugs e atalhos válidos', () => {
-    expect(TOOL_COUNT).toBe(11)
+  it('mantém as ferramentas com IDs, slugs e atalhos válidos', () => {
+    expect(TOOL_COUNT).toBe(12)
     expect(validateToolRegistry()).toEqual([])
     expect(new Set(TOOLS_REGISTRY.map((tool) => tool.id)).size).toBe(TOOL_COUNT)
     expect(DOCK_TOOLS.every((tool) => tool.id && tool.label && tool.icon)).toBe(true)
@@ -31,7 +31,7 @@ describe('catálogo central de ferramentas', () => {
 
   it('mantém rotas SEO e atalhos PWA ligados a ferramentas existentes', () => {
     const ids = new Set(TOOLS_REGISTRY.map((tool) => tool.id))
-    expect(SEO_PAGE_ROUTES).toHaveLength(12)
+    expect(SEO_PAGE_ROUTES).toHaveLength(13)
     expect(SEO_PAGE_ROUTES.every((route) => ids.has(route.toolId))).toBe(true)
     expect(PWA_SHORTCUTS.every((shortcut) => ids.has(shortcut.toolId))).toBe(true)
   })

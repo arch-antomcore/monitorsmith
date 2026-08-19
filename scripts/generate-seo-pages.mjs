@@ -415,6 +415,39 @@ const EDITORIAL_CONTENT = Object.freeze({
       ]
     },
   },
+  'ppi-calculator': {
+    related: ['monitor-test', 'display-calibration', 'dead-pixel-test'],
+    pt: {
+      intro: 'Calculadora óptica e geométrica de densidade de pixels (PPI), tamanho do ponto (dot pitch) e distância de visualização para acuidade visual humana padrão (Snellen 20/20).',
+      steps: ['Insira a resolução horizontal e vertical do display (ex: 2560 × 1440 ou 3840 × 2160) ou clique em um preset de mercado.', 'Informe a medida diagonal da tela visível em polegadas (ex: 24", 27" ou 32").', 'Analise o PPI calculado, o tamanho físico do ponto em milímetros e a distância ideal recomendada para nitidez de padrão Retina.'],
+      uses: ['Cálculo de densidade de pixels e tamanho físico de monitores antes da compra.', 'Definição da distância ergonômica ideal de trabalho para evitar fadiga visual e percepção de malha de pixels.', 'Ajuste correto da escala de interface (DPI Scaling) no Windows, macOS e Linux.'],
+      limitations: 'Os cálculos consideram um painel plano com pixels quadrados homogêneos. Telas curvas mantêm a mesma densidade planar, mas variam o campo de visão periférico.',
+      faq: [
+        ['O que é PPI e por que ele importa?', 'PPI (Pixels Per Inch) representa a quantidade de pixels lineares por polegada. Quanto maior o PPI, mais nítidos serão os textos e elementos gráficos, eliminando bordas serrilhadas.'],
+        ['O que significa a distância ideal "Retina"?', 'É a distância a partir da qual o olho humano com visão normal 20/20 (acuidade de 1 minuto de arco) não consegue mais discernir pixels individuais a olho nu.']
+      ],
+      methodology: [
+        'A densidade de pixels é obtida pela fórmula euclidiana da diagonal em pixels dividida pela diagonal física em polegadas: PPI = sqrt(W² + H²) / D. O dot pitch físico é o inverso métrico exato: 25,4 mm / PPI.',
+        'O cálculo do limiar de retinopatia baseia-se na acuidade visual padrão de Snellen (visão 20/20 ou 1.0 decimal), onde a resolução angular máxima do olho humano corresponde a 1 arco-minuto (1/60° ou 0,000290888 radianos). A distância em que um pixel subtende menos de 1 arco-minuto é dada por Distância (cm) = (Dot Pitch mm / 2 · tan(0,5′)) / 10 ≈ 8732 / PPI.',
+        'As recomendações de escala de sistema operacional (DPI scaling) equilibram a legibilidade de fontes vetoriais (mínimo de 10 a 12 pontos físicos) com a preservação de espaço de trabalho útil em ambientes Windows e macOS.'
+      ]
+    },
+    en: {
+      intro: 'Optical and geometric display calculator for pixel density (PPI), dot pitch (mm), and optimal viewing distance based on standard human visual acuity (Snellen 20/20).',
+      steps: ['Enter horizontal and vertical display resolution (e.g., 2560 × 1440 or 3840 × 2160) or select a popular market preset.', 'Specify the diagonal screen measurement in inches (e.g., 24", 27", or 32").', 'Review calculated PPI, physical dot pitch in millimeters, and the recommended viewing distance for Retina-grade acuity.'],
+      uses: ['Determining pixel density and physical pixel size prior to purchasing new monitors.', 'Setting ergonomic viewing distance to eliminate visual fatigue and visible pixel grid structure.', 'Configuring optimal OS scaling (DPI Scaling) in Windows, macOS, and Linux.'],
+      limitations: 'Calculations assume flat panels with square pixel geometry. Curved screens share the same planar pixel density but alter peripheral field-of-view angles.',
+      faq: [
+        ['What is PPI and why does it matter?', 'PPI (Pixels Per Inch) measures linear pixel density. Higher PPI produces sharper text and crisper graphics, eliminating visible subpixel aliasing.'],
+        ['What does "Retina" viewing distance mean?', 'It is the minimum distance at which a person with standard 20/20 vision (1 arcminute resolving power) cannot distinguish individual display pixels.']
+      ],
+      methodology: [
+        'Pixel density is derived from the Euclidean diagonal pixel count divided by physical diagonal in inches: PPI = sqrt(W² + H²) / D. Dot pitch is the exact metric reciprocal: 25.4 mm / PPI.',
+        'The Retina visual acuity threshold adheres to standard Snellen 20/20 vision (1 arcminute or 0.000290888 radians angular resolution). The distance where a single pixel subtends under 1 arcminute is given by Distance (cm) = (Dot Pitch mm / 2 · tan(0.5′)) / 10 ≈ 8732 / PPI.',
+        'Operating system DPI scaling recommendations balance vector font legibility (10–12 physical points minimum) against desktop workspace productivity across Windows and macOS.'
+      ]
+    }
+  },
 });
 
 const LEGAL_PAGES = Object.freeze([

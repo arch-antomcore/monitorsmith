@@ -17,6 +17,7 @@ export const MODE_IDS = Object.freeze({
   MESSAGE: 'message',
   COLOR: 'color',
   SPONSOR_LOOP: 'sponsor-loop',
+  PPI_CALCULATOR: 'ppi-calculator',
 });
 
 export const DISPLAY_MODE_IDS = Object.freeze([

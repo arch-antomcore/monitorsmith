@@ -23,6 +23,7 @@ const FullScreenClockMode = lazy(() => import('./components/Modes/FullScreenCloc
 const MessageOverlayMode = lazy(() => import('./components/Modes/MessageOverlayMode'));
 const ScreenCleanerMode = lazy(() => import('./components/Modes/ScreenCleanerMode'));
 const SponsorLoopMode = lazy(() => import('./components/Modes/SponsorLoopMode'));
+const PpiCalculatorMode = lazy(() => import('./components/Modes/PpiCalculatorMode'));
 
 const OnboardingOverlay = lazy(() => import('./components/UI/OnboardingOverlay'));
 
@@ -357,6 +358,14 @@ function DisplaySuite() {
         );
       case MODES.SPONSOR_LOOP:
         return <SponsorLoopMode {...commonModeProps} />;
+      case MODES.PPI_CALCULATOR:
+        return (
+          <PpiCalculatorMode
+            {...commonModeProps}
+            isFullscreen={isFullscreen}
+            onToggleFullscreen={toggleFullscreen}
+          />
+        );
       case MODES.BLACK:
       default:
         return <BlackScreenMode {...commonModeProps} showHint={false} />;

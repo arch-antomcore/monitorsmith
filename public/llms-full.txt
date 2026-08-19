@@ -27,6 +27,8 @@
 - [Online Teleprompter](https://monitorsmith.app/online-teleprompter/): Display and mirror fullscreen text as a simple reading aid for recordings.
 - [Loop de Marcas em Tela Cheia](https://monitorsmith.app/loop-de-marcas/): Apresente logos e imagens locais em rotação automática para eventos, transmissões e vitrines.
 - [Fullscreen Brand Loop](https://monitorsmith.app/sponsor-loop/): Present local logos and images in an automatic rotation for events, streams and displays.
+- [Calculadora de PPI e Densidade de Pixels](https://monitorsmith.app/calculadora-ppi-densidade-monitor/): Calcule o PPI (pixels por polegada), dot pitch em milímetros e a distância ideal de visualização para acuidade Snellen 20/20.
+- [Monitor PPI & Pixel Density Calculator](https://monitorsmith.app/ppi-monitor-calculator/): Calculate PPI (pixels per inch), dot pitch in millimeters and optimal viewing distance for 20/20 Snellen visual acuity.
 
 ## Artigos e Guias do Blog
 - [O que é Backlight Bleed e Como Testar seu Monitor](https://monitorsmith.app/blog/backlight-bleed-como-testar/): Entenda a física do Backlight Bleed (vazamento de luz), como testar seu monitor LCD/IPS em ambiente controlado e quando o comportamento é considerado vício de fabricação.

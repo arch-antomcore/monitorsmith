@@ -284,6 +284,29 @@ export const TOOLS_REGISTRY = Object.freeze([
         { slug: 'sponsor-loop', title: 'Fullscreen Sponsor and Brand Loop', h1: 'Fullscreen Brand Loop', description: 'Present local logos and images in an automatic rotation for events, streams and displays.' }),
     ],
   },
+  {
+    id: 'ppi-calculator',
+    mode: 'ppi-calculator',
+    aliases: ['ppi', 'dpi', 'calculadora-ppi', 'retina-calculator', 'pixel-density'],
+    category: 'Ver e cuidar',
+    title: 'Calculadora de PPI & Retina',
+    dockLabel: 'PPI & Retina',
+    heroTitle: 'Calculadora de PPI e Distância Retina',
+    description: 'Calcule a densidade de pixels (PPI), tamanho do ponto e distância ideal de visualização Snellen 20/20.',
+    heroDesc: 'Descubra a densidade real em PPI, tamanho físico do pixel (dot pitch) e a distância em que a tela atinge a nitidez Retina.',
+    when: 'Para planejar compras de monitores, calcular nitidez e configurar a escala ideal no sistema operacional.',
+    icon: 'ppi',
+    tone: 'calibration',
+    keyboard: null,
+    dock: { visible: true, order: 11 },
+    hero: { visible: true, order: 8 },
+    pwa: { visible: true, name: 'Calculadora PPI', shortName: 'PPI' },
+    seoPages: [
+      seoPage('ppi-calculator',
+        { slug: 'calculadora-ppi-densidade-monitor', title: 'Calculadora de PPI e Distância Retina de Monitor', h1: 'Calculadora de PPI e Densidade de Pixels', description: 'Calcule o PPI (pixels por polegada), dot pitch em milímetros e a distância ideal de visualização para acuidade Snellen 20/20.' },
+        { slug: 'ppi-monitor-calculator', title: 'Monitor PPI & Retina Distance Calculator Online', h1: 'Monitor PPI & Pixel Density Calculator', description: 'Calculate PPI (pixels per inch), dot pitch in millimeters and optimal viewing distance for 20/20 Snellen visual acuity.' }),
+    ],
+  },
 ]);
 
 const byOrder = (placement) => (left, right) =>
