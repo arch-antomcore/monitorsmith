@@ -55,7 +55,7 @@ let missingCanonical = 0;
 
 for (const file of htmlFiles) {
   const rel = path.relative(dist, file).replace(/\\/g, '/');
-  if (rel.startsWith('google') && rel.endsWith('.html')) continue;
+  if (rel === '404.html' || (rel.startsWith('google') && rel.endsWith('.html'))) continue;
   const html = fs.readFileSync(file, 'utf8');
 
   // AdSense check

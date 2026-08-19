@@ -1020,6 +1020,49 @@ ${blogLines}
 `;
 }
 
+function render404Page() {
+  return `<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Página Não Encontrada (404) | ${SITE_METADATA.name}</title>
+  <meta name="description" content="A página solicitada não foi encontrada no MonitorSmith. Explore nossas ferramentas de teste de monitor, guias e blog.">
+  <meta name="theme-color" content="#030304">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" href="/logo.png" type="image/png">
+  <style>
+    :root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif;display:flex;flex-direction:column;min-height:100vh}
+    main{flex:1;width:min(680px,calc(100% - 2rem));margin:auto;padding:4rem 0;text-align:center}
+    h1{font-size:clamp(3rem,8vw,5rem);line-height:1;margin:0 0 1rem;color:var(--accent);font-family:monospace}
+    h2{font-size:1.5rem;margin:0 0 1rem}
+    p{color:var(--muted);margin:0 0 2rem}
+    .links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+    .cta{display:inline-flex;padding:.85rem 1.4rem;border-radius:.75rem;background:var(--accent);color:#171006;font-weight:800;text-decoration:none;transition:transform .15s}
+    .cta:hover{transform:scale(1.03)}
+    .cta.secondary{background:var(--surface);color:var(--text);border:1px solid var(--line)}
+    footer{padding:2rem 0;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>404</h1>
+    <h2>Página Não Encontrada</h2>
+    <p>O link que você acessou pode ter sido movido ou não existe. Explore nossas ferramentas e guias de display abaixo:</p>
+    <div class="links">
+      <a class="cta" href="/">Todas as Ferramentas →</a>
+      <a class="cta secondary" href="/blog/">Acessar o Blog 📚</a>
+      <a class="cta secondary" href="/sobre/">Sobre Nós</a>
+    </div>
+  </main>
+  <footer>
+    <p>© 2026 MonitorSmith · <a href="https://exvorn.tech/" style="color:#fbbf24">EXVORN.TECH</a></p>
+  </footer>
+</body>
+</html>`;
+}
+
 async function main() {
   validateEditorialContent();
 
@@ -1057,13 +1100,17 @@ async function main() {
     generatedFiles.push(`/blog/${article.slug}/`);
   }
 
+  const notFoundHtml = render404Page();
+  await fs.writeFile(path.join(DIST_DIR, '404.html'), notFoundHtml, 'utf8');
+
   await fs.writeFile(path.join(DIST_DIR, 'sitemap.xml'), generateSitemapXml(), 'utf8');
   await fs.writeFile(path.join(DIST_DIR, 'robots.txt'), generateRobotsTxt(), 'utf8');
   await fs.writeFile(path.join(DIST_DIR, 'llms.txt'), generateLlmsText(), 'utf8');
   await fs.writeFile(path.join(DIST_DIR, 'llms-full.txt'), generateLlmsFullText(), 'utf8');
 
-  // Also write llms.txt and llms-full.txt to public/
+  // Also write llms.txt, llms-full.txt and 404.html to public/
   const publicDir = path.resolve(process.cwd(), 'public');
+  await fs.writeFile(path.join(publicDir, '404.html'), notFoundHtml, 'utf8');
   await fs.writeFile(path.join(publicDir, 'llms.txt'), generateLlmsText(), 'utf8');
   await fs.writeFile(path.join(publicDir, 'llms-full.txt'), generateLlmsFullText(), 'utf8');
 
@@ -1076,3 +1123,4 @@ main().catch((error) => {
   console.error(error);
   process.exit(1);
 });
+
