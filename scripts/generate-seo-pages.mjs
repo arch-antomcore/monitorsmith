@@ -615,6 +615,19 @@ function renderToolPage(route, locale) {
     },
     {
       '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      name: metadata.h1,
+      description: metadata.description,
+      inLanguage: isEn ? 'en-US' : 'pt-BR',
+      step: content.steps.map((stepText, index) => ({
+        '@type': 'HowToStep',
+        position: index + 1,
+        name: `${isEn ? 'Step' : 'Passo'} ${index + 1}`,
+        text: stepText,
+      })),
+    },
+    {
+      '@context': 'https://schema.org',
       '@type': 'WebApplication',
       name: metadata.title,
       description: metadata.description,
