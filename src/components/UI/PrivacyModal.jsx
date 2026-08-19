@@ -88,7 +88,7 @@ export default function PrivacyModal({ label = 'Política de Privacidade', class
           </section>
 
           <p style={{ margin: '6px 0 0', paddingTop: '12px', borderTop: '1px solid var(--ms-border, rgba(128,128,128,0.2))', color: 'var(--text-muted)', fontFamily: 'monospace', fontSize: '0.74rem' }}>
-            Última atualização: 10 de agosto de 2026.
+            Última atualização: 18 de agosto de 2026.
           </p>
         </div>
       </Modal>
