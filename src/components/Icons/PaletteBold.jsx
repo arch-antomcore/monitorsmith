@@ -1,0 +1,25 @@
+import * as React from "react";
+const SvgPaletteBold = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 256 256"
+    width="1em"
+    height="1em"
+    {...props}
+  >
+    <path fill="none" d="M0 0h256v256H0z" />
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={24}
+      d="M128 192a24 24 0 0 1 24-24h46.21a24 24 0 0 0 23.4-18.65 96.5 96.5 0 0 0 2.39-22.18c-.45-52.82-44.16-95.7-97-95.17a96 96 0 0 0-95 96c0 41.81 26.73 73.44 64 86.61A24 24 0 0 0 128 192"
+    />
+    <circle cx={128} cy={76} r={16} />
+    <circle cx={84} cy={100} r={16} />
+    <circle cx={84} cy={156} r={16} />
+    <circle cx={172} cy={100} r={16} />
+  </svg>
+);
+export default SvgPaletteBold;

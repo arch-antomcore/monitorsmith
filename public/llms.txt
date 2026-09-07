@@ -1,0 +1,58 @@
+# MonitorSmith
+
+> Suíte de utilitários web para inspeção visual de displays, iluminação e produtividade, por EXVORN.TECH.
+
+## Ver e cuidar
+- [Tela preta](https://monitorsmith.app/tela-preta-oled/): Preencha a tela com preto absoluto.
+- [Teste visual de pixels](https://monitorsmith.app/teste-de-dead-pixel/): Percorra cores sólidas e encontre pontos suspeitos no painel.
+- [Inspeção para limpeza](https://monitorsmith.app/limpeza-de-monitor/): Alto contraste para revelar poeira, marcas e manchas.
+- [Verificação visual](https://monitorsmith.app/teste-de-monitor/): Padrões experimentais de escala, cor, nitidez e contraste.
+- [Calculadora de PPI & Retina](https://monitorsmith.app/calculadora-ppi-densidade-monitor/): Calcule a densidade de pixels (PPI), tamanho do ponto e distância ideal de visualização Snellen 20/20.
+- [Teste de ghosting & motion blur](https://monitorsmith.app/teste-de-ghosting-monitor/): Observe rastros, borrão de movimento e overshoot; acompanhe a cadência da animação.
+- [Uniformidade e vazamento](https://monitorsmith.app/teste-de-uniformidade-monitor/): Campos de cinza de referência para observar clouding, glow e manchas.
+- [Gradiente e banding](https://monitorsmith.app/?tool=gradient-banding): Rampas suaves para detectar degraus de cor e dithering do driver.
+- [Exercitador de pixels](https://monitorsmith.app/?tool=pixel-exerciser): Ciclo rápido de cores para estimular subpixels presos e retenção leve.
+
+## Medição e desempenho
+- [Ficha técnica do display](https://monitorsmith.app/informacoes-do-monitor/): Leia resolução lógica, escala e recursos de cor e GPU informados pelo navegador.
+- [Medidor de Hz e frame time](https://monitorsmith.app/teste-de-taxa-de-atualizacao-hz/): Estime a cadência da animação, o intervalo entre quadros e oscilações no navegador.
+- [Tempo de reação e clique](https://monitorsmith.app/?tool=reaction-test): Cinco rodadas cronometradas com média, melhor marca e desvio.
+
+## Cor e iluminação
+- [Luz suave](https://monitorsmith.app/luz-para-videochamada/): Uma superfície clara com temperatura visual e intensidade ajustáveis.
+- [Estúdio de cor](https://monitorsmith.app/?tool=color): Preencha a tela com uma cor livre ou um preset.
+
+## Atalho de cor
+- [Tela verde](https://monitorsmith.app/tela-verde-chroma/): Verde sólido #00B140 para composições por chroma key.
+
+## Cálculo e óptica
+- [Calculadoras de display](https://monitorsmith.app/calculadora-de-banda-hdmi-displayport/): Banda de vídeo, distância de visão com FOV e proporção de tela.
+- [Régua de tela](https://monitorsmith.app/?tool=screen-ruler): Régua em centímetros e polegadas após calibração manual por uma referência conhecida.
+
+## Periféricos
+- [Teste de teclado](https://monitorsmith.app/teste-de-teclado-online/): Mapa visual de teclas, histórico de códigos e teclas simultâneas.
+- [Teste de mouse](https://monitorsmith.app/teste-de-mouse-online/): Botões, roda, clique duplo indesejado e taxa de eventos entregue pelo navegador.
+- [Teste de controle](https://monitorsmith.app/teste-de-controle-online/): Botões, gatilhos analógicos, drift de analógico e vibração.
+- [Teste de áudio e microfone](https://monitorsmith.app/?tool=audio-test): Canais esquerdo e direito, varredura de frequência e nível do microfone.
+- [Teste de webcam](https://monitorsmith.app/?tool=webcam-test): Prévia local com resolução, taxa de quadros e escolha de dispositivo.
+
+## Tempo e presença
+- [Foco](https://monitorsmith.app/timer-de-foco/): Um timer discreto para ciclos de concentração.
+- [Relógio](https://monitorsmith.app/relogio-em-tela-cheia/): Hora e data legíveis para uma tela secundária.
+- [Mensagem em tela](https://monitorsmith.app/mensagem-em-tela/): Exiba um recado em escala de sala ou texto espelhado.
+- [Loop de marcas](https://monitorsmith.app/loop-de-marcas/): Apresente imagens e logos locais em rotação automática.
+
+## Touch e mobile
+- [Teste de touchscreen](https://monitorsmith.app/teste-de-touchscreen-celular-tablet/): Teste zonas mortas e multi-toque do seu celular, tablet ou monitor touch.
+
+## Artigos e Guias Técnicos
+- [Blog do MonitorSmith](https://monitorsmith.app/blog/): Artigos sobre tecnologia de displays, calibração e produtividade.
+
+## Informações Institucionais e Legais
+- [Sobre o MonitorSmith](https://monitorsmith.app/sobre/): Propósito, arquitetura client-side e padrões de engenharia de displays da EXVORN.TECH.
+- [Contato e Suporte](https://monitorsmith.app/contato/): Canais oficiais de atendimento, dúvidas técnicas e feedback.
+- [Política de Privacidade](https://monitorsmith.app/privacidade/): Tratamento de dados locais, cookies e diretrizes Google AdSense.
+- [Termos de Uso](https://monitorsmith.app/termos/): Condições de uso e propriedade intelectual.
+
+## Optional
+- [Documentação Completa para LLMs](https://monitorsmith.app/llms-full.txt): Índice detalhado com URLs e descrições completas.

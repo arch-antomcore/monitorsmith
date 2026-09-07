@@ -1,0 +1,214 @@
+{
+  "id": "/",
+  "name": "MonitorSmith — Ferramentas para Monitores",
+  "short_name": "MonitorSmith",
+  "description": "27 ferramentas visuais para inspecionar displays, testar periféricos e organizar telas secundárias.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
+  "background_color": "#030304",
+  "theme_color": "#030304",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "categories": [
+    "utilities",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Tela Preta",
+      "short_name": "Preto",
+      "description": "Preencha a tela com preto absoluto.",
+      "url": "/?tool=black",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Teste de Pixels",
+      "short_name": "Pixels",
+      "description": "Percorra cores sólidas e encontre pontos suspeitos no painel.",
+      "url": "/?tool=dead-pixel",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Tela Verde",
+      "short_name": "Chroma",
+      "description": "Verde sólido #00B140 para composições por chroma key.",
+      "url": "/?tool=green-screen",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Timer de Foco",
+      "short_name": "Foco",
+      "description": "Um timer discreto para ciclos de concentração.",
+      "url": "/?tool=focus-timer",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Calculadora PPI",
+      "short_name": "PPI",
+      "description": "Calcule a densidade de pixels (PPI), tamanho do ponto e distância ideal de visualização Snellen 20/20.",
+      "url": "/?tool=ppi-calculator",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Teste de Ghosting",
+      "short_name": "Ghosting",
+      "description": "Observe rastros, borrão de movimento e overshoot; acompanhe a cadência da animação.",
+      "url": "/?tool=motion-blur",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Teste Touchscreen",
+      "short_name": "Touch",
+      "description": "Teste zonas mortas e multi-toque do seu celular, tablet ou monitor touch.",
+      "url": "/?tool=touch-tester",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Ficha do Display",
+      "short_name": "Ficha",
+      "description": "Leia resolução lógica, escala e recursos de cor e GPU informados pelo navegador.",
+      "url": "/?tool=display-info",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Medidor de Hz",
+      "short_name": "Hz",
+      "description": "Estime a cadência da animação, o intervalo entre quadros e oscilações no navegador.",
+      "url": "/?tool=refresh-rate",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Uniformidade",
+      "short_name": "Uniform.",
+      "description": "Campos de cinza de referência para observar clouding, glow e manchas.",
+      "url": "/?tool=uniformity",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Teste de Teclado",
+      "short_name": "Teclado",
+      "description": "Mapa visual de teclas, histórico de códigos e teclas simultâneas.",
+      "url": "/?tool=keyboard-test",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Teste de Mouse",
+      "short_name": "Mouse",
+      "description": "Botões, roda, clique duplo indesejado e taxa de eventos entregue pelo navegador.",
+      "url": "/?tool=mouse-test",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Calculadoras de Display",
+      "short_name": "Calc",
+      "description": "Banda de vídeo, distância de visão com FOV e proporção de tela.",
+      "url": "/?tool=display-calculators",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

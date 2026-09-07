@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#030304" />
+    <!-- SEO essencial -->
+    <meta name="description" content="MonitorSmith reúne ferramentas visuais para inspeção visual de monitores, tela preta, teste de pixels, ghosting e motion blur, calculadora de PPI, luz suave, timer, relógio e teleprompter." />
+    <meta name="author" content="EXVORN.TECH" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+    <!-- OpenGraph & Social Cards -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="MonitorSmith" />
+    <meta property="og:title" content="MonitorSmith — Ferramentas visuais e testes para monitores" />
+    <meta property="og:description" content="Inspecione pixels e superfícies, teste ghosting e motion blur, calcule PPI e distância de referência, use tela preta, luz de apoio, timer e teleprompter no navegador." />
+    <meta property="og:url" content="https://monitorsmith.app/" />
+    <meta property="og:image" content="https://monitorsmith.app/og-image.jpg" />
+    <meta property="og:image:secure_url" content="https://monitorsmith.app/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="MonitorSmith — ferramentas visuais e testes para monitores" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MonitorSmith — Ferramentas visuais e testes para monitores" />
+    <meta name="twitter:description" content="ferramentas gratuitas para inspeção visual, teste de ghosting, calculadora de PPI, superfícies de cor e iluminação de apoio." />
+    <meta name="twitter:image" content="https://monitorsmith.app/og-image.jpg" />
+    <meta name="twitter:image:alt" content="MonitorSmith — ferramentas visuais para o seu monitor, por EXVORN.TECH" />
+
+    <!-- Canonical, PWA e recursos externos -->
+    <link rel="canonical" href="https://monitorsmith.app/" />
+    <link rel="alternate" hreflang="pt-BR" href="https://monitorsmith.app/" />
+    <link rel="alternate" hreflang="x-default" href="https://monitorsmith.app/" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="describedby" href="/llms.txt" type="text/markdown" />
+
+    <!-- Mobile & PWA Specs -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MonitorSmith" />
+
+    <!-- Theme Initialization (Dark by default, prevents FOUC) -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem("ms_studio_theme");
+          var isLight = saved === "light";
+          if (isLight) {
+            document.documentElement.classList.add("ms-studio-light", "light-mode");
+            document.documentElement.classList.remove("dark", "ms-studio-dark");
+          } else {
+            document.documentElement.classList.add("dark", "ms-studio-dark");
+            document.documentElement.classList.remove("ms-studio-light", "light-mode");
+          }
+        } catch(e) {}
+      })();
+    </script>
+
+    <!-- Schema.org JSON-LD Structured Data Graph for Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://monitorsmith.app/#org",
+          "name": "EXVORN.TECH",
+          "url": "https://exvorn.tech/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://monitorsmith.app/icons/icon-512.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://exvorn.tech/"
+          ],
+          "knowsAbout": [
+            "Display Technology",
+            "ISO 9241-307 Ergonomics and Pixel Defect Standards",
+            "sRGB IEC 61966-2-1 Colorimetry",
+            "OLED and QD-OLED Panel Uniformity",
+            "Motion Blur and VSync Telemetry",
+            "Snellen 20/20 Visual Acuity and Pixel Density Optics"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://monitorsmith.app/#website",
+          "url": "https://monitorsmith.app/",
+          "name": "MonitorSmith",
+          "description": "Ferramentas web para inspeção visual de monitores, teste de ghosting, calculadora de PPI, superfícies de cor e produtividade.",
+          "inLanguage": "pt-BR",
+          "isAccessibleForFree": true,
+          "publisher": { "@id": "https://monitorsmith.app/#org" }
+        },
+        {
+          "@type": "WebApplication",
+          "@id": "https://monitorsmith.app/#webapp",
+          "name": "MonitorSmith",
+          "url": "https://monitorsmith.app/",
+          "description": "Suíte com ferramentas web para inspeção visual de monitores, teste de ghosting e motion blur, calculadora de PPI, superfícies de cor e luz de apoio.",
+          "applicationCategory": "UtilitiesApplication",
+          "inLanguage": "pt-BR",
+          "isAccessibleForFree": true,
+          "operatingSystem": "All (Windows, macOS, Linux, Android, iOS)",
+          "browserRequirements": "Navegador moderno; recursos como fullscreen, áudio, Wake Lock e PWA dependem de suporte e permissão.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "BRL"
+          },
+          "author": { "@id": "https://monitorsmith.app/#org" },
+          "creator": { "@id": "https://monitorsmith.app/#org" },
+          "publisher": { "@id": "https://monitorsmith.app/#org" },
+          "featureList": [
+            "Teste de dead pixel e pixel preso",
+            "Tela preta absoluta para OLED e teste de backlight bleed",
+            "Observação visual de ghosting e motion blur com estimativa da cadência do navegador",
+            "Calculadora de densidade de pixels (PPI), dot pitch e distância Retina Snellen 20/20",
+            "Inspeção para limpeza de tela e poeira",
+            "Padrões para verificação visual de contraste, gradiente e gamma",
+            "Luz ajustável para videochamadas com temperatura de cor",
+            "Estúdio de cor livre e tela verde para chroma key",
+            "Timer de foco (Pomodoro) com áudio sintetizado",
+            "Relógio de tela cheia digital e analógico",
+            "Mensagem em tela cheia com auto-ajuste de fonte",
+            "Teleprompter com espelhamento horizontal",
+            "Loop local de marcas e patrocinadores via IndexedDB"
+          ]
+        }
+      ]
+    }
+    </script>
+    <!-- Google AdSense Tag -->
+    <meta name="google-adsense-account" content="ca-pub-5926952327268950" />
+    <!-- Google Consent Mode v2: tudo negado até o usuário decidir. O script do
+         AdSense é injetado dinamicamente somente após o consentimento e apenas
+         em páginas com conteúdo editorial (ver src/lib/consent.js). -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        wait_for_update: 500
+      });
+    </script>
+    <title>MonitorSmith — Ferramentas visuais e testes para monitores</title>
+  </head>
+  <body>
+    <div id="root">
+      <main id="monitor-tools-home" class="ok-h11-hero">
+        <!-- Navegação Semântica do Header -->
+        <header style="max-width: 1100px; margin: 0 auto; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <div>
+            <a href="/" style="font-weight: 700; color: #fff; text-decoration: none; font-size: 1rem; letter-spacing: 0.05em;">MONITORSMITH</a>
+            <span style="font-size: 0.65rem; color: #fbbf24; margin-left: 6px; font-family: monospace;">EXVORN.TECH</span>
+          </div>
+          <nav aria-label="Navegação do site" style="display: flex; gap: 16px; font-size: 0.85rem;">
+            <a href="#monitor-tools" style="color: rgba(255,255,255,0.8); text-decoration: none;">Ferramentas</a>
+            <a href="/blog/" style="color: rgba(255,255,255,0.8); text-decoration: none;">Blog & Guias</a>
+            <a href="#about-title" style="color: rgba(255,255,255,0.8); text-decoration: none;">Metodologia</a>
+            <a href="/sobre/" style="color: rgba(255,255,255,0.8); text-decoration: none;">Sobre</a>
+            <a href="/contato/" style="color: rgba(255,255,255,0.8); text-decoration: none;">Contato</a>
+          </nav>
+        </header>
+
+        <section aria-describedby="library-description">
+          <div>
+            <span>EXVORN.TECH · Inspeção · Iluminação · Óptica · Foco</span>
+            <h1 id="library-title">Ferramentas para usar melhor seu monitor.</h1>
+            <p id="library-description">Inspecione pixels, teste ghosting, calcule densidade PPI, ilumine chamadas e organize o foco.</p>
+          </div>
+        </section>
+        
+        <section id="monitor-tools" aria-labelledby="tools-title">
+          <div>
+            <p>FERRAMENTAS</p>
+            <h2 id="tools-title">Escolha o que precisa fazer.</h2>
+            <p>Cada ferramenta ocupa a tela; pressione F quando quiser usar tela cheia.</p>
+          </div>
+          <div>
+            <article>
+              <h3><a href="/tela-preta-oled/">Tela Preta e Inspeção OLED / Vazamento de Luz</a></h3>
+              <p>Superfície #000000 para observar IPS glow e pontos luminosos em ambiente escuro.</p>
+            </article>
+            <article>
+              <h3><a href="/teste-de-dead-pixel/">Teste de Dead Pixels</a></h3>
+              <p>8 cores sólidas para conferência visual de pontos na tela.</p>
+            </article>
+            <article>
+              <h3><a href="/teste-de-ghosting-monitor/">Teste de Ghosting e Motion Blur</a></h3>
+              <p>Animação para observar rastros e overshoot, com estimativa da cadência do navegador. Não mede o GtG físico do painel.</p>
+            </article>
+            <article>
+              <h3><a href="/calculadora-ppi-densidade-monitor/">Calculadora de PPI e Distância de Referência</a></h3>
+              <p>Fórmulas de óptica de displays, dot pitch e distância de referência para acuidade 20/20.</p>
+            </article>
+            <article>
+              <h3><a href="/limpeza-de-monitor/">Inspeção para Limpeza</a></h3>
+              <p>Fundos de contraste para evidenciar marcas de dedo e poeira.</p>
+            </article>
+            <article>
+              <h3><a href="/teste-de-monitor/">Verificação Visual de Display</a></h3>
+              <p>Padrões visuais para observar contraste, níveis de cinza, gradientes e nitidez.</p>
+            </article>
+            <article>
+              <h3><a href="/luz-para-videochamada/">Luz para Videochamadas</a></h3>
+              <p>Fonte ajustável de luz suave e temperatura de cor para iluminar gravações.</p>
+            </article>
+            <article>
+              <h3><a href="/verificacao-visual/">Estúdio de Cor e Padrões</a></h3>
+              <p>Superfície de cor sólida livre ou predefinida para testes, cenários e fotos.</p>
+            </article>
+            <article>
+              <h3><a href="/tela-verde-chroma/">Tela Verde para Chroma Key</a></h3>
+              <p>Fundo verde puro (#00B140) para substituição de fundo em gravações.</p>
+            </article>
+            <article>
+              <h3><a href="/timer-de-foco/">Timer de Foco (Pomodoro)</a></h3>
+              <p>Ciclos de trabalho e descanso com temporizador visual e sons sintetizados.</p>
+            </article>
+            <article>
+              <h3><a href="/relogio-em-tela-cheia/">Relógio em Tela Cheia</a></h3>
+              <p>Exibição de hora e data em tela inteira em formatos digital e analógico.</p>
+            </article>
+            <article>
+              <h3><a href="/teleprompter-online/">Teleprompter e Mensagens</a></h3>
+              <p>Avisos em tela cheia e leitura de texto com espelhamento horizontal.</p>
+            </article>
+            <article>
+              <h3><a href="/loop-de-marcas/">Loop de Marcas</a></h3>
+              <p>Rotação local de imagens e marcas em tela cheia para apresentações.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- Artigos e Guias em Destaque -->
+        <section aria-labelledby="featured-articles-title">
+          <div>
+            <p>ENGENHARIA & ARTIGOS TÉCNICOS</p>
+            <h2 id="featured-articles-title">Guias e Artigos Especializados sobre Displays</h2>
+            <p>Aprofunde seus conhecimentos técnicos sobre tecnologia de painéis, calibração, acuidade visual e inspeção óptica.</p>
+          </div>
+          <div>
+            <article>
+              <h3><a href="/blog/ips-glow-vs-backlight-bleed/">IPS Glow vs Backlight Bleed: Como Identificar e Diferenciar</a></h3>
+              <p>Aprenda a distinguir o brilho angular característico da tecnologia IPS de defeitos reais de montagem e vazamento de luz traseira.</p>
+            </article>
+            <article>
+              <h3><a href="/blog/como-testar-monitor-oled/">Guia Completo para Testar e Cuidar de Monitores OLED</a></h3>
+              <p>Como verificar uniformidade de pretos, prevenir burn-in, testar retenção de imagem temporária e maximizar a vida útil de painéis OLED.</p>
+            </article>
+            <article>
+              <h3><a href="/blog/calibrar-monitor-fotografia-design/">Calibração Visual de Monitores para Fotografia e Design Gráfico</a></h3>
+              <p>Entenda os espaços sRGB, DCI-P3 e Adobe RGB, o ajuste de curva Gamma 2.2 e a percepção de escala de cinza para fluxos profissionais.</p>
+            </article>
+            <article>
+              <h3><a href="/blog/pixel-morto-vs-pixel-preso/">Dead Pixel vs Stuck Pixel: Diagnóstico, Testes e Garantia</a></h3>
+              <p>Saiba a diferença entre subpixels apagados e travados, limites da norma ISO 9241-307 adotada pelos fabricantes e como rodar ciclos cromáticos.</p>
+            </article>
+            <article>
+              <h3><a href="/blog/teste-contraste-gama-monitor/">Teste de Contraste e Gamma: O Que as Barras de Nível Revelam</a></h3>
+              <p>Como avaliar se o seu display esmaga detalhes em sombras (black crush) ou satura brancos em realces através de padrões de 16 níveis.</p>
+            </article>
+            <article>
+              <h3><a href="/blog/guia-completo-monitorsmith/">Engenharia do MonitorSmith: Como Funcionam as Ferramentas</a></h3>
+              <p>Visão técnica sobre renderização por Canvas, estimativas de cadência, cálculos de PPI, acuidade Snellen 20/20 e processamento local das ferramentas.</p>
+            </article>
+          </div>
+          <p><a href="/blog/">Explorar os artigos e guias no Blog →</a></p>
+        </section>
+
+        <!-- Arquitetura e Metodologia -->
+        <section aria-labelledby="about-title">
+          <div>
+            <p>ARQUITETURA & METODOLOGIA</p>
+            <h2 id="about-title">Como o MonitorSmith Funciona?</h2>
+          </div>
+          <div>
+            <p>O <strong>MonitorSmith</strong> é uma suíte profissional de utilitários e testes diagnósticos de display desenvolvida pela <strong>EXVORN.TECH</strong>. Criada para designers, fotógrafos, gamers e profissionais de tecnologia, a aplicação roda inteiramente no navegador sem a necessidade de downloads, cadastros ou instalações pesadas.</p>
+            <p>Os padrões visuais usam cores CSS e animações em <code>&lt;canvas&gt;</code>. A cadência observada depende do navegador e do sistema. As calculadoras estimam <strong>densidade de pixels (PPI)</strong>, distância entre pixels (dot pitch) e uma distância de referência para acuidade 20/20; não medem a visão do usuário nem substituem instrumentos de calibração.</p>
+            <p><strong>Processamento local:</strong> As ferramentas processam imagens, textos, áudio e entradas de dispositivos no navegador. Preferências e conteúdo do loop podem ficar salvos localmente. O acesso ao site usa a rede; anúncios externos dependem de consentimento. As ferramentas ficam disponíveis offline após a instalação bem-sucedida do cache; páginas e imagens editoriais dependem de visitas anteriores.</p>
+            <div>
+              <p><strong>Referências técnicas:</strong> Os guias discutem pixels, cor sRGB, gamma e acessibilidade. Essa referência não representa certificação do produto nem laudo do painel.</p>
+              <p>Desenvolvimento e conteúdo por <a href="https://exvorn.tech/">EXVORN.TECH</a>. Saiba mais na página <a href="/sobre/">Sobre</a> ou entre em <a href="/contato/">Contato</a>.</p>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="faq-title">
+          <div>
+            <p>PERGUNTAS FREQUENTES</p>
+            <h2 id="faq-title">Dúvidas comuns sobre teste de monitor</h2>
+          </div>
+          <dl>
+            <dt>Como testar se o monitor tem dead pixel ou pixel preso?</dt>
+            <dd>Abra o teste de pixels em tela cheia e alterne entre as cores. Pixels que não mudam ou permanecem apagados podem estar defeituosos.</dd>
+            <dt>Este teste funciona em OLED e LCD?</dt>
+            <dd>Sim, funciona em ambos. Em OLED ajuda a observar retenção de imagem, em LCD ajuda com pixels, vazamento de luz e uniformidade.</dd>
+            <dt>Como a ferramenta de tela preta reduz o consumo de energia?</dt>
+            <dd>Em painéis OLED, conteúdo escuro pode reduzir o consumo de energia. O efeito depende do brilho e do painel.</dd>
+            <dt>Preciso instalar algo para usar o MonitorSmith?</dt>
+            <dd>Não. Funciona direto no navegador. Se preferir, pode instalar como app para acesso offline.</dd>
+            <dt>Como verificar vazamento de luz (backlight bleed)?</dt>
+            <dd>Em um ambiente escuro, abra o modo de tela preta absoluta. Observe as bordas e os cantos da tela em busca de áreas esbranquiçadas ou vazamento excessivo.</dd>
+          </dl>
+        </section>
+
+        <footer>
+          <p>© 2026 MonitorSmith por <a href="https://exvorn.tech/">EXVORN.TECH</a>. Todos os direitos reservados.</p>
+          <p><a href="/blog/">Blog</a> | <a href="/sobre/">Sobre</a> | <a href="/contato/">Contato</a> | <a href="/privacidade/">Política de Privacidade</a> | <a href="/termos/">Termos de Serviço</a></p>
+        </footer>
+      </main>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script type="module">
+      if (import.meta.env.PROD && 'serviceWorker' in navigator && window.isSecureContext) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
+</body>
+</html>
