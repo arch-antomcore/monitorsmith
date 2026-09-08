@@ -907,6 +907,28 @@ body,
   letter-spacing: 0;
 }
 
+@media (max-width: 900px) and (orientation: portrait) {
+  .ok-h11-copy {
+    width: min(calc(100vw - 36px), 455px);
+  }
+}
+
+@media (max-width: 480px) and (orientation: portrait) {
+  .ok-h11-hero {
+    height: max(100svh, 960px);
+  }
+
+  .ok-h11-copy {
+    top: calc(var(--character-top) + var(--character-size) * 1.05);
+    width: min(calc(100vw - 36px), 366px);
+  }
+
+  .ok-h11-hero .ok-h11-copy button.msx-btn,
+  .ok-h11-hero .ok-h11-copy a.msx-btn {
+    padding-inline: 14px;
+  }
+}
+
 .ok-h11-hero .msx-btn {
   border-radius: var(--msx-radius);
 }

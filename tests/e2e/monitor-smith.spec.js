@@ -444,17 +444,41 @@ test.describe('quando o sistema força uma paleta de alto contraste', () => {
   })
 })
 
-test('landing não reserva a largura da scrollbar como rolagem horizontal', async ({ page }) => {
-  await page.setViewportSize({ width: 320, height: 568 })
-  await page.goto('/')
-  const dimensions = await page.evaluate(() => ({
-    viewport: document.documentElement.clientWidth,
-    content: document.documentElement.scrollWidth,
-    bodyViewport: document.body.clientWidth,
-    bodyContent: document.body.scrollWidth,
-  }))
-  expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport + 1)
-  expect(dimensions.bodyContent).toBeLessThanOrEqual(dimensions.bodyViewport + 1)
+test('landing contém texto e CTAs nos viewports portrait estreitos', async ({ page }) => {
+  for (const viewport of [
+    { width: 320, height: 568 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+    await page.locator('.ok-h11-portrait img').evaluate((image) => image.decode())
+
+    const geometry = await page.evaluate(() => {
+      const toRect = (element) => {
+        const rect = element.getBoundingClientRect()
+        return { top: rect.top, right: rect.right, bottom: rect.bottom, left: rect.left }
+      }
+      const hero = document.querySelector('.ok-h11-hero')
+      const copy = document.querySelector('.ok-h11-copy')
+      const actions = document.querySelector('.ok-h11-copy > div:last-child')
+      return {
+        viewport: document.documentElement.clientWidth,
+        content: document.documentElement.scrollWidth,
+        bodyViewport: document.body.clientWidth,
+        bodyContent: document.body.scrollWidth,
+        hero: toRect(hero),
+        copy: toRect(copy),
+        actions: toRect(actions),
+      }
+    })
+
+    expect(geometry.content).toBeLessThanOrEqual(geometry.viewport + 1)
+    expect(geometry.bodyContent).toBeLessThanOrEqual(geometry.bodyViewport + 1)
+    expect(geometry.copy.left).toBeGreaterThanOrEqual(0)
+    expect(geometry.copy.right).toBeLessThanOrEqual(viewport.width)
+    expect(geometry.copy.bottom).toBeLessThanOrEqual(geometry.hero.bottom - 26)
+    expect(geometry.actions.bottom).toBeLessThanOrEqual(geometry.hero.bottom - 26)
+  }
 })
 
 test('shell permanece contido nos viewports mínimos portrait e landscape', async ({ page }, testInfo) => {
