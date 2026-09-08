@@ -6,8 +6,8 @@ import { useI18n } from '../../i18n';
 const L = {
   pt: {
     title: 'Calculadoras de display',
-    desc: 'Três contas que resolvem quase toda dúvida de compra: banda do cabo, distância de visão e tamanho físico da tela.',
-    bandwidth: 'Banda de vídeo necessária', distance: 'Distância de visão e FOV', size: 'Dimensões por proporção',
+    desc: 'Três estimativas para comparar banda de sinal, campo de visão e tamanho físico da tela.',
+    bandwidth: 'Estimativa de banda de vídeo', distance: 'Distância de visão e FOV', size: 'Dimensões por proporção',
     width: 'Largura (px)', height: 'Altura (px)', rate: 'Taxa (Hz)', bpc: 'Bits por canal',
     raw: 'Taxa de pixels', dataRate: 'Banda estimada (+5%)', verdict: 'Referência de link',
     diagonal: 'Diagonal (pol)', ratioLabel: 'Proporção', fov: 'FOV horizontal alvo (graus)',
@@ -20,8 +20,8 @@ const L = {
   },
   en: {
     title: 'Display calculators',
-    desc: 'Three sums that answer almost every buying question: cable bandwidth, viewing distance and physical screen size.',
-    bandwidth: 'Required video bandwidth', distance: 'Viewing distance and FOV', size: 'Dimensions per aspect ratio',
+    desc: 'Three estimates for comparing signal bandwidth, field of view and physical screen size.',
+    bandwidth: 'Estimated video bandwidth', distance: 'Viewing distance and FOV', size: 'Dimensions per aspect ratio',
     width: 'Width (px)', height: 'Height (px)', rate: 'Refresh (Hz)', bpc: 'Bits per channel',
     raw: 'Pixel rate', dataRate: 'Estimated bandwidth (+5%)', verdict: 'Link reference',
     diagonal: 'Diagonal (in)', ratioLabel: 'Aspect ratio', fov: 'Target horizontal FOV (degrees)',
@@ -34,8 +34,8 @@ const L = {
   },
   es: {
     title: 'Calculadoras de pantalla',
-    desc: 'Tres cuentas que resuelven casi cualquier duda de compra: ancho de banda del cable, distancia de visión y tamaño físico.',
-    bandwidth: 'Ancho de banda necesario', distance: 'Distancia de visión y FOV', size: 'Dimensiones por relación de aspecto',
+    desc: 'Tres estimaciones para comparar ancho de banda, campo de visión y tamaño físico.',
+    bandwidth: 'Estimación de ancho de banda', distance: 'Distancia de visión y FOV', size: 'Dimensiones por relación de aspecto',
     width: 'Ancho (px)', height: 'Alto (px)', rate: 'Tasa (Hz)', bpc: 'Bits por canal',
     raw: 'Tasa de píxeles', dataRate: 'Banda estimada (+5%)', verdict: 'Referencia de enlace',
     diagonal: 'Diagonal (pulg)', ratioLabel: 'Relación de aspecto', fov: 'FOV horizontal objetivo (grados)',

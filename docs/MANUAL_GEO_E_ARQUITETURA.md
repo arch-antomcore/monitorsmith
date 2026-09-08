@@ -284,4 +284,4 @@ Não reescreva `main`, não use force-push e não publique com gates vermelhos.
 
 ---
 
-Última revisão do manual: 2026-09-07.
+Última revisão do manual: 2026-09-08.

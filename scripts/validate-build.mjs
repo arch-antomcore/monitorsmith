@@ -62,6 +62,7 @@ for (const file of htmlFiles) {
 
   if (!/<title>[^<]{8,}<\/title>/i.test(html)) errors.push(`${relative}: title ausente ou vazio`)
   if (!/<meta\s+name=["']description["']\s+content=["'][^"']{40,}["']/i.test(html)) errors.push(`${relative}: meta description ausente/curta`)
+  if (!/<meta\s+name=["']referrer["']\s+content=["']strict-origin-when-cross-origin["']/i.test(html)) errors.push(`${relative}: política de referrer ausente`)
   if (countMatches(html, /<h1(?:\s|>)/gi) !== 1) errors.push(`${relative}: deve conter exatamente um H1`)
   if (!canonical) errors.push(`${relative}: canonical ausente`)
   if (canonical) {
@@ -84,6 +85,12 @@ for (const file of htmlFiles) {
     .filter((href) => !href.startsWith('/?') && !href.startsWith('/#'))
   for (const href of internalLinks) {
     if (!(await routeExists(href))) errors.push(`${relative}: link interno sem destino ${href}`)
+  }
+
+  const externalLinks = [...html.matchAll(/href=["'](https?:\/\/[^"']+)["']/gi)].map((match) => match[1])
+  for (const href of externalLinks) {
+    try { new URL(href) } catch { errors.push(`${relative}: URL externa inválida ${href}`) }
+    if (/[.,;:!?]$/.test(href)) errors.push(`${relative}: pontuação incorporada à URL externa ${href}`)
   }
 }
 
@@ -113,6 +120,8 @@ if (!sw.includes('SKIP_WAITING')) errors.push('service worker: protocolo de atua
 
 const index = await readFile(path.join(distDir, 'index.html'), 'utf8')
 if (!index.includes('ca-pub-5926952327268950')) errors.push('AdSense: publisher de validação ausente do index')
+const notFound = await readFile(path.join(distDir, '404.html'), 'utf8')
+if (!/<meta\s+name=["']referrer["']\s+content=["']strict-origin-when-cross-origin["']/i.test(notFound)) errors.push('404.html: política de referrer ausente')
 const ads = await readFile(path.join(distDir, 'ads.txt'), 'utf8')
 if (!ads.includes('pub-5926952327268950')) errors.push('AdSense: publisher ausente do ads.txt')
 

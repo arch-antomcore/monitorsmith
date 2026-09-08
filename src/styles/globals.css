@@ -183,7 +183,7 @@ input:disabled {
   text-transform: uppercase;
 }
 
-/* UI primitives â€” Subtle, organic button micro-interactions */
+/* UI primitives — subtle, organic button micro-interactions */
 .wbp-button {
   display: inline-flex;
   min-height: 40px;
@@ -852,7 +852,7 @@ input:disabled {
   }
 }
 
-/* Component contracts â€” detailed states used by the React primitives. */
+/* Component contracts — detailed states used by the React primitives. */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -2137,7 +2137,7 @@ p.display-mode__instructions {
   }
 }
 
-/* MonitorSmith library â€” discovery and guidance before the immersive canvas. */
+/* MonitorSmith library — discovery and guidance before the immersive canvas. */
 .app-shell.is-library {
   min-height: 100dvh;
   overflow-x: hidden;
@@ -2200,9 +2200,9 @@ p.display-mode__instructions {
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* â”€â”€ Unified Card Internals (.ms-card__*) â€” shared by both grids â”€â”€ */
+/* Unified card internals (.ms-card__*), shared by both grids. */
 
-/* Head row: icon Â· titles Â· meta */
+/* Head row: icon · titles · meta */
 .ms-card__head {
   position: relative;
   z-index: 1;
@@ -2212,7 +2212,7 @@ p.display-mode__instructions {
   gap: 12px;
 }
 
-/* Icon area â€” standalone icon without card container background */
+/* Icon area — standalone icon without card container background */
 .ms-card__icon-area {
   display: inline-flex;
   align-items: center;
@@ -2296,7 +2296,7 @@ p.display-mode__instructions {
   color: var(--text-muted);
 }
 
-/* Content layer â€” sits above the decorative floating icon */
+/* Content layer — sits above the decorative floating icon */
 .ms-card__content {
   position: relative;
   z-index: 2;
@@ -2313,7 +2313,7 @@ p.display-mode__instructions {
   color: rgba(255, 255, 255, 0.68);
 }
 
-/* CTA link â€” "ABRIR" + bouncing arrow */
+/* CTA link — "ABRIR" + bouncing arrow */
 .ms-card__cta {
   display: flex;
   align-items: center;
@@ -2342,7 +2342,7 @@ p.display-mode__instructions {
   font-weight: 700;
 }
 
-/* Decorative floating icon â€” large, bottom-right corner */
+/* Decorative floating icon — large, bottom-right corner */
 .ms-card__decor {
   position: absolute;
   right: -10px;
@@ -2878,8 +2878,8 @@ p.display-mode__instructions {
     background-color: CanvasText !important;
   }
 
-  /* A cor Ã© o resultado medido nestas superfÃ­cies; permitir a substituiÃ§Ã£o do
-     sistema destruiria a funÃ§Ã£o do teste. O chrome continua adaptativo. */
+  /* A cor é o resultado observado nestas superfícies; permitir a substituição do
+     sistema destruiria a função do teste. O chrome continua adaptativo. */
   .display-mode__canvas,
   .calibration-lab__canvas,
   .sponsor-loop__stage,
@@ -2890,7 +2890,7 @@ p.display-mode__instructions {
 
 
 
-/* MonitorSmith tool library â€” Unified Design System */
+/* MonitorSmith tool library — unified design system */
 .ms-library__eyebrow {
   display: inline-flex;
   align-items: center;
@@ -2995,7 +2995,7 @@ p.display-mode__instructions {
   }
 }
 
-/* MonitorSmith home â€” full viewport surface */
+/* MonitorSmith home — full viewport surface */
 .ms-library {
   width: 100%;
   margin: 0;
@@ -3003,12 +3003,12 @@ p.display-mode__instructions {
 }
 
 /* â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• 
-   Hero â€” Fluid Centralized + Full Width Background
+   Hero — fluid centralized + full width background
    â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â•  */
 
 
 
-/* Ambient Aurora Glow â€” Soft diffuse emerald/indigo flare */
+/* Ambient Aurora Glow — soft diffuse emerald/indigo flare */
 
 
 
@@ -3160,7 +3160,7 @@ p.display-mode__instructions {
   margin: 24px auto 0;
 }
 
-/* Motion Button â€” Expanding Circle Install CTA */
+/* Motion Button — expanding circle install CTA */
 .ms-motion-btn {
   position: relative;
   display: inline-flex;
@@ -3811,7 +3811,7 @@ p.display-mode__instructions {
 }
 
 /* ==========================================================================
-   STUDIO LIGHT MODE (Tema Claro â€” Off White Acetinado / Warm Studio Fine Art)
+   STUDIO LIGHT MODE (Tema Claro — Off White Acetinado / Warm Studio Fine Art)
    ========================================================================== */
 html.ms-studio-light,
 html.ms-studio-light body,
@@ -3822,7 +3822,7 @@ html.ms-studio-light .ms-library,
 html.ms-studio-light .ms-hero,
 html.ms-studio-light .ms-seo-faq {
   --void: #F7F5F0 !important;       /* Off-white principal (Warm Cream / Marfim Acetinado) */
-  --void-soft: #EFECE6 !important;  /* Casca de ovo quente suave para rodapÃ© e transiÃ§Ãµes */
+  --void-soft: #EFECE6 !important;  /* Casca de ovo quente suave para rodapé e transições */
   --surface: rgba(255, 255, 255, 0.88) !important;
   --surface-solid: #FAF9F6 !important;
   --surface-raised: #F5F3EE !important;
@@ -3853,7 +3853,7 @@ html.ms-studio-light .ms-seo-faq {
 }
 html.ms-studio-light 
 
-/* Tipografia Universal e TÃ­tulos no Modo Claro */
+/* Tipografia universal e títulos no modo claro */
 html.ms-studio-light .app-mode-layer--library h1,
 html.ms-studio-light .app-mode-layer--library h2,
 html.ms-studio-light .app-mode-layer--library h3,
@@ -3936,7 +3936,7 @@ html.ms-studio-light .app-shell .wbp-navbar__brand--button:hover {
   border-color: rgba(87, 83, 78, 0.3) !important;
 }
 
-/* CartÃµes da Grade Principal (HeroGridCard, ToolCard e QuickLaunch) */
+/* Cartões da grade principal (HeroGridCard, ToolCard e QuickLaunch) */
 html.ms-studio-light .ms-tool-card,
 html.ms-studio-light .ms-tool-card {
   background: #FFFFFF !important;
@@ -3951,7 +3951,7 @@ html.ms-studio-light .ms-tool-card:hover {
   background: #FFFFFF !important;
 }
 
-/* Textos e Ãcones internos dos cartÃµes em modo claro */
+/* Textos e ícones internos dos cartões em modo claro */
 html.ms-studio-light .ms-card__titles,
 html.ms-studio-light .ms-card__titles strong {
   color: #1C1917 !important;
@@ -4018,7 +4018,7 @@ html.ms-studio-light .ms-faq-answer * {
   color: #1C1917 !important;
 }
 
-/* BotÃµes de AÃ§Ã£o, CTA e MotionButton em modo claro */
+/* Botões de ação, CTA e MotionButton em modo claro */
 html.ms-studio-light .ms-hero__scroll-btn,
 html.ms-studio-light button[class*="scroll-btn"] {
   background: #FFFFFF !important;
@@ -4053,7 +4053,7 @@ html.ms-studio-light .ms-motion-btn:hover .ms-motion-btn__text {
 html.ms-studio-light footer,
 html.ms-studio-light .FooterSection,
 html.ms-studio-light [class*="FooterSection"] {
-  background-color: #EFECE6 !important; /* Semi hot off white secundÃ¡rio */
+  background-color: #EFECE6 !important; /* Semi hot off white secundário */
   border-top-color: rgba(87, 83, 78, 0.15) !important;
   color: #44403C !important;
 }

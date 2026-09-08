@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="theme-color" content="#030304" />
     <!-- SEO essencial -->
     <meta name="description" content="MonitorSmith reúne ferramentas visuais para inspeção visual de monitores, tela preta, teste de pixels, ghosting e motion blur, calculadora de PPI, luz suave, timer, relógio e teleprompter." />
@@ -86,7 +87,7 @@
             "sRGB IEC 61966-2-1 Colorimetry",
             "OLED and QD-OLED Panel Uniformity",
             "Motion Blur and VSync Telemetry",
-            "Snellen 20/20 Visual Acuity and Pixel Density Optics"
+            "Pixel Density and Angular Geometry"
           ]
         },
         {
@@ -108,7 +109,7 @@
           "applicationCategory": "UtilitiesApplication",
           "inLanguage": "pt-BR",
           "isAccessibleForFree": true,
-          "operatingSystem": "All (Windows, macOS, Linux, Android, iOS)",
+          "operatingSystem": "Any operating system with a supported modern browser",
           "browserRequirements": "Navegador moderno; recursos como fullscreen, áudio, Wake Lock e PWA dependem de suporte e permissão.",
           "offers": {
             "@type": "Offer",
@@ -122,7 +123,7 @@
             "Teste de dead pixel e pixel preso",
             "Tela preta absoluta para OLED e teste de backlight bleed",
             "Observação visual de ghosting e motion blur com estimativa da cadência do navegador",
-            "Calculadora de densidade de pixels (PPI), dot pitch e distância Retina Snellen 20/20",
+            "Calculadora de densidade de pixels (PPI), dot pitch e referência geométrica de um minuto de arco",
             "Inspeção para limpeza de tela e poeira",
             "Padrões para verificação visual de contraste, gradiente e gamma",
             "Luz ajustável para videochamadas com temperatura de cor",
@@ -202,7 +203,7 @@
             </article>
             <article>
               <h3><a href="/calculadora-ppi-densidade-monitor/">Calculadora de PPI e Distância de Referência</a></h3>
-              <p>Fórmulas de óptica de displays, dot pitch e distância de referência para acuidade 20/20.</p>
+              <p>Fórmulas de densidade, dot pitch e distância correspondente a um minuto de arco.</p>
             </article>
             <article>
               <h3><a href="/limpeza-de-monitor/">Inspeção para Limpeza</a></h3>
@@ -222,7 +223,7 @@
             </article>
             <article>
               <h3><a href="/tela-verde-chroma/">Tela Verde para Chroma Key</a></h3>
-              <p>Fundo verde puro (#00B140) para substituição de fundo em gravações.</p>
+              <p>Referência CSS nominal #00B140 para comparar composições simples de chroma key.</p>
             </article>
             <article>
               <h3><a href="/timer-de-foco/">Timer de Foco (Pomodoro)</a></h3>
@@ -253,19 +254,19 @@
           <div>
             <article>
               <h3><a href="/blog/ips-glow-vs-backlight-bleed/">IPS Glow vs Backlight Bleed: Como Identificar e Diferenciar</a></h3>
-              <p>Aprenda a distinguir o brilho angular característico da tecnologia IPS de defeitos reais de montagem e vazamento de luz traseira.</p>
+              <p>Compare como brilho aparente e vazamento mudam com ângulo, distância, exposição e condições de observação.</p>
             </article>
             <article>
               <h3><a href="/blog/como-testar-monitor-oled/">Guia Completo para Testar e Cuidar de Monitores OLED</a></h3>
-              <p>Como verificar uniformidade de pretos, prevenir burn-in, testar retenção de imagem temporária e maximizar a vida útil de painéis OLED.</p>
+              <p>Como observar uniformidade e retenção sem prometer prevenção ou reparo, seguindo as proteções do fabricante.</p>
             </article>
             <article>
               <h3><a href="/blog/calibrar-monitor-fotografia-design/">Calibração Visual de Monitores para Fotografia e Design Gráfico</a></h3>
               <p>Entenda os espaços sRGB, DCI-P3 e Adobe RGB, o ajuste de curva Gamma 2.2 e a percepção de escala de cinza para fluxos profissionais.</p>
             </article>
             <article>
-              <h3><a href="/blog/pixel-morto-vs-pixel-preso/">Dead Pixel vs Stuck Pixel: Diagnóstico, Testes e Garantia</a></h3>
-              <p>Saiba a diferença entre subpixels apagados e travados, limites da norma ISO 9241-307 adotada pelos fabricantes e como rodar ciclos cromáticos.</p>
+              <h3><a href="/blog/pixel-morto-vs-pixel-preso/">Dead Pixel vs Stuck Pixel: Inspeção, Registro e Garantia</a></h3>
+              <p>Veja como registrar pontos aparentes em fundos diferentes, reconhecer os limites da inspeção visual e consultar a política vigente.</p>
             </article>
             <article>
               <h3><a href="/blog/teste-contraste-gama-monitor/">Teste de Contraste e Gamma: O Que as Barras de Nível Revelam</a></h3>
@@ -273,7 +274,7 @@
             </article>
             <article>
               <h3><a href="/blog/guia-completo-monitorsmith/">Engenharia do MonitorSmith: Como Funcionam as Ferramentas</a></h3>
-              <p>Visão técnica sobre renderização por Canvas, estimativas de cadência, cálculos de PPI, acuidade Snellen 20/20 e processamento local das ferramentas.</p>
+              <p>Visão técnica sobre Canvas, cadência observada, cálculos de PPI, referência angular e processamento local das ferramentas.</p>
             </article>
           </div>
           <p><a href="/blog/">Explorar os artigos e guias no Blog →</a></p>
@@ -286,8 +287,8 @@
             <h2 id="about-title">Como o MonitorSmith Funciona?</h2>
           </div>
           <div>
-            <p>O <strong>MonitorSmith</strong> é uma suíte profissional de utilitários e testes diagnósticos de display desenvolvida pela <strong>EXVORN.TECH</strong>. Criada para designers, fotógrafos, gamers e profissionais de tecnologia, a aplicação roda inteiramente no navegador sem a necessidade de downloads, cadastros ou instalações pesadas.</p>
-            <p>Os padrões visuais usam cores CSS e animações em <code>&lt;canvas&gt;</code>. A cadência observada depende do navegador e do sistema. As calculadoras estimam <strong>densidade de pixels (PPI)</strong>, distância entre pixels (dot pitch) e uma distância de referência para acuidade 20/20; não medem a visão do usuário nem substituem instrumentos de calibração.</p>
+            <p>O <strong>MonitorSmith</strong> é uma suíte de utilitários e referências visuais para displays desenvolvida pela <strong>EXVORN.TECH</strong>. A aplicação funciona em um navegador compatível, sem cadastro; instalação como PWA é opcional.</p>
+            <p>Os padrões visuais usam cores CSS e animações em <code>&lt;canvas&gt;</code>. A cadência observada depende do navegador e do sistema. As calculadoras estimam <strong>densidade de pixels (PPI)</strong>, distância entre pixels (dot pitch) e uma referência geométrica de um minuto de arco; não medem a visão do usuário nem substituem instrumentos de calibração.</p>
             <p><strong>Processamento local:</strong> As ferramentas processam imagens, textos, áudio e entradas de dispositivos no navegador. Preferências e conteúdo do loop podem ficar salvos localmente. O acesso ao site usa a rede; anúncios externos dependem de consentimento. As ferramentas ficam disponíveis offline após a instalação bem-sucedida do cache; páginas e imagens editoriais dependem de visitas anteriores.</p>
             <div>
               <p><strong>Referências técnicas:</strong> Os guias discutem pixels, cor sRGB, gamma e acessibilidade. Essa referência não representa certificação do produto nem laudo do painel.</p>
@@ -303,7 +304,7 @@
           </div>
           <dl>
             <dt>Como testar se o monitor tem dead pixel ou pixel preso?</dt>
-            <dd>Abra o teste de pixels em tela cheia e alterne entre as cores. Pixels que não mudam ou permanecem apagados podem estar defeituosos.</dd>
+            <dd>Abra o teste em tela cheia e alterne as cores. Registre pontos que permanecem diferentes e repita em outro conteúdo; a página não determina sozinha a causa física.</dd>
             <dt>Este teste funciona em OLED e LCD?</dt>
             <dd>Sim, funciona em ambos. Em OLED ajuda a observar retenção de imagem, em LCD ajuda com pixels, vazamento de luz e uniformidade.</dd>
             <dt>Como a ferramenta de tela preta reduz o consumo de energia?</dt>
@@ -311,7 +312,7 @@
             <dt>Preciso instalar algo para usar o MonitorSmith?</dt>
             <dd>Não. Funciona direto no navegador. Se preferir, pode instalar como app para acesso offline.</dd>
             <dt>Como verificar vazamento de luz (backlight bleed)?</dt>
-            <dd>Em um ambiente escuro, abra o modo de tela preta absoluta. Observe as bordas e os cantos da tela em busca de áreas esbranquiçadas ou vazamento excessivo.</dd>
+            <dd>Em um ambiente escuro, abra a tela preta e observe bordas e cantos. Compare também em brilho normal e de frente, pois ângulo, exposição e luz ambiente alteram a aparência.</dd>
           </dl>
         </section>
 

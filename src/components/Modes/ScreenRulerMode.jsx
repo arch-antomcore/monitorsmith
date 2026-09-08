@@ -6,7 +6,7 @@ import { useI18n } from '../../i18n';
 const L = {
   pt: {
     title: 'Régua de tela calibrada',
-    desc: 'Calibre uma vez e a régua passa a medir em unidades reais. Encoste um cartão bancário na tela e ajuste até as bordas coincidirem: todo cartão ID-1 tem 85,60 mm de largura.',
+    desc: 'Calibre com uma referência conhecida para obter medidas aproximadas. Um cartão no padrão ID-1 tem largura nominal de 85,60 mm; confirme que o seu segue esse padrão.',
     calibrate: 'Calibração pelo cartão', card: 'Largura do cartão na tela',
     orDiagonal: 'Ou informe a diagonal do painel', diagonal: 'Diagonal (pol)',
     ppi: 'Pixels CSS por polegada', dotPitch: 'Tamanho do pixel CSS', cmPerPx: 'Pixels CSS por centímetro',
@@ -16,7 +16,7 @@ const L = {
   },
   en: {
     title: 'Calibrated screen ruler',
-    desc: 'Calibrate once and the ruler measures in real units. Hold a bank card against the screen and adjust until the edges line up: every ID-1 card is 85.60 mm wide.',
+    desc: 'Calibrate with a known reference for approximate measurements. An ID-1 standard card has a nominal width of 85.60 mm; confirm that yours follows that standard.',
     calibrate: 'Card calibration', card: 'Card width on screen',
     orDiagonal: 'Or enter the panel diagonal', diagonal: 'Diagonal (in)',
     ppi: 'CSS pixels per inch', dotPitch: 'CSS pixel size', cmPerPx: 'CSS pixels per centimetre',
@@ -26,7 +26,7 @@ const L = {
   },
   es: {
     title: 'Regla de pantalla calibrada',
-    desc: 'Calibra una vez y la regla medirá en unidades reales. Apoya una tarjeta bancaria en la pantalla y ajusta hasta que coincidan los bordes: toda tarjeta ID-1 mide 85,60 mm de ancho.',
+    desc: 'Calibra con una referencia conocida para obtener medidas aproximadas. Una tarjeta estándar ID-1 tiene un ancho nominal de 85,60 mm; confirma que la tuya sigue ese estándar.',
     calibrate: 'Calibración con tarjeta', card: 'Ancho de la tarjeta en pantalla',
     orDiagonal: 'O indica la diagonal del panel', diagonal: 'Diagonal (pulg)',
     ppi: 'Píxeles CSS por pulgada', dotPitch: 'Tamaño del píxel CSS', cmPerPx: 'Píxeles CSS por centímetro',

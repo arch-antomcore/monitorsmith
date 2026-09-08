@@ -1,13 +1,19 @@
 import React from 'react';
-import SunDuotone from '../Icons/SunDuotone';
-import MoonDuotone from '../Icons/MoonDuotone';
-import LinkedinLogoRegular from '../Icons/LinkedinLogoRegular';
+import { Moon as MoonDuotone, Sun as SunDuotone } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import PwaModal from './PwaModal';
 import LanguageSwitcher from './LanguageSwitcher';
 import { resolveToolLaunch } from '../../constants/tools';
 import { openConsentPreferences } from '../../lib/consent';
 import { useI18n } from '../../i18n';
+
+function LinkedInIcon({ width = 16, height = 16 }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" width={width} height={height} fill="currentColor">
+      <path d="M5.4 3.5a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8ZM3.8 9h3.3v11H3.8V9Zm5.5 0h3.2v1.5h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.2 2.3 4.2 5.4v6h-3.3v-5.3c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V20H9.3V9Z" />
+    </svg>
+  );
+}
 
 const TOOL_LINKS = [
   { mode: 'dead-pixel', url: '/teste-de-dead-pixel/', label: { pt: 'Teste de dead pixels', en: 'Dead pixel test', es: 'Prueba de píxeles muertos' } },
@@ -111,12 +117,12 @@ export function FooterSection({ onLaunch }) {
             <a
               href="https://www.linkedin.com/in/matheus-peres-da-silva/"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label="LinkedIn EXVORN.TECH"
               className="msx-btn"
               style={{ padding: '13px 14px' }}
             >
-              <LinkedinLogoRegular width={16} height={16} weight="fill" />
+              <LinkedInIcon width={16} height={16} />
             </a>
           </div>
         </div>

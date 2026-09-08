@@ -3,12 +3,14 @@ import DisplayToolShell from "./DisplayToolShell";
 
 const colorPalette = ["#ff3b30", "#34c759", "#007aff", "#ff9500", "#af52de", "#ff2d55", "#5ac8fa", "#ffcc00", "#ffffff", "#000000"];
 
-export default function TouchTesterMode() {
-  const [showControls, setShowControls] = useState(true);
+export default function TouchTesterMode({ showControls: globalShowControls = true }) {
+  const [localControlsVisible, setLocalControlsVisible] = useState(true);
+  const showControls = globalShowControls && localControlsVisible;
   const [maxTouches, setMaxTouches] = useState(0);
   const [currentTouches, setCurrentTouches] = useState(0);
   const canvasRef = useRef(null);
   const gridCache = useRef(new Set());
+  const gestureRef = useRef(null);
   const CELL_SIZE = 40; // 40px grid
 
   const activeTouches = useRef(new Map()); // id -> {x, y, color}
@@ -90,11 +92,26 @@ export default function TouchTesterMode() {
   };
 
   const handleTouch = useCallback((e) => {
-    if (e.target.closest?.('button, a[href], input, select, textarea')) return;
-    if (showControls) setShowControls(false);
+    if (e.target.closest?.('.display-mode__controls, .display-mode__reopen-panel-btn, button, a[href], input, select, textarea')) return;
 
     const touches = e.touches;
     const currentCount = touches.length;
+    const primaryTouch = touches[0];
+
+    if (e.type === 'touchstart' && primaryTouch && !gestureRef.current) {
+      gestureRef.current = {
+        startX: primaryTouch.clientX,
+        startY: primaryTouch.clientY,
+        moved: false,
+        wasControlsVisible: showControls,
+      };
+      if (showControls) setLocalControlsVisible(false);
+    } else if (e.type === 'touchmove' && primaryTouch && gestureRef.current) {
+      const deltaX = primaryTouch.clientX - gestureRef.current.startX;
+      const deltaY = primaryTouch.clientY - gestureRef.current.startY;
+      if (Math.hypot(deltaX, deltaY) > 12) gestureRef.current.moved = true;
+    }
+
     setCurrentTouches(currentCount);
     
     // Use functional state update to ensure latest value
@@ -120,14 +137,28 @@ export default function TouchTesterMode() {
       currentMap.set(t.identifier, { x: t.clientX, y: t.clientY, color });
     }
     activeTouches.current = currentMap;
-  }, []);
+
+    if (touches.length === 0) {
+      const gesture = gestureRef.current;
+      gestureRef.current = null;
+      if (e.type !== 'touchcancel' && globalShowControls && gesture && !gesture.wasControlsVisible && !gesture.moved) {
+        setLocalControlsVisible(true);
+      }
+    }
+  }, [globalShowControls]);
 
   const handlePointerDown = useCallback((e) => {
-    if (e.target.closest?.('button, a[href], input, select, textarea')) return;
+    if (e.target.closest?.('.display-mode__controls, .display-mode__reopen-panel-btn, button, a[href], input, select, textarea')) return;
     if (e.pointerType !== 'mouse') return; // let onTouch handle touches
     if (e.buttons !== 1) return;
     e.currentTarget.setPointerCapture(e.pointerId);
-    if (showControls) setShowControls(false);
+    gestureRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      moved: false,
+      wasControlsVisible: showControls,
+    };
+    if (showControls) setLocalControlsVisible(false);
     updateGrid(e.clientX, e.clientY);
     activeTouches.current.set(e.pointerId, { x: e.clientX, y: e.clientY, color: colorPalette[0] });
     setCurrentTouches(activeTouches.current.size);
@@ -140,6 +171,11 @@ export default function TouchTesterMode() {
     if (activeTouches.current.has(e.pointerId)) {
       activeTouches.current.set(e.pointerId, { x: e.clientX, y: e.clientY, color: colorPalette[0] });
       updateGrid(e.clientX, e.clientY);
+      if (gestureRef.current) {
+        const deltaX = e.clientX - gestureRef.current.startX;
+        const deltaY = e.clientY - gestureRef.current.startY;
+        if (Math.hypot(deltaX, deltaY) > 12) gestureRef.current.moved = true;
+      }
     }
   }, []);
 
@@ -147,7 +183,12 @@ export default function TouchTesterMode() {
     if (e.pointerType !== 'mouse') return;
     activeTouches.current.delete(e.pointerId);
     setCurrentTouches(activeTouches.current.size);
-  }, []);
+    const gesture = gestureRef.current;
+    gestureRef.current = null;
+    if (e.type !== 'pointercancel' && globalShowControls && gesture && !gesture.wasControlsVisible && !gesture.moved) {
+      setLocalControlsVisible(true);
+    }
+  }, [globalShowControls]);
 
   const clearGrid = () => {
     gridCache.current.clear();
@@ -165,7 +206,6 @@ export default function TouchTesterMode() {
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      onClick={() => { if(!showControls) setShowControls(true); }}
     >
       <canvas 
         ref={canvasRef} 
@@ -173,21 +213,21 @@ export default function TouchTesterMode() {
       />
       
       <div style={{ position: 'absolute', top: '24px', right: '24px', zIndex: 10, color: 'rgba(255,255,255,0.8)', background: 'rgba(0,0,0,0.6)', padding: '12px 20px', borderRadius: '12px', fontSize: '15px', fontFamily: 'monospace', pointerEvents: 'none', border: '1px solid rgba(255,255,255,0.1)' }}>
-        <div style={{ marginBottom: '4px' }}><strong style={{ color: '#fbbf24' }}>Multi-toque max:</strong> {maxTouches}</div>
-        <div><strong style={{ color: '#fbbf24' }}>Dedos ativos:</strong> {currentTouches}</div>
+        <div style={{ marginBottom: '4px' }}><strong style={{ color: '#fbbf24' }}>Máximo de contatos:</strong> {maxTouches}</div>
+        <div><strong style={{ color: '#fbbf24' }}>Contatos ativos:</strong> {currentTouches}</div>
       </div>
 
       <DisplayToolShell
         id="touch-tester"
         visible={showControls}
         title="Teste de Touchscreen"
-        subtitle="Mapeie o digitador e multi-toque"
+        subtitle="Registre eventos de toque e simultaneidade"
         instructions={[
-          "Deslize os dedos por toda a tela para pintar as células da grade e revelar áreas mortas (dead zones).",
-          "Use vários dedos ao mesmo tempo para verificar o limite de multi-toque simultâneo do dispositivo.",
+          "Deslize os dedos por toda a tela para pintar a grade e repetir áreas que não receberam eventos de toque.",
+          "Use vários dedos ao mesmo tempo para observar quantos contatos simultâneos chegam ao navegador.",
           "Para esconder este menu, toque fora dele. Para mostrá-lo novamente, dê um toque rápido na tela."
         ]}
-        technicalLimit="Sistemas operacionais podem reservar toques (ex: gestos de navegação) limitando o multi-toque real relatado ao navegador (ex: Android limita a 3 dedos em gestos ativos)."
+        technicalLimit="O sistema, o navegador e gestos reservados podem interceptar contatos. Uma área não pintada ou um contador menor não confirma, sozinho, defeito nem o limite físico do digitalizador."
         controls={
           <div className="display-mode__control-stack">
             <button

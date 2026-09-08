@@ -3,13 +3,13 @@ export default [
     slug: 'backlight-bleed-como-testar',
     title: 'Como Testar Backlight Bleed no Monitor | Guia Técnico',
     h1: 'O que é Backlight Bleed e Como Testar seu Monitor',
-    description: 'Entenda a física do Backlight Bleed (vazamento de luz), como testar seu monitor LCD/IPS em ambiente controlado e quando o comportamento é considerado vício de fabricação.',
+    description: 'Entenda o vazamento de luz aparente, como comparar um monitor LCD em condições repetíveis e como registrar o resultado para consultar a garantia vigente.',
     toolId: 'black',
     relatedSlugs: ['ips-glow-vs-backlight-bleed', 'como-testar-monitor-oled', 'testar-monitor-olx-mercado-livre'],
     faq: [
-      ['O que causa o backlight bleed no nível estrutural?', 'Ocorre quando a pressão mecânica da moldura (bezel) ou o desalinhamento dos difusores ópticos permite que a luz da unidade de retroiluminação (BLU) escape pelas extremidades do painel.'],
-      ['Backlight bleed tem conserto via software ou firmware?', 'Não. É uma limitação puramente mecânica e estrutural da montagem do display. Se o vazamento for excessivo e invadir a área central de visão, a solução é solicitar a troca do equipamento.'],
-      ['Como diferenciar Backlight Bleed de IPS Glow?', 'O IPS Glow altera sua intensidade e posição conforme o ângulo de visão do observador muda. O Backlight Bleed permanece fixo nas bordas, independente de como você se movimenta.']
+      ['O que pode contribuir para o brilho irregular nas bordas?', 'Montagem, pressão, difusores, tecnologia do painel, ângulo e exposição podem influenciar a aparência. Uma inspeção visual não determina a causa estrutural.'],
+      ['A página indica se o produto deve ser trocado?', 'Não. Registre o comportamento em brilho normal e consulte a política vigente do fabricante, vendedor e os canais oficiais de defesa do consumidor aplicáveis ao caso.'],
+      ['Como comparar Backlight Bleed e IPS Glow?', 'Mude levemente o ângulo e a distância. Variações angulares são compatíveis com glow; regiões persistentes podem merecer registro, mas a página não fecha o diagnóstico.']
     ],
     body: `
       <h2>A Física do Vazamento de Luz (Backlight Bleed)</h2>
@@ -18,20 +18,19 @@ export default [
       <p>Para formar a imagem, a luz emitida pela BLU passa por múltiplas camadas ópticas: guias de luz (LGP), folhas difusoras, prismas de incremento de brilho (BEF) e polarizadores, até atingir a camada de cristal líquido TFT. Quando há tolerâncias mecânicas imperfeitas na moldura, parafusos com torque excessivo ou empenamento do chassi, as camadas ópticas sofrem microdeformações. Isso permite que feixes de luz escapem desobstruídos pelas bordas, criando manchas luminosas estáticas sobre fundos escuros.</p>
 
       <h2>Protocolo de Teste em Ambiente Controlado</h2>
-      <p>Para diagnosticar a severidade do vazamento de luz sem incorrer em falsos positivos gerados por reflexos ou superexposição de câmeras, siga este procedimento de inspeção:</p>
+      <p>Para comparar a aparência sem confundir reflexos e exposição automática da câmera, use um procedimento simples e repetível:</p>
       
       <ol>
-        <li><strong>Controle de Iluminação Ambiente:</strong> Reduza a luz da sala para 0,5 a 2 lux (ambiente escurecido, mas sem escuridão absoluta que induza fadiga pupilar).</li>
-        <li><strong>Ajuste de Luminância Operacional:</strong> Configure o brilho do monitor para um nível realista de uso contínuo (geralmente entre 100 e 140 cd/m², equivalente a 25%–40% na maioria dos monitores de 300–400 nits). Testar com brilho em 100% no escuro total distorce a avaliação prática.</li>
+        <li><strong>Controle do Ambiente:</strong> Reduza reflexos e mantenha a mesma iluminação nas comparações.</li>
+        <li><strong>Brilho de Uso:</strong> Configure o monitor no nível que você realmente utiliza e registre esse ajuste.</li>
         <li><strong>Superfície de Teste em Tela Cheia:</strong> Abra a ferramenta de tela preta absoluta em modo tela cheia (F11) para preencher todos os pixels com o valor digital RGB (0, 0, 0).</li>
-        <li><strong>Verificação Angular:</strong> Posicione-se a uma distância equivalente a 1,5 vez a largura da tela (cerca de 80 a 100 cm). Mova a cabeça 30 graus para os lados: manchas que permanecerem fixas nas extremidades da moldura são vazamentos de luz (bleed).</li>
+        <li><strong>Verificação Angular:</strong> Observe de frente e mude levemente ângulo e distância. Registre o que muda e o que permanece aparente, sem atribuir uma causa apenas por esse teste.</li>
       </ol>
 
       <p><a class="cta" href="/?tool=black">Abrir Tela Preta de Inspeção no MonitorSmith →</a></p>
 
       <h2>Critérios de Troca e Direitos do Consumidor</h2>
-      <p>Pequenas variações de uniformidade nas bordas são intrínsecas a displays Edge-lit de consumo. No entanto, o vazamento configura vício de qualidade quando invade a área de trabalho ativa (relação de aspecto 16:9), altera a renderização de cenas escuras em edição ou apresenta desvio cromático amarelado/azulado severo.</p>
-      <p>No Brasil, compras realizadas fora do estabelecimento comercial (internet ou telefone) garantem o <strong>direito de arrependimento em até 7 dias corridos</strong> após o recebimento (Art. 49 do Código de Defesa do Consumidor), permitindo a devolução sem necessidade de perícia técnica.</p>
+      <p>Tolerância, cobertura e prazo variam conforme modelo, fabricante, vendedor, região e modalidade de compra. Guarde nota, anúncio, número do pedido e fotos comparáveis; confirme a política e a legislação atuais nos canais oficiais antes de decidir.</p>
     `
   },
   {
@@ -43,8 +42,8 @@ export default [
     relatedSlugs: ['backlight-bleed-como-testar', 'politica-dead-pixel-fabricantes', 'o-que-sao-dead-pixels'],
     faq: [
       ['O que é IPS Glow?', 'É um brilho característico dos painéis In-Plane Switching causado pela refração da luz polarizada através dos cristais líquidos inclinados quando observados em ângulos não-perpendiculares.'],
-      ['O IPS Glow é coberto por garantia de fábrica?', 'Não. Fabricantes consideram o IPS Glow uma característica óptica inerente à tecnologia IPS. Apenas o vazamento mecânico excessivo (Backlight Bleed) é elegível para reparo.'],
-      ['Como mitigar a percepção do IPS Glow no setup?', 'Aumentar a distância de visão (mínimo de 70-80 cm), posicionar o monitor na altura dos olhos e adicionar iluminação indireta atrás do monitor (bias lighting) reduz substancialmente o contraste percebido do glow.']
+      ['O IPS Glow é coberto por garantia?', 'Políticas variam por fabricante, modelo, região e severidade. Compare com a documentação vigente do produto e envie registros feitos em condições normais de uso.'],
+      ['Como reduzir sua percepção no setup?', 'Teste distância, ângulo, brilho e luz ambiente até encontrar uma condição confortável; não existe uma distância universal para todos os painéis e usuários.']
     ],
     body: `
       <h2>A Natureza Óptica do IPS Glow</h2>
@@ -56,15 +55,15 @@ export default [
       <p>Identificar corretamente o fenômeno evita pedidos de suporte desnecessários e direciona reclamações fundamentadas:</p>
 
       <ul>
-        <li><strong>Origem Física:</strong> IPS Glow é um comportamento óptico-angular dos cristais; Backlight Bleed é uma fresta mecânica na vedação do chassi.</li>
-        <li><strong>Comportamento com Movimento:</strong> O IPS Glow desloca-se e desaparece quando você olha diretamente para o canto afetado; o Backlight Bleed permanece exatamente no mesmo ponto e com a mesma intensidade.</li>
-        <li><strong>Sensibilidade à Distância:</strong> Afastar-se do monitor reduz o IPS Glow porque os ângulos de visão nos cantos tornam-se mais fechados (próximos a 90°); o Bleed não se altera com a distância.</li>
-        <li><strong>Cobertura de RMA:</strong> O Glow não é defeito coberto; o Bleed grave com invasão de área útil é passível de troca.</li>
+        <li><strong>Ângulo:</strong> glow tende a variar com posição e distância; regiões persistentes podem ter outras origens.</li>
+        <li><strong>Repetição:</strong> observe de frente, repita com o mesmo brilho e registre quais áreas mudam.</li>
+        <li><strong>Câmera:</strong> exposição automática pode ampliar diferenças que parecem discretas a olho nu.</li>
+        <li><strong>Garantia:</strong> somente a documentação vigente e a avaliação do fornecedor definem cobertura.</li>
       </ul>
 
       <h2>O Erro Comum das Fotografias com Smartphone</h2>
-      <p>Smartphones modernos utilizam algoritmos de fotografia computacional com modo noturno e longa exposição. Ao fotografar uma tela preta no escuro, o sensor do celular amplifica a luz residual em 10x a 20x, transformando um leve IPS Glow padrão em uma mancha esbranquiçada gritante na foto.</p>
-      <p>Para registrar evidências técnicas válidas para fabricantes, utilize o modo manual (Pro) da câmera, fixando ISO em 100–200, balanço de branco em 6500K e tempo de exposição correspondente à percepção real do olho humano.</p>
+      <p>Celulares podem aumentar exposição, combinar quadros e alterar balanço de branco em cenas escuras. A fotografia documenta uma configuração, mas não mede luminância nem reproduz necessariamente a percepção visual.</p>
+      <p>Se houver controles manuais, mantenha os mesmos valores entre fotos e inclua também uma descrição do que foi visto a olho nu. Siga o procedimento solicitado pelo suporte do fabricante.</p>
 
       <p><a class="cta" href="/?tool=black">Testar Comportamento Angular no MonitorSmith →</a></p>
     `
@@ -78,8 +77,8 @@ export default [
     relatedSlugs: ['tela-preta-descanso-monitor', 'o-que-sao-dead-pixels', 'testar-monitor-olx-mercado-livre'],
     faq: [
       ['O que testar primeiro em um monitor OLED usado?', 'Exiba telas cheias em cores primárias (especialmente Vermelho e Magenta) e cinza a 5% de luminância para verificar retenção de logos, barras de tarefas e uniformidade de substrato.'],
-      ['Monitores OLED sofrem de vazamento de luz?', 'Não. Como cada pixel é um diodo orgânico individual que se desliga por completo em preto (#000000), o contraste estático é infinito e não há backlight unit.'],
-      ['O que é o teste de 5% de cinza?', 'É o teste mais rigoroso para avaliar a uniformidade de condução elétrica do painel OLED (TFT backplane), revelando faixas verticais (banding) em baixas tensões.']
+      ['Monitores OLED sofrem de backlight bleed?', 'OLED não usa a mesma unidade de luz de fundo dos LCDs, portanto esse mecanismo específico não se aplica. Reflexos, processamento, uniformidade e outros artefatos ainda podem aparecer.'],
+      ['O que é o teste de 5% de cinza?', 'É uma referência visual escura que pode tornar diferenças de uniformidade aparentes. O código solicitado pelo navegador não mede luminância nem a condução elétrica do painel.']
     ],
     body: `
       <h2>A Arquitetura OLED e Seus Pontos Críticos</h2>
@@ -98,19 +97,19 @@ export default [
       </ul>
 
       <h3>2. Uniformidade em Baixas Luzes (5% Near-Black)</h3>
-      <p>Em tensões elétricas muito baixas, os transistores do backplane de um painel OLED podem apresentar microvariações de condução. Exibir uma tela com 5% de cinza em ambiente escuro permite identificar o chamado <em>vertical banding</em> (linhas verticais sutis). Em painéis novos, essa irregularidade costuma estabilizar após os primeiros ciclos automáticos de compensação (Pixel Clean / Compensation Cycle).</p>
+      <p>Uma referência cinza escura pode tornar faixas e diferenças de uniformidade mais visíveis. Gerenciamento de cor, brilho e processamento alteram o resultado; rotinas de compensação devem ser usadas apenas conforme o manual do modelo.</p>
 
       <p><a class="cta" href="/?tool=black">Executar Ciclo de Inspeção no MonitorSmith →</a></p>
 
       <h2>Verificação de Ciclos de Limpeza no Menu OSD</h2>
-      <p>Ao negociar um monitor OLED usado, acesse o menu de serviço ou de suporte do monitor e confira o <strong>contador de horas de operação</strong> e o total de <strong>ciclos de Pixel Refresh</strong> executados. Painéis mantidos com as rotinas de proteção de fábrica ativas têm vida útil amplamente estendida.</p>
+      <p>Ao avaliar um OLED usado, consulte no menu normal os dados que o fabricante disponibiliza e peça histórico de uso e nota fiscal. Evite menus de serviço ou ciclos manuais não recomendados; siga as proteções descritas no manual do modelo.</p>
     `
   },
   {
     slug: 'tela-preta-descanso-monitor',
     title: 'Tela Preta: Proteção e Descanso para seu Monitor',
     h1: 'Tela Preta: Proteção do Painel, Eficiência e Conforto Visual',
-    description: 'Entenda os impactos de utilizar uma tela preta em tela cheia na conservação de diodos OLED, redução de consumo elétrico e alívio da fadiga visual.',
+    description: 'Entenda o que uma tela preta muda na emissão de um painel OLED e quais limites ainda dependem do modelo, do brilho e do ambiente.',
     toolId: 'black',
     relatedSlugs: ['como-testar-monitor-oled', 'manchas-no-monitor-causas', 'como-limpar-monitor-sem-danificar'],
     faq: [
@@ -120,17 +119,17 @@ export default [
     ],
     body: `
       <h2>O Papel da Tela Preta na Conservação de Displays</h2>
-      <p>O uso de fundos escuros em estações de trabalho não é apenas uma escolha estética, mas uma estratégia fundamentada na física dos semicondutores e na ergonomia visual. Diferentes tecnologias de display respondem de maneira distinta à exibição de preto puro:</p>
+      <p>Fundos escuros podem reduzir a luz aparente de uma tela ociosa, mas consumo e efeito no painel dependem da tecnologia, do firmware e do brilho configurado:</p>
 
       <ul>
-        <li><strong>Telas OLED / QD-OLED:</strong> O sinal digital nulo (0, 0, 0) desliga os transistores dos diodos emissores. O consumo de energia do painel cai para próximo de zero watt na matriz, e a temperatura de operação diminui, pausando o envelhecimento dos materiais orgânicos.</li>
-        <li><strong>Telas LCD MiniLED:</strong> O controlador de Local Dimming desativa os clusters de iluminação traseira nas zonas pretas, eliminando a emissão de fótons e o calor residual.</li>
+        <li><strong>Telas OLED / QD-OLED:</strong> pixels escuros costumam emitir menos luz, porém eletrônica, compensação e outras áreas da tela continuam consumindo energia.</li>
+        <li><strong>Telas LCD MiniLED:</strong> o local dimming pode reduzir a luz em zonas escuras, conforme algoritmo, modo e conteúdo.</li>
         <li><strong>Telas LCD IPS/VA Convencionais:</strong> Os cristais líquidos giram para bloquear a passagem de luz da backlight unit contínua. Embora não haja desligamento físico dos LEDs, reduz-se o brilho geral que atinge o campo visual do usuário.</li>
       </ul>
 
-      <h2>Ergonomia e Redução da Fadiga Ocular Digital (CVS)</h2>
-      <p>A Síndrome da Visão de Computador (Computer Vision Syndrome) é agravada por contrastes excessivos no campo de visão periférico. Quando um profissional utiliza duas ou três telas, manter monitores secundários exibindo fundos brancos vazios ou documentos estáticos enquanto foca na tela primária força a musculatura ciliar a um esforço compensatório contínuo.</p>
-      <p>Colocar a tela secundária em descanso preto imediato equaliza a distribuição de luminância do campo visual, permitindo maior foco na tarefa ativa sem a necessidade de desligar fisicamente o display e desconfigurar a disposição das janelas no sistema operacional.</p>
+      <h2>Conforto em Setups com Várias Telas</h2>
+      <p>Uma tela secundária muito clara pode incomodar algumas pessoas. O fundo preto oferece uma forma rápida de reduzir essa luz percebida sem mudar a disposição das janelas.</p>
+      <p>Conforto visual depende de brilho, distância, reflexos, iluminação do ambiente, pausas e necessidades individuais. A ferramenta não previne nem trata fadiga ocular.</p>
 
       <p><a class="cta" href="/?tool=black">Ativar Tela Preta de Descanso no MonitorSmith →</a></p>
     `
@@ -139,29 +138,29 @@ export default [
     slug: 'o-que-sao-dead-pixels',
     title: 'O que São Dead Pixels: Guia Completo e Identificação',
     h1: 'O que São Dead Pixels e Como Identificar no seu Monitor',
-    description: 'Compreenda a estrutura da matriz TFT, a diferença física entre pixels mortos, acesos e presos, e os métodos técnicos de verificação.',
+    description: 'Compare a aparência de pontos escuros, claros ou coloridos e aprenda a registrar o comportamento sem atribuir uma causa física apenas pelo navegador.',
     toolId: 'dead-pixel',
     relatedSlugs: ['pixel-morto-vs-pixel-preso', 'politica-dead-pixel-fabricantes', 'testar-monitor-olx-mercado-livre'],
     faq: [
-      ['O que é um Dead Pixel?', 'É um ponto na matriz onde o transistor de controle falhou em estado inativo, impedindo a passagem de luz e resultando em um ponto preto permanente.'],
-      ['Dead pixels se espalham pela tela?', 'Não. Cada pixel possui circuitos independentes no backplane TFT. Uma falha elétrica isolada não se propaga para pixels vizinhos, a menos que haja fissura física no vidro.'],
-      ['É possível recuperar um pixel morto por software?', 'Não. Pixels mortos são danos físicos no semicondutor. Apenas subpixels travados em estado condutivo (stuck pixels) têm chance de recuperação com estímulos de ciclagem rápida de sinal.']
+      ['O que esta página chama de pixel morto?', 'É a descrição visual de um ponto que permanece escuro em vários fundos. Poeira, escala e diferentes falhas podem parecer semelhantes, então a causa exige avaliação técnica.'],
+      ['Um ponto isolado tende a se espalhar?', 'A ferramenta não prevê evolução. Registre posição e aparência em datas diferentes e procure suporte se surgirem novas áreas ou dano físico.'],
+      ['Ciclagem de cores recupera pixels?', 'Não há garantia estabelecida. O ciclo é experimental, pode incomodar pessoas fotossensíveis e não repara dano físico ou burn-in; siga o fabricante.']
     ],
     body: `
       <h2>A Estrutura Microscópica de uma Matriz TFT</h2>
       <p>Um monitor moderno de resolução 1440p (2560x1440) contém 3,68 milhões de pixels; em resolução 4K (3840x2160), esse número sobe para 8,29 milhões. Como cada pixel é formado por três subpixels dedicados (Vermelho, Verde e Azul), a placa traseira do display abriga quase <strong>25 milhões de transistores microscópicos</strong> depositados sobre vidro.</p>
       
-      <p>Durante a litografia do semicondutor, micropartículas de poeira ou variações térmicas mínimas podem inutilizar uma trilha elétrica individual. O resultado visual dessa anomalia depende do estado elétrico em que o circuito foi interrompido.</p>
+      <p>Diferentes mecanismos no painel, no processamento ou na superfície podem produzir pontos de aparência semelhante. Uma página web mostra fundos de comparação, mas não lê o circuito responsável.</p>
 
       <h2>Classificação das Anomalias de Pixel</h2>
       <ul>
-        <li><strong>Pixel Morto (Dead Pixel):</strong> Todos os 3 subpixels estão permanentemente desligados. Em matrizes normalmente pretas (IPS/VA), manifesta-se como um ponto escuro constante sobre qualquer fundo claro.</li>
-        <li><strong>Subpixel Preso (Stuck Pixel):</strong> Um único transistor permanece travado em estado condutor (ligado). O ponto emite luz constante em vermelho, verde ou azul, tornando-se muito visível sobre fundos escuros ou pretos.</li>
-        <li><strong>Pixel Quente (Hot Pixel):</strong> Os três subpixels estão energizados simultaneamente no valor máximo, gerando um ponto branco brilhante inalterável.</li>
+        <li><strong>Ponto escuro:</strong> permanece aparente em fundos claros e merece comparação após limpar a superfície.</li>
+        <li><strong>Ponto colorido:</strong> aparece em uma ou mais cores; a sequência ajuda a registrar em quais fundos ele é visível.</li>
+        <li><strong>Ponto claro:</strong> destaca-se em fundos escuros. A aparência sozinha não identifica o mecanismo elétrico.</li>
       </ul>
 
       <h2>Metodologia de Detecção com Cores Primárias</h2>
-      <p>Para mapear anomalias sem confundir com partículas de poeira superficial, o procedimento correto exige inspecionar a tela limpa através de uma sequência de 8 fundos sólidos: Vermelho, Verde, Azul, Ciano, Magenta, Amarelo, Branco e Preto.</p>
+      <p>Limpe a tela conforme o manual e percorra os oito fundos sólidos. Anote posição, cor e repetibilidade; a sequência mapeia sintomas e não constitui diagnóstico físico.</p>
 
       <p><a class="cta" href="/?tool=dead-pixel">Iniciar Teste de 8 Cores no MonitorSmith →</a></p>
     `
@@ -191,7 +190,7 @@ export default [
       <p>Conecte cabos em todas as entradas de vídeo disponíveis (DisplayPort 1.4, HDMI 2.0/2.1). Confirme nas configurações de exibição do sistema operacional se o monitor atinge a <strong>resolução nativa, a profundidade de cor (8-bit / 10-bit) e a taxa de atualização máxima (ex: 144Hz, 240Hz)</strong> sem apresentar oscilações de sinal (flicker) ou linhas pretas intermitentes.</p>
 
       <h3>3. Auditoria de Subpixels e Uniformidade</h3>
-      <p>Abra o navegador no notebook conectado e carregue a suíte do MonitorSmith. Percorra a sequência de cores puras para identificar dead pixels e verifique a homogeneidade em tela preta para aferir vazamentos de luz anormais.</p>
+      <p>Abra o MonitorSmith e percorra a sequência de cores para registrar pontos suspeitos. Compare regiões da tela preta de frente e no brilho de uso; não trate a observação como medição de uniformidade.</p>
 
       <p><a class="cta" href="/?tool=dead-pixel">Levar MonitorSmith para o Teste →</a></p>
     `
@@ -200,55 +199,51 @@ export default [
     slug: 'pixel-morto-vs-pixel-preso',
     title: 'Pixel Morto vs Pixel Preso: Entenda as Diferenças e Soluções',
     h1: 'Pixel Morto vs Pixel Preso: Diferenças Técnicas e Possibilidades de Reparo',
-    description: 'Entenda os mecanismos de falha eletroeletrônica de subpixels presos e pixels mortos, e saiba quais abordagens práticas têm fundamentação real.',
+    description: 'Entenda as diferenças visuais entre pontos escuros, claros e coloridos, os limites do teste no navegador e como documentar o resultado.',
     toolId: 'dead-pixel',
     relatedSlugs: ['o-que-sao-dead-pixels', 'politica-dead-pixel-fabricantes', 'testar-monitor-olx-mercado-livre'],
     faq: [
-      ['Qual a diferença visual essencial entre eles?', 'O pixel morto é invariavelmente escuro em todas as cores de fundo. O subpixel preso brilha continuamente em vermelho, verde ou azul, destacando-se sobre fundos escuros.'],
-      ['Softwares de flashing rápido realmente funcionam?', 'Em casos de subpixels presos por desalinhamento temporário de carga estática nos cristais, a ciclagem de sinal em alta frequência (JScreenFix / color cycling) pode destravar o subpixel.'],
+      ['Qual a diferença visual essencial entre eles?', 'Um ponto escuro costuma aparecer em fundos claros; um ponto claro ou colorido destaca-se em fundos escuros ou cores específicas. Isso não confirma o mecanismo físico.'],
+      ['Softwares de flashing rápido realmente funcionam?', 'Não existe garantia. O recurso é experimental, não repara dano físico ou burn-in e deve ser evitado por pessoas sensíveis a flashes.'],
       ['Aplicar pressão na tela com o dedo é seguro?', 'Não é recomendado por fabricantes. A pressão física pode danificar permanentemente as camadas polarizadoras e desalinhar difusores de luz adjacentes.']
     ],
     body: `
       <h2>Fundamentos da Comutação de Cristais Líquidos</h2>
       <p>Em um painel LCD, a passagem de luz é modulada pela rotação física das moléculas de cristal líquido em resposta a um campo elétrico gerado pelo transistor de filme fino. Quando esse mecanismo sofre uma avaria, duas condições distintas podem ocorrer:</p>
 
-      <h3>1. O Pixel Morto (Circuito Aberto)</h3>
-      <p>Ocorre quando a trilha semicondutora do transistor queima ou se desconecta permanentemente. Sem corrente, os cristais permanecem em sua posição de repouso (bloqueando a passagem de luz em painéis normalmente pretos). Não existe intervenção por software capaz de reestabelecer a continuidade física de uma trilha rompida.</p>
+      <h3>1. Ponto Escuro Persistente</h3>
+      <p>Um ponto que continua escuro em vários fundos pode ser compatível com falha de pixel ou subpixel, mas sujeira, escala e outros mecanismos também interferem. O navegador não lê a trilha elétrica.</p>
 
-      <h3>2. O Subpixel Preso (Trava Eletrostática)</h3>
-      <p>Neste caso, o transistor permanece ativo e conduzindo tensão para um subpixel individual, mantendo os cristais alinhados para passagem total de luz. Como a conexão elétrica existe, métodos de estimulação rápida de sinal que forçam mudanças instantâneas de tensão entre 0V e Vmax podem, em certos casos, reverter o estado do subpixel.</p>
+      <h3>2. Ponto Claro ou Colorido Persistente</h3>
+      <p>A cor em que o ponto aparece ajuda a documentar o sintoma. A ciclagem rápida apenas alterna valores digitais e não comprova a causa nem oferece garantia de recuperação.</p>
 
       <p><a class="cta" href="/?tool=dead-pixel">Testar Subpixels no MonitorSmith →</a></p>
     `
   },
   {
     slug: 'politica-dead-pixel-fabricantes',
-    title: 'Políticas de Dead Pixel: Padrão ISO 9241-307 e Garantia de Fabricantes',
-    h1: 'Quantos Dead Pixels São Aceitáveis? Normas ISO e Políticas de Garantia',
-    description: 'Entenda a classificação internacional ISO 9241-307 para defeitos de pixel e como as políticas de garantia de marcas como Dell, LG, Samsung e Asus operam.',
+    title: 'Dead Pixel e Garantia: Como Conferir a Política do Monitor',
+    h1: 'Dead Pixels: Como Documentar e Conferir a Garantia Vigente',
+    description: 'Saiba como registrar pontos suspeitos e localizar a política vigente do fabricante, vendedor e região sem depender de limites genéricos.',
     toolId: 'dead-pixel',
     relatedSlugs: ['o-que-sao-dead-pixels', 'pixel-morto-vs-pixel-preso', 'testar-monitor-olx-mercado-livre'],
     faq: [
-      ['O que define a norma ISO 9241-307?', 'É o padrão internacional que rege requisitos ergonômicos e tolerâncias máximas de defeitos por milhão de pixels em displays eletrônicos.'],
-      ['Qual a classe da maioria dos monitores de consumo?', 'A maioria dos monitores e notebooks de consumo é enquadrada na Classe II da ISO 9241-307, que admite até 2 pixels acesos, 2 pixels escuros e até 5 subpixels defeituosos por milhão de pixels.'],
-      ['O Código de Defesa do Consumidor prevalece sobre a norma ISO no Brasil?', 'Sim. Jurisprudências brasileiras frequentemente determinam que o CDC protege o consumidor contra vícios de qualidade, independentemente de cláusulas restritivas em manuais de fábrica.']
+      ['Existe um limite universal de pixels defeituosos?', 'Não. Classes técnicas podem servir de referência, mas cobertura real varia por fabricante, modelo, tipo de ponto, agrupamento, região, vendedor e contrato.'],
+      ['Como encontro a regra aplicável?', 'Use o número exato do modelo e a região no site oficial do fabricante, leia o certificado de garantia e confirme com o vendedor antes de abrir o chamado.'],
+      ['O teste do MonitorSmith decide a garantia?', 'Não. Ele ajuda a localizar e registrar pontos aparentes. Elegibilidade é definida pela política vigente e pelos direitos aplicáveis à compra.']
     ],
     body: `
-      <h2>A Norma Internacional ISO 9241-307</h2>
-      <p>Para equacionar o rendimento industrial (yield) na fabricação de lâminas de vidro de grande escala sem encarecer excessivamente os produtos finais, a indústria de displays adota a <strong>Norma ISO 9241-307</strong> (que sucedeu a clássica ISO 13406-2). Essa norma categoriza os painéis em quatro classes de tolerância por milhão de pixels:</p>
+      <h2>Por que tabelas genéricas não bastam</h2>
+      <p>Normas técnicas e classes de defeito podem aparecer na documentação de displays, mas uma tabela encontrada na internet não define sozinha a cobertura do seu produto. Fabricantes atualizam programas comerciais e podem aplicar regras diferentes por linha e região.</p>
 
       <ul>
-        <li><strong>Classe 0 / I:</strong> Zero defeitos permitidos (padrão de monitores cirúrgicos, militares e linhas de altíssima precisão).</li>
-        <li><strong>Classe e política do fabricante:</strong> limites de defeitos variam por classe, tipo de falha, densidade do painel e garantia comercial. Compare o resultado com a documentação exata do modelo.</li>
-        <li><strong>Classe III e IV:</strong> Níveis de tolerância mais amplos, utilizados em sinalização industrial e painéis de baixo custo.</li>
+        <li><strong>Modelo e número de série:</strong> identifique-os no produto e guarde-os em registro privado.</li>
+        <li><strong>Tipo, posição e agrupamento:</strong> anote em quais fundos cada ponto aparece.</li>
+        <li><strong>Documentos atuais:</strong> salve a página da garantia, nota fiscal e protocolo de atendimento com data.</li>
       </ul>
 
-      <h2>Políticas Comerciais das Principais Marcas</h2>
-      <p>Alguns fabricantes oferecem garantias que superam a exigência mínima da norma:</p>
-      <ul>
-        <li><strong>Dell (Garantia de Painel Premium):</strong> Substituição gratuita da tela durante o período de garantia caso seja identificado um único subpixel brilhante (hot/stuck pixel) nas linhas UltraSharp, Alienware e Série P.</li>
-        <li><strong>Linhas Gamer com Política Zero Bright Dot (ZBD):</strong> Modelos premium da ASUS (ROG), Acer (Predator) e BenQ frequentemente oferecem prazos especiais com tolerância zero para pixels brilhantes nos primeiros meses.</li>
-      </ul>
+      <h2>Como abrir um chamado verificável</h2>
+      <p>Faça a inspeção com a tela limpa, brilho de uso e câmera sem filtros. Envie fotos junto de uma descrição do que é visível a olho nu. Consulte diretamente o suporte oficial e os canais públicos de defesa do consumidor de sua região para regras e prazos atuais.</p>
 
       <p><a class="cta" href="/?tool=dead-pixel">Mapear Pixels Defeituosos com o MonitorSmith →</a></p>
     `
@@ -262,8 +257,8 @@ export default [
     relatedSlugs: ['guia-limpeza-lcd-oled-notebook', 'manchas-no-monitor-causas', 'como-testar-monitor-oled'],
     faq: [
       ['Posso usar álcool comum ou limpa-vidros na tela?', 'Use somente o método autorizado pelo fabricante. Limpa-vidros, amônia, solventes e concentrações não aprovadas podem danificar revestimentos; água ou álcool também podem ser restritos em certos modelos.'],
-      ['Qual líquido é seguro para limpar monitores?', 'Água destilada ou desmineralizada é o padrão mais seguro. Para resíduos oleosos persistentes, soluções específicas para limpeza de telas sem álcool e sem amônia podem ser aplicadas.'],
-      ['Por que não usar papel toalha ou guardanapos?', 'Papéis possuem fibras de celulose rígidas que causam microarranhões na camada superficial plástica do monitor ao longo do tempo.']
+      ['Qual líquido é seguro para limpar monitores?', 'Não há uma resposta universal. Alguns manuais permitem água ou determinada solução; outros impõem restrições. Siga o procedimento e a concentração do modelo exato.'],
+      ['Por que evitar papel toalha ou guardanapos?', 'Eles podem reter partículas, soltar fibras ou ser mais abrasivos que o material recomendado pelo fabricante. Use um pano limpo e adequado ao modelo.']
     ],
     body: `
       <h2>A Química dos Revestimentos de Superfície</h2>
@@ -274,15 +269,15 @@ export default [
         <li><strong>Camadas Oleofóbicas:</strong> Polímeros fluorados que reduzem a adesão de gordura dactilar.</li>
       </ul>
 
-      <h2>Produtos Químicos Proibidos e Seus Efeitos</h2>
-      <p>Substâncias alcalinas ou solventes polares agressivos como <strong>amônia (hidróxido de amônio), álcool etílico, acetona e tolueno</strong> quebram as ligações moleculares dos revestimentos, resultando em descamação, manchas leitosas permanentes (crazing) e perda de uniformidade de contraste.</p>
+      <h2>Compatibilidade depende do revestimento</h2>
+      <p>Vidro, polarizadores e revestimentos variam entre modelos. Uma solução aceita em um equipamento pode manchar ou remover a camada de outro; a aparência externa não revela a compatibilidade química.</p>
 
       <h2>Procedimento de Limpeza em 4 Etapas</h2>
       <ol>
-        <li><strong>Desligamento e Resfriamento:</strong> Desligue o monitor da tomada. O painel frio evita a evaporação acelerada do líquido e facilita a visualização de resíduos sobre a superfície escura.</li>
-        <li><strong>Despoeiramento Inicial:</strong> Remova partículas minerais soprando ou utilizando um pincel de cerdas macias antiestáticas para que poeiras duras não atuem como abrasivos durante a fricção.</li>
-        <li><strong>Aplicação Indireta de Líquido:</strong> Umedeça levemente um pano de microfibra limpo (densidade ≥ 300 GSM) com água destilada. <strong>Nunca borrife líquido diretamente na tela</strong>, pois o excesso escorre para a moldura inferior, oxidando as conexões do controlador (TAB/COF).</li>
-        <li><strong>Movimentos Lineares Suaves:</strong> Passe o pano com movimentos retilíneos sem aplicar pressão mecânica concentrada. Finalize com o lado seco da microfibra.</li>
+        <li><strong>Consulte o manual:</strong> confirme material, solução permitida e forma de desligamento do equipamento.</li>
+        <li><strong>Remova partículas soltas:</strong> evite arrastá-las pela superfície e não use ar de alta pressão em bordas e aberturas.</li>
+        <li><strong>Use o pano indicado:</strong> se o manual permitir umidade, aplique-a ao pano, sem encharcar nem borrifar a tela.</li>
+        <li><strong>Faça movimentos suaves:</strong> não pressione o painel e mantenha líquido longe de bordas, portas e aberturas.</li>
       </ol>
 
       <p><a class="cta" href="/?tool=cleaner">Abrir Fundo de Inspeção no MonitorSmith →</a></p>
@@ -305,7 +300,7 @@ export default [
       <p>Diferentes categorias de dispositivos apresentam construções físicas distintas que exigem abordagens de higienização personalizadas:</p>
 
       <h3>Monitores Desktop com Acabamento Fosco (Matte)</h3>
-      <p>A superfície microtexturizada retém poeira com maior facilidade nas microranhuras. A limpeza deve ser suave e periódica com microfibra levemente umedecida, evitando fricção circular intensa para não polir áreas localizadas e alterar a refletância da tela.</p>
+      <p>Superfícies foscas podem mostrar resíduos de forma diferente das brilhantes. Use somente o material e a umidade permitidos no manual e evite pressão ou fricção repetida no mesmo ponto.</p>
 
       <h3>Telas de Notebooks e Ultrawides Curvos</h3>
       <p>Em laptops, a proximidade com o teclado transfere óleos sebáceos naturais dos dedos. Ao fechar a tampa, a pressão de transporte pode transferir marcas de teclas para a tela. A limpeza deve apoiar a parte traseira da tampa para evitar flexão mecânica excessiva do painel de vidro.</p>
@@ -322,19 +317,19 @@ export default [
     relatedSlugs: ['como-limpar-monitor-sem-danificar', 'guia-limpeza-lcd-oled-notebook', 'o-que-sao-dead-pixels'],
     faq: [
       ['O que é o efeito Mura em monitores?', 'Mura é um termo da indústria de displays para descrever irregularidades de luminância e contraste causadas por variações na espessura do cristal líquido ou estresse mecânico no painel.'],
-      ['Manchas causadas por umidade têm conserto?', 'Se a umidade penetrou entre as folhas difusoras da unidade de luz de fundo, a secagem natural raramente elimina as marcas d’água microscópicas, exigindo troca do módulo óptico.'],
-      ['Como testar a uniformidade de um painel manchado?', 'Exiba fundos homogêneos em branco puro, cinza a 50% e cores sólidas para mapear se a mancha é de atenuação óptica ou de falha nos emissores de luz.']
+      ['Manchas causadas por umidade têm conserto?', 'A aparência não confirma onde a umidade está nem o reparo necessário. Desligue o equipamento, não aplique calor e procure a orientação do fabricante ou assistência.'],
+      ['Como observar uma mancha?', 'Exiba branco, cinza e cores sólidas e registre em quais fundos ela aparece. Isso mapeia o sintoma, sem identificar a camada ou a causa.']
     ],
     body: `
       <h2>Diagnóstico Diferencial de Manchas em Displays</h2>
-      <p>O aparecimento de manchas em uma tela pode ser resultado de degradação química, sobrecarga térmica, impacto mecânico ou falhas de controle de qualidade na montagem do display.</p>
+      <p>Manchas podem ter origens superficiais, ópticas, eletrônicas ou ambientais. Formato e cor ajudam a documentar, mas não bastam para determinar a causa.</p>
 
       <h2>Principais Tipos de Anomalias de Superfície</h2>
       <ul>
-        <li><strong>Marcas de Pressão (Efeito Mura Mecânico):</strong> Manchas esbranquiçadas ou amareladas difusas causadas por dedos pressionando o painel ou impactos em transporte. Deformam a distância entre os substratos de vidro, alterando a densidade do cristal líquido.</li>
-        <li><strong>Infiltração de Umidade:</strong> Nuvens escuras ou irregulares visíveis em fundos brancos, causadas pela condensação de líquidos nas folhas difusoras da unidade de luz de fundo.</li>
-        <li><strong>Degradação Térmica do Difusor:</strong> Amarelamento progressivo em bordas inferiores devido ao calor concentrado das barras de LED de alta potência.</li>
-        <li><strong>Retenção de Imagem em OLED:</strong> Sombras nítidas de interfaces estáticas decorrentes do consumo diferenciado de corrente em subpixels individuais.</li>
+        <li><strong>Irregularidade difusa:</strong> registre se muda com ângulo, brilho ou conteúdo.</li>
+        <li><strong>Nuvens ou bordas escuras:</strong> desligue o equipamento se houver suspeita de líquido e procure assistência.</li>
+        <li><strong>Alteração de cor:</strong> compare com outro dispositivo e com o perfil padrão antes de atribuir uma causa térmica.</li>
+        <li><strong>Imagem persistente:</strong> observe se desaparece com o tempo e siga as rotinas do fabricante; não execute ciclos excessivos.</li>
       </ul>
 
       <p><a class="cta" href="/?tool=cleaner">Inspecionar Uniformidade do Painel no MonitorSmith →</a></p>

@@ -49,43 +49,79 @@ const formatFocusTime = (totalSeconds) => {
   return `${String(minutes).padStart(2, "0")}:${String(remainder).padStart(2, "0")}`;
 };
 
-function createAmbientNoiseSynth() {
+const AMBIENT_NOISE_PROFILES = [
+  { id: "brown", label: "Marrom" },
+  { id: "pink", label: "Rosa" },
+  { id: "white", label: "Branco" },
+];
+
+function generateAmbientNoiseSamples(profile, length, random = Math.random) {
+  const output = new Float32Array(Math.max(1, Math.floor(length)));
+  let brown = 0;
+  let b0 = 0;
+  let b1 = 0;
+  let b2 = 0;
+  let b3 = 0;
+  let b4 = 0;
+  let b5 = 0;
+  let b6 = 0;
+
+  for (let i = 0; i < output.length; i++) {
+    const white = random() * 2 - 1;
+    let sample = white * 0.22;
+
+    if (profile === "pink") {
+      // Paul Kellet's economical filter: a practical approximation of 1/f noise.
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.969 * b2 + white * 0.153852;
+      b3 = 0.8665 * b3 + white * 0.3104856;
+      b4 = 0.55 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.016898;
+      sample = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.11;
+      b6 = white * 0.115926;
+    } else if (profile === "brown") {
+      // Integrating white noise yields a practical low-frequency-weighted approximation.
+      brown = (brown + 0.02 * white) / 1.02;
+      sample = brown * 3.5;
+    }
+
+    output[i] = Math.max(-1, Math.min(1, sample));
+  }
+
+  return output;
+}
+
+function createAmbientNoiseSynth(profile = "brown", volume = 0.12) {
   if (typeof window === "undefined") return null;
   try {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     if (!AudioContext) return null;
     const ctx = new AudioContext();
-    const bufferSize = 2 * ctx.sampleRate;
+    const bufferSize = 8 * ctx.sampleRate;
     const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const output = noiseBuffer.getChannelData(0);
 
-    for (let i = 0; i < bufferSize; i++) {
-      output[i] = Math.random() * 2 - 1; // Pure white noise
-    }
+    output.set(generateAmbientNoiseSamples(profile, bufferSize));
 
     const whiteNoise = ctx.createBufferSource();
     whiteNoise.buffer = noiseBuffer;
     whiteNoise.loop = true;
 
-    // Use a BiquadFilter to create Pink/Brown noise for a warmer feel
-    const filter = ctx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 400; // Cut off harsh high frequencies (warmer sound)
-
     const gainNode = ctx.createGain();
-    gainNode.gain.setValueAtTime(0.8, ctx.currentTime);
+    gainNode.gain.setValueAtTime(Math.max(0, Math.min(0.35, volume)), ctx.currentTime);
 
-    whiteNoise.connect(filter);
-    filter.connect(gainNode);
+    whiteNoise.connect(gainNode);
     gainNode.connect(ctx.destination);
     whiteNoise.start();
+    ctx.resume().catch(() => {});
 
     return {
       stop: () => {
         try { whiteNoise.stop(); ctx.close(); } catch { /* Audio can already be closed by the browser. */ }
       },
       setVolume: (vol) => {
-        try { gainNode.gain.setValueAtTime(Math.max(0, Math.min(1, vol)), ctx.currentTime); } catch { /* Ignore a closed audio context. */ }
+        try { gainNode.gain.setTargetAtTime(Math.max(0, Math.min(0.35, vol)), ctx.currentTime, 0.015); } catch { /* Ignore a closed audio context. */ }
       }
     };
   } catch {
@@ -133,6 +169,8 @@ export default function FocusTimerMode({
   );
   const [customMinutesInput, setCustomMinutesInput] = useState('');
   const [isAmbientNoiseActive, setIsAmbientNoiseActive] = useState(false);
+  const [ambientNoiseProfile, setAmbientNoiseProfile] = useState('brown');
+  const [ambientNoiseVolume, setAmbientNoiseVolume] = useState(0.12);
   const ambientNoiseRef = useRef(null);
   const debounceRef = useRef(null);
 
@@ -142,10 +180,20 @@ export default function FocusTimerMode({
       ambientNoiseRef.current = null;
       setIsAmbientNoiseActive(false);
     } else {
-      const synth = createAmbientNoiseSynth();
+      const synth = createAmbientNoiseSynth(ambientNoiseProfile, ambientNoiseVolume);
       ambientNoiseRef.current = synth;
       setIsAmbientNoiseActive(Boolean(synth));
     }
+  };
+
+  const selectAmbientNoiseProfile = (profile) => {
+    setAmbientNoiseProfile(profile);
+    if (!isAmbientNoiseActive) return;
+
+    ambientNoiseRef.current?.stop();
+    const synth = createAmbientNoiseSynth(profile, ambientNoiseVolume);
+    ambientNoiseRef.current = synth;
+    setIsAmbientNoiseActive(Boolean(synth));
   };
 
   useEffect(() => {
@@ -374,6 +422,47 @@ export default function FocusTimerMode({
       </button>
 
       <div
+        aria-label="Perfil de ruído ambiente"
+        className="display-mode__preset-row"
+        role="group"
+      >
+        {AMBIENT_NOISE_PROFILES.map((profile) => (
+          <button
+            aria-pressed={ambientNoiseProfile === profile.id}
+            className="display-mode__preset-button"
+            key={profile.id}
+            onClick={() => selectAmbientNoiseProfile(profile.id)}
+            type="button"
+          >
+            {profile.label}
+          </button>
+        ))}
+      </div>
+
+      <label className="display-mode__field" htmlFor="ambient-noise-volume">
+        <span className="display-mode__field-label">
+          Volume do ruído <output>{Math.round(ambientNoiseVolume * 100)}%</output>
+        </span>
+        <input
+          id="ambient-noise-volume"
+          max="0.35"
+          min="0.03"
+          onChange={(event) => {
+            const nextVolume = Number(event.target.value);
+            setAmbientNoiseVolume(nextVolume);
+            ambientNoiseRef.current?.setVolume(nextVolume);
+          }}
+          step="0.01"
+          type="range"
+          value={ambientNoiseVolume}
+        />
+      </label>
+
+      <p className="display-mode__hint">
+        Perfis digitais aproximados, gerados no dispositivo. Comece em volume baixo.
+      </p>
+
+      <div
         aria-label="Duração da sessão"
         className="display-mode__preset-row"
         role="group"
@@ -434,11 +523,12 @@ export default function FocusTimerMode({
       controls={controls}
       visible={showControls}
       className={className}
+      rootRef={containerRef}
       aria-label={ariaLabel}
       data-mode="focus-timer"
       data-running={resolvedRunning}
       onKeyDown={handleKeyDown}
-      tabIndex="0"
+      tabIndex={0}
     >
       <div aria-hidden="true" className="display-mode__canvas display-mode__canvas--focus" />
 

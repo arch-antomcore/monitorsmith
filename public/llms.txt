@@ -7,11 +7,11 @@
 - [Teste visual de pixels](https://monitorsmith.app/teste-de-dead-pixel/): Percorra cores sólidas e encontre pontos suspeitos no painel.
 - [Inspeção para limpeza](https://monitorsmith.app/limpeza-de-monitor/): Alto contraste para revelar poeira, marcas e manchas.
 - [Verificação visual](https://monitorsmith.app/teste-de-monitor/): Padrões experimentais de escala, cor, nitidez e contraste.
-- [Calculadora de PPI & Retina](https://monitorsmith.app/calculadora-ppi-densidade-monitor/): Calcule a densidade de pixels (PPI), tamanho do ponto e distância ideal de visualização Snellen 20/20.
+- [Calculadora de PPI](https://monitorsmith.app/calculadora-ppi-densidade-monitor/): Calcule densidade de pixels, tamanho do ponto e a distância correspondente a um minuto de arco.
 - [Teste de ghosting & motion blur](https://monitorsmith.app/teste-de-ghosting-monitor/): Observe rastros, borrão de movimento e overshoot; acompanhe a cadência da animação.
 - [Uniformidade e vazamento](https://monitorsmith.app/teste-de-uniformidade-monitor/): Campos de cinza de referência para observar clouding, glow e manchas.
-- [Gradiente e banding](https://monitorsmith.app/?tool=gradient-banding): Rampas suaves para detectar degraus de cor e dithering do driver.
-- [Exercitador de pixels](https://monitorsmith.app/?tool=pixel-exerciser): Ciclo rápido de cores para estimular subpixels presos e retenção leve.
+- [Gradiente e banding](https://monitorsmith.app/?tool=gradient-banding): Rampas suaves para observar degraus de cor e padrões de dithering aparentes.
+- [Exercitador de pixels](https://monitorsmith.app/?tool=pixel-exerciser): Ciclo rápido de cores para exercitar uma região sob observação.
 
 ## Medição e desempenho
 - [Ficha técnica do display](https://monitorsmith.app/informacoes-do-monitor/): Leia resolução lógica, escala e recursos de cor e GPU informados pelo navegador.
@@ -43,7 +43,7 @@
 - [Loop de marcas](https://monitorsmith.app/loop-de-marcas/): Apresente imagens e logos locais em rotação automática.
 
 ## Touch e mobile
-- [Teste de touchscreen](https://monitorsmith.app/teste-de-touchscreen-celular-tablet/): Teste zonas mortas e multi-toque do seu celular, tablet ou monitor touch.
+- [Teste de touchscreen](https://monitorsmith.app/teste-de-touchscreen-celular-tablet/): Registre áreas sem resposta e o multi-toque observado pelo navegador.
 
 ## Artigos e Guias Técnicos
 - [Blog do MonitorSmith](https://monitorsmith.app/blog/): Artigos sobre tecnologia de displays, calibração e produtividade.

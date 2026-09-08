@@ -6,7 +6,7 @@
 
 **Repositório oficial:** <https://github.com/arch-antomcore/monitorsmith>
 
-**Revisão desta baseline:** 7 de setembro de 2026
+**Revisão desta baseline:** 8 de setembro de 2026
 
 Este documento registra fatos que podem ser conferidos no código e no artefato de produção. Ele não certifica hardware, acessibilidade integral, conformidade jurídica, aprovação comercial do Google AdSense nem funcionamento idêntico em todos os navegadores e dispositivos.
 
@@ -21,13 +21,13 @@ O build atual produz:
 - 8 páginas institucionais e legais;
 - 86 páginas estáticas adicionais à home criada pelo Vite;
 - 87 URLs no `sitemap.xml`, incluindo a home;
-- 48 recursos no precache do service worker gerado em `dist/sw.js`.
+- 46 recursos no precache do service worker gerado em `dist/sw.js`.
 
 Essas contagens são validadas a partir do catálogo e dos arquivos gerados. O arquivo `public/sw.js` é apenas o template de desenvolvimento; a lista final de precache existe em `dist/sw.js` depois de `npm run build`.
 
 ## Evidência automatizada
 
-O gate rápido executado em 7 de setembro de 2026 passou com:
+O gate rápido executado em 8 de setembro de 2026 passou com:
 
 - ESLint sem erros nem avisos;
 - 45 testes Vitest aprovados em 8 arquivos;
@@ -54,7 +54,7 @@ O resultado do E2E deve ser conferido na execução que antecede cada publicaç�
 
 ## Contratos técnicos verificados
 
-- GSAP é fornecido localmente por `src/vendor/gsap`, e as fontes usadas pela interface são empacotadas no projeto.
+- O Lenis usa o próprio ciclo `requestAnimationFrame`; não há cópia vendorizada de GSAP. As fontes usadas pela interface são empacotadas no projeto.
 - Lenis e animações respeitam a preferência `prefers-reduced-motion` por meio de `reducedMotion="user"`.
 - O catálogo central alimenta biblioteca, atalhos, manifest e rotas editoriais; IDs, aliases, atalhos e slugs conflitantes falham nos testes.
 - Os guias declaram limites de observação. Eventos do navegador, pixels CSS e `requestAnimationFrame` não provam taxa física, GtG, MPRT, PWM, fidelidade colorimétrica ou defeito eletrônico.
@@ -68,7 +68,8 @@ O repositório confirma apenas a implementação técnica:
 - sinais do Consent Mode negados por padrão;
 - solicitação do script de anúncios condicionada a consentimento explícito e a um slot configurado;
 - preferências revogáveis e páginas institucionais presentes;
-- unidades de anúncio ausentes das superfícies imersivas dos instrumentos.
+- unidades de anúncio ausentes das superfícies imersivas dos instrumentos;
+- imagens do Loop de Marcas persistidas apenas no IndexedDB local até remoção explícita ou limpeza dos dados do site.
 
 Esses controles não comprovam aprovação do AdSense, não substituem uma CMP certificada onde ela for exigida e não atestam conformidade com LGPD, GDPR ou outras leis. Hospedagem, atualização do PWA e fornecedores externos podem gerar tráfego de rede. Consulte `docs/ADSENSE_COMPLIANCE.md` e valide a configuração do domínio e da conta antes de ativar publicidade.
 

@@ -96,7 +96,7 @@
     {
       "name": "Calculadora PPI",
       "short_name": "PPI",
-      "description": "Calcule a densidade de pixels (PPI), tamanho do ponto e distância ideal de visualização Snellen 20/20.",
+      "description": "Calcule densidade de pixels, tamanho do ponto e a distância correspondente a um minuto de arco.",
       "url": "/?tool=ppi-calculator",
       "icons": [
         {
@@ -122,7 +122,7 @@
     {
       "name": "Teste Touchscreen",
       "short_name": "Touch",
-      "description": "Teste zonas mortas e multi-toque do seu celular, tablet ou monitor touch.",
+      "description": "Registre áreas sem resposta e o multi-toque observado pelo navegador.",
       "url": "/?tool=touch-tester",
       "icons": [
         {

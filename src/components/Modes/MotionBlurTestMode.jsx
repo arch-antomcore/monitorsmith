@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useReducedMotion } from 'framer-motion';
 import { DisplayToolShell } from './DisplayToolShell';
 
 const SPEED_PRESETS = [
@@ -10,31 +11,33 @@ const SPEED_PRESETS = [
 ];
 
 const PATTERNS = [
-  { id: 'ufo', label: 'Blocos de Alto Contraste (GtG)' },
+  { id: 'ufo', label: 'Blocos de Alto Contraste' },
   { id: 'text', label: 'Texto em Movimento (Legibilidade)' },
-  { id: 'lines', label: 'Linhas Finas de Retícula (MPRT)' },
+  { id: 'lines', label: 'Linhas Finas de Retícula' },
   { id: 'va-dark', label: 'Transição Escura (Black Smearing)' },
 ];
 
 export default function MotionBlurTestMode({
   visible = true,
+  showControls = true,
   onOpenHome,
   isFullscreen,
   onToggleFullscreen,
 }) {
+  const shouldReduceMotion = useReducedMotion();
   const canvasRef = useRef(null);
   const [speed, setSpeed] = useState(960);
   const [pattern, setPattern] = useState('ufo');
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [fps, setFps] = useState(60);
-  const [frameTimeJitter, setFrameTimeJitter] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(() => !shouldReduceMotion);
+  const [fps, setFps] = useState(null);
+  const [frameTimeJitter, setFrameTimeJitter] = useState(null);
 
   const stateRef = useRef({
     pos: 0,
     lastTime: 0,
     speed: 960,
     pattern: 'ufo',
-    isPlaying: true,
+    isPlaying: !shouldReduceMotion,
     frameCount: 0,
     lastFpsUpdate: 0,
     frameTimes: [],
@@ -45,6 +48,10 @@ export default function MotionBlurTestMode({
     stateRef.current.pattern = pattern;
     stateRef.current.isPlaying = isPlaying;
   }, [speed, pattern, isPlaying]);
+
+  useEffect(() => {
+    if (shouldReduceMotion) setIsPlaying(false);
+  }, [shouldReduceMotion]);
 
   const drawFrame = useCallback((ctx, width, height, posX) => {
     ctx.clearRect(0, 0, width, height);
@@ -105,9 +112,9 @@ export default function MotionBlurTestMode({
         ctx.font = 'bold 22px Outfit, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('MonitorSmith 240Hz Response Test', normalizedPos, centerY - 10);
+        ctx.fillText('MonitorSmith Motion Reference', normalizedPos, centerY - 10);
         ctx.font = '13px monospace';
-        ctx.fillText('1234567890 ABCDEF GtG / MPRT', normalizedPos, centerY + 16);
+        ctx.fillText('1234567890 ABCDEF · BROWSER CADENCE', normalizedPos, centerY + 16);
       } else if (currentPattern === 'lines') {
         // Fine 1px / 2px Grid Lines
         ctx.strokeStyle = track === 2 ? '#000000' : '#ffffff';
@@ -154,7 +161,7 @@ export default function MotionBlurTestMode({
       const dpr = window.devicePixelRatio || 1;
       canvas.width = Math.max(300, Math.floor(rect.width * dpr));
       canvas.height = Math.max(200, Math.floor(rect.height * dpr));
-      ctx.scale(dpr, dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     handleResize();
@@ -166,19 +173,21 @@ export default function MotionBlurTestMode({
 
     const render = (now) => {
       const state = stateRef.current;
-      if (!state.lastTime) state.lastTime = now;
-      const deltaSec = Math.min(0.1, (now - state.lastTime) / 1000);
-      state.lastTime = now;
+      if (!state.lastTime) {
+        state.lastTime = now;
+        state.lastFpsUpdate = now;
+      } else {
+        const deltaSec = Math.min(0.1, (now - state.lastTime) / 1000);
+        state.lastTime = now;
 
-      if (state.isPlaying) {
-        state.pos += state.speed * deltaSec;
+        if (state.isPlaying) state.pos += state.speed * deltaSec;
+
+        state.frameCount++;
+        state.frameTimes.push(deltaSec * 1000);
+        if (state.frameTimes.length > 30) state.frameTimes.shift();
       }
 
-      state.frameCount++;
-      state.frameTimes.push(deltaSec * 1000);
-      if (state.frameTimes.length > 30) state.frameTimes.shift();
-
-      if (now - state.lastFpsUpdate >= 500) {
+      if (state.frameCount > 0 && now - state.lastFpsUpdate >= 500) {
         const measuredFps = Math.round((state.frameCount * 1000) / (now - state.lastFpsUpdate));
         setFps(measuredFps);
         state.frameCount = 0;
@@ -197,10 +206,22 @@ export default function MotionBlurTestMode({
       animId = requestAnimationFrame(render);
     };
 
+    const resetTiming = () => {
+      const state = stateRef.current;
+      state.lastTime = 0;
+      state.lastFpsUpdate = 0;
+      state.frameCount = 0;
+      state.frameTimes = [];
+      setFps(null);
+      setFrameTimeJitter(null);
+    };
+
+    document.addEventListener('visibilitychange', resetTiming);
     animId = requestAnimationFrame(render);
 
     return () => {
       cancelAnimationFrame(animId);
+      document.removeEventListener('visibilitychange', resetTiming);
       if (resizeObserver) resizeObserver.disconnect();
     };
   }, [drawFrame]);
@@ -208,12 +229,12 @@ export default function MotionBlurTestMode({
   return (
     <DisplayToolShell
       id="motion-blur"
-      title="Teste de Ghosting e Motion Blur (UFO Motion)"
-      subtitle="Avaliação de tempo de resposta GtG, MPRT, overshoot e sincronização VSync"
-      instructions="Acompanhe os objetos em movimento com os olhos ou com a câmera em modo perseguição (pursuit camera) para identificar rastros de desfoque (ghosting), coronas claras de overdrive excessivo (overshoot) ou borrão de transição escura em painéis VA (black smearing)."
-      technicalLimit="A precisão do teste visual depende da taxa de atualização real do seu monitor (60Hz, 120Hz, 144Hz, 240Hz+) e da sincronização estrita de quadros no navegador."
+      title="Teste Visual de Ghosting e Motion Blur"
+      subtitle="Inspeção visual de rastros, overshoot e cadência da animação"
+      instructions="Acompanhe os objetos com os olhos ou compare gravações feitas sob o mesmo método. Rastros claros, escuros e borrões podem mudar entre configurações, mas a página não identifica sozinha a causa física."
+      technicalLimit="A animação e a telemetria dependem do navegador, compositor, carga do sistema e taxa configurada. Elas não medem GtG, MPRT nem confirmam a apresentação física de cada quadro. Quando o sistema prefere menos movimento, o padrão começa pausado."
       className="bg-[#050508] text-white select-none"
-      visible={visible}
+      visible={visible && showControls}
       onOpenHome={onOpenHome}
       isFullscreen={isFullscreen}
       onToggleFullscreen={onToggleFullscreen}
@@ -223,20 +244,22 @@ export default function MotionBlurTestMode({
         <div className="relative w-full h-72 sm:h-96 rounded-2xl overflow-hidden border border-white/15 bg-black shadow-2xl">
           <canvas
             ref={canvasRef}
+            aria-label="Padrão visual de movimento em três faixas de contraste"
             className="w-full h-full block"
+            role="img"
             style={{ width: '100%', height: '100%' }}
           />
 
           {/* Realtime Telemetry Overlay Badge */}
           <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-md border border-white/15 rounded-xl px-3.5 py-2 flex items-center gap-4 text-xs font-mono">
             <div>
-              <span className="text-white/50 text-[10px] block">TAXA REAL</span>
-              <span className="text-emerald-400 font-bold text-base">{fps} FPS</span>
+              <span className="text-white/50 text-[10px] block">FPS OBSERVADO</span>
+              <span className="text-emerald-400 font-bold text-base">{fps === null ? '…' : `${fps} FPS`}</span>
             </div>
             <div className="h-6 w-px bg-white/15" />
             <div>
-              <span className="text-white/50 text-[10px] block">JITTER VSYNC</span>
-              <span className="text-amber-400 font-semibold">{frameTimeJitter} ms</span>
+              <span className="text-white/50 text-[10px] block">VARIAÇÃO RAF</span>
+              <span className="text-amber-400 font-semibold">{frameTimeJitter === null ? '…' : `${frameTimeJitter} ms`}</span>
             </div>
           </div>
         </div>
@@ -251,6 +274,7 @@ export default function MotionBlurTestMode({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {PATTERNS.map((p) => (
                 <button
+                  aria-pressed={pattern === p.id}
                   key={p.id}
                   type="button"
                   onClick={() => setPattern(p.id)}
@@ -273,6 +297,7 @@ export default function MotionBlurTestMode({
                 Velocidade de Movimento ({speed} px/s)
               </label>
               <button
+                aria-pressed={isPlaying}
                 type="button"
                 onClick={() => setIsPlaying(!isPlaying)}
                 className="text-xs px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 font-mono transition-colors"
@@ -284,6 +309,7 @@ export default function MotionBlurTestMode({
             <div className="flex flex-wrap gap-2">
               {SPEED_PRESETS.map((s) => (
                 <button
+                  aria-pressed={speed === s.value}
                   key={s.value}
                   type="button"
                   onClick={() => setSpeed(s.value)}
@@ -304,10 +330,10 @@ export default function MotionBlurTestMode({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-white/70">
           <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-4 space-y-2">
             <h4 className="font-semibold text-white text-sm flex items-center gap-1.5">
-              <span>👻</span> Ghosting Normal
+              <span>👻</span> Rastro aparente
             </h4>
             <p className="leading-relaxed">
-              Um rastro suave da mesma cor que segue o objeto. Ocorre quando o tempo de resposta do pixel (GtG) é mais lento que o tempo de quadro (ex: painéis VA em transições escuras).
+              Observe forma, cor e extensão do rastro e compare no mesmo brilho, velocidade e modo do monitor. Esta animação não mede GtG.
             </p>
           </div>
 
@@ -316,16 +342,16 @@ export default function MotionBlurTestMode({
               <span>⚡</span> Overshoot (Inverse Ghosting)
             </h4>
             <p className="leading-relaxed">
-              Um rastro luminoso ou brilhante que precede ou segue o objeto. É causado por <em>overdrive</em> excessivo no monitor. Se visível, reduza o nível de overdrive no menu OSD.
+              Um halo claro pode ser compatível com overshoot. Compare níveis de <em>overdrive</em> no OSD e confirme em conteúdo real; nomes e efeitos variam por modelo.
             </p>
           </div>
 
           <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-4 space-y-2">
             <h4 className="font-semibold text-white text-sm flex items-center gap-1.5">
-              <span>👁️</span> MPRT (Motion Blur do Olho)
+              <span>👁️</span> Persistência percebida
             </h4>
             <p className="leading-relaxed">
-              Desfoque natural causado pelo rastreamento contínuo dos olhos sobre pixels que permanecem acesos durante todo o quadro (<em>sample-and-hold</em>). Reduz-se aumentando os Hz ou usando BFI/Strobe.
+              Rastreamento ocular, cadência, persistência e processamento influenciam a aparência. Medir MPRT exige procedimento e instrumento próprios.
             </p>
           </div>
         </div>

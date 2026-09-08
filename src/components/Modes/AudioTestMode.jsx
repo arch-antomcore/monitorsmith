@@ -17,7 +17,7 @@ const L = {
     unavailable: 'A API de áudio não está disponível neste navegador.',
     audioFailed: 'Não foi possível reproduzir o tom neste navegador.',
     micHint: 'Nível RMS relativo à escala digital, sem calibração acústica. O valor depende do ganho e do processamento do microfone; não mede decibéis do ambiente.',
-    note: 'A varredura ajuda a ouvir ressonâncias e o limite agudo da caixa ou do headset. Acima de 16 kHz muitos adultos já não escutam nada — isso é normal.',
+    note: 'A varredura ajuda a comparar ressonâncias aparentes. Audição e resposta do equipamento variam; ausência de som em uma faixa não identifica a causa.',
   },
   en: {
     title: 'Audio and microphone test',
@@ -32,7 +32,7 @@ const L = {
     unavailable: 'The audio API is unavailable in this browser.',
     audioFailed: 'Unable to play the tone in this browser.',
     micHint: 'RMS level relative to digital full scale, without acoustic calibration. It depends on microphone gain and processing; it does not measure ambient decibels.',
-    note: 'The sweep helps you hear resonances and the high-frequency limit of a speaker or headset. Above 16 kHz many adults hear nothing — that is normal.',
+    note: 'The sweep helps compare apparent resonances. Hearing and equipment response vary; silence in one range does not identify the cause.',
   },
   es: {
     title: 'Prueba de audio y micrófono',
@@ -47,7 +47,7 @@ const L = {
     unavailable: 'La API de audio no está disponible en este navegador.',
     audioFailed: 'No se pudo reproducir el tono en este navegador.',
     micHint: 'Nivel RMS relativo a la escala digital, sin calibración acústica. Depende de la ganancia y el procesamiento del micrófono; no mide decibelios ambientales.',
-    note: 'El barrido ayuda a oír resonancias y el límite de agudos del altavoz o auricular. Por encima de 16 kHz muchos adultos no oyen nada: es normal.',
+    note: 'El barrido ayuda a comparar resonancias aparentes. La audición y la respuesta del equipo varían; el silencio en una banda no identifica la causa.',
   },
 };
 

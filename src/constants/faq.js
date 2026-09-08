@@ -5,22 +5,22 @@ export const FAQ = {
     {
       id: 'pixels',
       question: 'Como saber se o meu monitor tem pixel morto ou pixel preso?',
-      answer: 'Abra o teste de pixels em tela cheia e percorra vermelho, verde, azul, branco e preto. Um pixel morto continua preto em todas as cores; um pixel preso fica fixo em uma cor. Um ponto visível em apenas uma cor não permite confirmar o tipo de falha. Ciclos de cor não garantem reparo. Aproxime-se a uns 30 cm e limpe a tela antes: sujeira imita defeito com facilidade.',
+      answer: 'Limpe a tela conforme o manual e percorra fundos vermelhos, verdes, azuis, brancos e pretos. Registre em quais cores o ponto aparece e repita em outra escala ou dispositivo. A aparência ajuda a localizar o sintoma, mas não confirma sua causa física; ciclos de cor não garantem reparo.',
     },
     {
       id: 'refresh',
       question: 'Por que a taxa medida é menor do que os Hz do meu monitor?',
-      answer: 'O navegador desenha na cadência do compositor do sistema, que pode limitar a 60 Hz quando a janela não está em foco, quando o notebook está economizando energia ou quando o monitor está em uma porta que negociou uma taxa menor. Deixe a aba em primeiro plano, ligue no cabo certo e confira nas configurações de vídeo do sistema operacional. O valor não certifica o funcionamento de VRR.',
+      answer: 'A página estima a cadência dos callbacks do navegador, influenciada por foco, energia, carga, compositor e configuração do sistema. Deixe a aba em primeiro plano e confira a taxa no sistema operacional. O valor não mede diretamente o painel nem certifica VRR.',
     },
     {
       id: 'uniformity',
       question: 'Como avaliar vazamento de luz e uniformidade do jeito certo?',
-      answer: 'Apague as luzes, deixe o monitor no brilho de uso normal e abra o teste de uniformidade no degrau de 0%. Fique de frente, a uns 70 cm, e não use a câmera do celular: sensores exageram o vazamento. Depois suba para 5% e 10% para ver clouding. Um pouco de glow nos cantos é normal em IPS; manchas grandes e assimétricas são o que interessa para acionar a garantia.',
+      answer: 'Mantenha brilho, posição e ambiente constantes e compare os degraus de 0%, 5%, 10% e 50% de frente. Câmeras podem alterar exposição, então use fotos apenas como registro. A avaliação é visual e não classifica a causa nem a cobertura de garantia.',
     },
     {
       id: 'oled',
       question: 'Os testes funcionam em OLED, LCD e telas de celular?',
-      answer: 'Sim. Em LCD eles ajudam com pixels, vazamento de luz, uniformidade e ghosting. Em OLED são úteis para retenção de imagem, pretos absolutos e ABL. Em celulares e tablets funcionam do mesmo jeito, com o bônus do teste de touchscreen. Só evite deixar padrões estáticos muito brilhantes por muito tempo em um OLED.',
+      answer: 'Sim, dentro dos recursos que o navegador e o dispositivo expõem. Os padrões ajudam a observar pontos, uniformidade aparente, retenção e movimento; o teste touch registra eventos recebidos pela página. Evite padrões brilhantes ou estáticos por longos períodos e siga o fabricante.',
     },
     {
       id: 'privacy',
@@ -40,29 +40,29 @@ export const FAQ = {
     {
       id: 'calibration',
       question: 'Os testes substituem um colorímetro?',
-      answer: 'Não, e ninguém deveria prometer isso. Padrões de tela ajudam você a enxergar problemas, ajustar brilho, contraste, nitidez e gamma a olho, e a decidir se vale investigar mais. Perfil de cor confiável exige uma sonda física medindo luminância e cromaticidade. Trate o MonitorSmith como diagnóstico rápido e referência visual.',
+      answer: 'Não. Padrões ajudam a comparar sombras, realces, gradientes e nitidez aparente e a decidir se vale medir mais. Um perfil de cor confiável exige uma sonda física e um fluxo com gerenciamento de cor. Trate o MonitorSmith como triagem e referência visual.',
     },
   ],
   en: [
     {
       id: 'pixels',
       question: 'How do I know whether my monitor has a dead or stuck pixel?',
-      answer: 'Open the pixel test in fullscreen and cycle red, green, blue, white and black. A dead pixel stays black on every colour; a stuck pixel is frozen on one colour. A dot visible on one color alone does not confirm the failure type. Color cycling does not guarantee a repair. Get about 30 cm away and clean the panel first: dust imitates a defect very convincingly.',
+      answer: 'Clean the screen as the manual directs and cycle red, green, blue, white and black. Record where the dot appears and repeat at another scale or device. Appearance helps locate the symptom but cannot confirm its physical cause; colour cycling does not guarantee repair.',
     },
     {
       id: 'refresh',
       question: 'Why is the measured rate lower than my monitor Hz?',
-      answer: 'The browser draws at the cadence of the system compositor, which can cap at 60 Hz when the window loses focus, when a laptop is saving power, or when the display negotiated a lower rate on that port. Keep the tab in the foreground, use the right cable and check the OS display settings. The value does not certify VRR operation.',
+      answer: 'The page estimates browser callback cadence, influenced by focus, power, load, compositor and system configuration. Keep the tab in the foreground and check the rate in operating-system settings. The value neither measures the panel directly nor certifies VRR.',
     },
     {
       id: 'uniformity',
       question: 'How should I judge backlight bleed and uniformity properly?',
-      answer: 'Turn the lights off, keep your normal brightness and open the uniformity test at the 0% step. Sit straight on, about 70 cm away, and do not use a phone camera: sensors exaggerate bleed. Then step to 5% and 10% to look for clouding. Some corner glow is normal on IPS; large asymmetric patches are what matters for a warranty claim.',
+      answer: 'Keep brightness, position and environment constant and compare 0%, 5%, 10% and 50% steps straight on. Cameras can alter exposure, so use photos only as records. This is visual inspection and cannot classify cause or warranty coverage.',
     },
     {
       id: 'oled',
       question: 'Do the tests work on OLED, LCD and phone screens?',
-      answer: 'Yes. On LCD they help with pixels, bleed, uniformity and ghosting. On OLED they are useful for image retention, absolute blacks and ABL behaviour. On phones and tablets everything works the same, plus the touchscreen test. Just avoid leaving very bright static patterns on an OLED for long stretches.',
+      answer: 'Yes, within what the browser and device expose. Patterns help observe dots, apparent uniformity, retention and motion; the touch test records events received by the page. Avoid bright or static patterns for long periods and follow manufacturer guidance.',
     },
     {
       id: 'privacy',
@@ -82,29 +82,29 @@ export const FAQ = {
     {
       id: 'calibration',
       question: 'Do these tests replace a colorimeter?',
-      answer: 'No, and nobody should promise that. Screen patterns help you see problems, tune brightness, contrast, sharpness and gamma by eye, and decide whether to dig deeper. A trustworthy colour profile needs a physical probe measuring luminance and chromaticity. Treat MonitorSmith as fast diagnosis and a visual reference.',
+      answer: 'No. Patterns help compare shadows, highlights, gradients and apparent sharpness and decide whether to measure further. A trustworthy colour profile needs a physical probe and a colour-managed workflow. Treat MonitorSmith as triage and a visual reference.',
     },
   ],
   es: [
     {
       id: 'pixels',
       question: '¿Cómo sé si mi monitor tiene un píxel muerto o atascado?',
-      answer: 'Abre la prueba de píxeles a pantalla completa y recorre rojo, verde, azul, blanco y negro. Un píxel muerto sigue negro en todos los colores; uno atascado queda fijo en un color. Un punto visible en un solo color no confirma el tipo de fallo. Los ciclos de color no garantizan reparación. Acércate a unos 30 cm y limpia el panel antes: el polvo imita muy bien un defecto.',
+      answer: 'Limpia la pantalla según el manual y recorre rojo, verde, azul, blanco y negro. Registra en qué fondos aparece el punto y repite con otra escala o dispositivo. La apariencia localiza el síntoma, pero no confirma su causa física; el ciclo de color no garantiza reparación.',
     },
     {
       id: 'refresh',
       question: '¿Por qué la tasa medida es menor que los Hz de mi monitor?',
-      answer: 'El navegador dibuja a la cadencia del compositor del sistema, que puede limitarse a 60 Hz cuando la ventana pierde el foco, cuando el portátil ahorra energía o cuando la pantalla negoció una tasa menor en ese puerto. Mantén la pestaña en primer plano, usa el cable adecuado y revisa los ajustes de pantalla del sistema. El valor no certifica el funcionamiento de VRR.',
+      answer: 'La página estima la cadencia de callbacks del navegador, influida por foco, energía, carga, compositor y configuración del sistema. Mantén la pestaña en primer plano y revisa la tasa en el sistema operativo. El valor no mide directamente el panel ni certifica VRR.',
     },
     {
       id: 'uniformity',
       question: '¿Cómo evaluar bien las fugas de luz y la uniformidad?',
-      answer: 'Apaga las luces, deja el brillo habitual y abre la prueba de uniformidad en el escalón del 0%. Colócate de frente, a unos 70 cm, y no uses la cámara del móvil: los sensores exageran las fugas. Después sube a 5% y 10% para ver clouding. Algo de glow en las esquinas es normal en IPS; las manchas grandes y asimétricas son las que importan para la garantía.',
+      answer: 'Mantén constantes el brillo, la posición y el ambiente y compara los pasos de 0%, 5%, 10% y 50% de frente. Las cámaras pueden cambiar la exposición, así que usa las fotos solo como registro. Es una inspección visual y no clasifica causa ni cobertura de garantía.',
     },
     {
       id: 'oled',
       question: '¿Las pruebas funcionan en OLED, LCD y pantallas de móvil?',
-      answer: 'Sí. En LCD ayudan con píxeles, fugas, uniformidad y ghosting. En OLED sirven para retención de imagen, negros absolutos y ABL. En móviles y tablets funciona igual, con el añadido de la prueba táctil. Solo evita dejar patrones estáticos muy brillantes mucho tiempo en un OLED.',
+      answer: 'Sí, dentro de lo que exponen el navegador y el dispositivo. Los patrones ayudan a observar puntos, uniformidad aparente, retención y movimiento; la prueba táctil registra eventos recibidos por la página. Evita patrones brillantes o estáticos durante mucho tiempo y sigue al fabricante.',
     },
     {
       id: 'privacy',
@@ -124,7 +124,7 @@ export const FAQ = {
     {
       id: 'calibration',
       question: '¿Estas pruebas sustituyen a un colorímetro?',
-      answer: 'No, y nadie debería prometerlo. Los patrones te ayudan a ver problemas, ajustar brillo, contraste, nitidez y gamma a ojo, y decidir si conviene investigar más. Un perfil de color fiable exige una sonda física que mida luminancia y cromaticidad. Considera MonitorSmith un diagnóstico rápido y una referencia visual.',
+      answer: 'No. Los patrones ayudan a comparar sombras, luces, gradientes y nitidez aparente y a decidir si conviene medir más. Un perfil de color fiable exige una sonda física y un flujo con gestión de color. Considera MonitorSmith una referencia visual de orientación.',
     },
   ],
 };

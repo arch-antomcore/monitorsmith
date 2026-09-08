@@ -23,9 +23,9 @@ O MonitorSmith transforma uma aba do navegador em superfícies de inspeção, co
 | Relógio | `clock` | `T` | Mostrar hora e data em uma tela secundária |
 | Mensagem em tela | `message` | `M` | Exibir avisos ou texto espelhado |
 | Loop de marcas | `sponsor-loop` | `L` | Apresentar imagens locais em rotação |
-| Calculadora de PPI | `ppi-calculator` | — | Estimar densidade de pixels (PPI), dot pitch e distância de acuidade a partir dos dados informados |
+| Calculadora de PPI | `ppi-calculator` | — | Estimar densidade de pixels (PPI), dot pitch e uma distância angular de referência |
 | Teste de Ghosting | `motion-blur` | — | Observar rastros e borrão em movimento, com estimativa de FPS do navegador |
-| Teste de touchscreen | `touch-tester` | — | Mapear zonas mortas e limite de multi-toque |
+| Teste de touchscreen | `touch-tester` | — | Registrar regiões e simultaneidade de eventos de toque expostos pelo navegador |
 | Ficha técnica do display | `display-info` | `I` | Ler dimensões lógicas, estimativa por DPR e capacidades expostas pelo navegador |
 | Medidor de Hz e frame time | `refresh-rate` | `R` | Estimar cadência de callbacks, frame time e variação observada pelo navegador |
 | Tempo de reação | `reaction-test` | `A` | Cronometrar cinco rodadas com média, recorde e desvio |
@@ -129,7 +129,7 @@ O service worker é gerado depois do bundle. O núcleo do app, fontes e ícones 
 
 A identificação pública do publisher permanece na meta tag e no `ads.txt`. O script do AdSense só é solicitado após consentimento, com slot configurado. Unidades sem slot real não criam iframes nem solicitam anúncios. O controle local de preferências não é uma CMP certificada. Configure os requisitos aplicáveis no painel do Google antes de ativar publicidade; aprovação comercial ou regulatória não é atestada pelos testes deste repositório.
 
-Ferramentas, mensagens, cores e imagens selecionadas são processadas no navegador. Isso não significa “zero rede”: hospedagem, atualização do PWA e AdSense podem gerar solicitações externas. Consulte [Privacidade](https://monitorsmith.app/privacidade/) e [Termos de uso](https://monitorsmith.app/termos/).
+Ferramentas, mensagens, cores e imagens selecionadas são processadas no navegador. Imagens do Loop de Marcas são persistidas no IndexedDB local até serem removidas ou até os dados do site serem apagados. Isso não significa “zero rede”: hospedagem, atualização do PWA e AdSense podem gerar solicitações externas. Consulte [Privacidade](https://monitorsmith.app/privacidade/) e [Termos de uso](https://monitorsmith.app/termos/).
 
 ## Acessibilidade e movimento
 

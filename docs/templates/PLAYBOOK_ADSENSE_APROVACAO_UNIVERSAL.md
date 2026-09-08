@@ -65,7 +65,7 @@ Uma revisão de conteúdo deve considerar mais do que quantidade de palavras. Pa
 
 ### Gate 3: Ferramentas Interativas de Alto Valor Técnico
 Para utilitários e web apps, adicione recursos que demonstrem engenharia real:
-- [ ] **Calculadoras e Conversores:** Fórmulas físicas e matemáticas reais (ex: Calculadora de densidade de pixels PPI, Dot Pitch, Acuidade Snellen 20/20, dimensionamento de telas).
+- [ ] **Calculadoras e Conversores:** Fórmulas físicas e matemáticas reais (ex: densidade de pixels PPI, dot pitch, referência geométrica de um minuto de arco e dimensionamento de telas).
 - [ ] **Padrões visuais via Canvas/DOM:** Loops com `requestAnimationFrame` podem mostrar movimento e estimar a cadência dos callbacks do navegador. Eles não medem diretamente GtG, MPRT, PWM ou a taxa física do painel.
 - [ ] **Sintetizadores e APIs Nativas:** Web Audio API (geradores de ruído, timers), Screen Wake Lock API, IndexedDB local.
 

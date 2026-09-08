@@ -6,7 +6,7 @@ import { useI18n } from '../../i18n';
 const L = {
   pt: {
     title: 'Teste de teclado',
-    desc: 'Os atalhos do MonitorSmith ficam desligados durante o teste. Tab continua navegando até os botões, onde Enter e Espaço ativam a ação. Atalhos do navegador e do sistema podem interceptar teclas.',
+    desc: 'Os atalhos do MonitorSmith ficam desligados durante o teste. Esc volta às ferramentas e não integra o mapa; Tab continua navegando, e Enter ou Espaço ativam botões. O navegador e o sistema podem interceptar teclas.',
     pressed: 'Teclas registradas', simultaneous: 'Simultâneas agora', maxSim: 'Máximo simultâneo',
     lastCode: 'Último code', lastKey: 'Último key', repeatGap: 'Intervalo de repetição',
     history: 'Histórico de eventos', reset: 'Limpar', back: 'Voltar às ferramentas',
@@ -15,7 +15,7 @@ const L = {
   },
   en: {
     title: 'Keyboard test',
-    desc: 'MonitorSmith shortcuts are disabled during the test. Tab still navigates to buttons, where Enter and Space activate the action. Browser and system shortcuts may intercept keys.',
+    desc: 'MonitorSmith shortcuts are disabled during the test. Escape returns to the tools and is not part of the map; Tab still navigates, while Enter or Space activates buttons. The browser and system may intercept keys.',
     pressed: 'Keys registered', simultaneous: 'Simultaneous now', maxSim: 'Max simultaneous',
     lastCode: 'Last code', lastKey: 'Last key', repeatGap: 'Repeat interval',
     history: 'Event history', reset: 'Clear', back: 'Back to tools',
@@ -24,7 +24,7 @@ const L = {
   },
   es: {
     title: 'Prueba de teclado',
-    desc: 'Los atajos de MonitorSmith están desactivados durante la prueba. Tab sigue navegando a los botones, donde Intro y Espacio activan la acción. El navegador y el sistema pueden interceptar teclas.',
+    desc: 'Los atajos de MonitorSmith están desactivados durante la prueba. Escape vuelve a las herramientas y no forma parte del mapa; Tab sigue navegando, mientras Intro o Espacio activa botones. El navegador y el sistema pueden interceptar teclas.',
     pressed: 'Teclas registradas', simultaneous: 'Simultáneas ahora', maxSim: 'Máximo simultáneo',
     lastCode: 'Último code', lastKey: 'Último key', repeatGap: 'Intervalo de repetición',
     history: 'Historial de eventos', reset: 'Limpiar', back: 'Volver a las herramientas',
@@ -34,7 +34,7 @@ const L = {
 };
 
 const ROWS = [
-  [['Escape', 'Esc', 1.4], ['F1', 'F1'], ['F2', 'F2'], ['F3', 'F3'], ['F4', 'F4'], ['F5', 'F5'], ['F6', 'F6'], ['F7', 'F7'], ['F8', 'F8'], ['F9', 'F9'], ['F10', 'F10'], ['F11', 'F11'], ['F12', 'F12']],
+  [['F1', 'F1'], ['F2', 'F2'], ['F3', 'F3'], ['F4', 'F4'], ['F5', 'F5'], ['F6', 'F6'], ['F7', 'F7'], ['F8', 'F8'], ['F9', 'F9'], ['F10', 'F10'], ['F11', 'F11'], ['F12', 'F12']],
   [['Backquote', '`'], ['Digit1', '1'], ['Digit2', '2'], ['Digit3', '3'], ['Digit4', '4'], ['Digit5', '5'], ['Digit6', '6'], ['Digit7', '7'], ['Digit8', '8'], ['Digit9', '9'], ['Digit0', '0'], ['Minus', '-'], ['Equal', '='], ['Backspace', '⌫', 2]],
   [['Tab', 'Tab', 1.6], ['KeyQ', 'Q'], ['KeyW', 'W'], ['KeyE', 'E'], ['KeyR', 'R'], ['KeyT', 'T'], ['KeyY', 'Y'], ['KeyU', 'U'], ['KeyI', 'I'], ['KeyO', 'O'], ['KeyP', 'P'], ['BracketLeft', '['], ['BracketRight', ']'], ['Backslash', '\\', 1.4]],
   [['CapsLock', 'Caps', 1.9], ['KeyA', 'A'], ['KeyS', 'S'], ['KeyD', 'D'], ['KeyF', 'F'], ['KeyG', 'G'], ['KeyH', 'H'], ['KeyJ', 'J'], ['KeyK', 'K'], ['KeyL', 'L'], ['Semicolon', ';'], ['Quote', "'"], ['Enter', '⏎', 2.1]],

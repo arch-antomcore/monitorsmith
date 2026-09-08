@@ -8,7 +8,7 @@ const PRESETS = [
   { label: '32" 4K UHD', width: 3840, height: 2160, diagonal: 32 },
   { label: '34" Ultrawide (UWQHD)', width: 3440, height: 1440, diagonal: 34 },
   { label: '49" Super Ultrawide', width: 5120, height: 1440, diagonal: 49 },
-  { label: '14" Laptop Retina', width: 3024, height: 1964, diagonal: 14.2 },
+  { label: '14,2" 3024×1964', width: 3024, height: 1964, diagonal: 14.2 },
   { label: '16" Laptop 4K', width: 3840, height: 2400, diagonal: 16 },
   { label: '55" TV 4K', width: 3840, height: 2160, diagonal: 55 },
 ];
@@ -26,6 +26,7 @@ function gcd(a, b) {
 
 export default function PpiCalculatorMode({
   visible = true,
+  showControls = true,
   onOpenHome,
   isFullscreen,
   onToggleFullscreen,
@@ -45,11 +46,11 @@ export default function PpiCalculatorMode({
     const dotPitchMm = 25.4 / ppi;
     const megapixels = (w * h) / 1000000;
 
-    // Snellen 20/20 standard visual acuity (1 arcminute = 1/60 degree)
+    // Geometric reference: one arcminute (1/60 degree) per pixel.
     // Distance (cm) = (DotPitch in mm / (2 * tan(0.5 arcmin in rad))) / 10
     // Simplified: 8732 / PPI in cm
-    const retinaDistanceCm = Math.round(8732 / ppi);
-    const retinaDistanceInches = Math.round(3438 / ppi);
+    const angularDistanceCm = Math.round(8732 / ppi);
+    const angularDistanceInches = Math.round(3438 / ppi);
 
     const divisor = gcd(w, h);
     const aspectW = w / divisor;
@@ -61,19 +62,19 @@ export default function PpiCalculatorMode({
     let densityCategory;
     if (ppi < 95) {
       recommendedScaling = '100% (Nativo)';
-      densityCategory = 'Baixa Densidade (Ideal para distâncias > 90 cm)';
+      densityCategory = 'Baixa densidade; a malha pode ficar visível a curta distância';
     } else if (ppi < 125) {
       recommendedScaling = '100% (Nativo)';
-      densityCategory = 'Padrão Desktop (Equilíbrio de espaço de trabalho)';
+      densityCategory = 'Faixa comum em monitores desktop';
     } else if (ppi < 165) {
       recommendedScaling = '125% – 150%';
-      densityCategory = 'Alta Densidade / HiDPI (Nitidez superior, recomenda escala)';
+      densityCategory = 'Alta densidade; a escala pode melhorar a legibilidade';
     } else if (ppi < 220) {
       recommendedScaling = '150% – 175%';
-      densityCategory = 'Ultra Densidade (Excelente para texto e edição fina)';
+      densityCategory = 'Densidade muito alta; avalie a escala conforme tamanho e distância';
     } else {
-      recommendedScaling = '200% (2x Retina)';
-      densityCategory = 'Densidade Retina (Pixels imperceptíveis a 40 cm)';
+      recommendedScaling = '200% (ponto de partida)';
+      densityCategory = 'Densidade muito alta; percepção depende da distância e da visão';
     }
 
     return {
@@ -85,8 +86,8 @@ export default function PpiCalculatorMode({
       dotPitchMm: dotPitchMm.toFixed(4),
       megapixels: megapixels.toFixed(2),
       aspectLabel,
-      retinaDistanceCm,
-      retinaDistanceInches,
+      angularDistanceCm,
+      angularDistanceInches,
       recommendedScaling,
       densityCategory,
     };
@@ -105,8 +106,8 @@ export default function PpiCalculatorMode({
 - Densidade: ${metrics.ppi} PPI
 - Tamanho do Ponto (Dot Pitch): ${metrics.dotPitchMm} mm
 - Resolução Total: ${metrics.megapixels} MP
-- Distância de Retinopatia (Snellen 20/20): ${metrics.retinaDistanceCm} cm (${metrics.retinaDistanceInches}")
-- Escala de SO Recomendada: ${metrics.recommendedScaling}
+- Distância de Referência Angular (1 arco-minuto): ${metrics.angularDistanceCm} cm (${metrics.angularDistanceInches}")
+- Escala de SO Sugerida como ponto de partida: ${metrics.recommendedScaling}
 Calculado em https://monitorsmith.app/`;
 
     if (navigator.clipboard) {
@@ -120,12 +121,12 @@ Calculado em https://monitorsmith.app/`;
   return (
     <DisplayToolShell
       id="ppi-calculator"
-      title="Calculadora de PPI e Distância Retina"
-      subtitle="Densidade de pixels, tamanho do ponto (dot pitch) e acuidade visual Snellen 20/20"
-      instructions="Ajuste a resolução e a diagonal em polegadas do seu display ou selecione um preset padrão para calcular a densidade óptica e a distância em que os pixels tornam-se invisíveis ao olho humano."
-      technicalLimit="A fórmula de retinopatia utiliza o padrão internacional de acuidade visual humana normal (1 arco-minuto de resolução angular)."
+      title="Calculadora de PPI e Referência Angular"
+      subtitle="Densidade de pixels, dot pitch e referência geométrica de um minuto de arco"
+      instructions="Ajuste a resolução e a diagonal do display para calcular a densidade e a distância aproximada em que um pixel subtende um minuto de arco."
+      technicalLimit="O limiar de um minuto de arco é uma referência geométrica, não uma distância ideal nem uma previsão individual; visão, contraste, conteúdo e escala do sistema alteram a percepção."
       className="bg-[#050508] text-white select-none"
-      visible={visible}
+      visible={visible && showControls}
       onOpenHome={onOpenHome}
       isFullscreen={isFullscreen}
       onToggleFullscreen={onToggleFullscreen}
@@ -141,6 +142,7 @@ Calculado em https://monitorsmith.app/`;
               const isSelected = width === p.width && height === p.height && diagonal === p.diagonal;
               return (
                 <button
+                  aria-pressed={isSelected}
                   key={p.label}
                   type="button"
                   onClick={() => handleApplyPreset(p)}
@@ -171,7 +173,7 @@ Calculado em https://monitorsmith.app/`;
               max="16000"
               step="1"
               value={width}
-              onChange={(e) => setWidth(Math.max(1, parseInt(e.target.value, 10) || 0))}
+              onChange={(e) => setWidth(Math.min(16000, Math.max(100, parseInt(e.target.value, 10) || 100)))}
               className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-white font-mono text-lg focus:outline-none focus:border-amber-500 transition-colors"
             />
           </div>
@@ -188,7 +190,7 @@ Calculado em https://monitorsmith.app/`;
               max="16000"
               step="1"
               value={height}
-              onChange={(e) => setHeight(Math.max(1, parseInt(e.target.value, 10) || 0))}
+              onChange={(e) => setHeight(Math.min(16000, Math.max(100, parseInt(e.target.value, 10) || 100)))}
               className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-white font-mono text-lg focus:outline-none focus:border-amber-500 transition-colors"
             />
           </div>
@@ -205,7 +207,7 @@ Calculado em https://monitorsmith.app/`;
               max="200"
               step="0.1"
               value={diagonal}
-              onChange={(e) => setDiagonal(Math.max(0.1, parseFloat(e.target.value) || 0))}
+              onChange={(e) => setDiagonal(Math.min(200, Math.max(1, parseFloat(e.target.value) || 1)))}
               className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-white font-mono text-lg focus:outline-none focus:border-amber-500 transition-colors"
             />
           </div>
@@ -233,14 +235,14 @@ Calculado em https://monitorsmith.app/`;
             <span className="text-[11px] text-white/50 leading-snug">Distância entre centros de pixels adjacentes</span>
           </div>
 
-          {/* Retina Distance Card */}
+          {/* Angular reference distance card */}
           <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-4 flex flex-col justify-between">
-            <span className="text-xs font-mono uppercase text-white/60 tracking-wider">Distância "Retina"</span>
+            <span className="text-xs font-mono uppercase text-white/60 tracking-wider">Referência angular</span>
             <div className="my-2">
-              <span className="text-2xl sm:text-3xl font-bold font-mono text-white tracking-tight">{metrics.retinaDistanceCm}</span>
-              <span className="text-xs text-white/50 ml-1.5">cm ({metrics.retinaDistanceInches}")</span>
+              <span className="text-2xl sm:text-3xl font-bold font-mono text-white tracking-tight">{metrics.angularDistanceCm}</span>
+              <span className="text-xs text-white/50 ml-1.5">cm ({metrics.angularDistanceInches}")</span>
             </div>
-            <span className="text-[11px] text-white/50 leading-snug">Pixels tornam-se imperceptíveis (Visão 20/20)</span>
+            <span className="text-[11px] text-white/50 leading-snug">Distância aproximada para 1 pixel subtender 1 minuto de arco</span>
           </div>
 
           {/* Recommended Scaling Card */}
@@ -249,7 +251,7 @@ Calculado em https://monitorsmith.app/`;
             <div className="my-2">
               <span className="text-2xl sm:text-3xl font-bold font-mono text-amber-400 tracking-tight">{metrics.recommendedScaling}</span>
             </div>
-            <span className="text-[11px] text-white/50 leading-snug">Ideal no Windows/macOS para evitar borrão</span>
+            <span className="text-[11px] text-white/50 leading-snug">Ponto de partida; ajuste por tamanho, distância e preferência</span>
           </div>
         </div>
 
@@ -257,13 +259,13 @@ Calculado em https://monitorsmith.app/`;
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-5 text-xs text-white/70 space-y-3">
             <h4 className="font-semibold text-white text-sm flex items-center gap-2">
-              <span>📐</span> O que é o Limite de Retinopatia (Snellen 20/20)?
+              <span>📐</span> O que é a referência angular?
             </h4>
             <p className="leading-relaxed">
-              O sistema visual humano com acuidade padrão (20/20 ou 1.0 decimal) possui uma resolução angular de aproximadamente <strong>1 minuto de arco (1/60°)</strong>.
+              Um minuto de arco equivale a <strong>1/60 de grau</strong>. A calculadora usa esse ângulo como uma convenção geométrica para comparar tamanhos de pixel e distâncias.
             </p>
             <p className="leading-relaxed">
-              A uma distância de <strong>{metrics.retinaDistanceCm} cm</strong>, a projeção angular de cada pixel de <strong>{metrics.dotPitchMm} mm</strong> subtende menos de 1 minuto de arco, tornando os pixels individuais indistinguíveis sem magnificação óptica.
+              A cerca de <strong>{metrics.angularDistanceCm} cm</strong>, cada pixel de <strong>{metrics.dotPitchMm} mm</strong> subtende aproximadamente 1 minuto de arco. Isso é uma referência matemática; não garante que uma pessoa deixe de perceber a estrutura do painel.
             </p>
           </div>
 

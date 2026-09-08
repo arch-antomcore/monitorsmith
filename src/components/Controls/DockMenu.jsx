@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import CaretLeftBold from '../Icons/CaretLeftBold';
-import CaretRightBold from '../Icons/CaretRightBold';
+import { ChevronLeft as CaretLeftBold, ChevronRight as CaretRightBold } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { cn } from '../../lib/utils';
 import { ControlIcon } from './Navbar';

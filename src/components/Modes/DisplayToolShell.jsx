@@ -13,6 +13,7 @@ export function DisplayToolShell({
   className = '',
   customOptionsLabel,
   onKeyDown,
+  rootRef,
   visible = true,
   style,
   tabIndex,
@@ -61,6 +62,7 @@ export function DisplayToolShell({
 
   return (
     <div
+      ref={rootRef}
       className={`display-mode display-mode--${id || 'tool'} ${className}`}
       onKeyDown={onKeyDown}
       style={style}

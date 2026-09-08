@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import ArrowClockwiseRegular from '../Icons/ArrowClockwiseRegular';
-import DeviceMobileFill from '../Icons/DeviceMobileFill';
-import HardDrivesRegular from '../Icons/HardDrivesRegular';
+import {
+  HardDrive as HardDrivesRegular,
+  RotateCw as ArrowClockwiseRegular,
+  Smartphone as DeviceMobileFill,
+} from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import Button from './Button';
 import Modal from './Modal';

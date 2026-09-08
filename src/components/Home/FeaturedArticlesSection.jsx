@@ -3,7 +3,7 @@ import { useI18n } from '../../i18n';
 const FEATURED_ARTICLES = [
   {
     slug: 'ips-glow-vs-backlight-bleed',
-    category: { pt: 'Diagnóstico de painel', en: 'Panel diagnosis', es: 'Diagnóstico de panel' },
+    category: { pt: 'Inspeção de painel', en: 'Panel inspection', es: 'Inspección de panel' },
     readTime: '6 min',
     title: {
       pt: 'IPS glow x backlight bleed: como diferenciar',
@@ -11,9 +11,9 @@ const FEATURED_ARTICLES = [
       es: 'IPS glow frente a backlight bleed: cómo diferenciarlos',
     },
     excerpt: {
-      pt: 'O brilho angular do cristal líquido muda quando você mexe a cabeça; o vazamento mecânico fica parado na borda. Aprenda a separar os dois antes de pedir troca.',
-      en: 'Angular liquid-crystal glow shifts when you move your head; mechanical bleed stays fixed at the bezel. Learn to separate both before asking for a replacement.',
-      es: 'El glow angular del cristal líquido cambia al mover la cabeza; la fuga mecánica queda fija en el borde. Aprende a separarlos antes de pedir un cambio.',
+      pt: 'Compare como o brilho aparente muda com ângulo, distância e exposição e registre o que se repete antes de consultar a garantia.',
+      en: 'Compare how apparent glow changes with angle, distance and exposure, and record what repeats before checking the warranty.',
+      es: 'Compara cómo cambia el brillo aparente con el ángulo, la distancia y la exposición, y registra lo que se repite antes de consultar la garantía.',
     },
   },
   {
@@ -26,9 +26,9 @@ const FEATURED_ARTICLES = [
       es: 'Guía completa para probar y cuidar monitores OLED',
     },
     excerpt: {
-      pt: 'Uniformidade de pretos, prevenção de burn-in, retenção temporária de imagem e o que realmente prolonga a vida útil de painéis OLED e QD-OLED.',
-      en: 'Black uniformity, burn-in prevention, temporary image retention and what actually extends the life of OLED and QD-OLED panels.',
-      es: 'Uniformidad de negros, prevención de burn-in, retención temporal de imagen y lo que realmente alarga la vida de paneles OLED y QD-OLED.',
+      pt: 'Como observar uniformidade e retenção sem prometer prevenção ou diagnóstico, seguindo as proteções do fabricante.',
+      en: 'How to observe uniformity and retention without promising prevention or diagnosis, while following manufacturer protections.',
+      es: 'Cómo observar uniformidad y retención sin prometer prevención ni diagnóstico, siguiendo las protecciones del fabricante.',
     },
   },
   {
@@ -41,9 +41,9 @@ const FEATURED_ARTICLES = [
       es: 'Calibración visual de monitores para fotografía y diseño',
     },
     excerpt: {
-      pt: 'sRGB, DCI-P3 e Adobe RGB na prática, ajuste de gama 2.2 e leitura de escala de cinza em fluxos de trabalho profissionais.',
-      en: 'sRGB, DCI-P3 and Adobe RGB in practice, gamma 2.2 adjustment and grayscale reading in professional workflows.',
-      es: 'sRGB, DCI-P3 y Adobe RGB en la práctica, ajuste de gamma 2.2 y lectura de escala de grises en flujos profesionales.',
+      pt: 'Espaços de cor, perfis ICC e os limites de uma verificação visual antes da medição instrumental.',
+      en: 'Colour spaces, ICC profiles and the limits of visual checks before instrument measurement.',
+      es: 'Espacios de color, perfiles ICC y los límites de una revisión visual antes de medir con instrumentos.',
     },
   },
   {
@@ -51,14 +51,14 @@ const FEATURED_ARTICLES = [
     category: { pt: 'Inspeção de pixels', en: 'Pixel inspection', es: 'Inspección de píxeles' },
     readTime: '5 min',
     title: {
-      pt: 'Pixel morto x pixel preso: diagnóstico e garantia',
-      en: 'Dead pixel vs stuck pixel: diagnosis and warranty',
-      es: 'Píxel muerto frente a píxel atascado: diagnóstico y garantía',
+      pt: 'Pontos escuros e coloridos: inspeção e registro',
+      en: 'Dark and coloured dots: inspection and recording',
+      es: 'Puntos oscuros y de color: inspección y registro',
     },
     excerpt: {
-      pt: 'A diferença elétrica entre subpixel apagado e travado, os limites da ISO 9241-307 adotados pelos fabricantes e como rodar o ciclo cromático certo.',
-      en: 'The electrical difference between a dark and a latched subpixel, the ISO 9241-307 limits manufacturers adopt and how to run the right colour cycle.',
-      es: 'La diferencia eléctrica entre subpíxel apagado y bloqueado, los límites de ISO 9241-307 que adoptan los fabricantes y cómo hacer el ciclo cromático correcto.',
+      pt: 'Como comparar fundos sólidos, descartar sujeira e documentar o sintoma para consultar a garantia vigente.',
+      en: 'How to compare solid backgrounds, rule out dust and document a symptom against the current warranty.',
+      es: 'Cómo comparar fondos sólidos, descartar suciedad y documentar el síntoma para consultar la garantía vigente.',
     },
   },
   {
@@ -71,9 +71,9 @@ const FEATURED_ARTICLES = [
       es: 'Prueba de contraste y gamma: qué revelan las barras',
     },
     excerpt: {
-      pt: 'Como descobrir se o seu display esmaga sombras (black crush) ou queima realces, usando padrões de dezesseis níveis.',
-      en: 'How to find out whether your display crushes shadows or clips highlights, using sixteen-step patterns.',
-      es: 'Cómo descubrir si tu pantalla aplasta las sombras o quema las luces, con patrones de dieciséis niveles.',
+      pt: 'Como observar a separação de sombras e realces e quais etapas da cadeia também alteram o resultado.',
+      en: 'How to observe shadow and highlight separation and which pipeline stages can also change the result.',
+      es: 'Cómo observar la separación de sombras y luces y qué etapas de la cadena también cambian el resultado.',
     },
   },
   {
@@ -86,17 +86,17 @@ const FEATURED_ARTICLES = [
       es: 'Ingeniería de MonitorSmith: cómo funcionan las herramientas',
     },
     excerpt: {
-      pt: 'Renderização em canvas sincronizada com VSync, cálculo de densidade óptica, acuidade Snellen 20/20 e processamento inteiramente local.',
-      en: 'VSync-synchronised canvas rendering, optical density maths, Snellen 20/20 acuity and fully local processing.',
-      es: 'Renderizado en canvas sincronizado con VSync, cálculo de densidad óptica, agudeza Snellen 20/20 y procesamiento totalmente local.',
+      pt: 'Padrões em canvas, estimativas temporais, cálculos geométricos e processamento das entradas das ferramentas na própria aba.',
+      en: 'Canvas patterns, timing estimates, geometric calculations and in-tab processing of tool inputs.',
+      es: 'Patrones en canvas, estimaciones temporales, cálculos geométricos y procesamiento de las entradas en la pestaña.',
     },
   },
 ];
 
 const COPY = {
-  pt: { eyebrow: 'Guias técnicos', title: 'Artigos que explicam o porquê.', lead: 'Conteúdo escrito pela equipe de engenharia da EXVORN.TECH, com fontes, normas e limites declarados.', read: 'Ler o artigo', all: 'Ver os 33 artigos do blog', by: 'Por EXVORN.TECH' },
-  en: { eyebrow: 'Technical guides', title: 'Articles that explain the why.', lead: 'Written by the EXVORN.TECH engineering team, with sources, standards and stated limits.', read: 'Read the article', all: 'See all 33 blog articles', by: 'By EXVORN.TECH' },
-  es: { eyebrow: 'Guías técnicas', title: 'Artículos que explican el porqué.', lead: 'Escritos por el equipo de ingeniería de EXVORN.TECH, con fuentes, normas y límites declarados.', read: 'Leer el artículo', all: 'Ver los 33 artículos del blog', by: 'Por EXVORN.TECH' },
+  pt: { eyebrow: 'Guias técnicos', title: 'Artigos que explicam o porquê.', lead: 'Conteúdo da equipe de engenharia da EXVORN.TECH, com método prático e limites declarados.', read: 'Ler o artigo', all: 'Ver os 33 artigos do blog', by: 'Por EXVORN.TECH' },
+  en: { eyebrow: 'Technical guides', title: 'Articles that explain the why.', lead: 'Content from the EXVORN.TECH engineering team, with practical methods and stated limits.', read: 'Read the article', all: 'See all 33 blog articles', by: 'By EXVORN.TECH' },
+  es: { eyebrow: 'Guías técnicas', title: 'Artículos que explican el porqué.', lead: 'Contenido del equipo de ingeniería de EXVORN.TECH, con métodos prácticos y límites declarados.', read: 'Leer el artículo', all: 'Ver los 33 artículos del blog', by: 'Por EXVORN.TECH' },
 };
 
 export default function FeaturedArticlesSection() {

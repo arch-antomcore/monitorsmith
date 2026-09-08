@@ -1,27 +1,27 @@
 import { useEffect, useState } from 'react';
 import { TOOL_COUNT } from '../../constants/tools';
-import ArrowLeftBold from '../Icons/ArrowLeftBold';
-import BroomDuotone from '../Icons/BroomDuotone';
-import ChatTeardropTextDuotone from '../Icons/ChatTeardropTextDuotone';
-import ClockDuotone from '../Icons/ClockDuotone';
-import CompassDuotone from '../Icons/CompassDuotone';
-import CornersInBold from '../Icons/CornersInBold';
-import CornersOutBold from '../Icons/CornersOutBold';
-import DeviceMobileDuotone from '../Icons/DeviceMobileDuotone';
-import EyeSlashDuotone from '../Icons/EyeSlashDuotone';
-import GridFourDuotone from '../Icons/GridFourDuotone';
-import HouseDuotone from '../Icons/HouseDuotone';
-import LightningFill from '../Icons/LightningFill';
-import MoonDuotone from '../Icons/MoonDuotone';
-import PaletteDuotone from '../Icons/PaletteDuotone';
-import QuestionDuotone from '../Icons/QuestionDuotone';
-import SlideshowDuotone from '../Icons/SlideshowDuotone';
-import SparkleDuotone from '../Icons/SparkleDuotone';
-import SunDimDuotone from '../Icons/SunDimDuotone';
-import TimerDuotone from '../Icons/TimerDuotone';
-import XBold from '../Icons/XBold';
-import ShareNetworkDuotone from '../Icons/ShareNetworkDuotone';
 import {
+  ArrowLeft as ArrowLeftBold,
+  BrushCleaning as BroomDuotone,
+  MessageCircleMore as ChatTeardropTextDuotone,
+  Clock3 as ClockDuotone,
+  Compass as CompassDuotone,
+  Minimize as CornersInBold,
+  Maximize as CornersOutBold,
+  Smartphone as DeviceMobileDuotone,
+  EyeOff as EyeSlashDuotone,
+  Grid2X2 as GridFourDuotone,
+  House as HouseDuotone,
+  Zap as LightningFill,
+  Moon as MoonDuotone,
+  Palette as PaletteDuotone,
+  CircleHelp as QuestionDuotone,
+  Presentation as SlideshowDuotone,
+  Sparkles as SparkleDuotone,
+  SunDim as SunDimDuotone,
+  Timer as TimerDuotone,
+  X as XBold,
+  Share2 as ShareNetworkDuotone,
   Info as LucideInfo,
   Gauge as LucideGauge,
   Zap as LucideZap,

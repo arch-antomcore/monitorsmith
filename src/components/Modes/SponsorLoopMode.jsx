@@ -431,7 +431,7 @@ export default function SponsorLoopMode({
     setIsPlaying(false);
     playbackDeadlineRef.current = 0;
     updateProgress(0);
-    setUploadMessage('Todas as imagens foram removidas da memória local.');
+    setUploadMessage('Todas as imagens foram removidas do armazenamento local.');
   };
 
   // --- Current slide ---
@@ -787,7 +787,7 @@ export default function SponsorLoopMode({
           </label>
 
           <p className="display-mode__hint">
-            Os arquivos ficam apenas na memória desta aba e são liberados ao sair. Use PNG, JPEG ou WebP; SVG não é aceito por segurança. Espaço controla a reprodução e as setas navegam quando o palco está focado.
+            Os arquivos ficam no IndexedDB deste navegador para reutilização local até você removê-los ou apagar os dados do site. Use PNG, JPEG ou WebP; SVG não é aceito. Espaço controla a reprodução e as setas navegam quando o palco está focado.
             O deslocamento sutil reduz conteúdo completamente estático, mas não evita nem repara burn-in.
             {shouldReduceMotion ? ' As transições foram removidas pela preferência de movimento reduzido.' : ''}
           </p>

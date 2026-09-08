@@ -1,7 +1,7 @@
 # Conformidade com o Google AdSense — MonitorSmith
 
 Documento operacional. Descreve o que já está implementado no código e o que
-depende de ação sua no painel do AdSense. Revisão: 7 de setembro de 2026.
+depende de ação sua no painel do AdSense. Revisão: 8 de setembro de 2026.
 
 ---
 

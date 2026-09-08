@@ -98,165 +98,165 @@ const EDITORIAL_CONTENT = Object.freeze({
   'black-screen': {
     related: ['dead-pixel-test', 'screen-cleaner', 'monitor-test'],
     pt: {
-      intro: 'Uma superfície preta ajuda a observar uniformidade, pixels luminosos, IPS glow e vazamento de luz (backlight bleed) em um ambiente escuro. Em OLED, pixels pretos desligam completamente os emissores; em LCD, a luz de fundo é bloqueada pelos cristais líquidos com contraste finito.',
-      steps: ['Abra a ferramenta e solicite tela cheia pelo botão ou pela tecla F.', 'Reduza a iluminação do ambiente para 0,5 a 2 lux sem alterar o ângulo normal de uso.', 'Observe o centro, as bordas e os cantos. Mova levemente a cabeça para distinguir IPS glow de vazamento físico fixo. Pressione Esc para encerrar.'],
-      uses: ['Inspeção visual de pixels claros, IPS glow e vazamento de luz (backlight bleed).', 'Conferência de um monitor novo durante o prazo de devolução legal (CDC Art. 49).', 'Comparação do comportamento de dois painéis sob as mesmas condições ópticas.', 'Descanso visual e redução de emissão de luz em monitores secundários.'],
-      limitations: 'Em LCD, a luz de fundo permanece ativa. Em OLED, a emissão em preto é nula (0,000 cd/m²). A ferramenta é uma referência óptica no navegador e não gera laudo pericial.',
+      intro: 'Uma superfície preta ajuda a observar uniformidade, pixels luminosos, IPS glow e vazamento de luz em ambiente escurecido. OLEDs normalmente reduzem muito a emissão em preto; LCDs continuam dependentes da luz de fundo e do comportamento do local dimming.',
+      steps: ['Abra a ferramenta e solicite tela cheia pelo botão ou pela tecla F.', 'Use o brilho habitual e reduza a iluminação da sala sem criar uma condição desconfortável.', 'Observe centro, bordas e cantos de frente e, depois, mude levemente o ângulo. Registre apenas o que se repete nas mesmas condições.'],
+      uses: ['Inspeção visual de pixels claros, IPS glow e vazamento de luz.', 'Conferência de um monitor novo dentro do prazo aplicável de troca ou garantia.', 'Comparação de dois painéis sob as mesmas condições de brilho, ângulo e ambiente.', 'Redução da luz emitida por uma tela secundária ociosa.'],
+      limitations: 'O resultado depende da tecnologia, brilho, local dimming, ângulo e adaptação visual. O navegador não mede luminância nem certifica defeitos físicos.',
       faq: [
-        ['Isso economiza energia?', 'Em painéis OLED e telas MiniLED com local dimming, a exibição de preto puro desativa os emissores e reduz drasticamente o consumo elétrico. Em LCDs convencionais, a economia é marginal.'],
-        ['Como distinguir IPS Glow de Backlight Bleed?', 'O IPS Glow altera sua intensidade e posição conforme o observador muda o ângulo de visão. O Backlight Bleed permanece fixo nas bordas da moldura independentemente do movimento.']
+        ['Isso economiza energia?', 'OLEDs e LCDs com local dimming podem consumir menos ao exibir áreas pretas, mas a redução varia por modelo, brilho e processamento. Em LCDs sem escurecimento local, a luz de fundo pode continuar ativa.'],
+        ['Como distinguir IPS Glow de Backlight Bleed?', 'Uma mudança forte ao alterar o ângulo sugere glow; uma região que se repete na mesma posição pode sugerir bleed. Fotografias, exposição automática e montagem do painel podem confundir a comparação.']
       ],
       methodology: [
-        'Displays OLED (WOLED e QD-OLED) são emissores diretos onde cada subpixel é um diodo orgânico individual. Ao renderizar a cor #000000 no espaço sRGB, o sinal digital envia valor zero aos transistores de controle, cessando completamente a passagem de corrente e resultando em luminância de 0,000 cd/m² (contraste infinito mensurável).',
-        'Em contrapartida, painéis LCD (Twisted Nematic, Vertical Alignment e In-Plane Switching) são moduladores de luz transmissivos dependentes de uma Unidade de Luz de Fundo (Backlight Unit - BLU) contínua. Mesmo os melhores painéis IPS mantêm um nível de preto residual entre 0,10 e 0,40 cd/m², resultando em contraste estático típico de 1.000:1 a 2.000:1 (IPS Black).',
-        'O vazamento de luz (backlight bleed) é um defeito de montagem mecânica onde a pressão irregular da moldura desalinha as camadas difusoras de luz, mantendo pontos luminosos fixos nas bordas. Já o IPS Glow é um fenômeno de refração angular nos cristais líquidos inclinados, alterando sua intensidade ao mover a cabeça a uma distância recomendada de 80 a 100 cm em ambiente escurecido.'
+        'OLEDs são autoemissivos e conseguem reduzir a emissão de pixels pretos sem uma luz de fundo contínua. O valor físico de luminância e o consumo restante dependem do painel, dos circuitos e do processamento do aparelho; esta página não os mede.',
+        'LCDs modulam uma luz de fundo. O nível de preto varia por tecnologia, brilho, contraste, escurecimento local e condições de observação, portanto um campo digital #000000 não implica um valor físico universal.',
+        'Glow angular e vazamento associado à montagem podem produzir manchas parecidas. Repetir a observação com posição, brilho e ambiente controlados ajuda a descrevê-las, mas a causa final exige avaliação do fabricante ou de um técnico.'
       ]
     },
     en: {
-      intro: 'A fullscreen black surface helps you inspect panel uniformity, bright subpixels, IPS glow, and backlight bleed in a dark room. On OLED displays, black pixels power off completely; on LCDs, the continuous backlight is blocked by liquid crystal rotation with finite contrast.',
-      steps: ['Open the tool and request fullscreen using its button or the F key.', 'Dim room lighting to 0.5–2 lux without changing your standard viewing angle.', 'Inspect the center, corners, and edges. Move slightly off-axis to distinguish viewing-angle glow from fixed mechanical bleed. Press Escape to finish.'],
-      uses: ['Visual inspection of bright subpixels, IPS glow, and backlight bleed.', 'Evaluating a new monitor during the statutory return or warranty window.', 'Side-by-side uniformity comparison of two displays under controlled illumination.', 'Reducing peripheral light and ocular strain on a secondary monitor.'],
-      limitations: 'LCD backlights remain energized. OLED black emission is zero (0.000 cd/m²). This browser utility provides a standard optical reference without generating certified hardware laboratory metrics.',
+      intro: 'A fullscreen black surface helps inspect uniformity, bright pixels, IPS glow and backlight bleed in a dim room. OLEDs usually reduce black emission substantially; LCDs still depend on their backlight and local-dimming behavior.',
+      steps: ['Open the tool and request fullscreen using its button or the F key.', 'Use your normal brightness and dim the room without creating an uncomfortable condition.', 'Inspect center, corners and edges head-on, then shift the viewing angle slightly. Record only repeatable observations.'],
+      uses: ['Visual inspection of bright pixels, IPS glow and backlight bleed.', 'Checking a new monitor within the applicable return or warranty period.', 'Side-by-side comparison under the same brightness, angle and ambient light.', 'Reducing light from an idle secondary display.'],
+      limitations: 'Results depend on panel technology, brightness, local dimming, angle and visual adaptation. The browser does not measure luminance or certify hardware faults.',
       faq: [
-        ['Does a black screen save power?', 'On OLED and MiniLED displays with active local dimming, black pixels power down completely, yielding substantial energy savings. On conventional edge-lit LCDs, power savings are negligible.'],
-        ['How do I distinguish IPS Glow from Backlight Bleed?', 'IPS Glow shifts in intensity and position as your head moves relative to the screen axis. Backlight bleed remains stationary along the bezel edges regardless of perspective.']
+        ['Does a black screen save power?', 'OLEDs and LCDs with local dimming may use less power for black areas, but the change varies by model, brightness and processing. LCDs without local dimming may keep the backlight active.'],
+        ['How do I distinguish IPS Glow from Backlight Bleed?', 'A strong change with viewing angle suggests glow; a repeatable fixed region may suggest bleed. Camera exposure and chassis construction can make the comparison ambiguous.']
       ],
       methodology: [
-        'OLED displays (including WOLED and QD-OLED matrices) are self-emissive devices where each subpixel functions as an independent organic diode. When rendering sRGB #000000, digital control signals drive switching transistors to the cut-off state, achieving true 0.000 cd/m² black luminance and infinite static contrast ratio.',
-        'Conversely, LCD panels (TN, VA, and IPS) act as transmissive spatial light modulators relying on a continuous Backlight Unit (BLU) of blue/white LEDs and phosphor diffusers. Liquid crystals block polarized light with finite efficiency, yielding residual black levels of 0.10 to 0.40 cd/m² and standard contrast ratios of 1,000:1 to 2,000:1 (IPS Black).',
-        'Backlight bleed stems from uneven mechanical clamping pressure around the chassis bezel that deforms internal optical diffusion sheets, producing invariant edge hotspots. IPS Glow is an intrinsic birefringent phenomenon where light escapes at oblique angles, shifting dynamically as the observer inspects the screen from an 80–100 cm distance in low ambient lighting.'
+        'OLED panels are self-emissive and can reduce emission from black pixels without a continuous backlight. Physical luminance and remaining power depend on the panel, electronics and device processing; this page does not measure them.',
+        'LCDs modulate a backlight. Black level varies with panel type, brightness, contrast, local dimming and viewing conditions, so digital #000000 does not imply one universal physical value.',
+        'Angular glow and assembly-related bleed can look similar. Repeating the observation with a controlled position, brightness and room condition helps describe the pattern, while final cause attribution requires manufacturer or technician assessment.'
       ]
     },
   },
   'dead-pixel-test': {
     related: ['monitor-test', 'black-screen', 'display-calibration'],
     pt: {
-      intro: 'A alternância entre 8 campos de cores sólidas puras isola os transistores da matriz TFT para identificar com precisão subpixels presos, pixels mortos e pontos quentes.',
+      intro: 'A alternância entre oito campos sólidos ajuda a localizar pontos que se comportam de modo diferente em cores claras, escuras e primárias.',
       steps: ['Abra o teste em tela cheia e limpe a superfície do monitor com microfibra.', 'Percorra a sequência completa: Vermelho, Verde, Azul, Ciano, Magenta, Amarelo, Branco e Preto.', 'Examine minuciosamente toda a matriz a uma distância confortável e repita qualquer ponto suspeito.'],
-      uses: ['Inspeção de monitores, notebooks, tablets e smartphones novos ou usados.', 'Auditoria técnica antes do término do prazo de devolução ou acionamento de garantia.', 'Mapeamento de subpixels defeituosos conforme a norma ISO 9241-307.'],
-      limitations: 'Trata-se de uma inspeção visual de conformidade óptica. Não repara danos físicos no semicondutor nem substitui a análise de RMA do fabricante.',
+      uses: ['Inspeção de monitores, notebooks, tablets e smartphones novos ou usados.', 'Registro visual antes do término do prazo aplicável de devolução ou garantia.', 'Localização repetível de pontos suspeitos para comparar com a política do fabricante.'],
+      limitations: 'Trata-se de inspeção visual. Poeira, escala, processamento e diferentes mecanismos de falha podem produzir aparências parecidas; a ferramenta não determina a causa nem a elegibilidade de garantia.',
       faq: [
-        ['Qual a diferença entre Dead Pixel e Stuck Pixel?', 'Um dead pixel permanece desligado e escuro em todas as cores; um stuck pixel é um transistor travado em condução, emitindo permanentemente vermelho, verde ou azul puro.'],
-        ['A norma ISO 9241-307 tolera quantos pixels defeituosos?', 'Em painéis Classe II (padrão de mercado de consumo), a norma admite até 2 pixels acesos, 2 pixels escuros e até 5 subpixels defeituosos por milhão de pixels.']
+        ['Qual a diferença visual entre pixel morto e subpixel preso?', 'Um ponto escuro em vários fundos claros costuma ser chamado de pixel morto; um ponto colorido que persiste em determinados fundos costuma ser chamado de subpixel preso. Só a aparência não revela o mecanismo elétrico.'],
+        ['Quantos defeitos são aceitos?', 'A política varia por fabricante, modelo, região, tipo e agrupamento do defeito. Consulte a garantia vigente do produto; uma classe técnica não substitui o contrato ou a legislação aplicável.']
       ],
       methodology: [
         'Monitores modernos utilizam matrizes ativas de transistores de filme fino (TFT - a-Si, IGZO ou LTPS). Em uma resolução 4K UHD (3840x2160), existem 8,29 milhões de pixels e mais de 24,88 milhões de subpixels RGB individuais controlados por transistores microscópicos.',
-        'Um Dead Pixel (pixel morto) ocorre quando a trilha elétrica do transistor queima em circuito aberto, mantendo os três subpixels desligados. Um Stuck Pixel (subpixel preso) é um transistor travado em estado condutor (on), emitindo luz vermelha, verde ou azul pura mesmo quando o sinal é preto absoluto.',
-        'A norma internacional ISO 9241-307 rege os critérios de garantia da indústria. Painéis de Classe I exigem zero defeitos. Painéis de Classe II admitem até 2 pixels acesos, 2 pixels escuros e 5 subpixels defeituosos por milhão de pixels. A ciclagem pelas 8 cores fundamentais do MonitorSmith isola cada subcanal elétrico para auditoria técnica.'
+        'Falhas de transistores, conexões, emissores ou controle podem produzir pontos escuros, claros ou coloridos. Um teste no navegador descreve o padrão visual, mas não identifica qual componente falhou.',
+        'Normas técnicas fornecem métodos e classificações, enquanto a cobertura comercial depende da política vigente do fabricante e da legislação local. A sequência de cores ajuda a registrar quais fundos tornam a anomalia visível.'
       ]
     },
     en: {
-      intro: 'Cycling through 8 pure primary and secondary solid colors isolates individual TFT subpixel circuits to pinpoint dead pixels, stuck subpixels, and hot pixels.',
+      intro: 'Cycling eight solid fields helps locate points that behave differently on bright, dark and primary-color backgrounds.',
       steps: ['Open the test fullscreen and wipe the screen with a clean microfiber cloth.', 'Cycle through the full sequence: Red, Green, Blue, Cyan, Magenta, Yellow, White, and Black.', 'Inspect the entire active matrix at a comfortable distance and re-verify any anomaly.'],
-      uses: ['Inspecting new or refurbished monitors, laptops, tablets, and smartphones.', 'Auditing display health before warranty or return window expiration.', 'Mapping defective subpixels in compliance with ISO 9241-307 standards.'],
-      limitations: 'This is a visual inspection protocol. It does not electronically repair broken semiconductor traces or alter manufacturer RMA policies.',
+      uses: ['Inspecting new or refurbished monitors, laptops, tablets and smartphones.', 'Recording observations before an applicable return or warranty period expires.', 'Locating repeatable suspicious points to compare with the manufacturer policy.'],
+      limitations: 'This is a visual inspection. Dust, scaling, processing and different failure mechanisms can look similar; the tool cannot determine cause or warranty eligibility.',
       faq: [
-        ['What is the difference between a dead pixel and a stuck subpixel?', 'A dead pixel stays permanently dark across all color fields. A stuck subpixel is a transistor locked in the conductive state, emitting continuous red, green, or blue light over dark scenes.'],
-        ['How many pixel defects are permitted under ISO 9241-307?', 'Under Class II tolerances (standard consumer displays), up to 2 hot pixels, 2 dark pixels, and 5 defective subpixels are permitted per million pixels.']
+        ['What is the visual difference between a dead pixel and a stuck subpixel?', 'A dark point across several bright fields is often called dead; a colored point that persists on specific fields is often called stuck. Appearance alone does not reveal the electrical mechanism.'],
+        ['How many defects are accepted?', 'Policies vary by manufacturer, model, region, defect type and clustering. Check the current product warranty; a technical class does not replace the contract or applicable law.']
       ],
       methodology: [
         'Modern displays utilize thin-film transistor (TFT) active matrices. A 4K UHD display (3840x2160) houses 8.29 million pixels and over 24.88 million discrete RGB subpixel gates lithographed onto glass substrates.',
-        'A true Dead Pixel occurs when thin-film transistor gate traces fail in open circuit, leaving all three subpixels unpowered. A Stuck Pixel occurs when a subpixel transistor remains locked in conductive saturation, emitting red, green, or blue light continuously.',
-        'ISO 9241-307 governs display quality classification worldwide. Class I requires zero defects; Class II permits up to 2 hot pixels, 2 dark pixels, and 5 defective subpixels per million pixels. MonitorSmith’s 8-field test routine systematically audits every individual electrical subpixel channel.'
+        'Failures in transistors, interconnects, emitters or control electronics can produce dark, bright or colored points. A browser test describes the visible pattern but cannot identify the failed component.',
+        'Technical standards provide methods and classifications, while commercial coverage depends on the current manufacturer policy and local law. The color sequence helps record which fields reveal the anomaly.'
       ]
     },
   },
   'screen-cleaner': {
     related: ['dead-pixel-test', 'black-screen', 'display-calibration'],
     pt: {
-      intro: 'Fundos de alto contraste evidenciam partículas de poeira, marcas oleofóbicas e resíduos para higienização segura de revestimentos ópticos.',
+      intro: 'Fundos de alto contraste ajudam a localizar poeira, marcas e resíduos antes de limpar a tela conforme o manual do modelo.',
       steps: ['Use o fundo de contraste para localizar marcas e poeira, sem limpar o painel ligado.', 'Encerre o teste, desligue o monitor e siga as orientações de limpeza do fabricante.', 'Use um pano macio adequado; se o fabricante permitir umidade, aplique o líquido no pano, nunca diretamente na tela.'],
       uses: ['Preparação para manutenção periódica preventiva de estações de trabalho.', 'Mapeamento de poeira superficial antes da aplicação de películas protetoras.', 'Inspeção de riscos superficiais na camada polarizadora.'],
-      limitations: 'O MonitorSmith fornece superfícies de contraste óptico para localização de resíduos. Produtos abrasivos ou solventes inadequados causam danos irreversíveis ao painel.',
+      limitations: 'O MonitorSmith fornece apenas superfícies de contraste. Materiais, líquidos e concentrações compatíveis variam; use somente o método autorizado pelo fabricante.',
       faq: [
-        ['Posso utilizar álcool ou limpa-vidros no monitor?', 'Nunca. Substâncias como amônia, álcool etílico, acetona ou limpa-vidros dissolvem a matriz polimérica dos filmes antirreflexo (AG/AR) e polarizadores, causando manchas opacas permanentes.'],
-        ['Qual o tecido mais seguro para limpar a tela?', 'Pano de microfibra de filamento dividido limpo (80% poliéster / 20% poliamida), livre de poeira abrasiva acumulada.']
+        ['Posso utilizar álcool ou limpa-vidros no monitor?', 'Use somente o produto e a concentração autorizados no manual do modelo. Limpa-vidros, amônia, acetona e soluções não aprovadas podem danificar revestimentos.'],
+        ['Qual pano usar?', 'Use um pano macio, limpo e sem partículas abrasivas, conforme a orientação do fabricante. Não aplique líquido diretamente no painel.']
       ],
       methodology: [
-        'Superfícies de displays modernos incorporam filmes poliméricos ultrafinos depositados por pulverização catódica ou evaporação a vácuo. Painéis foscos (matte) utilizam revestimentos Anti-Glare (AG) com microtexturas de dispersão luminosa. Telas brilhantes e OLED utilizam revestimentos multicamadas Anti-Reflective (AR) de interferência com camadas oleofóbicas fluoradas.',
-        'Solventes agressivos como hidróxido de amônio (amônia), acetona, tolueno e álcool etílico desidratam e dissolvem a matriz de triacetato de celulose (TAC) dos filmes polarizadores, resultando em descamação irreversível (crazing) e perda de uniformidade de contraste.',
-        'O procedimento seguro exige resfriamento elétrico do painel, remoção preliminar de poeiras minerais com pincel antiestático e aplicação indireta de água destilada ou desmineralizada em microfibra de alta densidade, exercendo pressão linear suave inferior a 50 g/cm² sem infiltração de líquidos nas molduras.'
+        'Telas podem usar vidro, polarizadores e revestimentos antirreflexo ou oleofóbicos com tolerâncias químicas diferentes. A aparência externa não informa qual solução é compatível.',
+        'Solventes e produtos domésticos podem manchar ou remover revestimentos. Alguns fabricantes permitem soluções específicas em certos modelos; por isso o manual do aparelho é a referência.',
+        'Desligue o equipamento, remova partículas sem pressionar e use um pano adequado apenas com a umidade permitida pelo fabricante. Evite que líquido alcance bordas, portas ou aberturas.'
       ]
     },
     en: {
-      intro: 'High-contrast inspection backgrounds illuminate dust particles, fingerprints, and residue for safe decontamination of optical display coatings.',
+      intro: 'High-contrast backgrounds help locate dust, marks and residue before cleaning the screen as its model manual directs.',
       steps: ['Use the contrast background to locate dust and marks without cleaning the powered screen.', 'Close the test, power off the display and follow the manufacturer cleaning instructions.', 'Use a suitable soft cloth; if moisture is allowed, apply it to the cloth, never directly to the screen.'],
       uses: ['Routine maintenance of professional editing and gaming monitors.', 'Inspecting display glass before applying protective films.', 'Evaluating superficial scratches on anti-glare coatings.'],
-      limitations: 'MonitorSmith delivers visual contrast references. Chemical solvents or abrasive wiping materials cause permanent delamination and polarizer damage.',
+      limitations: 'MonitorSmith only provides contrast surfaces. Compatible materials, liquids and concentrations vary; use only the method authorised by the manufacturer.',
       faq: [
-        ['Can I use household glass cleaners or alcohol on my monitor?', 'Never. Ammonia, ethyl alcohol, acetone, and household detergents dissolve polymer anti-glare (AG) and polarizing layers, producing permanent cloudy crazing and coating breakdown.'],
-        ['What is the safest cloth for cleaning screens?', 'A clean split-filament microfiber cloth (80% polyester / 20% polyamide) dedicated solely to optical glass surfaces.']
+        ['Can I use household glass cleaners or alcohol on my monitor?', 'Use only the product and concentration allowed by the exact model manual. Glass cleaner, ammonia, acetone and unapproved solutions can damage coatings.'],
+        ['What cloth should I use?', 'Use a soft, clean cloth without abrasive particles, following the manufacturer instructions. Never spray liquid directly onto the panel.']
       ],
       methodology: [
-        'Modern display surfaces incorporate sub-micron polymer coatings. Matte panels apply etched Anti-Glare (AG) surfaces that scatter specular reflections. Glossy displays and OLEDs apply multilayer Anti-Reflective (AR) optical interference coatings paired with top fluoropolymer oleophobic treatments.',
-        'Harsh solvents including ammonium hydroxide, ethyl alcohol, acetone, and acetic acid break polymer bonds in cellulose triacetate (TAC) polarizing films, causing irreversible clouding, delamination, and contrast degradation.',
-        'Safe cleaning protocol requires cooling down the panel, removing abrasive mineral dust with an anti-static brush, and indirect application of distilled water via clean microfiber, using linear wiping pressure below 50 g/cm² with zero liquid ingress into chassis bezels.'
+        'Displays may use glass, polarizers and anti-glare or oleophobic coatings with different chemical tolerances. External appearance does not identify which solution is compatible.',
+        'Solvents and household products can stain or remove coatings. Some manufacturers permit specific solutions on certain models, so the device manual is the authority.',
+        'Power the device down, remove particles without pressure and use a suitable cloth with only the moisture the manufacturer permits. Keep liquid away from edges, ports and openings.'
       ]
     },
   },
   'monitor-test': {
     related: ['display-calibration', 'dead-pixel-test', 'black-screen'],
     pt: {
-      intro: 'O Teste de Monitor é uma rotina de triagem rápida para conferência geral de painéis: integridade de geometria, uniformidade de iluminação, fase de sinal e clock de pixels.',
-      steps: ['Abra o teste em tela cheia logo após desembalar o monitor ou antes de finalizar uma compra.', 'Percorra a lista de verificação visual: geometria, uniformidade básica e ausência de distorções evidentes.', 'Anote qualquer inconsistência observada para acionar a garantia ou devolução dentro do prazo legal.'],
-      uses: ['Checklist de triagem e recebimento de monitores novos ou usados.', 'Verificação rápida de integridade geral do display antes de calibração avançada.', 'Detecção de incompatibilidades de quantização HDMI (Full RGB vs Limited RGB).'],
-      limitations: 'Este é um teste de triagem visual preliminar. Para avaliação aprofundada de escala de cinza e curvas de gama, utilize a ferramenta Verificação Visual.',
+      intro: 'O Teste de Monitor reúne padrões para uma triagem visual rápida de geometria, uniformidade aparente, tons e artefatos evidentes.',
+      steps: ['Abra o teste em tela cheia logo após desembalar o monitor ou antes de finalizar uma compra.', 'Percorra a lista de verificação visual: geometria, uniformidade básica e ausência de distorções evidentes.', 'Anote qualquer inconsistência observada para consultar a política de garantia ou devolução aplicável.'],
+      uses: ['Checklist de triagem e recebimento de monitores novos ou usados.', 'Verificação visual antes de uma medição instrumental.', 'Observação de sintomas compatíveis com uma faixa RGB incorreta, sem determinar a causa.'],
+      limitations: 'É uma triagem visual preliminar. O navegador não lê o sinal do cabo, a fase ou o clock físico e não confirma a configuração RGB da GPU.',
       faq: [
         ['Qual a diferença entre o Teste de Monitor e a Verificação Visual?', 'O Teste de Monitor é uma triagem rápida para conferência geral (ideal para recebimento); a Verificação Visual oferece laboratório de padrões para análise minuciosa de tons e gama.'],
-        ['Este teste identifica problemas de handshake HDMI/DisplayPort?', 'Sim. Permite verificar se o sinal está configurado na faixa completa (Full RGB 0-255) ou limitada (16-235).']
+        ['Este teste identifica problemas de faixa HDMI/DisplayPort?', 'Pode revelar pretos elevados ou perda de níveis, mas esses sintomas também têm outras causas. Confirme a faixa RGB nas configurações da GPU, do sistema e do monitor.']
       ],
       methodology: [
-        'Ao receber um display novo ou seminovo, uma auditoria de primeiro nível deve verificar simultaneamente integridade da matriz, clock de pixels e alinhamento de fase de sinal. Tensões mecânicas de transporte frequentemente causam deslocamento interno de difusores e microfissuras em conexões TAB/COF.',
-        'Painéis de consumo operam com tolerâncias de uniformidade de luminância de 10% a 15% entre o centro e os cantos. Padrões de teste em grade e campos uniformes expõem desvios assimétricos de temperatura de cor antes de ajustes finos no OSD.',
-        'A ferramenta auxilia na detecção de discrepâncias de quantização HDMI/DisplayPort, onde a GPU transmite faixa limitada (16-235) para um monitor configurado em faixa completa (0-255), resultando em pretos acinzentados e perda de contraste.'
+        'Uma triagem inicial pode registrar pixels suspeitos, distorções geométricas, regiões desiguais e artefatos que se repetem. A causa não pode ser inferida apenas pelo padrão mostrado na página.',
+        'Grades e campos uniformes facilitam a comparação visual entre centro, bordas e cantos. Quantificar luminância ou desvio de cor exige medidor e condições controladas.',
+        'Uma incompatibilidade entre faixa RGB limitada e completa pode elevar pretos ou cortar detalhes, mas a confirmação deve ser feita nas configurações da cadeia de vídeo.'
       ]
     },
     en: {
-      intro: 'The Monitor Test is a rapid triage checklist for newly acquired displays: verifying geometry, luminance uniformity, signal phase alignment, and pixel clock stability.',
+      intro: 'The Monitor Test groups patterns for a quick visual triage of geometry, apparent uniformity, tonal steps and obvious artifacts.',
       steps: ['Open the test fullscreen immediately after unboxing or before completing a purchase.', 'Go through the visual checklist: geometric grid alignment, basic uniformity, and absence of artifacts.', 'Document any defect to request immediate replacement within return periods.'],
-      uses: ['Unboxing triage checklist for new and refurbished monitors.', 'Quick general display health check before advanced color profiling.', 'Detecting HDMI quantization mismatches (Full RGB 0-255 vs Limited RGB 16-235).'],
-      limitations: 'This is a preliminary triage checklist. For granular grayscale ramps and gamma tracking, use the Visual Check tool.',
+      uses: ['Unboxing triage checklist for new and refurbished monitors.', 'A visual check before instrument-based measurement.', 'Observing symptoms compatible with an RGB-range mismatch without assigning the cause.'],
+      limitations: 'This is preliminary visual triage. The browser does not read cable signal timing, physical phase or pixel clock and cannot confirm GPU RGB-range settings.',
       faq: [
         ['What is the difference between Monitor Test and Visual Check?', 'Monitor Test is a rapid triage checklist (great for unboxing/returns); Visual Check is a technical pattern laboratory for evaluating tonal transitions and gamma.'],
-        ['Does this test detect HDMI handshake range mismatches?', 'Yes. It quickly reveals whether your GPU is outputting Full Range (0-255) or Limited Range (16-235).']
+        ['Does this test identify HDMI or DisplayPort range mismatches?', 'It may reveal elevated blacks or clipped levels, but other causes look similar. Confirm RGB range in GPU, operating-system and monitor settings.']
       ],
       methodology: [
-        'When receiving a new display, an initial triage audit evaluates matrix integrity, pixel clock stability, and signal phase alignment. Shipping shocks commonly induce optical sheet displacement and stress around chassis bezels.',
-        'Consumer monitors operate within allowable luminance uniformity variances of 10% to 15% between center and periphery. Geometric grid and uniform color patterns expose gross chromatic drift before OSD calibration.',
-        'The test assists in identifying HDMI/DisplayPort handshake mismatches, where a graphics card transmits Limited RGB (16-235) to a screen expecting Full RGB (0-255), producing washed-out black levels.'
+        'An initial triage can record suspicious pixels, geometric distortion, uneven regions and repeatable artifacts. The pattern alone cannot establish the underlying cause.',
+        'Grids and uniform fields make visual comparison between center, edges and corners easier. Quantifying luminance or color deviation requires a meter and controlled conditions.',
+        'A mismatch between limited and full RGB range can elevate blacks or clip detail, but confirmation belongs in the video-chain settings.'
       ]
     },
   },
   'display-calibration': {
     related: ['monitor-test', 'black-screen', 'screen-cleaner'],
     pt: {
-      intro: 'A Verificação Visual é um laboratório técnico de padrões de referência: escala de cinza de 256 níveis, curvas de gama (2.2 e BT.1886), nitidez de subpixel e detecção de color banding.',
+      intro: 'A Verificação Visual reúne padrões renderizados pelo navegador para observar escala de cinza, contraste, gradientes e nitidez aparente.',
       steps: ['Restaure o perfil padrão sRGB do monitor e estabilize a iluminação da sala.', 'Analise os passos de sombra (0% a 5%) e realce (95% a 100%) para verificar esmagamento ou estouro.', 'Examine gradientes contínuos e padrões de subpixel para avaliar dithering (FRC) e nitidez de fontes.'],
-      uses: ['Avaliação avançada de gradação tonal e rastreamento de curva gama.', 'Detecção de color banding em gradientes de 8 bits e 10 bits.', 'Verificação de nitidez e alinhamento de renderização de subpixel (ClearType/FreeType).'],
+      uses: ['Comparação visual de gradação tonal e respostas após ajustes no OSD.', 'Observação de banding aparente em diferentes conteúdos e modos.', 'Comparação de nitidez e franjas em renderização de texto.'],
       limitations: 'A avaliação visual orienta ajustes no menu OSD e na GPU. Não gera perfil ICC automatizado nem substitui um colorímetro ou espectrofotômetro de hardware.',
       faq: [
-        ['Como identificar se as sombras estão esmagadas (black crush)?', 'Nos blocos de cinza escuro (níveis de vídeo 1 a 5), todos os degraus adjacentes devem ser discerníveis do fundo preto absoluto. Se forem indistinguíveis, ajuste o brilho ou a curva gama.'],
-        ['Qual a curva gama recomendada para uso geral na web?', 'Gama 2.2 conforme a especificação sRGB (IEC 61966-2-1). Para edição de vídeo em ambiente escuro, a norma ITU-R BT.1886 especifica Gama 2.4.']
+        ['Como identificar possível black crush?', 'Se vários degraus próximos ao preto se fundirem, registre o comportamento e confira faixa RGB, brilho, contraste, perfil de cor e luz ambiente antes de ajustar o monitor.'],
+        ['Qual curva usar como referência?', 'sRGB possui uma função de transferência própria, frequentemente aproximada como gama 2,2. Fluxos de vídeo podem adotar BT.1886; o alvo depende do padrão e do ambiente do trabalho.']
       ],
       methodology: [
-        'A função de transferência gama (L = V^γ) compensa a resposta logarítmica da percepção humana de luminância descrita pela Lei de Stevens. O padrão sRGB e Rec.709 adota Gama 2.2 para ambientes de escritório iluminados (80 a 120 cd/m²), enquanto a norma ITU-R BT.1886 especifica Gama 2.4 para salas de masterização escurecidas.',
-        'Em sistemas de 8 bits por canal, a escala de cinza divide-se em 256 níveis discretos (0 a 255). Os padrões de teste do MonitorSmith oferecem degraus de avaliação de baixa intensidade (níveis 0 a 5) e alta intensidade (níveis 250 a 255) para validar se o display preserva detalhes de sombras profundas sem crushing e realces sem clipping.',
-        'A renderização de subpixel (como Microsoft ClearType e FreeType) utiliza a disposição física horizontal RGB para triplicar a resolução horizontal aparente de fontes. Em painéis com matriz BGR ou OLED PenTile, padrões de teste de subpixel revelam franjas cromáticas que exigem compensação no sistema operacional.'
+        'Funções de transferência relacionam códigos digitais e luminância. sRGB é segmentada e não equivale exatamente a uma potência única; BT.1886 define uma resposta de referência considerando as condições do display.',
+        'Uma rampa de 8 bits contém códigos de 0 a 255, mas gerenciamento de cor, composição, profundidade do framebuffer, GPU e painel podem transformar o resultado físico. A página permite observação, não validação colorimétrica.',
+        'A renderização de texto depende do sistema, navegador, escala e geometria de subpixels. Comparar padrões pode revelar franjas aparentes, sem identificar automaticamente a matriz física ou a correção adequada.'
       ]
     },
     en: {
-      intro: 'Visual Check is a precision reference pattern laboratory: 256-level grayscale ramps, gamma tracking curves (2.2 and BT.1886), continuous gradient sweeps, and subpixel font rendering.',
+      intro: 'Visual Check groups browser-rendered patterns for observing grayscale, contrast, gradients and apparent sharpness.',
       steps: ['Restore the default sRGB profile on your display and stabilize ambient room lighting.', 'Inspect deep shadow steps (0%–5%) and highlight steps (95%–100%) for crushing or clipping.', 'Examine continuous gradient sweeps and subpixel targets to assess dithering (FRC) and font rendering clarity.'],
-      uses: ['Advanced assessment of tonal gradation and gamma tracking.', 'Detecting color banding across 8-bit and 10-bit graphics pipelines.', 'Evaluating subpixel font antialiasing (ClearType/FreeType) on RGB and BGR panels.'],
+      uses: ['Visual comparison of tonal gradation after OSD changes.', 'Observing apparent banding across content and display modes.', 'Comparing text sharpness and visible color fringing.'],
       limitations: 'Visual inspection guides OSD and GPU driver tuning. It does not generate hardware ICC profiles or replace a dedicated spectrophotometer.',
       faq: [
-        ['How do I detect shadow crushing (black crush)?', 'In near-black test steps (levels 1 through 5), each block must remain distinguishable from pure black (#000000). If indistinguishable, increase display brightness or adjust gamma.'],
-        ['Which gamma standard should I target for web work?', 'Gamma 2.2 in compliance with the sRGB specification (IEC 61966-2-1). For video grading in darkened suites, ITU-R BT.1886 specifies Gamma 2.4.']
+        ['How do I identify possible shadow crushing?', 'If several near-black steps merge, record the behavior and check RGB range, brightness, contrast, color profile and ambient light before adjusting the display.'],
+        ['Which transfer curve should I use as reference?', 'sRGB has its own segmented transfer function, often approximated as gamma 2.2. Video workflows may use BT.1886; the target depends on the delivery standard and viewing environment.']
       ],
       methodology: [
-        'The electro-optical transfer function (gamma curve L = V^γ) models human perceptual brightness scaling described by Stevens’ Power Law. Standard sRGB and Rec.709 pipelines target gamma 2.2 for typical ambient illumination, whereas ITU-R BT.1886 defines gamma 2.4 for controlled grading environments.',
-        'In an 8-bit per channel pipeline, grayscale is quantized into 256 discrete levels (0–255). MonitorSmith’s precision test patterns supply near-black evaluation steps (levels 0–5) and near-white highlight steps (levels 250–255) to verify absence of shadow crushing or highlight clipping.',
-        'Subpixel text rasterizers (such as Microsoft ClearType and FreeType) leverage horizontal RGB stripe geometries to achieve 3x apparent horizontal resolution. Displays utilizing BGR or diamond OLED PenTile matrices produce chromatic fringing unless compensated by font antialiasing tuning.'
+        'Transfer functions relate digital code values to luminance. sRGB is segmented rather than an exact single power law; BT.1886 defines a reference response that accounts for display conditions.',
+        'An 8-bit ramp has codes from 0 to 255, but color management, composition, framebuffer depth, GPU and panel processing can transform the physical output. This page supports observation, not colorimetric validation.',
+        'Text rendering depends on the operating system, browser, scaling and subpixel geometry. Comparing targets may reveal visible fringing without automatically identifying panel layout or the correct compensation.'
       ]
     },
   },
@@ -268,13 +268,13 @@ const EDITORIAL_CONTENT = Object.freeze({
       uses: ['Videochamadas corporativas no Zoom, Google Meet e Microsoft Teams.', 'Luz de preenchimento suave para fotografia macro de pequenos produtos.', 'Equalização de balanço de branco para gravações com webcam.'],
       limitations: 'A temperatura exibida é uma aproximação colorimétrica sRGB renderizada na tela. A potência efetiva depende da luminância máxima do painel (nits).',
       faq: [
-        ['O monitor substitui uma luminária Softbox ou Ring Light?', 'Em distâncias de 50 a 80 cm, uma tela de 24 a 32 polegadas atua como uma fonte difusa de grande área, suavizando sombras faciais com qualidade superior a ring lights compactas.'],
+        ['O monitor substitui uma softbox ou ring light?', 'Ele pode servir como luz de apoio próxima, mas oferece menos controle de potência, espectro e posicionamento do que uma luminária dedicada. Compare o resultado na própria câmera.'],
         ['O que significa a temperatura de cor em Kelvin?', 'Valores baixos (3200K) produzem luz quente amarelada (lâmpada incandescente); valores altos (6500K / D65) produzem luz branca fria simulando a luz solar do meio-dia.']
       ],
       methodology: [
-        'A intensidade luminosa incidente decai com o quadrado da distância ($E = I / d^2$). Ao utilizar um monitor de 24 a 32 polegadas a 60 cm de distância, a ampla área emissiva transforma a tela em uma fonte difusa de grande abertura (softbox), suavizando sombras duras sob as sobrancelhas e o nariz.',
-        'A temperatura de cor correlacionada (CCT em Kelvin) permite casar a emissão do monitor com a iluminação ambiente da sala (3200K quente a 6500K D65), evitando que o sensor da câmera oscile o balanço de branco automático ou gere tons de pele cadavéricos.',
-        'LEDs brancos de monitores convencionais utilizam emissores azuis revestidos com fósforo amarelo, apresentando Índice de Reprodução de Cor (CRI / Ra) típico entre 80 e 90 Ra, oferecendo excelente luz de preenchimento facial para comunicação remota.'
+        'Uma tela grande e próxima pode funcionar como fonte de área e suavizar sombras em comparação com uma fonte pontual. A iluminância depende do tamanho, brilho, distância e ângulo do painel.',
+        'O controle de “Kelvin” converte uma faixa nominal em cores sRGB. Ele não mede nem calibra a CCT real emitida pelo monitor; use a prévia da câmera e ajuste conforme o ambiente.',
+        'Espectro, uniformidade e reprodução de cor variam entre painéis. Para trabalho colorimétrico ou iluminação consistente, use uma fonte medida e adequada à finalidade.'
       ]
     },
     en: {
@@ -283,78 +283,78 @@ const EDITORIAL_CONTENT = Object.freeze({
       uses: ['Corporate video calls on Zoom, Google Meet, and Microsoft Teams.', 'Diffuse fill lighting for tabletop and macro product photography.', 'Matching camera white balance during remote presentations.'],
       limitations: 'Displayed CCT is an sRGB chromatic approximation rendered on-screen. Peak illuminance is bounded by the panel’s native nit rating.',
       faq: [
-        ['Can a monitor replace a physical softbox or ring light?', 'At standard desktop distances (50–80 cm), a 24-to-32-inch screen functions as a wide diffuse light source, significantly softening facial shadows compared to compact point lights.'],
+        ['Can a monitor replace a physical softbox or ring light?', 'It can provide nearby fill light, but offers less control over output, spectrum and placement than a dedicated fixture. Judge the result in the camera preview.'],
         ['What does the Kelvin temperature scale signify?', 'Lower values (3200K) emit warm amber light mimicking incandescent tungsten; higher values (6500K / D65) emit crisp daylight white.']
       ],
       methodology: [
-        'Illuminance incident on a subject diminishes with the square of distance ($E = I / d^2$). Operating a 24-to-32-inch monitor at a 60 cm distance converts the panel into a wide-aperture diffuse light source, eliminating harsh facial shadows.',
-        'Modulating Correlated Color Temperature (CCT) from 3200K to 6500K matches room ambient lighting, preventing camera auto-exposure and white-balance hunting.',
-        'Consumer LCD backlights deliver Color Rendering Index (CRI/Ra) ratings between 80 and 90 Ra, providing high-quality fill lighting for remote meetings and streaming setups.'
+        'A large nearby screen can behave as an area source and soften shadows compared with a small point source. Illuminance depends on panel size, brightness, distance and angle.',
+        'The “Kelvin” control maps a nominal range to sRGB colors. It neither measures nor calibrates the monitor’s emitted CCT; use the camera preview and adjust for the room.',
+        'Spectrum, uniformity and color rendering vary between panels. Color-critical or repeatable lighting requires a measured fixture suited to the task.'
       ]
     },
   },
   'green-screen': {
     related: ['webcam-light', 'fullscreen-message', 'sponsor-loop'],
     pt: {
-      intro: 'Superfície de croma verde sólida calibrada no código sRGB #00B140 para composições de vídeo, recorte de fundo em OBS e fotografia de produtos.',
+      intro: 'Superfície de croma verde solicitada ao navegador no código sRGB #00B140 para composições de vídeo, recorte de fundo em OBS e fotografia de pequenos objetos.',
       steps: ['Abra a ferramenta e ative o modo tela cheia.', 'Posicione a tela atrás do objeto ou apresentador com iluminação frontal adequada.', 'Configure o filtro de Chroma Key no OBS Studio ou software de edição e ajuste a tolerância de recorte.'],
       uses: ['Fundo de chroma key para gravação de pequenos produtos e miniaturas.', 'Fundo autoiluminado para transmissões e gravação de webcams em mesas compactas.', 'Composições rápidas em DaVinci Resolve, Premiere Pro e CapCut.'],
       limitations: 'Displays emitem luz ativa e podem projetar reflexos verdes (spill) em objetos muito próximos. Mantenha distância adequada e regule o brilho.',
       faq: [
-        ['Por que o verde é a cor mais usada para Chroma Key?', 'Os sensores de câmeras digitais (matriz Bayer RGGB) possuem o dobro de fotodiodos verdes, proporcionando a maior relação sinal-ruído para algoritmos de recorte.'],
-        ['Como evitar que o verde reflita no objeto filmado?', 'Reduza o brilho do monitor para 30%–50% e ilumine o objeto frontalmente com uma fonte de luz dedicada.']
+        ['Por que o verde é comum em Chroma Key?', 'Ele costuma se separar bem de tons de pele e muitos sensores usam mais amostras verdes em sua matriz de cor. O resultado também depende da câmera, compressão, iluminação e objeto filmado.'],
+        ['Como reduzir reflexos verdes no objeto filmado?', 'Afaste o objeto da tela, reduza o brilho até o recorte ficar estável e use iluminação frontal independente. Ajuste enquanto observa a prévia da própria câmera.']
       ],
       methodology: [
-        'A cor verde #00B140 (RGB: 0, 177, 64) situa-se no ponto de máxima sensibilidade dos sensores de câmeras digitais que utilizam matriz de filtros de cor Bayer (RGGB), maximizando a relação sinal-ruído (SNR) para algoritmos de recorte.',
-        'A maioria das câmeras comprime o sinal de vídeo em formato 4:2:0, onde a resolução de cor é metade da resolução de luminância. Uma tela emissiva plana produz bordas de transição limpas sem rugas de tecido.',
-        'Diferente de tecidos de musselina que exigem iluminação externa difusa para eliminar vincos, a tela do monitor emite luminância própria homogênea, eliminando sombras projetadas em capturas de mesa.'
+        'O valor #00B140 é uma referência nominal em CSS. Gerenciamento de cor, perfil, brilho e características do painel podem alterar a luz que chega à câmera.',
+        'Câmeras e plataformas podem reduzir a resolução de cor ou comprimir o vídeo. Spill, moiré, banding, reflexos e foco na malha do painel podem prejudicar o recorte.',
+        'A tela evita vincos de tecido, mas não garante uniformidade nem elimina sombras. Confira exposição, distância, luz frontal e tolerância do filtro na imagem capturada.'
       ]
     },
     en: {
-      intro: 'Solid chroma green surface calibrated to sRGB #00B140 for video matting, OBS keying, and tabletop product shoots.',
+      intro: 'A chroma-green surface requested from the browser as sRGB #00B140 for video matting, OBS keying, and small tabletop shoots.',
       steps: ['Open the tool and enter fullscreen mode.', 'Position the display behind the subject with dedicated frontal lighting.', 'Configure the Chroma Key filter in OBS Studio or your NLE editor and adjust threshold tolerances.'],
       uses: ['Clean chroma key backdrop for macro product reviews and unboxings.', 'Self-luminous green background for compact webcam streaming setups.', 'Rapid compositing in DaVinci Resolve, Premiere Pro, and CapCut.'],
       limitations: 'Active displays emit light that can cause green spill on nearby subjects. Maintain physical distance and calibrate brightness.',
       faq: [
-        ['Why is green the preferred chroma key color?', 'Digital camera sensors using Bayer filter arrays (RGGB) feature twice as many green photosites as red or blue, delivering maximum signal-to-noise ratio for keying algorithms.'],
-        ['How do I eliminate green spill on reflective objects?', 'Lower screen brightness to 30%–50% and illuminate the foreground subject with a dedicated key light.']
+        ['Why is green commonly used for chroma key?', 'It often separates well from skin tones, and many camera sensors sample green more densely. Results still depend on the camera, compression, lighting and subject.'],
+        ['How do I reduce green spill on reflective objects?', 'Increase subject-to-screen distance, lower brightness until the key is stable and light the subject separately while checking the camera preview.']
       ],
       methodology: [
-        'Chroma green #00B140 (RGB: 0, 177, 64) aligns with the peak spectral quantum efficiency of Bayer RGGB sensor arrays, maximizing keying signal-to-noise ratios (SNR).',
-        'Video capture pipelines commonly encode in 4:2:0 chroma subsampling. An active emissive screen generates sharp boundary contrast without fabric micro-creases.',
-        'Unlike physical backdrops that require complex multi-point lighting to remove folds and shadows, a flat display surface produces uniform self-luminous chroma output.'
+        '#00B140 is a nominal CSS reference. Colour management, profiles, brightness and panel characteristics can change the light recorded by the camera.',
+        'Cameras and platforms may reduce colour resolution or compress video. Spill, moiré, banding, reflections and focus on the pixel grid can all weaken the key.',
+        'A screen avoids fabric folds but does not guarantee uniform output or remove shadows. Check exposure, distance, foreground lighting and key tolerance in the captured image.'
       ]
     },
   },
   'focus-timer': {
     related: ['fullscreen-clock', 'fullscreen-message', 'webcam-light'],
     pt: {
-      intro: 'Temporizador de foco e produtividade com metodologia Pomodoro e gerador de ruído marrom, rosa e branco sintetizado localmente via Web Audio API.',
-      steps: ['Escolha a duração do ciclo de foco (25 ou 50 minutos) e o som de mascaramento acústico desejado.', 'Inicie o temporizador e mantenha a tela em modo imersivo.', 'Ao soar o alerta de término, cumpra a pausa programada e reinicie o ciclo com disciplina.'],
-      uses: ['Blocos de trabalho focado (Deep Work) em programação, escrita e análise.', 'Mascaramento acústico de conversas e ruídos no home office.', 'Gestão de ritmo e prevenção de estafa mental em jornadas intensas.'],
-      limitations: 'É uma ferramenta de gestão temporal e apoio acústico. O áudio é sintetizado diretamente no navegador sem transmissão para servidores.',
+      intro: 'Temporizador de foco com ciclos configuráveis e aproximações digitais de ruído marrom, rosa e branco geradas no dispositivo pela Web Audio API.',
+      steps: ['Escolha a duração do ciclo, o perfil de ruído opcional e um volume baixo.', 'Inicie o temporizador e use a visualização imersiva se ela ajudar na sua rotina.', 'Quando o alerta tocar, faça a pausa que você planejou ou inicie outro ciclo.'],
+      uses: ['Blocos de trabalho focado em programação, escrita e análise.', 'Mascaramento opcional de conversas e ruídos no home office.', 'Organização de ciclos de trabalho e pausas de acordo com a preferência pessoal.'],
+      limitations: 'É uma ferramenta de organização temporal e apoio acústico. Os perfis são aproximações digitais, e o efeito varia entre pessoas e ambientes. O áudio é sintetizado no dispositivo sem transmissão de um fluxo sonoro para servidores.',
       faq: [
-        ['O que é ruído marrom (Brownian noise)?', 'É um ruído com densidade espectral que decai 6 dB por oitava ($1/f^2$), concentrando energia nos graves suaves, ideal para concentração profunda.'],
+        ['O que é ruído marrom (Brownian noise)?', 'É um ruído com maior energia relativa nas frequências baixas. Algumas pessoas o preferem para mascarar sons; outras trabalham melhor em silêncio.'],
         ['O temporizador consome internet para tocar o áudio?', 'Não. Todo o áudio é sintetizado matematicamente em tempo real no cliente pela Web Audio API.']
       ],
       methodology: [
-        'A síntese sonora utiliza a Web Audio API com AudioNodes nativos no navegador sem transmissão de streaming. O ruído marrom decai 6 dB por oitava ($1/f^2$), mascarando conversas e ruídos transitórios do ambiente.',
-        'A metodologia apoia-se em ciclos ultradianos biológicos de atenção de 90 minutos divididos em intervalos de foco de 25 a 50 minutos. A transição visual nítida atua como gatilho de descompressão neurológica.',
+        'A síntese sonora gera amostras pseudoaleatórias no navegador. O perfil branco mantém as amostras sem filtragem espectral adicional; rosa e marrom usam aproximações digitais que aumentam o peso relativo das frequências baixas.',
+        'Os intervalos servem como estrutura de organização. A ferramenta não previne fadiga, estafa ou burnout e não substitui pausas, ergonomia ou orientação de saúde.',
         'Temporizadores e geradores de DSP desta ferramenta executam localmente no navegador, sem fluxo de áudio vindo de um servidor.'
       ]
     },
     en: {
-      intro: 'Productivity timer based on Pomodoro protocols featuring real-time client-side Brownian, pink, and white noise synthesis powered by the Web Audio API.',
-      steps: ['Select your focus interval (25 or 50 minutes) and optional acoustic masking profile.', 'Start the timer and leave the interface in full-screen immersion.', 'When the cycle concludes, take the scheduled break and restart deliberately.'],
-      uses: ['Deep work blocks for software engineering, writing, and research.', 'Acoustic masking of ambient chatter and household distractions.', 'Pacing cognitive effort to prevent mental fatigue and burnout.'],
-      limitations: 'This is an organizational and psychoacoustic aid. All DSP audio generation runs locally in the client browser thread.',
+      intro: 'Focus timer with configurable intervals and digital approximations of brown, pink and white noise generated on the device through the Web Audio API.',
+      steps: ['Choose an interval, an optional noise profile and a low volume.', 'Start the timer and use the immersive view if it helps your routine.', 'When the alert sounds, take the break you planned or start another cycle.'],
+      uses: ['Focused work blocks for software engineering, writing, and research.', 'Optional masking of ambient chatter and household distractions.', 'Organising work and break cycles around personal preference.'],
+      limitations: 'This is a time-organisation and optional sound tool. The profiles are digital approximations, and their effect varies by person and environment. Audio is generated on the device without sending an audio stream to a server.',
       faq: [
-        ['What is Brownian noise (red noise)?', 'It is continuous noise with a power spectral density decaying at 6 dB per octave ($1/f^2$), emphasizing deep, soothing low frequencies for deep focus.'],
+        ['What is Brownian noise (red noise)?', 'It is noise with more relative energy at lower frequencies. Some people prefer it for masking sounds; others work better in silence.'],
         ['Does audio generation consume network bandwidth?', 'No. Audio waveforms are synthesized algorithmically in real time via the browser’s Web Audio API.']
       ],
       methodology: [
-        'Audio synthesis leverages the Web Audio API with native browser DSP nodes. Brown noise decays at 6 dB per octave ($1/f^2$), masking transient speech and environmental noise.',
-        'Structured work intervals align with biological ultradian attention rhythms. Visual phase transitions serve as unambiguous cues for cognitive context switching.',
+        'Audio synthesis generates pseudorandom samples in the browser. The white profile adds no spectral filtering; pink and brown use digital approximations that place more relative energy at lower frequencies.',
+        'Intervals provide an organisational structure. The tool does not prevent fatigue or burnout and does not replace breaks, ergonomics or health advice.',
         'The tool timer loops and audio synthesizers run locally in the browser, without an audio stream from a server.'
       ]
     },
@@ -362,32 +362,32 @@ const EDITORIAL_CONTENT = Object.freeze({
   'fullscreen-clock': {
     related: ['focus-timer', 'fullscreen-message', 'black-screen'],
     pt: {
-      intro: 'Exibe horário e data em formatos digital e analógico de alta resolução sincronizados com VSync para dashboards de estúdios e telas secundárias.',
+      intro: 'Exibe horário e data em formatos digital e analógico para dashboards, estúdios e telas secundárias.',
       steps: ['Abra a ferramenta e selecione a composição desejada (Digital ou Analógico).', 'Ative o modo tela cheia (F11) para ocultar barras e menus do sistema operacional.', 'Mantenha a aba aberta na tela secundária para referência contínua de horário.'],
       uses: ['Painel de horário contínuo em mesas de edição, recepções e estúdios.', 'Referência temporal sincronizada para apresentações e gravações.', 'Dashboard minimalista para telas secundárias ociosas.'],
       limitations: 'O horário é lido a partir do relógio do sistema operacional local. A ferramenta não atua como servidor NTP primário.',
       faq: [
         ['O relógio funciona sem conexão à internet?', 'Os recursos já armazenados pelo service worker podem abrir sem conexão. O horário vem do relógio configurado no dispositivo.'],
-        ['O que acontece se a aba ficar em segundo plano?', 'O MonitorSmith utiliza a Page Visibility API para re-sincronizar imediatamente os ponteiros e dígitos assim que a aba se torna ativa.']
+        ['O que acontece se a aba ficar em segundo plano?', 'O navegador pode atrasar temporizadores de abas inativas. Ao voltar, a próxima atualização lê novamente o relógio do dispositivo.']
       ],
       methodology: [
-        'O relógio sincroniza a renderização analógica e digital com a cadência de atualização do monitor (VSync) utilizando a High Resolution Time API (`performance.now()`) e `requestAnimationFrame`.',
-        'Navegadores modernos aplicam throttling em timers inativos para economizar bateria. O MonitorSmith re-sincroniza o estado temporal instantaneamente através de listeners do evento `visibilitychange`.',
+        'O componente lê `Date` e formata horário, data e fuso com `Intl.DateTimeFormat`. Um `setTimeout` alinhado ao próximo segundo agenda as atualizações.',
+        'Navegadores podem atrasar temporizadores em abas inativas. Cada atualização usa uma nova leitura do relógio do dispositivo, sem prometer sincronização de rede ou de VSync.',
         'O service worker armazena o shell principal para uso posterior; a disponibilidade offline depende de o navegador ter concluído esse cache.'
       ]
     },
     en: {
-      intro: 'High-resolution digital and analog clock synchronized with display VSync cadences for secondary monitors, studio dashboards, and events.',
+      intro: 'Digital and analog clock for secondary monitors, studio dashboards and events.',
       steps: ['Open the tool and choose your preferred layout (Digital or Analog).', 'Enter fullscreen mode (F11) to hide browser chrome and OS taskbars.', 'Keep the tab open on your secondary screen as a continuous time reference.'],
       uses: ['Continuous studio time reference on secondary monitors and reception desks.', 'Timed cue tracking during live presentations and broadcasts.', 'Minimalist dashboard for idle auxiliary displays.'],
       limitations: 'Time data is sourced from the local operating system RTC clock. The tool does not serve as a primary NTP time server.',
       faq: [
         ['Does the clock work without an active internet connection?', 'Resources already cached by the service worker can open without a connection. Time comes from the clock configured on the device.'],
-        ['How does it handle browser background tab throttling?', 'It listens to HTML5 Page Visibility API events to re-synchronize time instantly upon regaining window focus.']
+        ['How does it handle browser background tab throttling?', 'The browser may delay timers in inactive tabs. After you return, the next update reads the device clock again.']
       ],
       methodology: [
-        'The clock synchronizes rendering to the display refresh cadence via the High Resolution Time API (`performance.now()`) and `requestAnimationFrame`.',
-        'Modern browser engines throttle background tab timers to reduce battery draw; MonitorSmith re-syncs state immediately upon window focus events.',
+        'The component reads `Date` and formats time, date and time zone through `Intl.DateTimeFormat`. A `setTimeout` aligned to the next second schedules updates.',
+        'Browsers may delay inactive-tab timers. Every update takes a fresh device-clock reading, without claiming network or VSync synchronisation.',
         'The service worker caches the main shell for later use; offline availability depends on the browser completing that cache.'
       ]
     },
@@ -398,14 +398,14 @@ const EDITORIAL_CONTENT = Object.freeze({
       intro: 'Sinalização digital estática em tela cheia com tipografia escalável para auditórios, status de salas de reunião e gerador dinâmico de QR Code com correção Reed-Solomon.',
       steps: ['Digite a mensagem ou URL desejada e selecione uma paleta de alto contraste.', 'Ajuste a escala tipográfica para visualização nítida à distância da sala.', 'Ative o modo tela cheia para transformar o monitor em letreiro ou painel de status.'],
       uses: ['Sinalização de status de salas de reunião (Ocupado / Disponível).', 'Avisos visuais de grande porte para palcos, estandes e recepções.', 'Projeção de QR Code de alto contraste para acesso imediato a links e formulários.'],
-      limitations: 'Projetada para sinalização estática e recados de grande porte. Para leitura dinâmica de roteiros rolantes, utilize o Teleprompter Online.',
+      limitations: 'Projetada para sinalização estática. O modo teleprompter apenas espelha o texto e permite rolagem manual; não há rolagem automática.',
       faq: [
-        ['Como funciona o gerador de QR Code integrado?', 'O texto ou link é codificado diretamente no navegador com correção de erro Reed-Solomon de alta tolerância a reflexos e ângulos oblíquos.'],
+        ['Como funciona o gerador de QR Code integrado?', 'O texto ou link é codificado diretamente no navegador em um QR Code com nível de correção M. A leitura ainda depende de tamanho, contraste, foco, distância e câmera.'],
         ['As mensagens digitadas são salvas em servidores externos?', 'Não. Todo o estado é mantido exclusivamente na memória local da sessão no seu navegador.']
       ],
       methodology: [
-        'A legibilidade de texto em telas a distâncias de 3 a 10 metros fundamenta-se no padrão de acuidade visual de Snellen (resolução angular mínima de 1 minuto de arco por traço tipográfico). A tipografia responsiva ajusta a escala em unidades `vw/vh` para máxima legibilidade.',
-        'Ao alternar para o modo QR Code, os dados são codificados com algoritmos de correção de erro Reed-Solomon de alta tolerância, permitindo leitura por smartphones sob ângulos oblíquos ou reflexos na tela.',
+        'A tipografia escala de acordo com a janela. O usuário deve conferir a mensagem no local real, pois distância, acuidade, reflexos, tamanho e contraste mudam a leitura.',
+        'No modo QR Code, a biblioteca codifica o conteúdo localmente com correção de erro nível M. Isso fornece redundância, mas não garante leitura sob reflexo, desfoque, distância ou ângulo excessivos.',
         'Os temas oferecem opções de contraste; a legibilidade deve ser conferida na combinação de cores e tamanho de texto escolhidos. Não há certificação integral WCAG AAA.'
       ]
     },
@@ -413,14 +413,14 @@ const EDITORIAL_CONTENT = Object.freeze({
       intro: 'Fullscreen digital signage with dynamic typographic scaling for presentation halls, meeting room status boards, and dynamic Reed-Solomon QR Code generation.',
       steps: ['Type your notice or URL and select high-contrast color themes.', 'Adjust typographic scale for clear legibility across your room or venue.', 'Enter fullscreen mode to transform your screen into a clean status display.'],
       uses: ['Meeting room status signage (Occupied / Available).', 'Large-scale visual cue boards for stages, studios, and reception lobbies.', 'Projecting high-contrast QR codes for instant audience link distribution.'],
-      limitations: 'Engineered for static notices and stage prompts. For dynamic scrolling text during speech recording, use the Online Teleprompter.',
+      limitations: 'Designed for static notices. Teleprompter mode mirrors text and allows manual scrolling; it does not auto-scroll.',
       faq: [
-        ['How does the built-in QR Code generator operate?', 'Text and URLs are encoded client-side with Reed-Solomon error correction for reliable scanning under oblique angles and specular glare.'],
+        ['How does the built-in QR Code generator operate?', 'Text and URLs are encoded client-side as a QR Code with error-correction level M. Scanning still depends on size, contrast, focus, distance and camera.'],
         ['Are messages stored on external database servers?', 'No. State remains strictly within the local browser memory session.']
       ],
       methodology: [
-        'Signage legibility across 3 to 10 meters follows Snellen visual acuity standards (1 arcminute stroke angular resolution). Scaled typography utilizes viewport units (`vw/vh`) to guarantee character recognition.',
-        'QR Code conversions implement high-level Reed-Solomon error correction, ensuring mobile camera decodability even under oblique angles or glass reflections.',
+        'Typography scales with the viewport. Check the message at the real venue because distance, acuity, glare, character size and contrast affect legibility.',
+        'QR content is encoded locally with error-correction level M. Redundancy helps, but cannot guarantee scanning through glare, blur, excessive distance or angle.',
         'Themes offer contrast options; check legibility for the chosen colors and text size. There is no claim of comprehensive WCAG AAA certification.'
       ]
     },
@@ -428,33 +428,33 @@ const EDITORIAL_CONTENT = Object.freeze({
   'online-teleprompter': {
     related: ['fullscreen-message', 'webcam-light', 'fullscreen-clock'],
     pt: {
-      intro: 'Teleprompter online com controle de velocidade de rolagem em palavras por minuto (WPM), coluna estreita para redução de movimento ocular e espelhamento horizontal para vidros Beamsplitter.',
-      steps: ['Cole seu roteiro e ajuste o tamanho da tipografia e a largura da coluna de leitura.', 'Configure a velocidade de rolagem para coincidir com seu ritmo natural de fala (120 a 150 WPM).', 'Ative a inversão horizontal (Mirror Mode) caso utilize estrutura com espelho semi-refletor na câmera.'],
-      uses: ['Gravação de videoaulas, palestras, apresentações executivas e vídeos para o YouTube.', 'Leitura de roteiros através de vidros divisores de feixe (beamsplitter 70/30).', 'Treinamento de oratória e controle de cadência de fala.'],
-      limitations: 'Ferramenta de rolagem dinâmica. Requer ensaio prévio para sincronizar a cadência de leitura com a velocidade do texto.',
+      intro: 'Modo de apoio à leitura que exibe texto em tela cheia, permite rolagem manual e oferece espelhamento horizontal para estruturas de teleprompter.',
+      steps: ['Cole seu roteiro e ajuste o tamanho da tipografia.', 'Role o texto manualmente durante o ensaio e escolha uma quantidade que caiba de forma confortável.', 'Ative o espelhamento horizontal se a estrutura óptica utilizada inverter a imagem.'],
+      uses: ['Apoio de leitura para videoaulas, apresentações e gravações.', 'Exibição de texto espelhado em estruturas compatíveis.', 'Ensaio de roteiros curtos com controle manual.'],
+      limitations: 'O modo atual não controla WPM nem oferece rolagem automática. A compatibilidade e a orientação correta dependem da estrutura óptica usada.',
       faq: [
-        ['Por que o teleprompter possui modo de espelhamento horizontal?', 'Equipamentos profissionais utilizam um vidro dielétrico inclinado na frente da lente da câmera que inverte a imagem. A inversão horizontal cancela a reflexão óptica.'],
+        ['Por que o teleprompter possui modo de espelhamento horizontal?', 'Algumas estruturas com vidro semirrefletor invertem a imagem vista pelo apresentador. Use o controle somente quando a prévia na sua estrutura aparecer ao contrário.'],
         ['Como evitar que meus olhos pareçam estar lendo?', 'Mantenha a coluna de leitura estreita e posicione a tela o mais próximo possível do eixo central da lente da câmera.']
       ],
       methodology: [
-        'Equipamentos de teleprompter profissionais utilizam vidros dielétricos semirrefletivos Beamsplitter 70/30 (70% de transmissão para a lente e 30% de reflexão para o leitor). O modo espelhado inverte a matriz gráfica horizontalmente ($[-1, 0, 0, 1]$), cancelando a reflexão óptica.',
-        'Para manter contato visual direto com a lente sem movimento ocular lateral perceptível (movimentos sacádicos), a largura da coluna de leitura deve ocupar um campo visual inferior a 10 graus em relação ao eixo da câmera.',
-        'A taxa média de fala humana situa-se entre 120 e 150 palavras por minuto (WPM). O motor de rolagem suave com interpolação baseada em `requestAnimationFrame` evita saltos discretos de linha.'
+        'O modo espelhado aplica uma inversão horizontal por CSS. A orientação final deve ser conferida no vidro e no enquadramento reais.',
+        'Posicionar a área de leitura próxima ao eixo da lente pode reduzir movimentos laterais perceptíveis, mas o resultado depende de distância, largura do texto e enquadramento.',
+        'O conteúdo permanece estático e, quando excede a tela, pode ser rolado manualmente. Não existe motor de rolagem automática ou cálculo de palavras por minuto.'
       ]
     },
     en: {
-      intro: 'Online teleprompter with words-per-minute (WPM) scroll control, narrow column width adjustments to minimize saccadic eye tracking, and horizontal mirroring for beamsplitter glass rigs.',
-      steps: ['Paste your script and adjust font size and column width.', 'Set scroll speed to match your natural speaking pace (120–150 WPM).', 'Enable horizontal mirroring if using a beamsplitter glass frame mounted in front of your camera lens.'],
-      uses: ['Recording video courses, keynote presentations, and YouTube content.', 'Delivering scripted speeches through 70/30 beamsplitter prompter glass.', 'Speech pacing and public speaking cadence training.'],
-      limitations: 'Dynamic scrolling reading tool. Benefits from a quick rehearsal to match speech delivery with scroll progression.',
+      intro: 'A fullscreen reading aid with manual scrolling and horizontal mirroring for compatible teleprompter rigs.',
+      steps: ['Paste your script and adjust the type size.', 'Scroll manually during rehearsal and choose an amount of text that remains comfortable to read.', 'Enable horizontal mirroring only if your optical rig reverses the image.'],
+      uses: ['Reading support for video lessons, presentations and recordings.', 'Displaying mirrored text in compatible optical rigs.', 'Rehearsing short scripts under manual control.'],
+      limitations: 'The current mode has no WPM control or automatic scrolling. Compatibility and correct orientation depend on the optical rig.',
       faq: [
-        ['Why is horizontal mirroring needed for teleprompters?', 'Studio prompter hardware places a reflective glass in front of the lens that flips the image horizontally. Mirroring cancels this optical inversion.'],
-        ['How do I prevent visible lateral eye movement?', 'Keep the reading column narrow and place the screen as close to the camera lens optical axis as possible.']
+        ['Why is horizontal mirroring available?', 'Some semi-reflective glass rigs reverse the image seen by the presenter. Enable it only when the preview in your own rig appears backwards.'],
+        ['How can I reduce visible lateral eye movement?', 'A narrow reading column placed near the camera lens axis may help. Rehearse with the real distance, text width and framing because the tool cannot guarantee the result.']
       ],
       methodology: [
-        'Studio prompters utilize 70/30 dielectric beamsplitter glass. Horizontal mirror mode applies a CSS matrix ($[-1, 0, 0, 1]$) that cancels physical mirror reflection, presenting natural text orientation to the speaker.',
-        'To maintain direct eye contact without visible lateral eye movement, the text column width must occupy less than a 10-degree field of view relative to the optical axis.',
-        'Natural speech delivery averages 120–150 WPM. The smooth scrolling engine interpolates line progression on every display frame cycle (`requestAnimationFrame`), eliminating discrete line jumps.'
+        'Mirror mode applies a horizontal CSS transform. Verify final orientation with the actual glass and camera framing.',
+        'Keeping the reading area close to the lens axis may reduce visible lateral eye movement, but results depend on distance, text width and framing.',
+        'Content remains static and can be scrolled manually when it exceeds the viewport. There is no auto-scroll engine or words-per-minute calculation.'
       ]
     },
   },
@@ -464,63 +464,63 @@ const EDITORIAL_CONTENT = Object.freeze({
       intro: 'Carrossel em tela cheia para rotação automatizada de marcas de patrocinadores, anúncios e artes promocionais em eventos, lives e vitrines de lojas.',
       steps: ['Selecione as imagens que possui autorização para exibir.', 'Configure a ordem, a duração de cada marca (5 a 10 segundos), o tipo de transição e a cor de fundo.', 'Inicie a sequência e ative o modo tela cheia (F11).'],
       uses: ['Exibição de cotas de patrocinadores em transmissões ao vivo e palcos.', 'Vitrine digital para lojas, restaurantes (menuboards) e estandes de feiras.', 'Overlay rotativo de apoiadores em softwares de streaming (OBS Studio / vMix).'],
-      limitations: 'As imagens são processadas localmente na memória da sessão do navegador. Para sessões estáticas muito prolongadas em OLED, ative o deslocamento sutil de pixels.',
+      limitations: 'As imagens são processadas no navegador e persistidas localmente em IndexedDB para reutilização. Movimento sutil não impede retenção ou desgaste; siga as proteções do fabricante do display.',
       faq: [
         ['Posso utilizar a ferramenta como overlay no OBS Studio?', 'Sim. Adicione a aba em modo tela cheia como fonte de captura de janela ou navegador no OBS e aplique filtros de corte se necessário.'],
-        ['Como o deslocamento de pixels auxilia na preservação do painel?', 'Ele introduz microtranslações periódicas nos eixos X e Y para evitar a queima contínua dos mesmos subpixels em displays OLED.']
+        ['O que o deslocamento de pixels faz?', 'Ele move levemente a composição para variar sua posição. Isso não garante proteção contra retenção ou burn-in; limite brilho e duração e use as proteções do próprio painel.']
       ],
       methodology: [
-        'A exibição prolongada de logotipos de alta luminosidade em eventos pode causar retenção temporária em painéis estáticos. O algoritmo de deslocamento sutil de pixels (pixel orbiter) introduz micro-vetores de translação para mitigar desgaste sem comprometer o enquadramento.',
+        'Conteúdo estático e luminoso por longos períodos pode contribuir para retenção ou desgaste desigual em alguns painéis. O deslocamento muda a posição da composição, sem assegurar prevenção.',
         'As transições usam opacidade e transformações CSS. A fluidez efetiva depende do navegador, da GPU, da resolução das imagens e da carga do dispositivo.',
-        'As imagens importadas são representadas por URLs Blob locais (`URL.createObjectURL`) e revogadas no encerramento da sessão; a ferramenta não implementa um endpoint de upload.'
+        'Os arquivos são persistidos no IndexedDB do navegador e exibidos por URLs Blob locais (`URL.createObjectURL`). A ferramenta não implementa endpoint de upload; remover as imagens ou apagar os dados do site limpa esse armazenamento.'
       ]
     },
     en: {
       intro: 'Fullscreen automated carousel for rotating sponsor logos, commercial branding, and promotional banners across events, livestreams, and retail storefronts.',
       steps: ['Select the brand images you are authorized to display.', 'Configure sequence order, per-slide duration (5–10 seconds), transition style, and background color.', 'Launch the carousel and enter fullscreen mode (F11).'],
       uses: ['Sponsor logo rotation on stages, conferences, and tournament streams.', 'Digital signage for retail stores, restaurant menuboards, and trade show booths.', 'Rotating supporter overlay in OBS Studio, vMix, and Streamlabs.'],
-      limitations: 'Images are processed locally in browser session memory. For prolonged static sessions on OLEDs, activate subtle pixel shifting.',
+      limitations: 'Images are processed in the browser and persisted locally in IndexedDB for reuse. Subtle movement cannot prevent retention or wear; follow the display manufacturer protections.',
       faq: [
         ['Can I use this carousel as an OBS Studio overlay?', 'Yes. Capture the fullscreen browser tab as a Window Capture source in OBS and apply chroma or crop filters as needed.'],
-        ['How does pixel shifting protect displays?', 'It introduces subtle micro-translation vectors across X/Y axes to prevent continuous static subpixel wear on OLED panels.']
+        ['What does pixel shifting do?', 'It moves the composition slightly to vary its position. It does not guarantee protection from retention or burn-in; limit brightness and duration and use the panel’s own protections.']
       ],
       methodology: [
-        'Prolonged static display of high-luminance sponsor logos can induce temporary retention. The subtle pixel shifting algorithm introduces micro-translation vectors across X/Y axes without degrading aesthetic framing.',
-        'Fade transitions and translation routines leverage CSS 3D hardware acceleration (`transform: translate3d`) on isolated compositing layers, guaranteeing stable 60/120 FPS performance during live broadcasts.',
-        'Imported images are represented by local object URLs (`URL.createObjectURL`) and revoked when the tool is torn down; the tool does not implement an image-upload endpoint.'
+        'Bright static content shown for long periods can contribute to retention or uneven wear on some panels. Pixel shifting changes composition position without assuring prevention.',
+        'Transitions use CSS opacity and transforms. Actual smoothness depends on the browser, GPU, image resolution and device load.',
+        'Files are persisted in browser IndexedDB and displayed through local object URLs (`URL.createObjectURL`). The tool has no upload endpoint; remove images or clear site data to erase that storage.'
       ]
     },
   },
   'ppi-calculator': {
     related: ['monitor-test', 'display-calibration', 'dead-pixel-test'],
     pt: {
-      intro: 'Calculadora óptica e geométrica de densidade de pixels (PPI), tamanho do ponto (dot pitch) e distância de visualização para acuidade visual humana padrão (Snellen 20/20).',
-      steps: ['Insira a resolução horizontal e vertical do display (ex: 2560 × 1440 ou 3840 × 2160) ou clique em um preset de mercado.', 'Informe a medida diagonal da tela visível em polegadas (ex: 24", 27" ou 32").', 'Analise o PPI calculado, o tamanho físico do ponto em milímetros e a distância ideal recomendada para nitidez de padrão Retina.'],
-      uses: ['Cálculo de densidade de pixels e tamanho físico de monitores antes da compra.', 'Definição da distância ergonômica ideal de trabalho para evitar fadiga visual e percepção de malha de pixels.', 'Ajuste correto da escala de interface (DPI Scaling) no Windows, macOS e Linux.'],
-      limitations: 'Os cálculos consideram um painel plano com pixels quadrados homogêneos. Telas curvas mantêm a mesma densidade planar, mas variam o campo de visão periférico.',
+      intro: 'Calculadora geométrica de densidade de pixels (PPI), tamanho nominal do ponto e distância em que um pixel subtende cerca de um minuto de arco.',
+      steps: ['Insira a resolução horizontal e vertical do display (ex: 2560 × 1440 ou 3840 × 2160) ou escolha um preset.', 'Informe a diagonal visível da tela em polegadas.', 'Compare PPI, dot pitch e a referência angular calculada com sua distância, visão e preferência de escala.'],
+      uses: ['Comparação de densidade e tamanho nominal de pixels antes da compra.', 'Referência geométrica para avaliar a percepção da malha de pixels.', 'Apoio à escolha de escala de interface no sistema operacional.'],
+      limitations: 'Os cálculos usam a resolução e a diagonal informadas, assumindo pixels quadrados e geometria plana. Diagonais nominais, curvas, escala do sistema e geometrias de subpixel podem diferir do modelo.',
       faq: [
-        ['O que é PPI e por que ele importa?', 'PPI (Pixels Per Inch) representa a quantidade de pixels lineares por polegada. Quanto maior o PPI, mais nítidos serão os textos e elementos gráficos, eliminando bordas serrilhadas.'],
-        ['O que significa a distância ideal "Retina"?', 'É a distância a partir da qual o olho humano com visão normal 20/20 (acuidade de 1 minuto de arco) não consegue mais discernir pixels individuais a olho nu.']
+        ['O que é PPI e por que ele importa?', 'PPI representa a quantidade de pixels lineares por polegada. Densidade maior reduz o tamanho angular dos pixels, mas nitidez percebida também depende de distância, escala, renderização e visão.'],
+        ['O que significa a distância de referência?', 'É o ponto geométrico em que um pixel subtende aproximadamente um minuto de arco. Trata-se de uma convenção de cálculo, não de um limite universal de percepção.']
       ],
       methodology: [
         'A densidade de pixels é obtida pela fórmula euclidiana da diagonal em pixels dividida pela diagonal física em polegadas: PPI = sqrt(W² + H²) / D. O dot pitch físico é o inverso métrico exato: 25,4 mm / PPI.',
-        'O cálculo do limiar de retinopatia baseia-se na acuidade visual padrão de Snellen (visão 20/20 ou 1.0 decimal), onde a resolução angular máxima do olho humano corresponde a 1 arco-minuto (1/60° ou 0,000290888 radianos). A distância em que um pixel subtende menos de 1 arco-minuto é dada por Distância (cm) = (Dot Pitch mm / 2 · tan(0,5′)) / 10 ≈ 8732 / PPI.',
-        'As recomendações de escala de sistema operacional (DPI scaling) equilibram a legibilidade de fontes vetoriais (mínimo de 10 a 12 pontos físicos) com a preservação de espaço de trabalho útil em ambientes Windows e macOS.'
+        'A referência angular usa um minuto de arco e a aproximação Distância (cm) ≈ 8732 / PPI. Acuidade real, contraste, geometria de subpixels e conteúdo podem alterar a percepção.',
+        'Escala de interface é uma preferência operacional influenciada por distância, visão, tamanho do painel, sistema e aplicativo; a ferramenta não prescreve um valor universal.'
       ]
     },
     en: {
-      intro: 'Optical and geometric display calculator for pixel density (PPI), dot pitch (mm), and optimal viewing distance based on standard human visual acuity (Snellen 20/20).',
-      steps: ['Enter horizontal and vertical display resolution (e.g., 2560 × 1440 or 3840 × 2160) or select a popular market preset.', 'Specify the diagonal screen measurement in inches (e.g., 24", 27", or 32").', 'Review calculated PPI, physical dot pitch in millimeters, and the recommended viewing distance for Retina-grade acuity.'],
-      uses: ['Determining pixel density and physical pixel size prior to purchasing new monitors.', 'Setting ergonomic viewing distance to eliminate visual fatigue and visible pixel grid structure.', 'Configuring optimal OS scaling (DPI Scaling) in Windows, macOS, and Linux.'],
-      limitations: 'Calculations assume flat panels with square pixel geometry. Curved screens share the same planar pixel density but alter peripheral field-of-view angles.',
+      intro: 'A geometric calculator for pixel density (PPI), nominal dot pitch and the distance where one pixel subtends about one arcminute.',
+      steps: ['Enter horizontal and vertical display resolution or choose a preset.', 'Specify the visible screen diagonal in inches.', 'Compare PPI, dot pitch and the angular reference with your distance, eyesight and scaling preference.'],
+      uses: ['Comparing pixel density and nominal pixel size before a purchase.', 'A geometric reference for considering visible pixel structure.', 'Supporting an operating-system interface scaling choice.'],
+      limitations: 'Calculations use the entered resolution and diagonal, assuming square pixels and flat geometry. Nominal diagonals, curves, system scaling and subpixel geometry can differ from the model.',
       faq: [
-        ['What is PPI and why does it matter?', 'PPI (Pixels Per Inch) measures linear pixel density. Higher PPI produces sharper text and crisper graphics, eliminating visible subpixel aliasing.'],
-        ['What does "Retina" viewing distance mean?', 'It is the minimum distance at which a person with standard 20/20 vision (1 arcminute resolving power) cannot distinguish individual display pixels.']
+        ['What is PPI and why does it matter?', 'PPI measures linear pixel density. A higher value reduces pixel angular size, while perceived sharpness also depends on distance, scaling, rendering and eyesight.'],
+        ['What does the reference distance mean?', 'It is the geometric point where one pixel subtends roughly one arcminute. It is a calculation convention, not a universal perception threshold.']
       ],
       methodology: [
         'Pixel density is derived from the Euclidean diagonal pixel count divided by physical diagonal in inches: PPI = sqrt(W² + H²) / D. Dot pitch is the exact metric reciprocal: 25.4 mm / PPI.',
-        'The Retina visual acuity threshold adheres to standard Snellen 20/20 vision (1 arcminute or 0.000290888 radians angular resolution). The distance where a single pixel subtends under 1 arcminute is given by Distance (cm) = (Dot Pitch mm / 2 · tan(0.5′)) / 10 ≈ 8732 / PPI.',
-        'Operating system DPI scaling recommendations balance vector font legibility (10–12 physical points minimum) against desktop workspace productivity across Windows and macOS.'
+        'The angular reference uses one arcminute and the approximation Distance (cm) ≈ 8732 / PPI. Actual acuity, contrast, subpixel geometry and content can change perception.',
+        'Interface scaling is an operational preference influenced by distance, eyesight, display size, operating system and application; the tool does not prescribe a universal value.'
       ]
     }
   },
@@ -529,64 +529,64 @@ const EDITORIAL_CONTENT = Object.freeze({
     pt: {
       intro: 'Animação em canvas para observar visualmente rastros, desfoque e artefatos de overdrive. A telemetria descreve a cadência dos callbacks do navegador; não mede GtG ou MPRT físicos.',
       steps: ['Selecione a velocidade de deslocamento (recomendado: 480 ou 960 px/s) e o padrão visual desejado (blocos de contraste, texto ou transição escura).', 'Acompanhe visualmente o objeto em movimento da esquerda para a direita mantendo os olhos fixos na linha central de sincronização.', 'Observe se há rastros escuros trailing (ghosting) ou bordas claras brilhantes invertidas (overshoot por overdrive excessivo).'],
-      uses: ['Ajuste fino do nível de overdrive (Response Time) no menu OSD do monitor para eliminar ghosting sem introduzir overshoot.', 'Verificação de estabilidade de taxa de quadros (FPS) e consistência de tempo de quadro (frame time pacing).', 'Comparação de clareza de movimento em taxas de atualização de 60Hz, 120Hz, 144Hz, 165Hz, 240Hz e 360Hz.'],
+      uses: ['Comparação visual de níveis de overdrive no menu OSD.', 'Observação da estabilidade dos callbacks de animação no navegador.', 'Comparação de clareza de movimento entre configurações de taxa de atualização.'],
       limitations: 'O resultado depende do navegador, do sistema e da taxa configurada. A ferramenta não mede tempo de resposta físico, latência total ou MPRT em milissegundos. Essas medições exigem instrumentos e um procedimento controlado.',
       faq: [
-        ['Qual a diferença entre GtG e MPRT?', 'GtG (Gray-to-Gray) mede o tempo físico que os cristais líquidos ou diodos levam para mudar de cor. MPRT (Motion Picture Response Time) mede a persistência da imagem na retina decorrente do princípio sample-and-hold.'],
-        ['Como corrigir o rastro brilhante (overshoot)?', 'O overshoot é causado por tensão elétrica excessiva aplicada aos pixels (overdrive agressivo). No menu do seu monitor, reduza o nível de Response Time / Overdrive de "Fastest/Extreme" para "Normal/Fast".']
+        ['Qual a diferença entre GtG e MPRT?', 'GtG descreve transições de pixel sob um procedimento de medição; MPRT descreve persistência percebida sob outro procedimento. Esta animação não mede nenhum dos dois.'],
+        ['Como investigar um rastro brilhante?', 'Compare níveis de Response Time ou Overdrive do monitor e escolha o que produzir o melhor equilíbrio no conteúdo real. Os nomes e efeitos variam por modelo.']
       ],
       methodology: [
         'A animação usa `window.requestAnimationFrame`, agendado antes das repinturas do navegador. Sua cadência costuma acompanhar o display, mas pode ser limitada pelo sistema e por abas em segundo plano.',
         'A telemetria observa intervalos de animação para indicar variações de cadência. Ela não elimina engasgos nem confirma a apresentação física de cada quadro.',
-        'Os padrões de contraste em três faixas reproduzem as transições críticas de engenharia de painéis: escuro para cinza (revela black smearing em painéis VA), cinza médio (revela overdrive overshoot) e claro (revela retenção de tempo de resposta em transições simétricas).'
+        'As faixas de contraste oferecem transições escuras, médias e claras para comparação visual. Elas podem tornar rastros aparentes, mas não identificam sozinhas a tecnologia, a causa ou o tempo de resposta.'
       ]
     },
     en: {
       intro: 'A canvas animation for visually inspecting trails, blur and overdrive artifacts. Telemetry describes browser callback cadence; it does not measure physical GtG or MPRT.',
       steps: ['Select motion speed (recommended: 480 or 960 px/s) and your desired visual pattern (high-contrast blocks, readable text, or dark transition).', 'Track the moving object smoothly from left to right, focusing on the central pursuit synchronization mark.', 'Examine trailing dark shadows (ghosting) or bright inverse halos (overshoot caused by aggressive overdrive).'],
-      uses: ['Tuning monitor overdrive / response time settings in the OSD menu to eliminate trailing without introducing inverse ghosting.', 'Verifying frame rate stability and frame time consistency across high-refresh-rate displays.', 'Evaluating dynamic motion clarity across 60Hz, 120Hz, 144Hz, 165Hz, 240Hz, and 360Hz panels.'],
+      uses: ['Visually comparing overdrive settings in the monitor OSD.', 'Observing browser animation-callback stability.', 'Comparing motion clarity between configured refresh-rate modes.'],
       limitations: 'Results depend on the browser, operating system and configured refresh rate. The tool does not measure physical response time, total latency or MPRT in milliseconds. Those measurements require instruments and a controlled procedure.',
       faq: [
-        ['What is the difference between GtG and MPRT?', 'GtG (Gray-to-Gray) measures the physical transition time of liquid crystals or diodes. MPRT (Motion Picture Response Time) measures perceived retinal blur caused by sample-and-hold display persistence.'],
-        ['How do I fix bright halos (overshoot)?', 'Overshoot is caused by excessive voltage applied to accelerate pixel transitions. In your monitor’s OSD menu, reduce the Overdrive / Response Time setting from "Extreme" to "Fast" or "Normal".']
+        ['What is the difference between GtG and MPRT?', 'GtG describes pixel transitions under one measurement procedure; MPRT describes persistence under another. This animation measures neither value.'],
+        ['How do I investigate bright halos?', 'Compare the monitor’s Response Time or Overdrive levels and choose the best balance in real content. Names and effects vary by model.']
       ],
       methodology: [
         'The animation uses `window.requestAnimationFrame`, scheduled before browser repaints. Cadence usually follows the display, but system conditions and background tabs may limit it.',
         'Telemetry observes animation intervals to indicate cadence variation. It cannot prevent stuttering or confirm physical presentation of each frame.',
-        'Three-tiered background luminance tracks replicate critical display engineering transitions: dark-to-gray (identifies VA black smearing), mid-gray (identifies overdrive corona/overshoot), and high-key (evaluates symmetric rise/fall times).'
+        'Contrast tracks provide dark, mid-tone and bright transitions for visual comparison. They can make trails apparent but cannot identify display technology, cause or response time on their own.'
       ]
     }
   },
   'touch-tester': {
     related: ['dead-pixel-test', 'screen-cleaner'],
     pt: {
-      intro: 'Este teste interativo mapeia a precisão do digitalizador (touchscreen) de celulares, tablets e monitores interativos. Ele permite detectar áreas insensíveis (zonas mortas), toques fantasmas e avaliar o suporte máximo ao multi-toque.',
+      intro: 'Este teste registra eventos de toque entregues pelo navegador em celulares, tablets e monitores interativos. Ele ajuda a observar regiões sem eventos, contatos inesperados e simultaneidade aparente.',
       steps: ['Toque e arraste os dedos por toda a área da tela para pintar as células.', 'Se alguma célula não mudar de cor, você localizou uma possível zona morta no sensor touch.', 'Para testar o limite de multi-toque, posicione vários dedos simultaneamente até que o contador pare de subir.'],
-      uses: ['Identificação de danos físicos ou flexíveis rompidos no display do celular ou tablet.', 'Teste de resposta ao toque após a substituição de uma tela (reparo de hardware).', 'Diagnóstico de "touch fantasma" (ghost touch) ao deixar o dispositivo imóvel.', 'Verificação da especificação do fabricante sobre o limite simultâneo de toques.'],
-      limitations: 'Depende das permissões da API de toque do navegador e de reservas do SO. No iOS ou Android, gestos de navegação do sistema podem interceptar o toque.',
+      uses: ['Mapeamento repetível de onde o navegador recebeu contatos.', 'Comparação antes e depois de uma alteração de película, configuração ou reparo.', 'Registro de eventos inesperados com o dispositivo imóvel.', 'Observação do máximo simultâneo exposto nessa sessão.'],
+      limitations: 'Depende da API do navegador, do sistema e de gestos reservados. O resultado não mede eletrônica, não identifica a causa e não confirma a capacidade física máxima do digitalizador.',
       faq: [
-        ['Por que meu celular de "10 toques" só registra 3 dedos aqui?', 'Muitos sistemas operacionais (especialmente Android customizados) interceptam toques com 3 ou 4 dedos para funções globais do sistema. Desative esses atalhos se quiser testar a capacidade bruta do hardware no navegador.'],
+        ['Por que meu celular de "10 toques" só registra 3 dedos aqui?', 'O sistema, o navegador e gestos globais podem interceptar ou agrupar contatos. O contador mostra apenas os eventos expostos à página naquela tentativa.'],
         ['Este teste diz se minha tela está quebrada?', 'Ele mostra onde o navegador não recebeu contato durante a sessão. Repita o teste e descarte interferências de software, película, umidade ou configuração antes de atribuir o resultado ao hardware.']
       ],
       methodology: [
         'O digitalizador capacitivo é uma fina camada transparente sobreposta ao painel LCD ou OLED. Ele projeta um campo eletrostático que sofre deformação ao ser tocado por um material condutivo.',
         'A API nativa "Touch Events" dos navegadores traduz essas interações de hardware para eventos do DOM (`touchstart`, `touchmove`, `touchend`). O Motor do MonitorSmith rastreia o ciclo de vida individual de cada dedo ativo.',
-        'Zonas mortas (dead zones) representam trilhas de capacitores rompidas na matriz física. O teste de "Touch Fantasma" aproveita esse mesmo registro de eventos passivos.'
+        'Ausência ou aparecimento inesperado de eventos é apenas um sintoma. Repita em condições diferentes e consulte suporte técnico antes de atribuir uma causa física.'
       ]
     },
     en: {
-      intro: 'This interactive tool maps the digitizer accuracy of smartphones, tablets, and touch monitors. It helps detect unresponsive regions (dead zones), ghost touches, and evaluates multi-touch limits.',
+      intro: 'This test records touch events delivered by the browser on phones, tablets and touch monitors. It helps observe regions without events, unexpected contacts and apparent simultaneity.',
       steps: ['Tap and drag your fingers across the entire screen area to paint the grid cells.', 'If any cell remains unaffected, you have found a potential digitizer dead zone.', 'To test the multi-touch threshold, press multiple fingers simultaneously until the counter stops registering.'],
-      uses: ['Identifying hardware damage or broken flex cables in mobile displays.', 'Post-repair touch response validation after replacing a cracked screen.', 'Diagnosing "ghost touch" issues by leaving the device motionless.', 'Verifying manufacturer specifications for concurrent touch points.'],
-      limitations: 'Reliant on browser Touch API implementation and OS reservations. System navigation gestures (like edge swipes or 3/4 finger actions on iOS/Android) may intercept events.',
+      uses: ['Repeatably mapping where the browser received contact.', 'Comparing behavior before and after a protector, setting or repair change.', 'Recording unexpected events while the device remains untouched.', 'Observing the maximum simultaneity exposed in this session.'],
+      limitations: 'Results depend on browser APIs, the operating system and reserved gestures. They do not measure electronics, identify a cause or confirm the digitizer’s physical maximum.',
       faq: [
-        ['Why does my "10-point touch" phone only log 3 fingers here?', 'Many operating systems intercept 3 or 4-finger gestures for global system shortcuts. Disable these OS-level shortcuts if you want to test raw hardware capability in the browser.'],
-        ['Does this test confirm my screen is broken?', 'It shows exactly where the digitizer fails to register electrical contact, which strongly indicates a hardware defect in the touch layer.']
+        ['Why does my "10-point touch" phone only log 3 fingers here?', 'The operating system, browser and global gestures may intercept or group contacts. The counter only shows events exposed to this page in that attempt.'],
+        ['Does this test confirm my screen is broken?', 'No. It shows where the page did or did not receive events. Repeat the test and rule out software, protectors, moisture and settings before seeking hardware service.']
       ],
       methodology: [
         'A capacitive digitizer is a transparent mesh overlay on top of the LCD or OLED panel. It creates an electrostatic field that deforms upon contact with a conductive object.',
         'The native browser Touch Events API translates hardware interactions into DOM events (`touchstart`, `touchmove`, `touchend`). MonitorSmith tracks the individual lifecycle of each active finger.',
-        'Dead zones represent physically severed capacitor traces in the matrix. Ghost touch testing leverages this same passive event logging.'
+        'Missing or unexpected events are symptoms only. Repeat under different conditions and consult technical support before assigning a physical cause.'
       ]
     }
   }
@@ -600,17 +600,17 @@ const LEGAL_PAGES = Object.freeze([
     h1: 'Sobre o MonitorSmith e a EXVORN.TECH',
     sections: [
       ['1. Nossa Missão e Filosofia de Produto', [
-        'O MonitorSmith foi desenvolvido para fornecer um conjunto integrado de utilitários de alta precisão para inspeção visual de telas, testes de uniformidade, calibração preliminar de cores e produtividade em múltiplos monitores.',
+        'O MonitorSmith reúne utilitários de referência para inspeção visual de telas, comparação de uniformidade aparente, verificação preliminar de cores e uso de monitores auxiliares.',
         'O MonitorSmith reúne ferramentas executadas no navegador com HTML, Canvas, Web Audio API, High Resolution Time API e Service Workers, sem exigir a instalação de um aplicativo nativo.',
       ]],
       ['2. Processamento local e privacidade', [
-        'Todas as operações — desde a sintetização espectral de ruído marrom até a renderização de teleprompter e rotação de logotipos em modo tela cheia — são processadas localmente na GPU e CPU do dispositivo do usuário.',
+        'Entradas das ferramentas, como texto, imagens, temporizadores e síntese de áudio, são processadas no dispositivo do usuário. A execução pode envolver CPU, GPU e APIs do navegador conforme o recurso.',
         'As ferramentas processam texto, imagens e leituras de dispositivos localmente. A hospedagem recebe requisições de acesso, e serviços de publicidade podem receber dados após consentimento, conforme a política de privacidade.',
       ]],
       ['3. Padrões Técnicos e Normas de Referência', [
         'As ferramentas e publicações técnicas do MonitorSmith fundamentam-se em padrões e normas consolidadas da indústria de displays e acústica:',
         '• ISO 9241-307:2008: Métodos de análise ergonômica e limites de tolerância para defeitos de subpixels (pixels mortos, presos e luminosos) em painéis LCD (IPS/VA/TN).',
-        '• IEC 61966-2-1: Especificação padrão do espaço de cor sRGB e curva eletro-óptica de Gama 2.2.',
+        '• IEC 61966-2-1: Especificação do espaço de cor sRGB e de sua função de transferência segmentada.',
         '• ITU-R BT.709 e BT.1886: Parâmetros colorimétricos e função de transferência eletro-óptica (Gama 2.4) para produção e exibição de vídeo.',
         '• W3C Web Audio API e WCAG 2.2: referências para áudio no navegador e acessibilidade.',
       ]],
@@ -651,8 +651,8 @@ const LEGAL_PAGES = Object.freeze([
         'A operação do site envolve infraestrutura de hospedagem e exibição de publicidade de terceiros. Esta política descreve o tratamento de dados técnicos, cookies e as opções de controle disponíveis.',
       ]],
       ['2. Dados Armazenados no Dispositivo', [
-        'O navegador pode utilizar recursos locais como localStorage, Cache Storage e Service Worker exclusivamente para salvar tema visual, preferências de interface e arquivos necessários ao funcionamento offline do Progressive Web App (PWA).',
-        'Imagens adicionadas ao Loop de Marcas permanecem apenas na memória temporária da aba aberta e são automaticamente descartadas ao encerrar ou recarregar a ferramenta. O usuário pode limpar dados de navegação, cookies e cache a qualquer momento nas configurações do seu navegador.',
+        'O navegador utiliza localStorage para tema, idioma, apresentação inicial e consentimento; Cache Storage e Service Worker guardam arquivos do PWA; e IndexedDB guarda imagens escolhidas no Loop de Marcas para reutilização local.',
+        'As imagens do Loop de Marcas permanecem no armazenamento local do navegador até serem removidas na ferramenta ou até os dados do site serem apagados. A aplicação não possui endpoint próprio para receber esses arquivos.',
       ]],
       ['3. Fornecedores de Terceiros e Google AdSense', [
         'Fornecedores de terceiros, incluindo o Google, utilizam cookies para veicular anúncios com base em visitas anteriores dos usuários a este site ou a outros sites na internet.',
@@ -664,11 +664,11 @@ const LEGAL_PAGES = Object.freeze([
         'Alternativamente, você pode desativar o uso de cookies de publicidade personalizada de terceiros acessando www.aboutads.info ou ajustando os controles de privacidade do seu navegador ou região.',
       ]],
       ['5. Direitos sob a LGPD e Contato', [
-        'Como as ferramentas operam no modelo client-side sem cadastro obrigatório, nenhuma informação pessoal identificável é mantida em bases de dados da EXVORN.TECH.',
+        'As ferramentas não exigem cadastro e não enviam seus textos ou imagens a um backend próprio do aplicativo. A hospedagem, o canal de e-mail e serviços de terceiros consentidos podem processar dados técnicos ou informações fornecidas pelo usuário conforme suas próprias finalidades e políticas.',
         `Para esclarecimentos sobre privacidade, solicitações institucionais ou exercício de direitos sob a Lei Geral de Proteção de Dados (LGPD), utilize o canal institucional em ${SITE_METADATA.contactUrl} ou envie e-mail para contato@exvorn.tech.`,
       ]],
       ['6. Atualizações desta Política', [
-        `Esta política foi revisada em 6 de junho de 2026 e reflete a operação atual da plataforma. Alterações materiais serão publicadas nesta mesma URL.`,
+        `Esta política foi revisada em 7 de setembro de 2026 e reflete a operação atual da plataforma. Alterações materiais serão publicadas nesta mesma URL.`,
       ]],
     ],
   },
@@ -682,7 +682,7 @@ const LEGAL_PAGES = Object.freeze([
       ['2. Limites Técnicos e Operacionais', ['Os padrões visuais oferecem apoio à observação humana. O MonitorSmith não mede diretamente parâmetros elétricos de painéis, não substitui colorímetros de hardware e não garante identificação exata de causas de defeitos.', 'Fatores como gerenciamento de cor do sistema operacional, renderização do navegador, ângulo de visão, iluminação ambiente e brilho influenciam o que é visualizado.']],
       ['3. Ergonomia e Segurança', ['Interrompa o uso imediatamente caso luzes, contrastes ou frequências visuais causem desconforto ou fadiga ocular.', 'Para limpeza física de telas, siga sempre o manual do fabricante do monitor, utilizando panos de microfibra limpos e sem aplicar líquidos diretamente sobre os circuitos ou painel.']],
       ['4. Propriedade Intelectual e Conteúdo', ['A marca MonitorSmith, a identidade visual e o código-fonte pertencem à EXVORN.TECH.', 'O usuário é o único responsável pelas imagens e textos que carregar localmente na aplicação, declarando possuir os direitos necessários para sua exibição.']],
-      ['5. Contato e Vigência', [`Revisão vigente desde 18 de agosto de 2026. Para dúvidas e contato institucional, acesse ${SITE_METADATA.contactUrl} ou contato@exvorn.tech.`]],
+      ['5. Contato e Vigência', [`Revisão vigente desde 7 de setembro de 2026. Para dúvidas e contato institucional, acesse ${SITE_METADATA.contactUrl} ou contato@exvorn.tech.`]],
     ],
   },
   {
@@ -692,7 +692,7 @@ const LEGAL_PAGES = Object.freeze([
     h1: 'Política de Cookies e Consentimento',
     sections: [
       ['1. O que usamos e por quê', [
-        'O MonitorSmith é uma aplicação que roda no navegador e depende de muito pouco armazenamento. Usamos três recursos locais essenciais: localStorage para lembrar o tema visual, o idioma da interface e a sua decisão de consentimento; Cache Storage e Service Worker para permitir que as ferramentas funcionem offline depois da primeira visita.',
+        'O MonitorSmith usa localStorage para preferências de interface e consentimento, IndexedDB para imagens do Loop de Marcas e Cache Storage com Service Worker para arquivos necessários ao uso posterior.',
         'Nenhum desses recursos essenciais rastreia comportamento, cria identificadores publicitários ou é compartilhado com terceiros. Eles são gravados no seu dispositivo e podem ser apagados a qualquer momento pelas configurações do navegador.',
       ]],
       ['2. Cookies de publicidade (Google AdSense)', [
@@ -713,7 +713,7 @@ const LEGAL_PAGES = Object.freeze([
         'Também é possível desativar a personalização diretamente no Google, em https://www.google.com/settings/ads, ou apagar todos os dados locais deste site pelas configurações do seu navegador — nesse caso, o banner de consentimento voltará a aparecer na próxima visita.',
       ]],
       ['6. Vigência e contato', [
-        'Esta política de cookies vigora desde 6 de junho de 2026. Dúvidas sobre cookies, consentimento ou exercício de direitos podem ser enviadas para contato@exvorn.tech.',
+        'Esta política de cookies foi revisada em 7 de setembro de 2026. Dúvidas sobre cookies, consentimento ou exercício de direitos podem ser enviadas para contato@exvorn.tech.',
       ]],
     ],
   },
@@ -724,25 +724,25 @@ const LEGAL_PAGES = Object.freeze([
     h1: 'Metodologia Técnica e Padrões de Referência',
     sections: [
       ['1. Princípio editorial: dizer o que a ferramenta não faz', [
-        'Toda ferramenta do MonitorSmith declara o seu limite técnico na própria interface. Um navegador não mede luminância em cd/m², não lê o EDID completo do painel e não substitui colorímetro, sonda de contraste ou laudo laboratorial. O que ele faz muito bem é gerar padrões precisos, contar tempo com exatidão e aplicar contas determinísticas.',
-        'Essa honestidade é deliberada: um diagnóstico visual útil depende de o leitor saber exatamente qual conclusão o teste sustenta e qual não sustenta.',
+        'Toda ferramenta do MonitorSmith declara o seu limite técnico na própria interface. Um navegador não mede luminância em cd/m², não lê o EDID completo do painel e não substitui colorímetro, sonda de contraste ou laudo laboratorial. Ele solicita padrões digitais, observa eventos e aplica cálculos reproduzíveis dentro das limitações da plataforma.',
+        'Essa honestidade é deliberada: uma triagem visual útil depende de o leitor saber exatamente qual conclusão o teste sustenta e qual não sustenta.',
       ]],
       ['2. Renderização dos padrões', [
-        'Os padrões são desenhados em elementos canvas ou em superfícies CSS de cor sólida, sempre em valores absolutos de sRGB de 8 bits, sem gradiente decorativo, sombra ou filtro sobre a área de teste. Quando um degrau de 5% é solicitado, o valor enviado ao painel é exatamente o código digital 13.',
-        'As animações de movimento — como o teste de ghosting e o exercitador de pixels — são sincronizadas com o VSync do display através de requestAnimationFrame, para que cada quadro corresponda a uma composição real e não a um temporizador aproximado.',
+        'Os padrões são desenhados em canvas ou superfícies CSS com valores digitais definidos. Gerenciamento de cor, composição, GPU, perfil e processamento do painel podem alterar o sinal e a luz efetivamente exibidos.',
+        'Animações como o teste de movimento e o exercitador de pixels usam requestAnimationFrame. A API agenda callbacks para a composição do navegador, mas não confirma que cada callback virou um quadro físico no painel.',
       ]],
       ['3. Medição de tempo', [
         'As medições temporais usam `performance.now()`, um relógio monotônico cuja precisão disponível pode ser reduzida pelo navegador por segurança e privacidade. Isso evita saltos causados por ajuste do relógio civil, mas não remove atrasos de agendamento.',
         'A taxa de atualização é obtida contando quadros entregues em uma janela de amostragem e dividindo pelo intervalo decorrido; o jitter é o desvio padrão dos intervalos entre quadros. Nenhum valor é suavizado ou interpolado antes de aparecer na tela.',
       ]],
       ['4. Cálculos ópticos', [
-        'As calculadoras aplicam óptica geométrica clássica. A densidade de pixels vem da diagonal em pixels dividida pela diagonal física; o dot pitch é o inverso da densidade convertido para milímetros; a distância de acuidade usa o padrão Snellen 20/20, equivalente a um minuto de arco de resolução angular.',
-        'A banda de vídeo parte da taxa de pixels multiplicada pela profundidade de bits dos três canais, com aproximadamente 5% de blanking, coerente com os timings CVT-RB v2 da VESA. Todos os resultados são reproduzíveis à mão com as mesmas fórmulas.',
+        'As calculadoras aplicam óptica geométrica. A densidade de pixels vem da diagonal em pixels dividida pela diagonal informada; o dot pitch correspondente é o inverso da densidade convertido para milímetros; a referência de distância usa a convenção geométrica de um minuto de arco por pixel.',
+        'A estimativa de banda parte da taxa de pixels multiplicada pela profundidade de bits dos três canais e aplica uma margem fixa de 5%. Ela não calcula timings CVT-RB, overhead de codificação, número de lanes ou DSC; compatibilidade deve ser confirmada nos dois dispositivos e no cabo.',
       ]],
       ['5. Normas e especificações de referência', [
         '• ISO 9241-307 — critérios de defeitos de pixels e classes de tolerância de painéis.',
         '• ISO 9241-303 e 9241-3 — requisitos ergonômicos de displays eletrônicos.',
-        '• IEC 61966-2-1 — definição do espaço de cor sRGB e curva de gama 2.2.',
+        '• IEC 61966-2-1 — definição do espaço de cor sRGB e de sua função de transferência.',
         '• ITU-R BT.709 e BT.1886 — colorimetria e função de transferência eletro-óptica para vídeo.',
         '• VESA CVT-RB v2, Adaptive-Sync e Display Stream Compression — timings, taxa variável e compressão.',
         '• W3C High Resolution Time, Media Queries Level 4/5, Gamepad, Pointer Events e Web Audio — as APIs que sustentam cada instrumento.',
@@ -761,7 +761,7 @@ const LEGAL_PAGES = Object.freeze([
     h1: 'Aviso Legal e Isenção de Responsabilidade',
     sections: [
       ['1. Natureza informativa do conteúdo', [
-        'Todo o conteúdo publicado no MonitorSmith — instrumentos, guias técnicos e artigos — tem finalidade informativa e educacional. Ele apoia a observação humana e o diagnóstico preliminar, mas não constitui laudo técnico, perícia, certificação, consultoria profissional ou garantia de resultado.',
+        'Todo o conteúdo publicado no MonitorSmith — instrumentos, guias técnicos e artigos — tem finalidade informativa e educacional. Ele apoia a observação e a triagem visual, mas não constitui laudo técnico, perícia, certificação, consultoria profissional ou garantia de resultado.',
         'Decisões de compra, devolução, reparo ou acionamento de garantia são de responsabilidade exclusiva do usuário e devem considerar o manual do fabricante e a legislação aplicável.',
       ]],
       ['2. Limites técnicos', [
@@ -778,12 +778,12 @@ const LEGAL_PAGES = Object.freeze([
         'O MonitorSmith não é afiliado, patrocinado ou endossado por nenhum fabricante de monitores, periféricos ou placas de vídeo.',
       ]],
       ['5. Publicidade e independência editorial', [
-        'O site é sustentado por publicidade veiculada por meio do Google AdSense. Anunciantes não têm qualquer influência sobre o conteúdo técnico, as recomendações ou os limites declarados em cada ferramenta.',
-        'Anúncios são sempre rotulados como publicidade e aparecem apenas em páginas com conteúdo editorial, nunca sobre as superfícies de teste.',
+        'O site pode ser monetizado por meio do Google AdSense quando unidades de anúncio estiverem ativadas. O conteúdo editorial e os limites técnicos são definidos pela EXVORN.TECH.',
+        'Quando exibidas, as unidades são identificadas e reservadas a páginas com conteúdo editorial, fora das superfícies de teste.',
       ]],
       ['6. Limitação de responsabilidade e contato', [
         'Na máxima extensão permitida pela legislação aplicável, a EXVORN.TECH não responde por danos diretos ou indiretos decorrentes do uso ou da impossibilidade de uso das ferramentas e do conteúdo deste site.',
-        'Este aviso vigora desde 6 de junho de 2026. Contato para questões legais: contato@exvorn.tech.',
+        'Este aviso foi revisado em 7 de setembro de 2026. Contato para questões legais: contato@exvorn.tech.',
       ]],
     ],
   },
@@ -795,26 +795,26 @@ const LEGAL_PAGES = Object.freeze([
     sections: [
       ['1. Compromisso', [
         'O MonitorSmith utiliza WCAG 2.2 como referência de acessibilidade e passa por verificações automatizadas e revisão de fluxos. Essas verificações não equivalem a uma avaliação integral de conformidade AA ou AAA.',
-        'A interface é operável inteiramente por teclado, respeita a preferência prefers-reduced-motion do sistema e expõe rótulos programáticos em todos os controles interativos.',
+        'A navegação principal e os controles centrais são operáveis por teclado, a preferência prefers-reduced-motion é respeitada e controles recebem rótulos programáticos durante o desenvolvimento e a revisão.',
       ]],
       ['2. Recursos implementados', [
-        '• Navegação completa por teclado, com foco visível de alto contraste em todos os elementos interativos.',
-        '• Atalhos de uma tecla para abrir instrumentos, além de Esc para sair e F para alternar tela cheia.',
+        '• Navegação principal por teclado e foco visível nos controles revisados.',
+        '• Esc para sair de instrumentos e atalhos documentados apenas nos fluxos que os implementam.',
         '• Estrutura semântica com marcos de página, hierarquia de títulos consistente e textos alternativos nas imagens informativas.',
-        '• Redução automática de animações quando o sistema operacional sinaliza preferência por menos movimento.',
-        '• Tema claro e tema escuro, ambos com contraste verificado, e interface disponível em português, inglês e espanhol.',
+        '• Transições de interface reduzidas e teste de movimento iniciado em pausa quando o sistema sinaliza preferência por menos movimento.',
+        '• Tema claro e tema escuro. A página inicial, o catálogo e os controles globais têm português, inglês e espanhol; parte dos instrumentos originais permanece em português, como indicado nos guias traduzidos.',
       ]],
       ['3. Limitações conhecidas e inerentes', [
         'Alguns instrumentos são, por natureza, visuais: identificar um pixel preso, avaliar uniformidade de cinza ou julgar banding depende de percepção visual e não pode ser traduzido em texto equivalente. Nesses casos, a página descreve o objetivo, o procedimento e a interpretação do resultado em linguagem clara.',
-        'Ferramentas com padrões em movimento ou piscadas rápidas trazem aviso explícito de fotossensibilidade e controles para reduzir velocidade e brilho.',
+        'O teste de movimento oferece pausa e seleção de velocidade. O exercitador de pixels permanece bloqueado até a confirmação de um aviso sobre piscadas rápidas e oferece controle de velocidade.',
         'Instrumentos que dependem de hardware específico — controle, microfone, câmera — informam quando a API não está disponível no navegador, em vez de falhar silenciosamente.',
       ]],
       ['4. Tecnologias assistivas testadas', [
-        'A interface é verificada com navegação exclusivamente por teclado e com leitores de tela em configuração padrão no Windows e no macOS. Relatos de incompatibilidade com outras combinações são tratados como defeito prioritário.',
+        'A validação inclui verificações automatizadas, navegação por teclado e zoom. A cobertura manual com diferentes leitores de tela, navegadores e sistemas ainda precisa ser ampliada; relatos de incompatibilidade são tratados como defeitos.',
       ]],
       ['5. Como relatar uma barreira', [
         'Se você encontrar qualquer barreira de acessibilidade, escreva para contato@exvorn.tech descrevendo a página, o navegador, a tecnologia assistiva usada e o que aconteceu. Respondemos e registramos a correção com data nesta página.',
-        'Declaração revisada em 6 de junho de 2026.',
+        'Declaração revisada em 7 de setembro de 2026.',
       ]],
     ],
   },
@@ -862,6 +862,16 @@ function escapeHtml(value) {
 
 function safeJson(value) {
   return JSON.stringify(value).replaceAll('<', '\\u003c');
+}
+
+function formatContentDate(locale = 'pt-BR') {
+  const date = new Date(`${SITE_METADATA.contentLastModified}T12:00:00Z`);
+  return new Intl.DateTimeFormat(locale, {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
 }
 
 function renderToolPage(route, locale) {
@@ -971,6 +981,7 @@ function renderToolPage(route, locale) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>${escapeHtml(metadata.title)} | ${SITE_METADATA.name}</title>
   <meta name="description" content="${escapeHtml(metadata.description)}">
   <meta name="theme-color" content="#030304">
@@ -1033,7 +1044,7 @@ function renderToolPage(route, locale) {
     <div class="editorial-byline">
       <span>${isEn ? 'By' : 'Por'} <strong>EXVORN.TECH — Display Analysis</strong></span>
       <span>•</span>
-      <time datetime="${SITE_METADATA.contentLastModified}">${isEn ? 'Updated August 18, 2026' : 'Atualizado em 18 de agosto de 2026'}</time>
+      <time datetime="${SITE_METADATA.contentLastModified}">${isEn ? `Updated ${formatContentDate('en-US')}` : `Atualizado em ${formatContentDate('pt-BR')}`}</time>
     </div>
     <p class="intro">${escapeHtml(content.intro)}</p>
     <a class="cta" href="/?tool=${encodeURIComponent(route.toolId)}">${labels.open}</a>
@@ -1059,8 +1070,10 @@ function renderToolPage(route, locale) {
 function formatLegalParagraph(paragraph) {
   const escaped = escapeHtml(paragraph);
   return escaped.replace(/(https?:\/\/[^\s)]+|www\.[^\s)]+)/g, (url) => {
-    const href = url.startsWith('http') ? url : `https://${url}`;
-    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    const punctuation = url.match(/[.,;:!?]+$/)?.[0] ?? '';
+    const cleanUrl = punctuation ? url.slice(0, -punctuation.length) : url;
+    const href = cleanUrl.startsWith('http') ? cleanUrl : `https://${cleanUrl}`;
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>${punctuation}`;
   });
 }
 
@@ -1069,7 +1082,7 @@ function renderLegalPage(page) {
   const schema = { '@context': 'https://schema.org', '@type': 'WebPage', name: page.title, description: page.description, url, inLanguage: 'pt-BR', dateModified: SITE_METADATA.contentLastModified, isPartOf: { '@type': 'WebSite', name: SITE_METADATA.name, url: `${BASE_URL}/` }, publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' } };
   const sections = page.sections.map(([heading, paragraphs]) => `<section><h2>${escapeHtml(heading)}</h2>${paragraphs.map((paragraph) => `<p>${formatLegalParagraph(paragraph)}</p>`).join('')}</section>`).join('');
   const html = `<!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>${escapeHtml(page.title)}</title><meta name="description" content="${escapeHtml(page.description)}"><meta name="theme-color" content="#030304"><meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1"><link rel="canonical" href="${url}"><link rel="alternate" hreflang="pt-BR" href="${url}"><link rel="alternate" hreflang="x-default" href="${url}"><link rel="icon" href="/logo.png" type="image/png"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><link rel="describedby" href="/llms.txt" type="text/markdown"><meta property="og:title" content="${escapeHtml(page.title)}"><meta property="og:description" content="${escapeHtml(page.description)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website"><meta property="og:site_name" content="MonitorSmith"><meta property="og:locale" content="pt_BR"><meta property="og:image" content="${BASE_URL}/og-image.jpg"><meta property="og:image:secure_url" content="${BASE_URL}/og-image.jpg"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="MonitorSmith — informações legais e de privacidade"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(page.title)}"><meta name="twitter:description" content="${escapeHtml(page.description)}"><meta name="twitter:image" content="${BASE_URL}/og-image.jpg"><meta name="twitter:image:alt" content="MonitorSmith — informações legais e de privacidade">${CONSENT_HEAD_SCRIPT}<script type="application/ld+json">${safeJson(schema)}</script>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="referrer" content="strict-origin-when-cross-origin"><title>${escapeHtml(page.title)}</title><meta name="description" content="${escapeHtml(page.description)}"><meta name="theme-color" content="#030304"><meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1"><link rel="canonical" href="${url}"><link rel="alternate" hreflang="pt-BR" href="${url}"><link rel="alternate" hreflang="x-default" href="${url}"><link rel="icon" href="/logo.png" type="image/png"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><link rel="describedby" href="/llms.txt" type="text/markdown"><meta property="og:title" content="${escapeHtml(page.title)}"><meta property="og:description" content="${escapeHtml(page.description)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website"><meta property="og:site_name" content="MonitorSmith"><meta property="og:locale" content="pt_BR"><meta property="og:image" content="${BASE_URL}/og-image.jpg"><meta property="og:image:secure_url" content="${BASE_URL}/og-image.jpg"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="MonitorSmith — informações legais e de privacidade"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(page.title)}"><meta name="twitter:description" content="${escapeHtml(page.description)}"><meta name="twitter:image" content="${BASE_URL}/og-image.jpg"><meta name="twitter:image:alt" content="MonitorSmith — informações legais e de privacidade">${CONSENT_HEAD_SCRIPT}<script type="application/ld+json">${safeJson(schema)}</script>
 <style>:root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif;padding-bottom:env(safe-area-inset-bottom)}header,main,footer{width:min(760px,calc(100% - 2rem));margin-inline:auto}header{padding:1.2rem 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}a{color:#fbbf24;text-underline-offset:.2em}header a{color:var(--text);font-weight:750;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:0.4rem 0.6rem;border-radius:0.5rem}main{padding:3rem 0}h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1;letter-spacing:-.035em}h2{font-size:1.2rem;margin:2.2rem 0 .5rem}p{color:var(--muted)}.notice{padding:1rem;background:var(--surface);border:1px solid var(--line);border-radius:.8rem}footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center}footer a{display:inline-flex;align-items:center;min-height:44px;padding:0.5rem 0.85rem;border-radius:0.6rem;background:rgba(255,255,255,0.04);border:1px solid var(--line);color:var(--text);text-decoration:none;font-size:0.88rem;transition:background 0.15s, border-color 0.15s}footer a:hover{background:rgba(251,191,36,0.12);border-color:var(--accent);color:#fbbf24}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}@media(max-width:640px){footer a{flex:1 1 calc(50% - 0.5rem);justify-content:center;text-align:center}}</style></head>
 <body><header><a href="/">MonitorSmith · EXVORN.TECH</a><a href="/">← Todas as ferramentas</a></header><main><h1>${escapeHtml(page.h1)}</h1><p class="notice">Este documento descreve a operação atual do MonitorSmith. Em caso de dúvida, entre em contato antes de continuar o uso.</p>${sections}</main><footer><a href="/">Todas as ferramentas</a><a href="/blog/">Blog</a><a href="/sobre/">Sobre</a><a href="/contato/">Contato</a><a href="/metodologia/">Metodologia</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a><a href="/cookies/">Cookies</a><a href="/aviso-legal/">Aviso legal</a><a href="/acessibilidade/">Acessibilidade</a></footer>${CONSENT_BODY_SCRIPT}</body></html>`;
   return html;
@@ -1120,6 +1133,7 @@ function renderBlogArticle(article) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>${escapeHtml(documentTitle)}</title>
   <meta name="description" content="${escapeHtml(article.description)}">
   <meta name="theme-color" content="#030304">
@@ -1182,7 +1196,7 @@ function renderBlogArticle(article) {
     <div class="editorial-byline">
       <span>Por <strong>EXVORN.TECH — Display Analysis</strong></span>
       <span>•</span>
-      <time datetime="${SITE_METADATA.contentLastModified}">Atualizado em 18 de agosto de 2026</time>
+      <time datetime="${SITE_METADATA.contentLastModified}">Atualizado em ${formatContentDate('pt-BR')}</time>
     </div>
     <div class="blog-body">${article.body}</div>
     <div class="cta-group">
@@ -1217,6 +1231,7 @@ function renderBlogIndex() {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>${escapeHtml(documentTitle)}</title>
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="theme-color" content="#030304">
@@ -1371,6 +1386,7 @@ function render404Page() {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Página Não Encontrada (404) | ${SITE_METADATA.name}</title>
   <meta name="description" content="A página solicitada não foi encontrada no MonitorSmith. Explore nossas ferramentas de teste de monitor, guias e blog.">
   <meta name="theme-color" content="#030304">
@@ -1389,6 +1405,7 @@ function render404Page() {
     .cta.secondary{background:var(--surface);color:var(--text);border:1px solid var(--line)}
     footer{padding:2rem 0;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--muted)}
     @media(max-width:640px){.links{flex-direction:column;gap:0.75rem}.cta,.cta.secondary{width:100%}}
+    @media(prefers-reduced-motion:reduce){.cta{transition:none}.cta:hover{transform:none}}
   </style>
 </head>
 <body>

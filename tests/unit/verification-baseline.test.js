@@ -29,20 +29,19 @@ describe('contratos estáticos complementares do produto', () => {
     expect(appJsx).not.toContain('reducedMotion="never"')
   })
 
-  it('mantém GSAP local e as integrações de Lenis e Motion', async () => {
-    const [gsapCore, gsapScrollTrigger, viteConfig, appJsx, toolExplorer] = await Promise.all([
-      access(path.join(root, 'src', 'vendor', 'gsap', 'gsap-core.js')).then(() => true).catch(() => false),
-      access(path.join(root, 'src', 'vendor', 'gsap', 'ScrollTrigger.js')).then(() => true).catch(() => false),
+  it('mantém as integrações de Lenis e Motion sem a camada GSAP não utilizada', async () => {
+    const [gsapVendor, viteConfig, appJsx, toolExplorer] = await Promise.all([
+      access(path.join(root, 'src', 'vendor', 'gsap')).then(() => true).catch(() => false),
       readFile(path.join(root, 'vite.config.js'), 'utf8'),
       readFile(path.join(root, 'src', 'App.jsx'), 'utf8'),
       readFile(path.join(root, 'src', 'components', 'Home', 'ToolExplorer.jsx'), 'utf8'),
     ])
 
-    expect(gsapCore).toBe(true)
-    expect(gsapScrollTrigger).toBe(true)
-    expect(viteConfig).toContain("'gsap': path.resolve(__dirname, './src/vendor/gsap/index.js')")
-    expect(appJsx).not.toContain('gsap.ticker.lagSmoothing(0)')
+    expect(gsapVendor).toBe(false)
+    expect(viteConfig).not.toContain('gsap')
+    expect(appJsx).not.toContain('gsap')
     expect(appJsx).toContain('<ReactLenis')
+    expect(appJsx).toContain('autoRaf')
     // A grade de instrumentos usa entrada escalonada por Motion, sem tilt em GSAP.
     expect(toolExplorer).toContain('whileInView')
     expect(toolExplorer).toContain('viewport={{ once: true')

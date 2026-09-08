@@ -1,13 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'framer-motion';
-import { ReactLenis, useLenis } from 'lenis/react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { CustomEase } from 'gsap/CustomEase';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger, CustomEase);
-}
+import { ReactLenis } from 'lenis/react';
 
 import AdaptiveNavbar from './components/Controls/AdaptiveNavbar';
 import DockMenu from './components/Controls/DockMenu';
@@ -517,34 +510,14 @@ function DisplaySuite() {
 import { ConsentBanner } from './components/UI/ConsentBanner';
 import { I18nProvider } from './i18n';
 
-function ScrollTriggerSync() {
-  useLenis(() => {
-    ScrollTrigger.update();
-  });
-  return null;
-}
-
 export default function App() {
-  const lenisRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    function update(time) {
-      lenisRef.current?.lenis?.raf(time * 1000);
-    }
-    gsap.ticker.add(update);
-
-    return () => {
-      gsap.ticker.remove(update);
-    };
-  }, []);
 
   return (
     <I18nProvider>
       <MotionConfig reducedMotion="user">
         <ReactLenis
-          ref={lenisRef}
-          autoRaf={false}
+          autoRaf
           root
           options={{
             lerp: 0.1,
@@ -555,7 +528,6 @@ export default function App() {
             syncTouch: false,
           }}
         >
-          <ScrollTriggerSync />
           <DisplaySuite />
           <ConsentBanner />
         </ReactLenis>

@@ -597,7 +597,7 @@ function GammaPattern({ showGuidance }) {
           style={{ position: "absolute", bottom: "16px", left: "0", right: "0", textAlign: "center" }}
         >
           <span style={{ backgroundColor: "rgba(0,0,0,0.8)", color: "#FFF", padding: "6px 12px", borderRadius: "4px", fontSize: "0.75rem", display: "inline-block", maxWidth: "90%" }}>
-            Estimativa visual baseada em mistura espacial. Ajuste o zoom do navegador para 100% (físico).
+            Estimativa visual baseada em mistura espacial. Use zoom de 100% para repetir a comparação; escala do sistema e DPR ainda podem alterar o tamanho físico.
           </span>
         </motion.div>
       ) : null}
