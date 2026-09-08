@@ -3,10 +3,6 @@ import { TOOL_LIBRARY } from '../../constants/tools';
 import { useI18n } from '../../i18n';
 import '../originkit/hero-11.css';
 
-function asset(file) {
-  return `/originkit/hero-11/${file}`;
-}
-
 function BackgroundArtwork() {
   return (
     <>
@@ -33,14 +29,13 @@ function BackgroundArtwork() {
         MONITORSMITH
       </div>
 
-      {/* Retrato do hero preservado exatamente como no design original. */}
       <div className="ok-h11-portrait">
         <img
-          src={asset('hero-portrait.png')}
-          alt="MonitorSmith — bancada de inspeção de displays"
+          src="/originkit/hero-11/hero-portrait.webp"
+          alt=""
           className="ok-h11-layerImage"
-          width={1024}
-          height={1024}
+          width={1122}
+          height={1402}
           loading="eager"
           decoding="async"
         />

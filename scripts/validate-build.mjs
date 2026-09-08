@@ -40,6 +40,7 @@ const files = await walk(distDir)
 const htmlFiles = files.filter((file) => file.endsWith('.html') && !path.basename(file).startsWith('google') && path.basename(file) !== '404.html');
 const canonicals = new Map()
 const codeAssets = files.filter((file) => /\.(?:css|js)$/.test(file))
+const localAssetExtensions = '(?:avif|gif|ico|jpe?g|png|svg|webp|woff2?|mp3|ogg|wav|mp4|webm)'
 const assetMetrics = await Promise.all(codeAssets.map(async (file) => {
   const source = await readFile(file)
   return {
@@ -50,6 +51,17 @@ const assetMetrics = await Promise.all(codeAssets.map(async (file) => {
 const totalCodeGzip = assetMetrics.reduce((total, asset) => total + asset.gzipBytes, 0)
 const largestScriptGzip = Math.max(0, ...assetMetrics.filter((asset) => asset.type === '.js').map((asset) => asset.gzipBytes))
 const largestStyleGzip = Math.max(0, ...assetMetrics.filter((asset) => asset.type === '.css').map((asset) => asset.gzipBytes))
+
+for (const file of codeAssets) {
+  const source = await readFile(file, 'utf8')
+  const references = [...source.matchAll(new RegExp(`(?:["'\\x60(])(/[^"'\\x60\\s?#)]+\\.${localAssetExtensions})(?=[?"'\\x60\\s)])(?:[?][^"'\\x60\\s)]*)?`, 'gi'))]
+    .map((match) => match[1])
+  for (const reference of new Set(references)) {
+    if (!(await routeExists(reference))) {
+      errors.push(`${path.relative(distDir, file)}: recurso local sem arquivo ${reference}`)
+    }
+  }
+}
 
 if (largestScriptGzip > 180 * 1024) errors.push(`performance: maior bundle JS gzip excede 180 KiB (${Math.ceil(largestScriptGzip / 1024)} KiB)`)
 if (largestStyleGzip > 48 * 1024) errors.push(`performance: maior CSS gzip excede 48 KiB (${Math.ceil(largestStyleGzip / 1024)} KiB)`)
