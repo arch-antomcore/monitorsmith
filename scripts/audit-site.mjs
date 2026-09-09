@@ -52,14 +52,17 @@ let brokenImages = 0;
 let missingAdSense = 0;
 let jsonLdErrors = 0;
 let missingCanonical = 0;
+let legacyRedirects = 0;
 
 for (const file of htmlFiles) {
   const rel = path.relative(dist, file).replace(/\\/g, '/');
   if (rel === '404.html' || (rel.startsWith('google') && rel.endsWith('.html'))) continue;
   const html = fs.readFileSync(file, 'utf8');
+  const isLegacyRedirect = /<html[^>]*\bdata-legacy-redirect\b/i.test(html);
+  if (isLegacyRedirect) legacyRedirects++;
 
   // AdSense check
-  if (!html.includes('ca-pub-5926952327268950')) {
+  if (!isLegacyRedirect && !html.includes('ca-pub-5926952327268950')) {
     console.warn(`  ⚠️ Falta AdSense em: ${rel}`);
     missingAdSense++;
   }
@@ -129,8 +132,9 @@ console.log(`- Páginas sem AdSense: ${missingAdSense}`);
 console.log(`- Erros em JSON-LD: ${jsonLdErrors}`);
 console.log(`- Páginas sem Canonical: ${missingCanonical}`);
 console.log(`- URLs do sitemap ausentes: ${sitemapMissing}`);
+console.log(`- Rotas históricas preservadas: ${legacyRedirects}`);
 
-if (brokenLinks > 0 || brokenImages > 0 || missingAdSense > 0 || jsonLdErrors > 0 || missingCanonical > 0 || sitemapMissing > 0) {
+if (brokenLinks > 0 || brokenImages > 0 || missingAdSense > 0 || jsonLdErrors > 0 || missingCanonical > 0 || sitemapMissing > 0 || legacyRedirects !== 14) {
   console.log('\n❌ AUDITORIA REPROVADA.');
   process.exit(1);
 } else {

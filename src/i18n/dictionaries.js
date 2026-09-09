@@ -56,7 +56,7 @@ const pt = {
   'section.method.p2': 'As calculadoras aplicam óptica geométrica para densidade de pixels, dot pitch, campo de visão e distâncias de referência. A referência angular usa a convenção de um minuto de arco; percepção e conforto variam entre pessoas e condições.',
   'section.method.p3': 'As ferramentas processam imagens, textos, áudio e eventos de dispositivos expostos pelo navegador. A hospedagem recebe acessos e serviços de terceiros consentidos podem fazer requisições; consulte a política de privacidade. Os recursos centrais podem funcionar offline depois de armazenados pelo navegador.',
   'section.method.standards': 'Normas de referência',
-  'section.method.byline': 'Pesquisa e revisão técnica pela equipe de engenharia da EXVORN.TECH.',
+  'section.method.byline': 'Pesquisa e revisão técnica pela equipe editorial MonitorSmith da EXVORN.TECH.',
   'section.method.limits': 'Limite honesto: são referências ópticas de navegador. Não substituem colorímetro, sonda de luminância ou laudo laboratorial.',
 
   'section.faq.eyebrow': 'Perguntas frequentes',
@@ -157,7 +157,7 @@ const en = {
   'section.method.p2': 'The calculators apply geometric optics to pixel density, dot pitch, field of view and reference distances. The angular reference uses a one-arcminute convention; perception and comfort vary by person and conditions.',
   'section.method.p3': 'Tools process images, text, audio and browser-exposed device events. Hosting receives requests and consented third-party services may make network calls; see the privacy policy. Core resources can work offline after the browser caches them.',
   'section.method.standards': 'Reference standards',
-  'section.method.byline': 'Research and technical review by the EXVORN.TECH engineering team.',
+  'section.method.byline': 'Research and technical review by the MonitorSmith editorial team at EXVORN.TECH.',
   'section.method.limits': 'Honest limit: these are browser-grade optical references. They do not replace a colorimeter, a luminance probe or a laboratory report.',
 
   'section.faq.eyebrow': 'FAQ',
@@ -258,7 +258,7 @@ const es = {
   'section.method.p2': 'Las calculadoras aplican óptica geométrica a la densidad de píxeles, dot pitch, campo de visión y distancias de referencia. La referencia angular usa la convención de un minuto de arco; la percepción y la comodidad varían según la persona y las condiciones.',
   'section.method.p3': 'Las herramientas procesan imágenes, textos, audio y eventos de dispositivos expuestos por el navegador. El alojamiento recibe solicitudes y los servicios de terceros consentidos pueden comunicarse por red; consulta la política de privacidad. Los recursos centrales pueden funcionar sin conexión tras guardarse en caché.',
   'section.method.standards': 'Normas de referencia',
-  'section.method.byline': 'Investigación y revisión técnica del equipo de ingeniería de EXVORN.TECH.',
+  'section.method.byline': 'Investigación y revisión técnica del equipo editorial de MonitorSmith en EXVORN.TECH.',
   'section.method.limits': 'Límite honesto: son referencias ópticas de navegador. No sustituyen un colorímetro, una sonda de luminancia ni un informe de laboratorio.',
 
   'section.faq.eyebrow': 'Preguntas frecuentes',

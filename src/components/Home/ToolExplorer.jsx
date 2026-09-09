@@ -104,6 +104,7 @@ export default function ToolExplorer({ onLaunch }) {
           <div className="msx-grid" data-testid="tool-grid">
             {tools.map((tool, index) => {
               const text = localized(tool, locale);
+              const guideSlug = locale === 'en' ? tool.seoSlugEn : tool.seoSlug;
               return (
                 <motion.div
                   key={tool.id}
@@ -140,9 +141,9 @@ export default function ToolExplorer({ onLaunch }) {
                     <p className="msx-card__flag">{t('explorer.requires')}</p>
                   ) : null}
 
-                  {tool.seoSlug ? (
+                  {guideSlug ? (
                     <a
-                      href={`/${tool.seoSlug}/`}
+                      href={`/${guideSlug}/`}
                       className="msx-card__guide"
                       data-testid={`guide-${tool.id}`}
                     >

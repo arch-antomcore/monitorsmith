@@ -100,7 +100,9 @@ generate-seo-pages.mjs
   ├─ 22 guias pt-BR
   ├─ 22 guias en
   ├─ 33 artigos e índice do blog
-  ├─ 8 páginas institucionais e legais
+  ├─ diretório de ferramentas
+  ├─ 9 páginas institucionais e legais
+  ├─ 14 páginas noindex de migração histórica
   ├─ sitemap.xml
   ├─ manifest.webmanifest
   ├─ llms.txt
@@ -111,7 +113,11 @@ validate-build.mjs
   └─ verificação estrutural final
 ```
 
-O resultado contém 86 páginas estáticas adicionais e 87 URLs no sitemap quando a home do Vite é incluída: home, 44 guias localizados, 33 artigos, índice do blog e 8 páginas institucionais e legais.
+O resultado contém 88 páginas estáticas indexáveis adicionais e 89 URLs no
+sitemap quando a home do Vite é incluída: home, 44 guias localizados, 33
+artigos, índice do blog, diretório de ferramentas e 9 páginas institucionais e
+legais. As 14 páginas de migração histórica são `noindex,follow` e ficam fora
+do sitemap.
 
 ### Página editorial obrigatória
 
@@ -131,7 +137,10 @@ A versão inglesa pode explicar uma ferramenta para busca internacional. A home,
 
 ## 5. Sitemap e `lastmod`
 
-O sitemap deriva de `SEO_PAGE_ROUTES`, `BLOG_ARTICLES` e das oito páginas institucionais e legais. Pares localizados recebem alternates dentro do HTML; o sitemap lista suas URLs canônicas.
+O sitemap deriva de `SEO_PAGE_ROUTES`, `BLOG_ARTICLES`, do diretório de
+ferramentas e das nove páginas institucionais e legais. Pares localizados
+recebem alternates dentro do HTML; o sitemap lista apenas URLs canônicas que
+devem ser indexadas. Páginas de erro e migrações históricas não entram nele.
 
 `lastmod` representa revisão editorial, não data do build. Nunca use `new Date()` para atualizar todas as páginas automaticamente. Ao alterar materialmente uma página, atualize o campo correspondente no catálogo.
 
@@ -255,10 +264,12 @@ npm run test:e2e
 
 Confirme no artefato:
 
-- 87 URLs no sitemap;
+- 89 URLs canônicas no sitemap;
 - 22 pares completos de `hreflang`;
 - 33 artigos e o índice do blog;
-- 8 páginas institucionais e legais;
+- diretório com links HTML para os 44 guias;
+- 9 páginas institucionais e legais;
+- 14 rotas históricas `noindex,follow`, cada uma com destino canônico válido;
 - zero CTA com modo ou preset errado;
 - zero URL de `llms*.txt` ausente;
 - manifest com ícones 192/512/maskable;
@@ -284,4 +295,4 @@ Não reescreva `main`, não use force-push e não publique com gates vermelhos.
 
 ---
 
-Última revisão do manual: 2026-09-08.
+Última revisão do manual: 2026-09-09.

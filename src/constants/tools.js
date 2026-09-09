@@ -14,7 +14,7 @@ export const SITE_METADATA = Object.freeze({
   contactUrl: 'https://exvorn.tech/',
   locale: 'pt-BR',
   fallbackLocale: 'pt-BR',
-  contentLastModified: '2026-09-08',
+  contentLastModified: '2026-09-09',
 });
 
 export const TOOL_CATEGORIES = Object.freeze([
@@ -862,7 +862,10 @@ export const TOOL_LIBRARY = Object.freeze(
     ...(typeof tool.launchPreset?.ambientBrightness === 'number'
       ? { brightness: tool.launchPreset.ambientBrightness }
       : {}),
-    ...(tool.seoPages && tool.seoPages.length > 0 ? { seoSlug: tool.seoPages[0].pt.slug } : {}),
+    ...(tool.seoPages && tool.seoPages.length > 0 ? {
+      seoSlug: tool.seoPages[0].pt.slug,
+      seoSlugEn: tool.seoPages[0].en.slug,
+    } : {}),
   })),
 );
 

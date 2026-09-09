@@ -15,6 +15,7 @@ import blogInspection from './blog-articles-inspection.mjs';
 import blogCalibration from './blog-articles-calibration.mjs';
 import blogProductivity from './blog-articles-productivity.mjs';
 import { INSTRUMENT_EDITORIAL } from './editorial-instruments.mjs';
+import { LEGACY_REDIRECTS } from './site-migrations.mjs';
 
 const BASE_URL = SITE_METADATA.baseUrl;
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
@@ -44,10 +45,21 @@ const CONSENT_BODY_SCRIPT = `<style>
 <script>
 (function(){
   var KEY='ms_consent_v2';
+  var isEnglish=(document.documentElement.lang||'').toLowerCase().indexOf('en')===0;
+  var copy=isEnglish?{
+    title:'Privacy, cookies and ads',
+    description:'We use local storage to remember your preferences. You decide whether to allow ads and personalization.',
+    policy:'Cookie policy',ads:'Advertising',personalization:'Personalization',reject:'Essential only',selection:'Save selection',accept:'Accept all',preferences:'Privacy preferences'
+  }:{
+    title:'Privacidade, cookies e anúncios',
+    description:'Usamos armazenamento local para lembrar suas preferências. Você decide se permite anúncios e personalização.',
+    policy:'Política de cookies',ads:'Publicidade',personalization:'Personalização',reject:'Só o essencial',selection:'Salvar seleção',accept:'Aceitar tudo',preferences:'Preferências de privacidade'
+  };
   function read(){try{var raw=JSON.parse(localStorage.getItem(KEY));if(raw&&raw.decided===true&&typeof raw.ads==='boolean'&&typeof raw.personalization==='boolean')return{decided:true,ads:raw.ads,personalization:raw.ads&&raw.personalization};}catch(e){}return null}
   function update(state){try{gtag('consent','update',{ad_storage:state.ads?'granted':'denied',ad_user_data:state.personalization?'granted':'denied',ad_personalization:state.personalization?'granted':'denied',analytics_storage:'denied'});}catch(e){}}
   function loadAds(state){
     if(!state||state.ads!==true||document.getElementById('ms-adsense-script'))return;
+    if(!document.querySelector('.ms-ad ins.adsbygoogle'))return;
     window.adsbygoogle=window.adsbygoogle||[];
     if(!state.personalization)window.adsbygoogle.requestNonPersonalizedAds=1;
     var sc=document.createElement('script');sc.id='ms-adsense-script';
@@ -72,7 +84,7 @@ const CONSENT_BODY_SCRIPT = `<style>
   banner.id='ms-consent';
   banner.setAttribute('role','dialog');
   banner.setAttribute('aria-labelledby','ms-consent-title');
-  banner.innerHTML='<div class="wrap"><div><h2 id="ms-consent-title">Privacidade, cookies e anúncios</h2><p>Usamos armazenamento local para lembrar suas preferências. Você decide se permite anúncios e personalização. <a href="/cookies/" style="color:#ffb020">Política de cookies</a>.</p><p><label><input type="checkbox" data-ms-ads> Publicidade</label> <label><input type="checkbox" data-ms-personalization> Personalização</label></p></div><div class="actions"><button type="button" data-ms-reject>Só o essencial</button><button type="button" data-ms-selection>Salvar seleção</button><button type="button" class="primary" data-ms-accept>Aceitar tudo</button></div></div>';
+  banner.innerHTML='<div class="wrap"><div><h2 id="ms-consent-title">'+copy.title+'</h2><p>'+copy.description+' <a href="/cookies/" style="color:#ffb020">'+copy.policy+'</a>.</p><p><label><input type="checkbox" data-ms-ads> '+copy.ads+'</label> <label><input type="checkbox" data-ms-personalization> '+copy.personalization+'</label></p></div><div class="actions"><button type="button" data-ms-reject>'+copy.reject+'</button><button type="button" data-ms-selection>'+copy.selection+'</button><button type="button" class="primary" data-ms-accept>'+copy.accept+'</button></div></div>';
   document.body.appendChild(banner);
   var ads=banner.querySelector('[data-ms-ads]');var personalization=banner.querySelector('[data-ms-personalization]');
   ads.checked=!!(saved&&saved.ads);personalization.checked=!!(saved&&saved.personalization);
@@ -84,13 +96,39 @@ const CONSENT_BODY_SCRIPT = `<style>
   banner.querySelector('[data-ms-reject]').focus({preventScroll:true});
   }
   var footer=document.querySelector('footer');
-  if(footer){var preferences=document.createElement('button');preferences.type='button';preferences.textContent='Preferências de privacidade';preferences.style.cssText='padding:12px;color:inherit;background:transparent;border:1px solid currentColor;border-radius:6px;cursor:pointer';preferences.addEventListener('click',openPreferences);footer.appendChild(preferences)}
+  if(footer){var preferences=document.createElement('button');preferences.type='button';preferences.textContent=copy.preferences;preferences.style.cssText='padding:12px;color:inherit;background:transparent;border:1px solid currentColor;border-radius:6px;cursor:pointer';preferences.addEventListener('click',openPreferences);footer.appendChild(preferences)}
   var saved=read();
-  if(saved){update(saved);loadAds(saved)}else{openPreferences()}
+  var hasAdSlots=!!document.querySelector('.ms-ad ins.adsbygoogle');
+  if(saved){update(saved);loadAds(saved)}else if(hasAdSlots){openPreferences()}
 })();
 </script>`;
 
-const BLOG_ARTICLES = [...blogInspection, ...blogCalibration, ...blogProductivity];
+const BLOG_CATEGORIES = Object.freeze([
+  Object.freeze({
+    id: 'inspecao-de-paineis',
+    label: 'Inspeção e cuidado de painéis',
+    description: 'Procedimentos para observar pixels, uniformidade, retenção, superfícies e vazamento aparente sem transformar uma triagem visual em diagnóstico.',
+    articles: blogInspection,
+  }),
+  Object.freeze({
+    id: 'cor-e-imagem',
+    label: 'Cor, imagem e iluminação',
+    description: 'Guias sobre resposta tonal, gerenciamento de cor, gradientes, iluminação de apoio e uso de telas como parte de um fluxo visual.',
+    articles: blogCalibration,
+  }),
+  Object.freeze({
+    id: 'trabalho-e-apresentacao',
+    label: 'Trabalho, áudio e apresentação',
+    description: 'Métodos práticos para organizar tempo, posicionar telas e usar relógio, teleprompter, mensagens, QR codes e loops em situações reais.',
+    articles: blogProductivity,
+  }),
+]);
+
+const BLOG_ARTICLES = BLOG_CATEGORIES.flatMap((category) => category.articles.map((article) => Object.freeze({
+  ...article,
+  categoryId: category.id,
+  categoryLabel: category.label,
+})));
 const BLOG_SLUG_SET = new Set(BLOG_ARTICLES.map((a) => a.slug));
 
 const EDITORIAL_CONTENT = Object.freeze({
@@ -621,6 +659,38 @@ const LEGAL_PAGES = Object.freeze([
     ],
   },
   {
+    slug: 'politica-editorial',
+    title: 'Política Editorial, Fontes e Correções — MonitorSmith',
+    description: 'Como o MonitorSmith escolhe temas, verifica afirmações, informa limites, identifica autoria e corrige seus guias técnicos.',
+    h1: 'Política Editorial, Fontes e Correções',
+    sections: [
+      ['1. Para quem e para que publicamos', [
+        'O blog do MonitorSmith atende pessoas que precisam observar uma tela, preparar um ambiente visual ou usar uma ferramenta do site com mais segurança. Cada artigo deve resolver uma tarefa concreta e permanecer dentro do foco do produto: displays, cor, iluminação de apoio, periféricos, áudio funcional e organização do trabalho diante da tela.',
+        'Não criamos páginas apenas para cobrir variações de palavras pesquisadas. Quando dois temas levam ao mesmo procedimento e à mesma conclusão, a revisão deve diferenciá-los com escopos claros ou consolidá-los. O título precisa corresponder ao que a página realmente entrega.',
+      ]],
+      ['2. Autoria e responsabilidade', [
+        'Os textos são publicados pela equipe MonitorSmith da EXVORN.TECH, responsável também pela implementação e manutenção das ferramentas. A identificação institucional não representa certificação independente, laboratório acreditado ou vínculo com fabricantes citados.',
+        'Cada artigo informa as datas de publicação e de revisão substancial. Alterações apenas visuais ou tipográficas não justificam apresentar o conteúdo como recém-revisado. Dúvidas sobre autoria ou contestar uma afirmação podem ser enviadas para contato@exvorn.tech.',
+      ]],
+      ['3. Como uma orientação é construída', [
+        'A revisão parte do comportamento verificável da ferramenta e descreve preparação, sequência de uso, sinais observáveis, fatores de confusão e próximos passos. Resultados que dependem de brilho físico, colorimetria, eletrônica, firmware ou estado clínico não são inferidos a partir de uma página web.',
+        'Sempre que a conclusão depende do produto, o artigo remete ao manual e à política vigente do modelo. Valores digitais solicitados ao navegador, como RGB, duração ou contagem de quadros, são separados de medições físicas que exigem instrumento.',
+      ]],
+      ['4. Hierarquia de fontes', [
+        'Priorizamos especificações dos organismos responsáveis, documentação técnica de APIs, normas e orientações oficiais de fabricantes ou autoridades. Fontes secundárias podem ajudar a explicar contexto, mas não substituem a referência primária quando a afirmação trata de uma regra, interface ou requisito técnico.',
+        'As referências visíveis no fim de cada artigo indicam o ponto para o qual foram consultadas. Um link não significa endosso integral do conteúdo externo, e a disponibilidade ou redação da fonte pode mudar depois da revisão.',
+      ]],
+      ['5. Limites, segurança e independência', [
+        'Os guias distinguem observação, estimativa e medição. O MonitorSmith não emite laudos, não decide cobertura de garantia, não promete reparar pixels, não calibra fisicamente um monitor e não substitui avaliação profissional quando ela é necessária.',
+        'Publicidade, quando ativada, não compra cobertura editorial nem altera conclusões. Não usamos links de afiliado nos guias atuais. Unidades publicitárias ficam fora das superfícies imersivas, páginas de erro e documentos institucionais.',
+      ]],
+      ['6. Correções e atualização', [
+        'Corrigimos erros factuais, links quebrados e descrições incompatíveis com a ferramenta. Uma revisão substancial atualiza a data do artigo e deve preservar a diferença entre o que foi observado no navegador e o que apenas uma fonte externa sustenta.',
+        'Para solicitar uma correção, informe a URL, o trecho, a fonte que contradiz a página e, quando relevante, navegador, sistema e modelo do dispositivo. O canal público é contato@exvorn.tech. Política revisada em 9 de setembro de 2026.',
+      ]],
+    ],
+  },
+  {
     slug: 'contato',
     title: 'Contato e Suporte Técnico — MonitorSmith',
     description: 'Entre em contato com a equipe técnica do MonitorSmith e EXVORN.TECH para suporte, feedback, sugestões e parcerias.',
@@ -668,7 +738,7 @@ const LEGAL_PAGES = Object.freeze([
         `Para esclarecimentos sobre privacidade, solicitações institucionais ou exercício de direitos sob a Lei Geral de Proteção de Dados (LGPD), utilize o canal institucional em ${SITE_METADATA.contactUrl} ou envie e-mail para contato@exvorn.tech.`,
       ]],
       ['6. Atualizações desta Política', [
-        `Esta política foi revisada em 7 de setembro de 2026 e reflete a operação atual da plataforma. Alterações materiais serão publicadas nesta mesma URL.`,
+        `Esta política foi revisada em 9 de setembro de 2026 e reflete a operação atual da plataforma. Alterações materiais serão publicadas nesta mesma URL.`,
       ]],
     ],
   },
@@ -682,7 +752,7 @@ const LEGAL_PAGES = Object.freeze([
       ['2. Limites Técnicos e Operacionais', ['Os padrões visuais oferecem apoio à observação humana. O MonitorSmith não mede diretamente parâmetros elétricos de painéis, não substitui colorímetros de hardware e não garante identificação exata de causas de defeitos.', 'Fatores como gerenciamento de cor do sistema operacional, renderização do navegador, ângulo de visão, iluminação ambiente e brilho influenciam o que é visualizado.']],
       ['3. Ergonomia e Segurança', ['Interrompa o uso imediatamente caso luzes, contrastes ou frequências visuais causem desconforto ou fadiga ocular.', 'Para limpeza física de telas, siga sempre o manual do fabricante do monitor, utilizando panos de microfibra limpos e sem aplicar líquidos diretamente sobre os circuitos ou painel.']],
       ['4. Propriedade Intelectual e Conteúdo', ['A marca MonitorSmith, a identidade visual e o código-fonte pertencem à EXVORN.TECH.', 'O usuário é o único responsável pelas imagens e textos que carregar localmente na aplicação, declarando possuir os direitos necessários para sua exibição.']],
-      ['5. Contato e Vigência', [`Revisão vigente desde 7 de setembro de 2026. Para dúvidas e contato institucional, acesse ${SITE_METADATA.contactUrl} ou contato@exvorn.tech.`]],
+      ['5. Contato e Vigência', [`Revisão vigente desde 9 de setembro de 2026. Para dúvidas e contato institucional, acesse ${SITE_METADATA.contactUrl} ou contato@exvorn.tech.`]],
     ],
   },
   {
@@ -705,7 +775,7 @@ const LEGAL_PAGES = Object.freeze([
         'Assim que você decide no banner, enviamos uma atualização de consentimento correspondente à sua escolha, e somente então o script de anúncios é injetado na página. Esses controles técnicos permitem registrar a escolha do usuário. Eles não representam certificação jurídica de conformidade.',
       ]],
       ['4. Onde os anúncios podem aparecer', [
-        'Por decisão de produto e por conformidade com as políticas do Google Publisher, unidades de anúncio existem apenas em páginas com conteúdo editorial próprio: a página inicial, os guias técnicos de cada instrumento e os artigos do blog.',
+        'Por decisão de produto e em atenção às políticas do Google Publisher, unidades de anúncio só podem ser configuradas em páginas com conteúdo editorial próprio, como a página inicial, os guias técnicos e os artigos do blog. Sem um identificador de unidade válido, nenhum espaço publicitário é renderizado.',
         'Nenhum anúncio é exibido sobre as superfícies de teste em tela cheia, sobre padrões de calibração, sobre a tela preta ou em qualquer estado da aplicação sem conteúdo textual. Também não há anúncios intersticiais, pop-ups, camadas que induzem cliques acidentais ou elementos que se sobrepõem aos controles das ferramentas.',
       ]],
       ['5. Como revogar ou alterar o consentimento', [
@@ -713,7 +783,7 @@ const LEGAL_PAGES = Object.freeze([
         'Também é possível desativar a personalização diretamente no Google, em https://www.google.com/settings/ads, ou apagar todos os dados locais deste site pelas configurações do seu navegador — nesse caso, o banner de consentimento voltará a aparecer na próxima visita.',
       ]],
       ['6. Vigência e contato', [
-        'Esta política de cookies foi revisada em 7 de setembro de 2026. Dúvidas sobre cookies, consentimento ou exercício de direitos podem ser enviadas para contato@exvorn.tech.',
+        'Esta política de cookies foi revisada em 9 de setembro de 2026. Dúvidas sobre cookies, consentimento ou exercício de direitos podem ser enviadas para contato@exvorn.tech.',
       ]],
     ],
   },
@@ -749,7 +819,7 @@ const LEGAL_PAGES = Object.freeze([
         '• WCAG 2.2 — referência para contraste, navegação e acessibilidade; sem declaração de certificação integral.',
       ]],
       ['6. Revisão e autoria', [
-        'Pesquisa, implementação e revisão técnica são conduzidas pela equipe de engenharia da EXVORN.TECH, estúdio responsável pelo produto. Correções e contestações técnicas são bem-vindas em contato@exvorn.tech e resultam em atualização datada desta página.',
+        'Pesquisa, implementação e revisão técnica são conduzidas pela equipe editorial MonitorSmith da EXVORN.TECH, responsável pelo produto. Correções e contestações técnicas são bem-vindas em contato@exvorn.tech e resultam em atualização datada desta página.',
         'Quando um instrumento depende de comportamento específico de navegador — como a taxa de eventos coalescidos do ponteiro ou a disponibilidade do atuador de vibração —, isso é declarado na página do próprio instrumento.',
       ]],
     ],
@@ -783,7 +853,7 @@ const LEGAL_PAGES = Object.freeze([
       ]],
       ['6. Limitação de responsabilidade e contato', [
         'Na máxima extensão permitida pela legislação aplicável, a EXVORN.TECH não responde por danos diretos ou indiretos decorrentes do uso ou da impossibilidade de uso das ferramentas e do conteúdo deste site.',
-        'Este aviso foi revisado em 7 de setembro de 2026. Contato para questões legais: contato@exvorn.tech.',
+        'Este aviso foi revisado em 9 de setembro de 2026. Contato para questões legais: contato@exvorn.tech.',
       ]],
     ],
   },
@@ -814,7 +884,7 @@ const LEGAL_PAGES = Object.freeze([
       ]],
       ['5. Como relatar uma barreira', [
         'Se você encontrar qualquer barreira de acessibilidade, escreva para contato@exvorn.tech descrevendo a página, o navegador, a tecnologia assistiva usada e o que aconteceu. Respondemos e registramos a correção com data nesta página.',
-        'Declaração revisada em 7 de setembro de 2026.',
+        'Declaração revisada em 9 de setembro de 2026.',
       ]],
     ],
   },
@@ -848,6 +918,43 @@ function validateEditorialContent() {
   for (const key of contentKeys) {
     if (!catalogKeys.has(key)) errors.push(`Conteúdo sem rota no catálogo: ${key}`);
   }
+
+  const articleSlugs = new Set();
+  const articleTitles = new Set();
+  const substantialParagraphs = new Map();
+  for (const article of BLOG_ARTICLES) {
+    const label = article.slug || '(sem slug)';
+    if (!article.slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(article.slug)) errors.push(`Slug de artigo inválido: ${label}`);
+    if (articleSlugs.has(article.slug)) errors.push(`Slug de artigo duplicado: ${label}`);
+    articleSlugs.add(article.slug);
+    if (!article.title || !article.h1 || !article.description || !article.toolId) errors.push(`Metadados incompletos no artigo: ${label}`);
+    if (articleTitles.has(article.title)) errors.push(`Título de artigo duplicado: ${article.title}`);
+    articleTitles.add(article.title);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(article.publishedAt || '')) errors.push(`publishedAt inválido em ${label}`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(article.updatedAt || '')) errors.push(`updatedAt inválido em ${label}`);
+    if (article.updatedAt && article.publishedAt && article.updatedAt < article.publishedAt) errors.push(`updatedAt anterior à publicação em ${label}`);
+    if (countWords(article.body) < 500) errors.push(`Corpo editorial insuficiente em ${label}: ${countWords(article.body)} palavras`);
+    if ((article.body.match(/<h2\b/gi) || []).length < 4) errors.push(`Artigo sem seções suficientes: ${label}`);
+    if (/\bclass=["'][^"']*\bcta\b/i.test(article.body) || /href=["']\/?\?tool=/i.test(article.body)) errors.push(`CTA promocional duplicada dentro do corpo: ${label}`);
+    if (!Array.isArray(article.faq) || article.faq.length < 3) errors.push(`FAQ incompleta em ${label}`);
+    if (!Array.isArray(article.relatedSlugs) || article.relatedSlugs.length < 2) errors.push(`Artigos relacionados insuficientes em ${label}`);
+    for (const relatedSlug of article.relatedSlugs || []) {
+      if (!BLOG_SLUG_SET.has(relatedSlug)) errors.push(`Artigo relacionado inexistente: ${label} -> ${relatedSlug}`);
+      if (relatedSlug === article.slug) errors.push(`Artigo relacionado a si mesmo: ${label}`);
+    }
+    if (!Array.isArray(article.sources) || article.sources.length < 2) errors.push(`Fontes primárias insuficientes em ${label}`);
+    for (const source of article.sources || []) {
+      if (!source?.label || !source?.note || !/^https:\/\//.test(source?.url || '')) errors.push(`Fonte incompleta ou insegura em ${label}`);
+    }
+
+    for (const paragraph of article.body.matchAll(/<p(?:\s[^>]*)?>([\s\S]*?)<\/p>/gi)) {
+      const normalized = stripHtml(paragraph[1]).toLocaleLowerCase('pt-BR');
+      if (normalized.split(/\s+/u).length < 24) continue;
+      const previous = substantialParagraphs.get(normalized);
+      if (previous) errors.push(`Parágrafo substancial duplicado entre ${previous} e ${label}`);
+      else substantialParagraphs.set(normalized, label);
+    }
+  }
   if (errors.length) throw new Error(`Conteúdo de build inválido:\n- ${errors.join('\n- ')}`);
 }
 
@@ -872,6 +979,64 @@ function formatContentDate(locale = 'pt-BR') {
     year: 'numeric',
     timeZone: 'UTC',
   }).format(date);
+}
+
+function formatIsoDate(value, locale = 'pt-BR') {
+  const date = new Date(`${value}T12:00:00Z`);
+  return new Intl.DateTimeFormat(locale, {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
+}
+
+function stripHtml(value) {
+  return String(value)
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&(?:nbsp|amp|quot|#39|lt|gt);/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function countWords(value) {
+  const text = stripHtml(value);
+  return text ? text.split(/\s+/u).length : 0;
+}
+
+function headingId(value) {
+  return stripHtml(value)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '') || 'secao';
+}
+
+function prepareArticleBody(body) {
+  const usedIds = new Map();
+  const headings = [];
+  let html = String(body).replace(/<h(2|3)([^>]*)>([\s\S]*?)<\/h\1>/gi, (match, level, attributes, label) => {
+    const existingId = attributes.match(/\bid=["']([^"']+)["']/i)?.[1];
+    const baseId = existingId || headingId(label);
+    const count = usedIds.get(baseId) || 0;
+    usedIds.set(baseId, count + 1);
+    const id = count ? `${baseId}-${count + 1}` : baseId;
+    if (level === '2') headings.push({ id, label: stripHtml(label) });
+    const cleanAttributes = attributes.replace(/\s+id=["'][^"']+["']/i, '');
+    return `<h${level}${cleanAttributes} id="${id}">${label}</h${level}>`;
+  });
+  html = html
+    .replace(/<table([^>]*)>/gi, '<div class="table-scroll" role="region" aria-label="Tabela de referência com rolagem horizontal" tabindex="0"><table$1>')
+    .replace(/<\/table>/gi, '</table></div>');
+  return { html, headings };
+}
+
+function renderFooter(locale = 'pt') {
+  const isEn = locale === 'en';
+  return `<footer><a href="/">${isEn ? 'Home' : 'Início'}</a><a href="/ferramentas/">${isEn ? 'Tool guide index' : 'Guias de ferramentas'}</a><a href="/blog/">Blog</a><a href="/sobre/">${isEn ? 'About' : 'Sobre'}</a><a href="/politica-editorial/">${isEn ? 'Editorial policy' : 'Política editorial'}</a><a href="/contato/">${isEn ? 'Contact' : 'Contato'}</a><a href="/metodologia/">${isEn ? 'Methodology' : 'Metodologia'}</a><a href="/privacidade/">${isEn ? 'Privacy' : 'Privacidade'}</a><a href="/termos/">${isEn ? 'Terms' : 'Termos de uso'}</a><a href="/cookies/">Cookies</a><a href="/aviso-legal/">${isEn ? 'Disclaimer' : 'Aviso legal'}</a><a href="/acessibilidade/">${isEn ? 'Accessibility' : 'Acessibilidade'}</a></footer>`;
 }
 
 function renderToolPage(route, locale) {
@@ -1042,12 +1207,14 @@ function renderToolPage(route, locale) {
   <main>
     <h1>${escapeHtml(metadata.h1)}</h1>
     <div class="editorial-byline">
-      <span>${isEn ? 'By' : 'Por'} <strong>EXVORN.TECH — Display Analysis</strong></span>
+      <span>${isEn ? 'By' : 'Por'} <strong>${isEn ? 'MonitorSmith editorial team' : 'Equipe editorial MonitorSmith'} · EXVORN.TECH</strong></span>
       <span>•</span>
       <time datetime="${SITE_METADATA.contentLastModified}">${isEn ? `Updated ${formatContentDate('en-US')}` : `Atualizado em ${formatContentDate('pt-BR')}`}</time>
+      <span>•</span>
+      <a href="/politica-editorial/">${isEn ? 'Editorial process' : 'Processo editorial'}</a>
     </div>
     <p class="intro">${escapeHtml(content.intro)}</p>
-    <a class="cta" href="/?tool=${encodeURIComponent(route.toolId)}">${labels.open}</a>
+    <a class="cta" href="/#${encodeURIComponent(route.toolId)}">${labels.open}</a>
     ${labels.interfaceNote ? `<p class="note">${labels.interfaceNote}</p>` : ''}
     <section><h2>${labels.how}</h2><ol>${content.steps.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ol></section>
     <section><h2>${labels.when}</h2><ul>${content.uses.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></section>
@@ -1061,7 +1228,8 @@ function renderToolPage(route, locale) {
 
     <section><h2>${labels.related}</h2><ul>${related}</ul></section>
   </main>
-  <footer><a href="/">${labels.back}</a><a href="/blog/">Blog</a><a href="/sobre/">${isEn ? 'About' : 'Sobre'}</a><a href="/contato/">${isEn ? 'Contact' : 'Contato'}</a><a href="/metodologia/">${isEn ? 'Methodology' : 'Metodologia'}</a><a href="/privacidade/">${labels.privacy}</a><a href="/termos/">${labels.terms}</a><a href="/cookies/">Cookies</a><a href="/aviso-legal/">${isEn ? 'Disclaimer' : 'Aviso legal'}</a><a href="/acessibilidade/">${isEn ? 'Accessibility' : 'Acessibilidade'}</a></footer>${CONSENT_BODY_SCRIPT}
+  ${renderFooter(isEn ? 'en' : 'pt')}
+${CONSENT_BODY_SCRIPT}
 </body>
 </html>`;
   return html;
@@ -1084,18 +1252,25 @@ function renderLegalPage(page) {
   const html = `<!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="referrer" content="strict-origin-when-cross-origin"><title>${escapeHtml(page.title)}</title><meta name="description" content="${escapeHtml(page.description)}"><meta name="theme-color" content="#030304"><meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1"><link rel="canonical" href="${url}"><link rel="alternate" hreflang="pt-BR" href="${url}"><link rel="alternate" hreflang="x-default" href="${url}"><link rel="icon" href="/logo.png" type="image/png"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><link rel="describedby" href="/llms.txt" type="text/markdown"><meta property="og:title" content="${escapeHtml(page.title)}"><meta property="og:description" content="${escapeHtml(page.description)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website"><meta property="og:site_name" content="MonitorSmith"><meta property="og:locale" content="pt_BR"><meta property="og:image" content="${BASE_URL}/og-image.jpg"><meta property="og:image:secure_url" content="${BASE_URL}/og-image.jpg"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="MonitorSmith — informações legais e de privacidade"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(page.title)}"><meta name="twitter:description" content="${escapeHtml(page.description)}"><meta name="twitter:image" content="${BASE_URL}/og-image.jpg"><meta name="twitter:image:alt" content="MonitorSmith — informações legais e de privacidade">${CONSENT_HEAD_SCRIPT}<script type="application/ld+json">${safeJson(schema)}</script>
 <style>:root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif;padding-bottom:env(safe-area-inset-bottom)}header,main,footer{width:min(760px,calc(100% - 2rem));margin-inline:auto}header{padding:1.2rem 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}a{color:#fbbf24;text-underline-offset:.2em}header a{color:var(--text);font-weight:750;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:0.4rem 0.6rem;border-radius:0.5rem}main{padding:3rem 0}h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1;letter-spacing:-.035em}h2{font-size:1.2rem;margin:2.2rem 0 .5rem}p{color:var(--muted)}.notice{padding:1rem;background:var(--surface);border:1px solid var(--line);border-radius:.8rem}footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center}footer a{display:inline-flex;align-items:center;min-height:44px;padding:0.5rem 0.85rem;border-radius:0.6rem;background:rgba(255,255,255,0.04);border:1px solid var(--line);color:var(--text);text-decoration:none;font-size:0.88rem;transition:background 0.15s, border-color 0.15s}footer a:hover{background:rgba(251,191,36,0.12);border-color:var(--accent);color:#fbbf24}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}@media(max-width:640px){footer a{flex:1 1 calc(50% - 0.5rem);justify-content:center;text-align:center}}</style></head>
-<body><header><a href="/">MonitorSmith · EXVORN.TECH</a><a href="/">← Todas as ferramentas</a></header><main><h1>${escapeHtml(page.h1)}</h1><p class="notice">Este documento descreve a operação atual do MonitorSmith. Em caso de dúvida, entre em contato antes de continuar o uso.</p>${sections}</main><footer><a href="/">Todas as ferramentas</a><a href="/blog/">Blog</a><a href="/sobre/">Sobre</a><a href="/contato/">Contato</a><a href="/metodologia/">Metodologia</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a><a href="/cookies/">Cookies</a><a href="/aviso-legal/">Aviso legal</a><a href="/acessibilidade/">Acessibilidade</a></footer>${CONSENT_BODY_SCRIPT}</body></html>`;
+<body><header><a href="/">MonitorSmith · EXVORN.TECH</a><a href="/ferramentas/">← Diretório de ferramentas</a></header><main><h1>${escapeHtml(page.h1)}</h1><p class="notice">Este documento descreve a operação atual do MonitorSmith. Em caso de dúvida, entre em contato antes de continuar o uso.</p>${sections}</main>${renderFooter('pt')}${CONSENT_BODY_SCRIPT}</body></html>`;
   return html;
 }
 
 function renderBlogArticle(article) {
   const pageUrl = `${BASE_URL}/blog/${article.slug}/`;
   const documentTitle = `${article.title} | ${SITE_METADATA.name}`;
+  const preparedBody = prepareArticleBody(article.body);
+  const editorialWordCount = countWords(article.body);
+  const readingMinutes = Math.max(3, Math.ceil(editorialWordCount / 200));
+  const publishedAt = article.publishedAt;
+  const updatedAt = article.updatedAt;
   const breadcrumbId = `${pageUrl}#breadcrumb`;
   const relatedHtml = (article.relatedSlugs || []).filter((s) => BLOG_SLUG_SET.has(s)).map((s) => {
     const rel = BLOG_ARTICLES.find((a) => a.slug === s);
     return rel ? `<li><a href="/blog/${rel.slug}/">${escapeHtml(rel.h1)}</a></li>` : '';
   }).join('');
+  const tocHtml = preparedBody.headings.length > 2 ? `<nav class="article-toc" aria-label="Sumário do artigo"><h2>Neste guia</h2><ol>${preparedBody.headings.map((heading) => `<li><a href="#${heading.id}">${escapeHtml(heading.label)}</a></li>`).join('')}</ol></nav>` : '';
+  const sourcesHtml = `<section class="sources" data-editorial-sources><h2>Fontes consultadas</h2><p>Referências primárias e oficiais usadas para conferir conceitos, interfaces e limites deste guia.</p><ol>${article.sources.map((source) => `<li><a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.label)}</a><span>${escapeHtml(source.note)}</span></li>`).join('')}</ol></section>`;
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -1103,10 +1278,14 @@ function renderBlogArticle(article) {
     headline: article.h1,
     description: article.description,
     inLanguage: 'pt-BR',
-    datePublished: '2026-08-10',
-    dateModified: SITE_METADATA.contentLastModified,
-    author: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
+    datePublished: publishedAt,
+    dateModified: updatedAt,
+    author: { '@type': 'Organization', name: 'Equipe MonitorSmith — EXVORN.TECH', url: `${BASE_URL}/sobre/` },
     publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
+    image: `${BASE_URL}/og-image.jpg`,
+    articleSection: article.categoryLabel,
+    wordCount: editorialWordCount,
+    isAccessibleForFree: true,
     mainEntityOfPage: pageUrl,
   };
   const breadcrumbSchema = {
@@ -1137,7 +1316,7 @@ function renderBlogArticle(article) {
   <title>${escapeHtml(documentTitle)}</title>
   <meta name="description" content="${escapeHtml(article.description)}">
   <meta name="theme-color" content="#030304">
-  <meta name="author" content="EXVORN.TECH">
+  <meta name="author" content="Equipe MonitorSmith — EXVORN.TECH">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="${pageUrl}">
   <link rel="icon" href="/logo.png" type="image/png">
@@ -1153,6 +1332,10 @@ function renderBlogArticle(article) {
   <meta property="og:image" content="${BASE_URL}/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="MonitorSmith — ${escapeHtml(article.h1)}">
+  <meta property="article:published_time" content="${publishedAt}">
+  <meta property="article:modified_time" content="${updatedAt}">
+  <meta property="article:section" content="${escapeHtml(article.categoryLabel)}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(documentTitle)}">
   <meta name="twitter:description" content="${escapeHtml(article.description)}">
@@ -1165,14 +1348,17 @@ function renderBlogArticle(article) {
     header,main,footer{width:min(820px,calc(100% - 2rem));margin-inline:auto}
     header{padding:1.1rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;border-bottom:1px solid var(--line);flex-wrap:wrap}
     header a{text-decoration:none;font-weight:700;display:inline-flex;align-items:center;min-height:44px;padding:0.4rem 0.6rem;border-radius:0.5rem}
-    main{padding:clamp(2rem,6vw,4rem) 0}h1{font-size:clamp(1.8rem,6vw,3rem);line-height:1.1;letter-spacing:-.03em;margin:0 0 1rem}h2{font-size:1.25rem;margin:2rem 0 .7rem}h3{font-size:1.1rem;margin:1.5rem 0 .5rem}
+    main{padding:clamp(2rem,6vw,4rem) 0}h1{font-size:clamp(1.8rem,6vw,3rem);line-height:1.1;letter-spacing:-.03em;margin:0 0 1rem}h2{font-size:1.25rem;margin:2rem 0 .7rem;scroll-margin-top:1rem}h3{font-size:1.1rem;margin:1.5rem 0 .5rem;scroll-margin-top:1rem}
+    .article-kicker{margin:0 0 .65rem;color:var(--accent);font:700 .72rem/1.4 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}.standfirst{font-size:1.12rem;line-height:1.75;color:#d0d2d8;margin:0 0 1.25rem}
     .editorial-byline{display:flex;gap:.75rem;align-items:center;font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--line);flex-wrap:wrap}
     .cta-group{display:flex;gap:1rem;margin:2.5rem 0;flex-wrap:wrap;justify-content:flex-start}
     .cta{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0.9rem 1.4rem;border-radius:.85rem;background:var(--accent);color:#171006;font-weight:800;text-decoration:none;transition:transform .15s, box-shadow .15s}.cta:hover{transform:scale(1.03);box-shadow:0 0 15px rgba(245,158,11,0.4)}
     .cta.secondary{background:var(--surface);color:var(--text);border:1px solid var(--line)}.cta.secondary:hover{border-color:var(--accent);box-shadow:0 0 15px rgba(255,255,255,0.05)}
     .blog-body p{color:var(--muted);margin:1rem 0}.blog-body h2{color:var(--text)}.blog-body h3{color:var(--text)}.blog-body ul,.blog-body ol{color:var(--muted);padding-left:1.5rem}.blog-body li{margin:.4rem 0}
-    .blog-body table{width:100%;max-width:100%;overflow-x:auto;display:block;border-collapse:collapse;margin:1.5rem 0}
+    .blog-body .table-scroll{width:100%;max-width:100%;overflow-x:auto;margin:1.5rem 0;border-radius:.4rem}.blog-body table{width:100%;min-width:36rem;border-collapse:collapse;margin:0}.blog-body th,.blog-body td{padding:.75rem;text-align:left;border:1px solid var(--line);vertical-align:top}.blog-body th{color:var(--text);background:rgba(255,255,255,.04)}
     .blog-body pre,.blog-body code{max-width:100%;overflow-x:auto}
+    .article-toc{margin:1.5rem 0;padding:1.25rem 1.4rem;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.24);border-radius:1rem}.article-toc h2{margin:0 0 .65rem;font-size:1rem}.article-toc ol{margin:0;padding-left:1.25rem}.article-toc li{margin:.35rem 0}.article-toc a{color:#f5d28d}
+    .sources li{margin:1rem 0}.sources a{font-weight:700}.sources span{display:block;margin-top:.2rem;color:var(--muted);font-size:.92rem}
     section{margin:1.5rem 0;padding:1.4rem;background:var(--surface);border:1px solid var(--line);border-radius:1rem}li,p{color:var(--muted)}.faq dt{font-weight:750;margin-top:1rem;color:var(--text)}.faq dd{color:var(--muted);margin:.25rem 0 0}
     .related-grid{display:grid;gap:.75rem}.related-grid a{display:block;padding:1rem;background:var(--surface);border:1px solid var(--line);border-radius:.75rem;text-decoration:none;transition:border-color .2s;min-height:44px}.related-grid a:hover{border-color:var(--accent)}
     footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center}
@@ -1190,23 +1376,33 @@ function renderBlogArticle(article) {
   </style>
 </head>
 <body>
-  <header><a href="/">MonitorSmith · EXVORN.TECH</a><a href="/">← Todas as ferramentas</a></header>
+  <header><a href="/">MonitorSmith · EXVORN.TECH</a><a href="/blog/">← Índice do blog</a></header>
   <main>
+    <p class="article-kicker">${escapeHtml(article.categoryLabel)}</p>
     <h1>${escapeHtml(article.h1)}</h1>
+    <p class="standfirst">${escapeHtml(article.description)}</p>
     <div class="editorial-byline">
-      <span>Por <strong>EXVORN.TECH — Display Analysis</strong></span>
+      <span>Por <strong>Equipe editorial MonitorSmith · EXVORN.TECH</strong></span>
       <span>•</span>
-      <time datetime="${SITE_METADATA.contentLastModified}">Atualizado em ${formatContentDate('pt-BR')}</time>
+      <span>Publicado em <time datetime="${publishedAt}">${formatIsoDate(publishedAt, 'pt-BR')}</time></span>
+      <span>•</span>
+      <span>Revisado em <time datetime="${updatedAt}">${formatIsoDate(updatedAt, 'pt-BR')}</time></span>
+      <span>•</span>
+      <span>${readingMinutes} min de leitura</span>
+      <span>•</span>
+      <a href="/politica-editorial/">Como revisamos</a>
     </div>
-    <div class="blog-body">${article.body}</div>
-    <div class="cta-group">
-      <a class="cta" href="/?tool=${encodeURIComponent(article.toolId)}">Experimentar Ferramenta →</a>
-      <a class="cta secondary" href="/blog/">Ver todas as matérias 📚</a>
-    </div>
+    ${tocHtml}
+    <article class="blog-body" data-blog-article>${preparedBody.html}</article>
     ${faqHtml}
-    ${relatedHtml ? `<section><h2>Leia também</h2><div class="related-grid"><ul>${relatedHtml}</ul></div></section>` : ''}
+    ${sourcesHtml}
+    ${relatedHtml ? `<section><h2>Continue pelo tema</h2><div class="related-grid"><ul>${relatedHtml}</ul></div></section>` : ''}
+    <div class="cta-group">
+      <a class="cta" href="/#${encodeURIComponent(article.toolId)}">Abrir a ferramenta relacionada →</a>
+    </div>
   </main>
-  <footer><a href="/">Todas as ferramentas</a><a href="/blog/">Blog</a><a href="/sobre/">Sobre</a><a href="/contato/">Contato</a><a href="/metodologia/">Metodologia</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a><a href="/cookies/">Cookies</a><a href="/aviso-legal/">Aviso legal</a><a href="/acessibilidade/">Acessibilidade</a></footer>${CONSENT_BODY_SCRIPT}
+  ${renderFooter('pt')}
+${CONSENT_BODY_SCRIPT}
 </body>
 </html>`;
 }
@@ -1222,10 +1418,19 @@ function renderBlogIndex() {
     description,
     url: pageUrl,
     inLanguage: 'pt-BR',
+    dateModified: SITE_METADATA.contentLastModified,
     isPartOf: { '@type': 'WebSite', name: SITE_METADATA.name, url: `${BASE_URL}/` },
     publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
+    hasPart: BLOG_ARTICLES.map((article) => ({ '@type': 'Article', name: article.h1, url: `${BASE_URL}/blog/${article.slug}/` })),
   };
-  const cards = BLOG_ARTICLES.map((article) => `<a href="/blog/${article.slug}/" class="card"><h2>${escapeHtml(article.h1)}</h2><p>${escapeHtml(article.description)}</p></a>`).join('');
+  const categoryNav = BLOG_CATEGORIES.map((category) => `<a href="#${category.id}">${escapeHtml(category.label)}</a>`).join('');
+  const categorySections = BLOG_CATEGORIES.map((category) => {
+    const cards = BLOG_ARTICLES.filter((article) => article.categoryId === category.id).map((article) => {
+      const readingMinutes = Math.max(3, Math.ceil(countWords(article.body) / 200));
+      return `<article class="card"><div class="card-meta"><span>${readingMinutes} min</span><time datetime="${article.updatedAt}">revisto ${escapeHtml(formatIsoDate(article.updatedAt, 'pt-BR'))}</time></div><h3><a href="/blog/${article.slug}/">${escapeHtml(article.h1)}</a></h3><p>${escapeHtml(article.description)}</p></article>`;
+    }).join('');
+    return `<section class="category" id="${category.id}" aria-labelledby="${category.id}-title"><div class="category-head"><p class="eyebrow">Trilha editorial</p><h2 id="${category.id}-title">${escapeHtml(category.label)}</h2><p>${escapeHtml(category.description)}</p></div><div class="grid">${cards}</div></section>`;
+  }).join('');
   return `<!doctype html>
 <html lang="pt-BR">
 <head>
@@ -1254,10 +1459,12 @@ function renderBlogIndex() {
     header,main,footer{width:min(960px,calc(100% - 2rem));margin-inline:auto}
     header{padding:1.1rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;border-bottom:1px solid var(--line);flex-wrap:wrap}
     header a{text-decoration:none;font-weight:700;display:inline-flex;align-items:center;min-height:44px;padding:0.4rem 0.6rem;border-radius:0.5rem}
-    main{padding:clamp(2rem,6vw,4rem) 0}h1{font-size:clamp(2rem,7vw,3.5rem);line-height:1.04;letter-spacing:-.04em;margin:0 0 .5rem}.subtitle{color:var(--muted);font-size:1.1rem;margin-bottom:2rem}
+    main{padding:clamp(2rem,6vw,4rem) 0}h1{font-size:clamp(2rem,7vw,3.5rem);line-height:1.04;letter-spacing:-.04em;margin:0 0 .5rem}.subtitle{color:var(--muted);font-size:1.1rem;margin:0 0 1rem;max-width:70ch}
+    .editorial-intro{margin:1.5rem 0;padding:1.25rem 1.4rem;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.24);border-radius:1rem}.editorial-intro p{margin:.3rem 0;color:var(--muted)}.trail-nav{display:flex;gap:.65rem;flex-wrap:wrap;margin:1rem 0 2.5rem}.trail-nav a{display:inline-flex;align-items:center;min-height:44px;padding:.55rem .85rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--text)}
+    .category{margin:3rem 0;scroll-margin-top:1rem}.category-head{max-width:70ch;margin-bottom:1.2rem}.category-head h2{font-size:clamp(1.5rem,4vw,2rem);margin:.2rem 0}.category-head p{color:var(--muted)}.eyebrow{color:var(--accent)!important;font:700 .68rem/1.4 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}
     .grid{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
-    .card{display:flex;flex-direction:column;justify-content:center;padding:1.5rem;background:var(--surface);border:1px solid var(--line);border-radius:1.25rem;text-decoration:none;transition:border-color .2s,transform .15s,box-shadow .2s;min-height:120px}.card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.4)}
-    .card h2{font-size:1.15rem;line-height:1.3;margin:0 0 .75rem;color:var(--text)}.card p{font-size:.95rem;color:var(--muted);margin:0;line-height:1.6}
+    .card{display:flex;flex-direction:column;padding:1.5rem;background:var(--surface);border:1px solid var(--line);border-radius:1.25rem;transition:border-color .2s,transform .15s,box-shadow .2s;min-height:190px}.card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.4)}
+    .card h3{font-size:1.15rem;line-height:1.35;margin:.55rem 0 .75rem}.card h3 a{color:var(--text);text-decoration:none}.card p{font-size:.95rem;color:var(--muted);margin:0;line-height:1.6}.card-meta{display:flex;justify-content:space-between;gap:.75rem;color:#8e949d;font-size:.75rem}.card-meta time{text-align:right}
     footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center}
     footer a{display:inline-flex;align-items:center;min-height:44px;padding:0.5rem 0.85rem;border-radius:0.6rem;background:rgba(255,255,255,0.04);border:1px solid var(--line);color:var(--text);text-decoration:none;font-size:0.88rem;transition:background 0.15s, border-color 0.15s}
     footer a:hover{background:rgba(251,191,36,0.12);border-color:var(--accent);color:#fbbf24}
@@ -1271,14 +1478,118 @@ function renderBlogIndex() {
   </style>
 </head>
 <body>
-  <header><a href="/">MonitorSmith · EXVORN.TECH</a><a href="/">← Todas as ferramentas</a></header>
+  <header><a href="/">MonitorSmith · EXVORN.TECH</a><a href="/ferramentas/">Diretório de ferramentas</a></header>
   <main>
     <h1>Blog</h1>
-    <p class="subtitle">Artigos técnicos, engenharia de displays e guias práticos sobre monitores e produtividade.</p>
-    <div class="grid">${cards}</div>
+    <p class="subtitle">Guias revisados para observar telas, interpretar resultados, preparar ambientes visuais e usar cada instrumento com limites claros.</p>
+    <aside class="editorial-intro" aria-label="Compromisso editorial">
+      <p><strong>O que você encontra aqui:</strong> procedimentos reproduzíveis, fatores que confundem a observação, fontes consultadas e uma seção explícita sobre o que cada teste não comprova.</p>
+      <p>Conteúdo por Equipe MonitorSmith · EXVORN.TECH. <a href="/politica-editorial/">Leia como pesquisamos, revisamos e corrigimos os guias.</a></p>
+    </aside>
+    <nav class="trail-nav" aria-label="Trilhas do blog">${categoryNav}</nav>
+    ${categorySections}
   </main>
-  <footer><a href="/">Todas as ferramentas</a><a href="/blog/">Blog</a><a href="/sobre/">Sobre</a><a href="/contato/">Contato</a><a href="/metodologia/">Metodologia</a><a href="/privacidade/">Privacidade</a><a href="/termos/">Termos de uso</a><a href="/cookies/">Cookies</a><a href="/aviso-legal/">Aviso legal</a><a href="/acessibilidade/">Acessibilidade</a></footer>${CONSENT_BODY_SCRIPT}
+  ${renderFooter('pt')}
+${CONSENT_BODY_SCRIPT}
 </body>
+</html>`;
+}
+
+function renderToolsIndex() {
+  const pageUrl = `${BASE_URL}/ferramentas/`;
+  const description = `Diretório dos ${SEO_PAGE_ROUTES.length * 2} guias de ferramentas do MonitorSmith, com versões em português e inglês, procedimentos de uso e limites técnicos.`;
+  const categoryByTool = new Map(TOOLS_REGISTRY.map((tool) => [tool.id, tool.category]));
+  const categorySections = TOOL_CATEGORIES.map((category, categoryIndex) => {
+    const routes = SEO_PAGE_ROUTES.filter((route) => categoryByTool.get(route.toolId) === category);
+    if (!routes.length) return '';
+    const categoryId = `categoria-${categoryIndex + 1}`;
+    const cards = routes.map((route) => `<article class="tool-card"><p class="tool-id">${escapeHtml(route.toolId)}</p><h3><a href="/${route.pt.slug}/">${escapeHtml(route.pt.h1)}</a></h3><p>${escapeHtml(route.pt.description)}</p><div class="tool-links"><a href="/${route.pt.slug}/" hreflang="pt-BR">Guia em português</a><a href="/${route.en.slug}/" lang="en" hreflang="en">English guide</a></div></article>`).join('');
+    return `<section id="${categoryId}" class="tool-category"><h2>${escapeHtml(category)}</h2><div class="tool-grid">${cards}</div></section>`;
+  }).join('');
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Diretório de ferramentas do MonitorSmith',
+    description,
+    url: pageUrl,
+    inLanguage: 'pt-BR',
+    dateModified: SITE_METADATA.contentLastModified,
+    isPartOf: { '@type': 'WebSite', name: SITE_METADATA.name, url: `${BASE_URL}/` },
+    hasPart: SEO_PAGE_ROUTES.flatMap((route) => [
+      { '@type': 'TechArticle', name: route.pt.h1, url: `${BASE_URL}/${route.pt.slug}/`, inLanguage: 'pt-BR' },
+      { '@type': 'TechArticle', name: route.en.h1, url: `${BASE_URL}/${route.en.slug}/`, inLanguage: 'en' },
+    ]),
+  };
+  return `<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Ferramentas e Guias de Uso | MonitorSmith</title>
+  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+  <meta name="theme-color" content="#030304">
+  <link rel="canonical" href="${pageUrl}">
+  <link rel="icon" href="/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta property="og:title" content="Ferramentas e Guias de Uso | MonitorSmith">
+  <meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:url" content="${pageUrl}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MonitorSmith">
+  <meta property="og:image" content="${BASE_URL}/og-image.jpg">
+  ${CONSENT_HEAD_SCRIPT}
+  <script type="application/ld+json">${safeJson(schema)}</script>
+  <style>
+    :root{color-scheme:dark;--bg:#030304;--surface:#0a0b0f;--text:#f5f5f5;--muted:#b9bbc4;--line:rgba(255,255,255,.1);--accent:#f59e0b}*{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Outfit,ui-sans-serif,system-ui,-apple-system,sans-serif;padding-bottom:env(safe-area-inset-bottom)}a{color:#fbbf24;text-underline-offset:.2em}header,main,footer{width:min(1080px,calc(100% - 2rem));margin-inline:auto}
+    header{padding:1.1rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;border-bottom:1px solid var(--line);flex-wrap:wrap}header a{text-decoration:none;font-weight:700;min-height:44px;display:inline-flex;align-items:center;padding:.4rem .6rem}
+    main{padding:clamp(2rem,6vw,4rem) 0}h1{font-size:clamp(2rem,7vw,3.6rem);line-height:1.05;letter-spacing:-.04em;margin:0 0 1rem}.lead{max-width:72ch;color:var(--muted);font-size:1.1rem}.how{margin:2rem 0;padding:1.3rem 1.5rem;border:1px solid rgba(245,158,11,.25);background:rgba(245,158,11,.06);border-radius:1rem}.how h2{margin:0 0 .5rem;font-size:1.15rem}.how p{margin:.4rem 0;color:var(--muted)}
+    .tool-category{margin:3rem 0;scroll-margin-top:1rem}.tool-category>h2{font-size:clamp(1.45rem,4vw,2rem);margin:0 0 1rem}.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1rem}.tool-card{display:flex;flex-direction:column;padding:1.35rem;background:var(--surface);border:1px solid var(--line);border-radius:1rem}.tool-card h3{font-size:1.1rem;line-height:1.35;margin:.25rem 0 .65rem}.tool-card h3 a{color:var(--text);text-decoration:none}.tool-card p{color:var(--muted);margin:0}.tool-id{color:var(--accent)!important;font:700 .66rem/1.4 ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}.tool-links{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:auto;padding-top:1rem}.tool-links a{display:inline-flex;align-items:center;min-height:44px}
+    footer{padding:1.5rem 0 3rem;border-top:1px solid var(--line);display:flex;gap:.75rem;flex-wrap:wrap}footer a{display:inline-flex;align-items:center;min-height:44px;padding:.5rem .85rem;border:1px solid var(--line);border-radius:.6rem;color:var(--text);text-decoration:none}:focus-visible{outline:3px solid var(--accent);outline-offset:4px}@media(max-width:640px){.tool-grid{grid-template-columns:1fr}footer a{flex:1 1 calc(50% - .5rem);justify-content:center;text-align:center}}
+  </style>
+</head>
+<body>
+  <header><a href="/">MonitorSmith · EXVORN.TECH</a><a href="/blog/">Blog e guias editoriais</a></header>
+  <main>
+    <h1>Ferramentas e guias de uso</h1>
+    <p class="lead">Escolha uma tarefa e leia o procedimento antes de abrir o instrumento. Cada guia explica o que a página solicita ao navegador, como repetir a observação e quais conclusões exigem equipamento ou avaliação externa.</p>
+    <aside class="how" aria-label="Como usar este diretório"><h2>Como escolher</h2><p>Os guias em português levam à mesma aplicação interativa. As versões em inglês têm conteúdo equivalente e informam quando a interface permanece em português.</p><p>Para artigos de contexto, comparações e checklists mais longos, visite o <a href="/blog/">blog organizado por trilhas</a>. Para fórmulas e limites comuns, consulte a <a href="/metodologia/">metodologia técnica</a>.</p></aside>
+    ${categorySections}
+  </main>
+  ${renderFooter('pt')}
+${CONSENT_BODY_SCRIPT}
+</body>
+</html>`;
+}
+
+function renderLegacyRedirect(sourcePath, targetPath) {
+  const isEnglish = sourcePath.startsWith('/en/');
+  const targetUrl = `${BASE_URL}${targetPath}`;
+  const title = isEnglish ? 'Page moved | MonitorSmith' : 'Página movida | MonitorSmith';
+  const heading = isEnglish ? 'This page has moved' : 'Esta página mudou de endereço';
+  const message = isEnglish
+    ? 'The guide now has a permanent canonical address. You will be taken directly to the current page.'
+    : 'O guia foi consolidado em um endereço canônico permanente. Você será levado diretamente à página atual.';
+  const linkLabel = isEnglish ? 'Continue to the current guide' : 'Continuar para o guia atual';
+  return `<!doctype html>
+<html lang="${isEnglish ? 'en' : 'pt-BR'}" data-legacy-redirect>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>${title}</title>
+  <meta name="description" content="${message}">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="${targetUrl}">
+  <meta http-equiv="refresh" content="0;url=${targetPath}">
+  <link rel="icon" href="/logo.png" type="image/png">
+  <style>:root{color-scheme:dark}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#030304;color:#f5f5f5;font:16px/1.7 system-ui,sans-serif}main{width:min(620px,calc(100% - 2rem));padding:3rem;text-align:center;background:#0a0b0f;border:1px solid rgba(255,255,255,.12);border-radius:1rem}p{color:#b9bbc4}a{display:inline-flex;min-height:44px;align-items:center;color:#fbbf24;font-weight:700}</style>
+  <script>window.location.replace(${safeJson(targetPath)});</script>
+</head>
+<body><main><h1>${heading}</h1><p>${message}</p><a href="${targetPath}">${linkLabel} →</a></main></body>
 </html>`;
 }
 
@@ -1286,6 +1597,7 @@ function generateSitemapXml() {
   const urls = [];
   urls.push({ loc: `${BASE_URL}/`, lastmod: SITE_METADATA.contentLastModified, changefreq: 'weekly', priority: '1.0' });
   urls.push({ loc: `${BASE_URL}/blog/`, lastmod: SITE_METADATA.contentLastModified, changefreq: 'weekly', priority: '0.9' });
+  urls.push({ loc: `${BASE_URL}/ferramentas/`, lastmod: SITE_METADATA.contentLastModified, changefreq: 'weekly', priority: '0.9' });
 
   for (const page of LEGAL_PAGES) {
     urls.push({ loc: `${BASE_URL}/${page.slug}/`, lastmod: SITE_METADATA.contentLastModified, changefreq: 'monthly', priority: '0.5' });
@@ -1299,7 +1611,7 @@ function generateSitemapXml() {
   }
 
   for (const article of BLOG_ARTICLES) {
-    urls.push({ loc: `${BASE_URL}/blog/${article.slug}/`, lastmod: SITE_METADATA.contentLastModified, changefreq: 'monthly', priority: '0.7' });
+    urls.push({ loc: `${BASE_URL}/blog/${article.slug}/`, lastmod: article.updatedAt, changefreq: 'monthly', priority: '0.7' });
   }
 
   const entries = urls
@@ -1331,7 +1643,7 @@ Sitemap: ${BASE_URL}/sitemap.xml
 function generateLlmsText() {
   const tools = TOOL_CATEGORIES.map((category) => `## ${category}\n${TOOLS_REGISTRY
     .filter((tool) => tool.category === category)
-    .map((tool) => `- [${tool.title}](${BASE_URL}${tool.seoPages?.[0] ? `/${tool.seoPages[0].pt.slug}/` : `/?tool=${tool.id}`}): ${tool.description}`)
+    .map((tool) => `- [${tool.title}](${BASE_URL}${tool.seoPages?.[0] ? `/${tool.seoPages[0].pt.slug}/` : `/#${tool.id}`}): ${tool.description}`)
     .join('\n')}`).join('\n\n');
   return `# MonitorSmith
 
@@ -1340,10 +1652,12 @@ function generateLlmsText() {
 ${tools}
 
 ## Artigos e Guias Técnicos
+- [Diretório de ferramentas](https://monitorsmith.app/ferramentas/): Todos os guias de uso em português e inglês.
 - [Blog do MonitorSmith](https://monitorsmith.app/blog/): Artigos sobre tecnologia de displays, calibração e produtividade.
 
 ## Informações Institucionais e Legais
 - [Sobre o MonitorSmith](https://monitorsmith.app/sobre/): Propósito, arquitetura client-side e padrões de engenharia de displays da EXVORN.TECH.
+- [Política Editorial](https://monitorsmith.app/politica-editorial/): Autoria, seleção de fontes, revisão, limites e correções.
 - [Contato e Suporte](https://monitorsmith.app/contato/): Canais oficiais de atendimento, dúvidas técnicas e feedback.
 - [Política de Privacidade](https://monitorsmith.app/privacidade/): Tratamento de dados locais, cookies e diretrizes Google AdSense.
 - [Termos de Uso](https://monitorsmith.app/termos/): Condições de uso e propriedade intelectual.
@@ -1374,6 +1688,7 @@ ${blogLines}
 
 ## Institucional e Legal
 - [Sobre o MonitorSmith](https://monitorsmith.app/sobre/): Propósito, arquitetura client-side e padrões de engenharia de displays.
+- [Política Editorial](https://monitorsmith.app/politica-editorial/): Autoria, seleção de fontes, revisão, limites e correções.
 - [Contato e Suporte](https://monitorsmith.app/contato/): Canais oficiais de atendimento, dúvidas técnicas e feedback.
 - [Política de Privacidade](https://monitorsmith.app/privacidade/): Tratamento de dados locais, cookies e diretrizes Google AdSense.
 - [Termos de Uso](https://monitorsmith.app/termos/): Condições de uso e propriedade intelectual.
@@ -1455,12 +1770,23 @@ async function main() {
   await fs.writeFile(path.join(blogDir, 'index.html'), renderBlogIndex(), 'utf8');
   generatedFiles.push('/blog/');
 
+  const toolsDir = path.join(DIST_DIR, 'ferramentas');
+  await fs.mkdir(toolsDir, { recursive: true });
+  await fs.writeFile(path.join(toolsDir, 'index.html'), renderToolsIndex(), 'utf8');
+  generatedFiles.push('/ferramentas/');
+
   for (const article of BLOG_ARTICLES) {
     const articleDir = path.join(blogDir, article.slug);
     await fs.mkdir(articleDir, { recursive: true });
     const html = renderBlogArticle(article);
     await fs.writeFile(path.join(articleDir, 'index.html'), html, 'utf8');
     generatedFiles.push(`/blog/${article.slug}/`);
+  }
+
+  for (const [sourcePath, targetPath] of LEGACY_REDIRECTS) {
+    const sourceDir = path.join(DIST_DIR, ...sourcePath.split('/').filter(Boolean));
+    await fs.mkdir(sourceDir, { recursive: true });
+    await fs.writeFile(path.join(sourceDir, 'index.html'), renderLegacyRedirect(sourcePath, targetPath), 'utf8');
   }
 
   const notFoundHtml = render404Page();
@@ -1490,7 +1816,7 @@ async function main() {
   ]);
 
   console.log(
-    `SEO/GEO: ${TOOL_COUNT} ferramentas, ${SEO_PAGE_ROUTES.length * 2} guias localizados, ${BLOG_ARTICLES.length} artigos de blog e ${generatedFiles.length} páginas geradas; ${generatedFiles.length + 1} URLs com a home do Vite.`,
+    `SEO/GEO: ${TOOL_COUNT} ferramentas, ${SEO_PAGE_ROUTES.length * 2} guias localizados, ${BLOG_ARTICLES.length} artigos de blog, ${generatedFiles.length} páginas canônicas e ${LEGACY_REDIRECTS.length} rotas históricas preservadas; ${generatedFiles.length + 1} URLs indexáveis com a home do Vite.`,
   );
 }
 

@@ -16,21 +16,21 @@ function LinkedInIcon({ width = 16, height = 16 }) {
 }
 
 const TOOL_LINKS = [
-  { mode: 'dead-pixel', url: '/teste-de-dead-pixel/', label: { pt: 'Teste de dead pixels', en: 'Dead pixel test', es: 'Prueba de píxeles muertos' } },
-  { mode: 'refresh-rate', url: '/teste-de-taxa-de-atualizacao-hz/', label: { pt: 'Medidor de Hz e frame time', en: 'Hz and frame time meter', es: 'Medidor de Hz y frame time' } },
-  { mode: 'uniformity', url: '/teste-de-uniformidade-monitor/', label: { pt: 'Uniformidade e vazamento', en: 'Uniformity and bleed', es: 'Uniformidad y fugas' } },
-  { mode: 'keyboard-test', url: '/teste-de-teclado-online/', label: { pt: 'Teste de teclado', en: 'Keyboard test', es: 'Prueba de teclado' } },
-  { mode: 'mouse-test', url: '/teste-de-mouse-online/', label: { pt: 'Teste de mouse', en: 'Mouse test', es: 'Prueba de ratón' } },
-  { mode: 'gamepad-test', url: '/teste-de-controle-online/', label: { pt: 'Teste de controle', en: 'Gamepad test', es: 'Prueba de mando' } },
+  { mode: 'dead-pixel', url: { pt: '/teste-de-dead-pixel/', en: '/dead-pixel-test/' }, label: { pt: 'Teste de dead pixels', en: 'Dead pixel test', es: 'Prueba de píxeles muertos' } },
+  { mode: 'refresh-rate', url: { pt: '/teste-de-taxa-de-atualizacao-hz/', en: '/refresh-rate-test/' }, label: { pt: 'Medidor de Hz e frame time', en: 'Hz and frame time meter', es: 'Medidor de Hz y frame time' } },
+  { mode: 'uniformity', url: { pt: '/teste-de-uniformidade-monitor/', en: '/screen-uniformity-test/' }, label: { pt: 'Uniformidade e vazamento', en: 'Uniformity and bleed', es: 'Uniformidad y fugas' } },
+  { mode: 'keyboard-test', url: { pt: '/teste-de-teclado-online/', en: '/keyboard-test/' }, label: { pt: 'Teste de teclado', en: 'Keyboard test', es: 'Prueba de teclado' } },
+  { mode: 'mouse-test', url: { pt: '/teste-de-mouse-online/', en: '/mouse-test/' }, label: { pt: 'Teste de mouse', en: 'Mouse test', es: 'Prueba de ratón' } },
+  { mode: 'gamepad-test', url: { pt: '/teste-de-controle-online/', en: '/gamepad-test/' }, label: { pt: 'Teste de controle', en: 'Gamepad test', es: 'Prueba de mando' } },
 ];
 
 const STUDIO_LINKS = [
-  { mode: 'black', url: '/tela-preta-oled/', label: { pt: 'Tela preta e inspeção OLED', en: 'Black screen and OLED check', es: 'Pantalla negra e inspección OLED' } },
-  { mode: 'white', url: '/luz-para-videochamada/', label: { pt: 'Luz para videochamadas', en: 'Video call light', es: 'Luz para videollamadas' } },
-  { mode: 'green-screen', url: '/tela-verde-chroma/', label: { pt: 'Tela verde para chroma key', en: 'Green screen for chroma key', es: 'Pantalla verde para croma' } },
-  { mode: 'display-calculators', url: '/calculadora-de-banda-hdmi-displayport/', label: { pt: 'Calculadoras de display', en: 'Display calculators', es: 'Calculadoras de pantalla' } },
-  { mode: 'ppi-calculator', url: '/calculadora-ppi-densidade-monitor/', label: { pt: 'Calculadora de PPI', en: 'PPI calculator', es: 'Calculadora de PPI' } },
-  { mode: 'motion-blur', url: '/teste-de-ghosting-monitor/', label: { pt: 'Ghosting e motion blur', en: 'Ghosting and motion blur', es: 'Ghosting y motion blur' } },
+  { mode: 'black', url: { pt: '/tela-preta-oled/', en: '/black-screen/' }, label: { pt: 'Tela preta e inspeção OLED', en: 'Black screen and OLED check', es: 'Pantalla negra e inspección OLED' } },
+  { mode: 'white', url: { pt: '/luz-para-videochamada/', en: '/webcam-light/' }, label: { pt: 'Luz para videochamadas', en: 'Video call light', es: 'Luz para videollamadas' } },
+  { mode: 'green-screen', url: { pt: '/tela-verde-chroma/', en: '/green-screen/' }, label: { pt: 'Tela verde para chroma key', en: 'Green screen for chroma key', es: 'Pantalla verde para croma' } },
+  { mode: 'display-calculators', url: { pt: '/calculadora-de-banda-hdmi-displayport/', en: '/hdmi-displayport-bandwidth-calculator/' }, label: { pt: 'Calculadoras de display', en: 'Display calculators', es: 'Calculadoras de pantalla' } },
+  { mode: 'ppi-calculator', url: { pt: '/calculadora-ppi-densidade-monitor/', en: '/ppi-monitor-calculator/' }, label: { pt: 'Calculadora de PPI', en: 'PPI calculator', es: 'Calculadora de PPI' } },
+  { mode: 'motion-blur', url: { pt: '/teste-de-ghosting-monitor/', en: '/motion-blur-ghosting-test/' }, label: { pt: 'Ghosting e motion blur', en: 'Ghosting and motion blur', es: 'Ghosting y motion blur' } },
 ];
 
 export function FooterSection({ onLaunch }) {
@@ -82,7 +82,7 @@ export function FooterSection({ onLaunch }) {
 
   const renderLinks = (list) => list.map((item) => (
     <li key={item.mode}>
-      <a href={item.url} onClick={(event) => handleToolClick(event, item.mode)}>
+      <a href={item.url[locale] || item.url.pt} onClick={(event) => handleToolClick(event, item.mode)}>
         {item.label[locale] || item.label.pt}
       </a>
     </li>
@@ -143,6 +143,7 @@ export function FooterSection({ onLaunch }) {
           <h3>{t('footer.guides')}</h3>
           <ul>
             {renderLinks(STUDIO_LINKS)}
+            <li><a href="/ferramentas/">{locale === 'en' ? 'All tool guides' : locale === 'es' ? 'Todas las guías' : 'Todos os guias'}</a></li>
             <li><a href="/blog/">{t('footer.blog')}</a></li>
           </ul>
         </div>
@@ -153,6 +154,7 @@ export function FooterSection({ onLaunch }) {
             <li><a href="/sobre/">{t('footer.about')}</a></li>
             <li><a href="/contato/">{t('footer.contact')}</a></li>
             <li><a href="/metodologia/">{t('footer.methodology')}</a></li>
+            <li><a href="/politica-editorial/">{locale === 'en' ? 'Editorial policy' : locale === 'es' ? 'Política editorial' : 'Política editorial'}</a></li>
             <li><PwaModal label={t('footer.install')} className="msx-linklike" /></li>
           </ul>
         </div>

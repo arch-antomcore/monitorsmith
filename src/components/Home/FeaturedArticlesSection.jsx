@@ -4,99 +4,99 @@ const FEATURED_ARTICLES = [
   {
     slug: 'ips-glow-vs-backlight-bleed',
     category: { pt: 'Inspeção de painel', en: 'Panel inspection', es: 'Inspección de panel' },
-    readTime: '6 min',
+    readTime: '4 min',
     title: {
-      pt: 'IPS glow x backlight bleed: como diferenciar',
-      en: 'IPS glow vs backlight bleed: telling them apart',
-      es: 'IPS glow frente a backlight bleed: cómo diferenciarlos',
+      pt: 'IPS glow e backlight bleed: comparação por ângulo e posição',
+      en: 'IPS glow and backlight bleed: comparing angle and position',
+      es: 'IPS glow y backlight bleed: comparación por ángulo y posición',
     },
     excerpt: {
-      pt: 'Compare como o brilho aparente muda com ângulo, distância e exposição e registre o que se repete antes de consultar a garantia.',
-      en: 'Compare how apparent glow changes with angle, distance and exposure, and record what repeats before checking the warranty.',
-      es: 'Compara cómo cambia el brillo aparente con el ángulo, la distancia y la exposición, y registra lo que se repite antes de consultar la garantía.',
+      pt: 'Compare brilho aparente em cenas escuras variando ângulo, distância e posição, sem transformar uma observação visual em diagnóstico do painel.',
+      en: 'Compare apparent brightness in dark scenes by changing angle, distance and position, without treating visual observation as a panel diagnosis.',
+      es: 'Compara el brillo aparente en escenas oscuras variando el ángulo, la distancia y la posición, sin tratar la observación como diagnóstico.',
     },
   },
   {
     slug: 'como-testar-monitor-oled',
     category: { pt: 'Tecnologia OLED', en: 'OLED technology', es: 'Tecnología OLED' },
-    readTime: '8 min',
+    readTime: '4 min',
     title: {
-      pt: 'Guia completo para testar e cuidar de monitores OLED',
-      en: 'Complete guide to testing and caring for OLED monitors',
-      es: 'Guía completa para probar y cuidar monitores OLED',
+      pt: 'Como inspecionar um monitor OLED novo ou usado',
+      en: 'How to inspect a new or used OLED monitor',
+      es: 'Cómo inspeccionar un monitor OLED nuevo o usado',
     },
     excerpt: {
-      pt: 'Como observar uniformidade e retenção sem prometer prevenção ou diagnóstico, seguindo as proteções do fabricante.',
-      en: 'How to observe uniformity and retention without promising prevention or diagnosis, while following manufacturer protections.',
-      es: 'Cómo observar uniformidad y retención sin prometer prevención ni diagnóstico, siguiendo las protecciones del fabricante.',
+      pt: 'Confira sinal, superfície, cores, uniformidade aparente, retenção e rotinas de manutenção seguindo os controles previstos pelo fabricante.',
+      en: 'Check signal, surface, colours, apparent uniformity, retention and maintenance routines using the controls provided by the manufacturer.',
+      es: 'Comprueba señal, superficie, colores, uniformidad aparente, retención y mantenimiento con los controles previstos por el fabricante.',
     },
   },
   {
     slug: 'calibrar-monitor-fotografia-design',
     category: { pt: 'Calibração e cor', en: 'Calibration and colour', es: 'Calibración y color' },
-    readTime: '7 min',
+    readTime: '4 min',
     title: {
-      pt: 'Calibração visual de monitores para fotografia e design',
-      en: 'Visual monitor calibration for photography and design',
-      es: 'Calibración visual de monitores para fotografía y diseño',
+      pt: 'Calibração de monitor para fotografia e design',
+      en: 'Monitor calibration for photography and design',
+      es: 'Calibración de monitor para fotografía y diseño',
     },
     excerpt: {
-      pt: 'Espaços de cor, perfis ICC e os limites de uma verificação visual antes da medição instrumental.',
-      en: 'Colour spaces, ICC profiles and the limits of visual checks before instrument measurement.',
-      es: 'Espacios de color, perfiles ICC y los límites de una revisión visual antes de medir con instrumentos.',
+      pt: 'O que padrões visuais conseguem verificar, quando usar um colorímetro e como manter um fluxo de cor documentado.',
+      en: 'What visual patterns can check, when to use a colorimeter and how to maintain a documented colour workflow.',
+      es: 'Qué pueden comprobar los patrones visuales, cuándo usar un colorímetro y cómo documentar el flujo de color.',
     },
   },
   {
     slug: 'pixel-morto-vs-pixel-preso',
     category: { pt: 'Inspeção de pixels', en: 'Pixel inspection', es: 'Inspección de píxeles' },
-    readTime: '5 min',
+    readTime: '4 min',
     title: {
-      pt: 'Pontos escuros e coloridos: inspeção e registro',
-      en: 'Dark and coloured dots: inspection and recording',
-      es: 'Puntos oscuros y de color: inspección y registro',
+      pt: 'Ponto escuro, claro ou colorido: como registrar a diferença',
+      en: 'Dark, bright or coloured dot: how to record the difference',
+      es: 'Punto oscuro, claro o de color: cómo registrar la diferencia',
     },
     excerpt: {
-      pt: 'Como comparar fundos sólidos, descartar sujeira e documentar o sintoma para consultar a garantia vigente.',
-      en: 'How to compare solid backgrounds, rule out dust and document a symptom against the current warranty.',
-      es: 'Cómo comparar fondos sólidos, descartar suciedad y documentar el síntoma para consultar la garantía vigente.',
+      pt: 'Monte um registro comparável de pontos aparentes e evite concluir a causa física apenas pela aparência.',
+      en: 'Create a comparable record of apparent dots without inferring their physical cause from appearance alone.',
+      es: 'Crea un registro comparable de puntos aparentes sin concluir su causa física solo por la apariencia.',
     },
   },
   {
     slug: 'teste-contraste-gama-monitor',
     category: { pt: 'Padrões visuais', en: 'Test patterns', es: 'Patrones visuales' },
-    readTime: '6 min',
+    readTime: '4 min',
     title: {
-      pt: 'Teste de contraste e gama: o que as barras revelam',
-      en: 'Contrast and gamma test: what the bars reveal',
-      es: 'Prueba de contraste y gamma: qué revelan las barras',
+      pt: 'Contraste e resposta tonal do monitor: teste visual',
+      en: 'Monitor contrast and tonal response: a visual check',
+      es: 'Contraste y respuesta tonal del monitor: prueba visual',
     },
     excerpt: {
-      pt: 'Como observar a separação de sombras e realces e quais etapas da cadeia também alteram o resultado.',
-      en: 'How to observe shadow and highlight separation and which pipeline stages can also change the result.',
-      es: 'Cómo observar la separación de sombras y luces y qué etapas de la cadena también cambian el resultado.',
+      pt: 'Observe recorte e separação tonal, entenda funções de transferência e registre ajustes sem confundir triagem com medição.',
+      en: 'Observe clipping and tonal separation, understand transfer functions and record adjustments without confusing screening with measurement.',
+      es: 'Observa recorte y separación tonal, entiende las funciones de transferencia y registra ajustes sin confundir revisión con medición.',
     },
   },
   {
     slug: 'guia-completo-monitorsmith',
     category: { pt: 'Arquitetura e Web APIs', en: 'Architecture and Web APIs', es: 'Arquitectura y Web APIs' },
-    readTime: '10 min',
+    readTime: '5 min',
     title: {
-      pt: 'Engenharia do MonitorSmith: como as ferramentas funcionam',
-      en: 'MonitorSmith engineering: how the tools work',
-      es: 'Ingeniería de MonitorSmith: cómo funcionan las herramientas',
+      pt: 'Guia do MonitorSmith: como testar uma hipótese no navegador',
+      en: 'MonitorSmith guide: testing a hypothesis in the browser',
+      es: 'Guía de MonitorSmith: cómo probar una hipótesis en el navegador',
     },
     excerpt: {
-      pt: 'Padrões em canvas, estimativas temporais, cálculos geométricos e processamento das entradas das ferramentas na própria aba.',
-      en: 'Canvas patterns, timing estimates, geometric calculations and in-tab processing of tool inputs.',
-      es: 'Patrones en canvas, estimaciones temporales, cálculos geométricos y procesamiento de las entradas en la pestaña.',
+      pt: 'Formule uma pergunta, controle variáveis, registre observações e escolha uma verificação seguinte ao usar as 27 ferramentas.',
+      en: 'Frame a question, control variables, record observations and choose the next check while using the 27 tools.',
+      es: 'Formula una pregunta, controla variables, registra observaciones y elige la siguiente comprobación al usar las 27 herramientas.',
     },
   },
 ];
 
 const COPY = {
-  pt: { eyebrow: 'Guias técnicos', title: 'Artigos que explicam o porquê.', lead: 'Conteúdo da equipe de engenharia da EXVORN.TECH, com método prático e limites declarados.', read: 'Ler o artigo', all: 'Ver os 33 artigos do blog', by: 'Por EXVORN.TECH' },
-  en: { eyebrow: 'Technical guides', title: 'Articles that explain the why.', lead: 'Content from the EXVORN.TECH engineering team, with practical methods and stated limits.', read: 'Read the article', all: 'See all 33 blog articles', by: 'By EXVORN.TECH' },
-  es: { eyebrow: 'Guías técnicas', title: 'Artículos que explican el porqué.', lead: 'Contenido del equipo de ingeniería de EXVORN.TECH, con métodos prácticos y límites declarados.', read: 'Leer el artículo', all: 'Ver los 33 artículos del blog', by: 'Por EXVORN.TECH' },
+  pt: { eyebrow: 'Guias técnicos', title: 'Artigos que explicam o porquê.', lead: 'Conteúdo da equipe editorial MonitorSmith · EXVORN.TECH, com fontes, método prático e limites declarados.', policy: 'Conheça o processo editorial.', read: 'Ler o artigo', all: 'Ver os 33 artigos do blog' },
+  en: { eyebrow: 'Technical guides', title: 'Articles that explain the why.', lead: 'Content from the MonitorSmith · EXVORN.TECH editorial team, with sources, practical methods and stated limits.', policy: 'See the editorial process.', read: 'Read in Portuguese', all: 'See all 33 blog articles' },
+  es: { eyebrow: 'Guías técnicas', title: 'Artículos que explican el porqué.', lead: 'Contenido del equipo editorial MonitorSmith · EXVORN.TECH, con fuentes, métodos prácticos y límites declarados.', policy: 'Consulta el proceso editorial.', read: 'Leer en portugués', all: 'Ver los 33 artículos del blog' },
 };
 
 export default function FeaturedArticlesSection() {
@@ -112,7 +112,10 @@ export default function FeaturedArticlesSection() {
             <p className="msx-eyebrow">{copy.eyebrow}</p>
             <h2 id="featured-articles-title" className="msx-title">{copy.title}</h2>
           </div>
-          <p className="msx-lead">{copy.lead}</p>
+          <p className="msx-lead">
+            {copy.lead}{' '}
+            <a href="/politica-editorial/" className="msx-inline-link">{copy.policy}</a>
+          </p>
         </div>
 
         <div className="msx-grid">
@@ -122,6 +125,7 @@ export default function FeaturedArticlesSection() {
               <div className="msx-card__top">
                 <span className="msx-card__cat msx-card__id">{pick(article.category)}</span>
                 <span className="msx-card__top-spacer" />
+                {locale !== 'pt' ? <span lang="pt-BR">PT-BR</span> : null}
                 <span>{article.readTime}</span>
               </div>
 

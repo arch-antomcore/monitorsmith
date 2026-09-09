@@ -104,12 +104,18 @@ Ao adicionar uma ferramenta, não crie uma segunda lista em `App.jsx`, no manife
 
 ## SEO, páginas editoriais e GEO
 
-O build entrega 87 URLs no sitemap:
+O build entrega 89 URLs canônicas no sitemap:
 
 - 1 home do produto;
 - 22 guias em português e 22 equivalentes em inglês;
 - 33 artigos e o índice do blog;
-- 8 páginas institucionais e legais.
+- 9 páginas institucionais e legais, incluindo a política editorial;
+- 1 diretório de ferramentas que liga todos os 44 guias estáticos.
+
+Quatorze endereços publicados pela arquitetura anterior também são preservados
+como páginas de migração `noindex,follow`, fora do sitemap. Como o GitHub Pages
+não fornece redirects HTTP por caminho, essas páginas declaram o destino
+canônico, encaminham a navegação e mantêm um link de recuperação visível.
 
 Cada par editorial possui canonical próprio, `hreflang` bidirecional, `x-default`, Open Graph, favicon, manifest, FAQ visível e links relacionados validados. A home não declara uma tradução inglesa inexistente.
 
@@ -176,7 +182,12 @@ Instale o navegador de teste uma vez com `npx playwright install chromium`. O ga
 npm run validate
 ```
 
-`npm run build` executa Vite, gera as 86 páginas estáticas adicionais, cria sitemap/manifest/arquivos LLM, gera o service worker e valida o conteúdo de `dist/`.
+`npm run build` executa Vite, gera 88 páginas estáticas indexáveis e 14 páginas
+de migração, cria sitemap/manifest/arquivos LLM, gera o service worker e valida
+o conteúdo de `dist/`. O gate exige que os 33 artigos tenham estrutura
+editorial, datas, fontes visíveis, links internos e conteúdo substancial; esse
+limiar interno é uma proteção contra regressão, não uma regra de contagem de
+palavras do Google.
 
 ## Fluxo de contribuição e publicação
 

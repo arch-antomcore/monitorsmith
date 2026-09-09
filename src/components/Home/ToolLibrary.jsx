@@ -68,7 +68,7 @@ function FaqBlock() {
 }
 
 function MethodologyBlock() {
-  const { t } = useI18n();
+  const { locale, t } = useI18n();
 
   return (
     <section className="msx-section msx-grid-bg" id="metodologia" aria-labelledby="method-title">
@@ -96,10 +96,14 @@ function MethodologyBlock() {
             <dd>{STANDARDS.slice(3).join(' · ')}</dd>
           </div>
           <div>
-            <dt>E-E-A-T</dt>
+            <dt>{locale === 'en' ? 'Editorial responsibility' : locale === 'es' ? 'Responsabilidad editorial' : 'Responsabilidade editorial'}</dt>
             <dd>
               {t('section.method.byline')}{' '}
               <a href="/sobre/" className="msx-inline-link">Sobre</a>
+              {' · '}
+              <a href="/politica-editorial/" className="msx-inline-link">
+                {locale === 'en' ? 'How we review' : locale === 'es' ? 'Cómo revisamos' : 'Como revisamos'}
+              </a>
               {' · '}
               <a href="/contato/" className="msx-inline-link">{t('footer.contact')}</a>
             </dd>

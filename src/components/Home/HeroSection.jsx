@@ -66,7 +66,7 @@ export default function HeroSection({ onScrollToTools }) {
         >
           <p className="ok-h11-eyebrow">{t('hero.eyebrow')}</p>
           <h1 className="ok-h11-title">
-            {t('hero.title.pre')} <em>{t('hero.title.em')}</em><br />
+            {t('hero.title.pre')} <em>{t('hero.title.em')}</em><br />{' '}
             {t('hero.title.post')}
           </h1>
         </motion.div>

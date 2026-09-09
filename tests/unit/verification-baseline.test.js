@@ -82,12 +82,16 @@ describe('contratos estáticos complementares do produto', () => {
     expect(footerSection).toContain('href="/cookies/"')
     expect(footerSection).toContain('href="/aviso-legal/"')
     expect(footerSection).toContain('href="/acessibilidade/"')
+    expect(footerSection).toContain('href="/politica-editorial/"')
+    expect(footerSection).toContain('href="/ferramentas/"')
     expect(footerSection).toContain('openConsentPreferences')
 
     // Metadados editoriais e schema TechArticle e HowTo nos guias
     expect(seoScript).toContain('TechArticle')
     expect(seoScript).toContain("'@type': 'HowTo'")
-    expect(seoScript).toContain('EXVORN.TECH — Display Analysis')
+    expect(seoScript).toContain('Equipe editorial MonitorSmith')
+    expect(seoScript).toContain("if(!document.querySelector('.ms-ad ins.adsbygoogle'))return")
+    expect(seoScript).toContain('data-legacy-redirect')
     expect(seoScript).toContain('CONSENT_HEAD_SCRIPT')
   })
 })
