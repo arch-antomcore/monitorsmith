@@ -7,7 +7,7 @@ export default [
     description: 'Entenda o que padrões visuais conseguem verificar, quando usar um colorímetro e como manter um fluxo de cor documentado para fotografia e design.',
     relatedSlugs: ['teste-contraste-gama-monitor', 'o-que-e-color-banding', 'monitor-para-edicao-video'],
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'International Color Consortium — Display calibration',
@@ -71,6 +71,36 @@ export default [
       <p>Degraus escuros fundidos podem envolver brilho, nível de preto, faixa RGB, processamento ou luz ambiente. Degraus claros iguais podem envolver contraste, sinal ou recorte no próprio conteúdo. Uma dominante que aparece apenas em um aplicativo aponta para o fluxo de cor antes de apontar para o painel. Uma dominante presente em todos os campos e entradas merece comparação com outro modo e, se o trabalho exigir precisão, medição.</p>
       <p>sRGB, Adobe RGB, Display P3 e os espaços de cinema não são nomes intercambiáveis. O perfil incorporado descreve como interpretar números da imagem; o perfil do monitor descreve o dispositivo. Converter uma imagem, atribuir um perfil e trocar o modo do monitor são operações diferentes.</p>
 
+      <h2>Comece pela entrega, não pelo menu do monitor</h2>
+      <p>Um fotógrafo que prepara imagens para uma galeria na web enfrenta um problema diferente de quem fecha um catálogo impresso. No primeiro caso, interessa conferir arquivos exportados em sRGB em navegadores e aparelhos comuns, sem presumir que todos respeitam o perfil da mesma maneira. No segundo, entram o perfil da condição de impressão, a prova, o papel e a luz sob a qual a página será observada. Há ainda trabalhos mistos: a mesma campanha pode virar página, impressão e vídeo. Uma única configuração não transforma esses destinos em equivalentes.</p>
+      <p>Antes da sessão, escreva uma frase de aceite: “estas fotografias serão entregues como JPEG sRGB para o site” ou “este layout será conferido com a prova e o perfil fornecidos pela gráfica”. A frase evita que o ajuste seja guiado apenas pelo aspecto agradável da tela. Também esclarece o que precisa ser preservado: detalhes próximos ao preto, cores de marca, tons de pele, separação de produtos semelhantes ou gradações suaves.</p>
+
+      <h2>Brilho da tela e luz da sala trabalham juntos</h2>
+      <p>O olho se adapta ao campo mais luminoso ao redor. Se o monitor domina uma sala escura, ele pode parecer equilibrado mesmo emitindo luz demais para um fluxo de impressão. O editor tende então a escurecer o arquivo, e a cópia física revela a diferença. Em uma sala banhada por sol ocorre o inverso: reflexos levantam o preto aparente e empurram o usuário a aumentar contraste ou saturação para recuperar impacto.</p>
+      <p>Não existe um número universal de brilho que resolva qualquer estúdio. Observe onde a imagem será usada, controle reflexos diretos e mantenha a iluminação estável durante comparações. Se houver instrumento, registre a luminância medida junto do perfil. Sem instrumento, use a mesma posição de trabalho, feche persianas na mesma condição e anote o ajuste do monitor. Esse registro não vira medição por aproximação; ele apenas torna a próxima sessão menos arbitrária.</p>
+
+      <h2>Um fluxo simples para uma seleção de fotografias</h2>
+      <ol>
+        <li>Escolha três arquivos representativos antes de mexer na tela: uma cena escura com detalhe relevante, uma cena clara e uma imagem com cores que exigem consistência.</li>
+        <li>Confirme o perfil incorporado em cada arquivo. Quando faltar perfil, descubra a origem em vez de atribuir um espaço ao acaso e alterar a aparência dos números existentes.</li>
+        <li>Faça a correção no aplicativo principal com gerenciamento de cor ativo. Evite julgar a mesma imagem simultaneamente em visualizadores desconhecidos.</li>
+        <li>Exporte cópias identificadas pelo destino. Reabra o arquivo final, porque a exportação pode mudar espaço, profundidade, escala, nitidez e compressão.</li>
+        <li>Para web, compare em mais de um navegador e em um segundo aparelho que represente o público. A comparação revela dependências do fluxo, sem eleger o aparelho doméstico como referência absoluta.</li>
+        <li>Para impressão, use a prova e a condição de visualização contratadas. Se o fornecedor não informa perfil ou processo, registre essa lacuna antes de tentar compensá-la visualmente.</li>
+      </ol>
+
+      <h2>Duas telas na mesma mesa raramente coincidem sozinhas</h2>
+      <p>Monitores do mesmo modelo podem divergir por unidade, idade, modo de imagem e horas de uso. Modelos diferentes acrescentam gamut, contraste, revestimento e comportamento angular distintos. Igualar controles numéricos de brilho ou RGB não iguala a emissão. Copiar o perfil de uma tela para a outra também troca uma descrição medida por uma suposição.</p>
+      <p>Em uma estação com dois monitores, calibre e caracterize cada um separadamente, associe cada perfil ao dispositivo correspondente e confira se o aplicativo acompanha a janela quando ela cruza de uma tela para outra. Reserve uma delas para a decisão principal se a cadeia não gerencia perfis por monitor de forma previsível. A segunda continua útil para ferramentas, referências e verificação, desde que a equipe saiba qual imagem orienta a aprovação.</p>
+
+      <h2>O perfil precisa acompanhar o estado que foi medido</h2>
+      <p>Um perfil descreve a tela em uma combinação concreta de controles e condições. Trocar o modo “sRGB” por “Cinema”, ativar HDR, alterar intensamente o brilho ou restaurar o monitor pode romper essa relação. Atualizações de sistema e driver também podem mudar a associação do perfil ou o caminho de saída. Por isso, guarde junto do arquivo ICC uma nota curta com tela, porta, modo, ajustes, instrumento, software e data.</p>
+      <p>Não há calendário idêntico para todos os equipamentos. Refaça a validação quando houver mudança de configuração, transporte, manutenção ou diferença perceptível em um trabalho conhecido. Em uso contínuo, estabeleça uma periodicidade compatível com a exigência do serviço e compare relatórios. Uma variação isolada pede repetição do procedimento antes de decisões caras; uma tendência sob as mesmas condições indica que a caracterização antiga merece revisão.</p>
+
+      <h2>Como registrar uma divergência para a equipe</h2>
+      <p>“A foto ficou quente” é difícil de reproduzir. Um relato útil informa arquivo e perfil, versão exportada, aplicativo, tela, modo, ambiente e região observada. Acrescente uma captura digital apenas para mostrar interface e coordenadas; não a trate como prova da emissão. Quando houver medição, associe o relatório original. Quando não houver, use linguagem perceptiva: “o cinza médio parece avermelhado nesta tela e não na segunda tela com o mesmo arquivo”.</p>
+      <p>Esse cuidado muda a conversa. O retocador pode descobrir que recebeu uma cópia sem perfil; o designer pode identificar uma cor fora do gamut de impressão; o suporte pode pedir que o teste seja repetido em outra entrada. O objetivo do registro é preservar contexto suficiente para que outra pessoa confirme ou descarte a hipótese, não dar aparência científica a uma observação visual.</p>
+
       <h2>Erros comuns e limites</h2>
       <ul>
         <li>Ajustar o branco comparando com uma folha sob iluminação desconhecida. Papel, lâmpada e adaptação visual alteram a comparação.</li>
@@ -89,7 +119,7 @@ export default [
     description: 'Método para separar banding presente no arquivo de problemas na renderização, no sinal ou na tela usando comparações controladas.',
     relatedSlugs: ['calibrar-monitor-fotografia-design', 'teste-contraste-gama-monitor'],
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'W3C — CSS Color Module Level 4',
@@ -157,6 +187,38 @@ export default [
         <li>Não confunda banding com posterização intencional, macroblocos de vídeo, contorno de nitidez ou moiré da foto da tela.</li>
       </ul>
 
+      <h2>O formato do gradiente muda o que você consegue enxergar</h2>
+      <p>Um degradê curto, com grande mudança de cor em poucos pixels, esconde degraus que aparecem em uma transição longa e lenta. A direção também interfere: um gradiente diagonal passa por amostras e operações de rasterização diferentes de um gradiente horizontal. Em cenas reais, textura, grão e detalhe mascaram transições; em uma área de céu limpa, a mesma quantização fica evidente. Por isso, um único padrão serve como ponto de partida, não como retrato de todo conteúdo.</p>
+      <p>Ao criar um arquivo de referência, preserve a versão mestre e anote espaço de cor, profundidade e método de geração. Exporte cópias separadas para cada comparação. Se a imagem for aberta, redimensionada e salva várias vezes em formato com perdas, o teste passa a incluir danos acumulados. Também evite capturar um degradê da própria página e usá-lo como “original”: a captura já atravessou parte da cadeia que está sendo investigada.</p>
+
+      <h2>Divida a cadeia em pontos de controle</h2>
+      <p>Pense no caminho como uma sequência: arquivo, decodificador, aplicativo, composição do sistema, GPU, formato de saída, conexão, processamento interno e painel. Não é preciso dominar cada etapa para testá-las com ordem. Guarde um arquivo mestre, mude uma variável por vez e compare em pontos onde o resultado possa ser observado novamente.</p>
+      <table>
+        <thead><tr><th scope="col">Mudança controlada</th><th scope="col">Se o banding mudar</th><th scope="col">Pergunta seguinte</th></tr></thead>
+        <tbody>
+          <tr><td>Outro arquivo no mesmo aplicativo</td><td>O conteúdo ou sua codificação ganha peso na hipótese.</td><td>As duas versões têm o mesmo perfil, profundidade e compressão?</td></tr>
+          <tr><td>Mesmo arquivo em outro aplicativo</td><td>Decodificação, gerenciamento de cor ou renderização podem divergir.</td><td>Qual aplicativo respeita o perfil e qual caminho de saída ele usa?</td></tr>
+          <tr><td>Mesma janela movida para outra tela</td><td>Perfil por monitor, composição e painel entram na comparação.</td><td>A mudança acompanha a janela ou permanece na tela física?</td></tr>
+          <tr><td>Outra entrada, sem alterar o restante</td><td>Formato, faixa ou processamento da entrada podem participar.</td><td>O sistema manteve resolução, taxa, HDR e profundidade?</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Um caso comum na edição de fotografia</h2>
+      <p>Imagine um fundo de estúdio cinza que parece contínuo no arquivo de trabalho, mas ganha anéis depois da exportação para a web. Volte à versão mestre e compare a exportação em ampliação de 100%, sem interpolação. Se as faixas já aparecem no arquivo final em mais de um aparelho, examine profundidade, conversão, compressão e dimensões. Reduzir a qualidade do JPEG, por exemplo, muda mais do que a profundidade nominal: a codificação com perdas pode produzir estruturas próprias.</p>
+      <p>Faça duas novas exportações a partir do mestre, cada uma com apenas uma diferença documentada. Não aplique ruído, troque de perfil e aumente a qualidade ao mesmo tempo. Se uma mudança resolve a aparência, confirme com outra imagem e veja o custo em tamanho, compatibilidade e detalhe. Um ajuste que funciona em um fundo cinza pode criar granulação desnecessária em retratos ou arquivos gráficos.</p>
+
+      <h2>Um caso comum em vídeo e streaming</h2>
+      <p>Em vídeo, o degradê pode parecer limpo na linha do tempo e apresentar faixas no arquivo enviado à plataforma. Compare o master local, o arquivo codificado e a reprodução após o processamento do serviço. Use o mesmo trecho e pause nos mesmos quadros. Céu em movimento, fumaça e fundos escuros são bons locais de observação, mas o player, o nível de qualidade adaptativa e o dispositivo receptor também entram no resultado.</p>
+      <p>Uma transmissão ao vivo acrescenta largura de banda variável e codificação em tempo real. Faça uma gravação local paralela quando possível. Se o arquivo local estiver limpo e a versão recebida apresentar faixas, a investigação se desloca para codificação, transporte e reprodução. Isso ainda não prova qual encoder ou plataforma causou a perda, mas impede a troca prematura do monitor.</p>
+
+      <h2>SDR e HDR exigem amostras coerentes com cada modo</h2>
+      <p>Ativar HDR no sistema para observar um padrão SDR pode acionar conversão, expansão ou mapeamento de tons. Abrir material HDR no caminho SDR também altera a relação entre códigos e luz. Em vez de alternar o botão e comparar “qual parece melhor”, escolha um arquivo identificado para cada condição e confirme que aplicativo e display reconhecem o modo. Registre ainda o brilho da janela e o comportamento de tela cheia, pois alguns painéis mudam a emissão conforme a área clara.</p>
+      <p>Uma foto do monitor não resolve essa distinção. A câmera pode registrar linhas decorrentes do obturador, reduzir ruído e remapear realces. Se for necessário mostrar o sintoma a um suporte remoto, envie o arquivo original, a captura digital e uma foto apenas como documentação adicional, com exposição e ambiente descritos.</p>
+
+      <h2>Transforme a observação em um relatório útil</h2>
+      <p>Anote onde a faixa começa, em que cores aparece, se é fixa ou acompanha a janela e quais comparações a modificaram. Inclua versões dos aplicativos, perfil do arquivo, configuração SDR ou HDR, conexão e modelo da tela. Evite frases como “o monitor não tem cores suficientes” quando isso ainda é hipótese. Um relato como “as faixas estão no PNG capturado e aparecem em dois dispositivos, mas não no mestre de maior profundidade” aponta para um trecho da cadeia e pode ser repetido.</p>
+      <p>Se a decisão envolve aceite de equipamento, defina antes qual padrão, sinal e tolerância serão usados. O gosto por uma transição mais granulada ou mais lisa não substitui um critério. Em produção cotidiana, a melhor correção pode estar no arquivo ou na codificação; em controle de qualidade, pode ser necessário medir e testar o caminho de vídeo com ferramentas próprias.</p>
+
       <h2>Limites do teste</h2>
       <p>O navegador pode informar capacidades aproximadas de gamut e faixa dinâmica, mas isso não certifica profundidade efetiva nem precisão. Para aceitar um monitor em produção, use padrões apropriados ao sinal, gerador ou software validado, medição instrumental e critérios definidos. A sequência acima serve para reduzir hipóteses e produzir um relato reproduzível para suporte técnico ou para a equipe de pós-produção.</p>
     `
@@ -169,7 +231,7 @@ export default [
     description: 'Use padrões visuais para observar recorte e separação tonal, entender funções de transferência e registrar ajustes sem confundir triagem com medição.',
     relatedSlugs: ['calibrar-monitor-fotografia-design', 'monitor-para-edicao-video'],
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'W3C — CSS Color Module Level 4',
@@ -233,6 +295,45 @@ export default [
       <p>Se sombras e realces forem recortados ao mesmo tempo, confira primeiro faixa do sinal e modos automáticos. Se apenas as sombras mudarem conforme a luz da sala, reflexos e adaptação visual podem ser relevantes. Se o comportamento variar com a posição da cabeça, ângulo de visão e tecnologia do painel entram na investigação. Se apenas um aplicativo divergir, compare perfis, gerenciamento de cor e configurações de reprodução.</p>
       <p>Ver todos os degraus também não significa que a curva esteja correta: aumentar demais o nível de preto pode revelar códigos escuros e, ao mesmo tempo, reduzir profundidade visual. Da mesma forma, preservar realces não prova que branco, luminância ou contraste estejam no alvo.</p>
 
+      <h2>Teste sombras e realces com material que você conhece</h2>
+      <p>Depois dos padrões sintéticos, abra duas imagens de trabalho cuja origem esteja documentada. Para sombras, escolha uma cena com tecido escuro, cabelo ou objeto preto em que ainda existam diferenças relevantes. Para realces, use nuvens, roupa clara ou superfície brilhante que tenha textura antes do branco máximo. O objetivo não é “enxergar tudo” a qualquer custo, e sim confirmar se a configuração preserva as distinções que o arquivo contém.</p>
+      <p>Trabalhe com a versão mestre, no aplicativo habitual e em ampliação conhecida. Uma miniatura pode misturar pixels; um zoom exagerado muda o contexto em que os tons são percebidos. Se o padrão mostra separação e a foto não, confira primeiro o próprio arquivo, seu perfil e a edição. Se ambos perdem os mesmos extremos depois de uma troca de entrada, a faixa do sinal ou o modo da tela merece atenção.</p>
+
+      <h2>Faixa completa e faixa limitada: um desencontro visível</h2>
+      <p>Computadores e cadeias de vídeo podem mapear os extremos do sinal de modos diferentes. Quando a saída e a entrada discordam, os pretos podem ser comprimidos, os brancos podem recortar ou toda a imagem pode parecer lavada. Os nomes dos controles variam entre drivers e monitores, então não altere uma opção apenas porque ela contém “completo”, “limitado”, “PC” ou “vídeo”. Confirme o manual e a configuração nas duas pontas.</p>
+      <p>Faça a mudança como um teste reversível. Fotografe ou anote o menu original, altere só a faixa, reabra o mesmo padrão e veja se os extremos reaparecem sem deslocar toda a escala. Em seguida, confira conteúdo real. Se a opção resolve um padrão mas torna o restante acinzentado, talvez a cadeia ainda esteja incoerente. Uma captura digital pode mostrar códigos recortados antes da tela; ela não registra o preto emitido nem os reflexos da sala.</p>
+
+      <h2>OLED, LCD e escurecimento local pedem leituras diferentes</h2>
+      <p>Em um LCD, vazamento de luz, nível do backlight e ângulo de visão influenciam o preto aparente. Em OLED, pixels escuros podem emitir muito pouco, mas algoritmos de proteção e mudanças de brilho com conteúdo também afetam a observação. Displays com escurecimento local podem levantar ou fechar áreas ao redor de objetos claros. Nenhuma dessas características muda o valor codificado do padrão, porém todas alteram a luz que chega aos olhos.</p>
+      <p>Repita o teste com o padrão centralizado e depois deslocado para outra região. Compare tela cheia e janela somente se você registrar a mudança de área iluminada. Se o detalhe some perto de um objeto claro e retorna quando a composição muda, o processamento espacial entra na hipótese. Não ajuste a curva do arquivo para compensar um comportamento que depende da posição no painel.</p>
+
+      <h2>Como investigar uma foto que “fecha” em outros aparelhos</h2>
+      <ol>
+        <li>Volte ao arquivo exportado e confira histograma, perfil incorporado e valores nas áreas reclamadas. Preserve uma cópia sem novas edições.</li>
+        <li>Abra o mesmo arquivo em dois aplicativos na tela principal. Uma diferença entre eles sugere tratamento de cor ou renderização distinto.</li>
+        <li>Compare em outro aparelho sob luz moderada, sem usar brilho automático durante a observação. O aparelho adicional representa outro resultado, não um padrão absoluto.</li>
+        <li>Se a imagem estiver sistematicamente escura fora da estação, confronte o brilho de trabalho e a luz da sala. Não levante as sombras do arquivo antes de revisar essa condição.</li>
+        <li>Exporte uma prova com identificação e uma única correção. Peça que o revisor informe aparelho, aplicativo e ambiente em vez de responder somente “melhor” ou “pior”.</li>
+      </ol>
+      <p>Esse circuito evita a edição em espiral, na qual cada comentário recebido gera uma curva nova. Quando o destino é web, sempre haverá variação entre telas. O papel do monitor ajustado é oferecer um ponto de decisão conhecido e produzir arquivos tecnicamente coerentes, não controlar a configuração do público.</p>
+
+      <h2>Não use o controle de contraste como um realçador criativo</h2>
+      <p>Em muitos monitores, o controle chamado “contraste” altera o ganho dos níveis altos e pode recortar canais antes que o branco pareça estourado por completo. Controles de “realce de sombra”, “nível de preto”, contraste dinâmico ou HDR simulado aplicam outras transformações. Para edição, comece em um modo previsível e mude apenas o controle cuja função foi confirmada no manual ou por um padrão.</p>
+      <p>Observe também canais de cor, não só uma escala neutra. Um realce pode continuar mostrando diferença de luminância enquanto um canal vermelho já foi recortado, mudando a cor de pele, flor ou iluminação. Gradientes coloridos e fotografias conhecidas complementam a escala de cinza. Para verificar o ponto exato e a curva resultante, porém, é preciso medir.</p>
+
+      <h2>Monte um registro que sobreviva à próxima alteração</h2>
+      <table>
+        <thead><tr><th scope="col">Campo</th><th scope="col">Por que guardar</th></tr></thead>
+        <tbody>
+          <tr><td>Arquivo e versão</td><td>Evita comparar um padrão atualizado ou uma exportação diferente.</td></tr>
+          <tr><td>Entrada, resolução, cadência e faixa</td><td>Documenta o caminho que produziu a observação.</td></tr>
+          <tr><td>Modo e controles do monitor</td><td>Permite retornar ao estado anterior depois de uma tentativa.</td></tr>
+          <tr><td>Luz da sala e posição</td><td>Contextualiza diferenças no preto aparente e nos reflexos.</td></tr>
+          <tr><td>O que mudou e o que permaneceu</td><td>Separa uma causa provável de coincidências.</td></tr>
+        </tbody>
+      </table>
+      <p>Repita a observação após o monitor estabilizar e após uma reinicialização, se a mudança será mantida no trabalho. Perfis, filtros noturnos e modos automáticos podem reaparecer. Quando outra pessoa reproduz o mesmo resultado com o registro, a equipe ganha uma base melhor para decidir entre configuração, calibração, suporte técnico ou troca do equipamento.</p>
+
       <h2>Erros comuns e limites</h2>
       <ul>
         <li>Ajustar brilho e contraste simultaneamente e perder a referência da mudança.</li>
@@ -252,7 +353,7 @@ export default [
     description: 'Organize a escolha do monitor pelo padrão de entrega, caminho do sinal, uniformidade, medição e condições reais de trabalho em SDR ou HDR.',
     relatedSlugs: ['calibrar-monitor-fotografia-design', 'o-que-e-color-banding'],
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'ITU — Recommendation BT.2100',
@@ -263,6 +364,11 @@ export default [
         label: 'ITU — Recommendation BT.1886',
         url: 'https://www.itu.int/rec/R-REC-BT.1886-0-201103-I',
         note: 'Função eletro-óptica de referência para monitores planos em produção HDTV.'
+      },
+      {
+        label: 'ITU — Recommendation BT.709',
+        url: 'https://www.itu.int/rec/R-REC-BT.709',
+        note: 'Referência oficial para parâmetros de imagem HDTV usados em entregas SDR.'
       },
       {
         label: 'W3C — Media Queries Level 5',
@@ -318,6 +424,41 @@ export default [
         <li>Defina periodicidade de nova medição com base na estabilidade observada e na criticidade da entrega.</li>
       </ol>
 
+      <h2>Separe a tela de trabalho da tela de avaliação</h2>
+      <p>A linha do tempo, os scopes, os painéis e o navegador ocupam espaço, mas não exigem a mesma confiança colorimétrica da imagem aprovada. Uma tela ampla pode ser ótima para interface e ainda apresentar uniformidade ou resposta tonal inadequadas para a decisão final. Separar funções ajuda a investir onde o erro custa mais: a tela de avaliação recebe o sinal e a validação definidos pelo projeto; a tela de trabalho prioriza ergonomia e área útil.</p>
+      <p>Em uma estrutura pequena, o mesmo monitor pode acumular papéis. Nesse caso, crie modos documentados e deixe claro qual janela é gerenciada pelo aplicativo e qual saída representa o vídeo. Evite arrastar a imagem entre telas e aprovar pela que “parece melhor”. Se houver apenas um display de consumo, use-o com limites declarados, consulte scopes e reserve revisões críticas para uma instalação conhecida ou um profissional equipado.</p>
+
+      <h2>O caminho do sinal pode invalidar uma boa tela</h2>
+      <p>A imagem vista dentro da interface pode atravessar gerenciamento de cor do sistema e composição gráfica. Uma saída de vídeo dedicada pode seguir outro caminho, contornando partes desse tratamento. Adaptadores, docks e conversores acrescentam formatos e faixas próprios. Antes de comprar, desenhe o percurso real: software, hardware de saída, cabo, entrada e modo do monitor. Confirme que todos aceitam juntos a resolução, a cadência, a profundidade e a subamostragem necessárias; especificações isoladas não demonstram a combinação completa.</p>
+      <p>Depois da instalação, use um arquivo conhecido para verificar níveis e geometria, e compare os scopes do software com padrões enviados à saída. Um preto lavado pode vir de faixa incompatível; cores alteradas apenas na interface podem envolver perfil ou visualizador. Trocar a tela antes de localizar essa fronteira aumenta o custo e preserva a falha.</p>
+
+      <h2>A sala faz parte da avaliação</h2>
+      <p>Reflexos sobre o painel levantam o preto percebido e mudam conforme o editor se move. Paredes muito coloridas afetam a adaptação e podem aparecer refletidas. Uma janela lateral produz condições diferentes pela manhã e à tarde. Para um trabalho consistente, organize uma posição que reduza reflexos diretos, preserve distância confortável e permita repetir a iluminação. O ambiente não precisa parecer um laboratório para ser documentado com honestidade.</p>
+      <p>Faça uma inspeção simples com a tela desligada: procure janelas, lâmpadas e superfícies claras refletidas na região em que a imagem ficará. Sente-se nas posições usadas pela equipe, porque o acabamento e o ângulo mudam a visibilidade. Controle primeiro as fontes mais perturbadoras; aumentar brilho para vencê-las pode prejudicar decisões de sombra e cansa quem trabalha por horas.</p>
+
+      <h2>Como comparar dois modelos sem cair na ficha técnica</h2>
+      <ol>
+        <li>Prepare uma tabela com os sinais e modos indispensáveis. Elimine modelos que não os aceitam na entrada disponível.</li>
+        <li>Procure medições no modo de interesse. Um resultado excelente no preset nativo não descreve o modo Rec. 709 ou a operação HDR.</li>
+        <li>Leia gráficos de resposta tonal e gamut, além da média de erro. Verifique máximos, regiões problemáticas e uniformidade.</li>
+        <li>Observe como o monitor mantém o resultado após aquecer e em áreas claras de tamanhos diferentes. Esse comportamento pesa mais que um pico isolado.</li>
+        <li>Confira operação diária: troca de preset, avisos de sinal, LUTs, acesso aos controles, geração de relatório e recuperação após repouso.</li>
+        <li>Some instrumento, software, hardware de saída, garantia e manutenção ao preço. O painel é apenas uma parte da estação.</li>
+      </ol>
+      <p>Reviews podem informar, desde que expliquem método e limitações. Resultados de unidades diferentes ajudam a perceber variação; não garantem como será o exemplar comprado. Guarde a nota fiscal e faça os testes de aceitação dentro dos prazos aplicáveis, sem executar procedimentos que violem o manual ou a garantia.</p>
+
+      <h2>HDR de prévia não é sinônimo de monitor de masterização</h2>
+      <p>Uma tela pode reconhecer um sinal HDR e oferecer uma prévia útil para montagem, enquadramento e intenção geral. A aprovação de masterização exige saber como ela acompanha a função de transferência, quais níveis sustenta, como controla o preto e o que faz com cores ou brilhos fora da capacidade. O comportamento também pode mudar conforme a área brilhante, a duração da cena e limites térmicos.</p>
+      <p>Na compra, procure curvas e medições em várias janelas, além do maior número anunciado. Na operação, mantenha separados os presets de SDR e HDR e valide cada um. Se a tela aplica mapeamento de tons próprio, documente-o: uma imagem “mais agradável” pode esconder que o sinal excedeu o destino.</p>
+
+      <h2>Revisão remota precisa de um vocabulário comum</h2>
+      <p>Quando diretor, montador e cliente olham telas diferentes, frases como “está escuro” ou “o azul estourou” misturam gosto, ambiente e falha técnica. Envie arquivos identificados, informe o dispositivo de referência da sessão e peça comentários por plano e região. Use scopes e valores para localizar o sinal, sem alegar que eles reproduzem a percepção final.</p>
+      <p>Se uma decisão crítica ocorre remotamente, faça uma sessão de alinhamento com material conhecido e defina qual instalação desempata divergências. Uma plataforma de revisão pode recomprimir ou converter o vídeo; compare o arquivo enviado com o reproduzido. Para aprovações menos críticas, registre a variedade de dispositivos como parte do teste de distribuição, em vez de tentar calibrar telas de clientes por instruções visuais.</p>
+
+      <h2>Planeje manutenção e uma saída para falhas</h2>
+      <p>A escolha continua depois da compra. Guarde relatórios iniciais, presets, firmware e configuração do caminho. Valide novamente após atualização, mudança de hardware ou transporte. A periodicidade depende da estabilidade observada e da responsabilidade da entrega; um calendário sem medição não demonstra que a tela permaneceu dentro de tolerância.</p>
+      <p>Também defina o que acontece quando a validação falha. Pode ser repetir o aquecimento e a medição, restaurar um preset, revisar a associação de perfil, chamar assistência ou deslocar a aprovação para outra sala. Ter esse roteiro evita que a produção continue por inércia em uma tela cuja condição já não é conhecida.</p>
+
       <h2>Erros comuns e limites</h2>
       <ul>
         <li>Comprar pela maior resolução quando conexão, escala da interface ou distância de trabalho são o limite real.</li>
@@ -337,7 +478,7 @@ export default [
     description: 'Use uma tela como fundo de chroma key em enquadramentos pequenos, controle reflexos e moiré e ajuste o recorte com um checklist reproduzível.',
     relatedSlugs: ['fundo-cor-fotos-produto', 'cores-streaming-cenarios'],
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'OBS Studio — Chroma Key Filter',
@@ -367,7 +508,7 @@ export default [
 
       <h2>Prepare o enquadramento antes de escolher a cor</h2>
       <ul>
-        <li>Monte a câmera na resolução e taxa de quadros que serão usadas na gravação ou transmissão. Avalie sempre a saída final, não apenas a tela do computador.</li>
+        <li>Monte a câmera na resolução e taxa de quadros que serão usadas na gravação ou transmissão. Avalie sempre a saída final, em vez de confiar somente na tela do computador.</li>
         <li>Preencha todo o fundo visível com a tela. Bordas, moldura e reflexos próximos criam cores que o filtro terá de tratar separadamente.</li>
         <li>Limpe a tela e retire películas brilhantes soltas. Observe pixels, grade, faixas e reflexos no foco real da lente.</li>
         <li>Separe o sujeito do painel tanto quanto o espaço permitir. A distância reduz a luz colorida refletida e permite desfocar a estrutura da tela.</li>
@@ -407,6 +548,47 @@ export default [
         <li>Trocar fundo, câmera e filtro ao mesmo tempo e perder a causa da melhora ou piora.</li>
       </ul>
 
+      <h2>Escolha verde, azul ou outra cor pelo que está em cena</h2>
+      <p>O verde costuma oferecer boa separação em muitas câmeras, mas perde a vantagem quando a roupa, o produto, uma embalagem ou reflexo importante contém tons próximos. Azul pode preservar esses elementos e, ao mesmo tempo, exigir mais luz ou revelar mais ruído em determinada câmera. Uma cor personalizada só ajuda quando fica distante das cores do primeiro plano no sinal capturado. O nome da cor na interface não decide essa distância.</p>
+      <p>Faça uma amostra com o sujeito pronto, inclusive maquiagem, acessórios e roupa final. Observe os canais no arquivo e teste o movimento. Uma camiseta que parece cinza a olho nu pode refletir o fundo; tecido semitransparente pode misturar as duas cores. Para produto, gire superfícies brilhantes durante a gravação. A melhor chave é a que preserva o objeto real com ajuste moderado e fundo estável.</p>
+
+      <h2>A distância resolve problemas que o filtro não entende</h2>
+      <p>Encostar o sujeito na tela aumenta o tamanho aparente do fundo, mas também projeta luz colorida sobre pele, cabelo e bordas. Aumentar a distância reduz essa contaminação e ajuda a desfocar a matriz de pixels. Em uma mesa curta, ganhe espaço aproximando a câmera com uma composição mais fechada ou usando uma tela maior; não tente compensar todo spill com um controle agressivo.</p>
+      <p>Repare na sombra. Uma luminária frontal pode lançar sobre a tela a sombra do sujeito, criando uma região mais escura que o filtro trata de forma diferente. Elevar, deslocar ou difundir a fonte costuma ser mais limpo do que aumentar Similarity. Se o painel é brilhante, a própria luz frontal pode aparecer como reflexo; mude o ângulo e confira as quatro bordas do quadro.</p>
+
+      <h2>A câmera precisa entregar informação suficiente nas bordas</h2>
+      <p>Subexposição eleva ruído quando o sinal é recuperado. Nitidez artificial cria contornos; redução de ruído pode borrar cabelo; compressão mistura a cor do fundo com os pixels do sujeito. Antes de culpar o filtro, grave sem chave e examine o material em tamanho real. Ajuste luz, foco e exposição para um arquivo limpo, sem recortar realces. A imagem visualmente “mais viva” nem sempre produz a borda mais fácil.</p>
+      <p>Se a câmera oferece formatos diferentes, compare-os dentro do fluxo que você realmente consegue gravar e transmitir. Maior resolução ou taxa de dados pode preservar detalhes, mas também aumenta processamento e não corrige iluminação desigual. Faça um clipe curto com mãos, cabelo e objeto translúcido; esse material revela mais do que uma pose parada.</p>
+
+      <h2>Ajuste o Chroma Key em uma ordem legível</h2>
+      <ol>
+        <li>Comece com o filtro desligado e corrija enquadramento, foco, exposição e uniformidade visível do fundo.</li>
+        <li>Ative o filtro no tipo de cor correspondente. Mantenha os controles iniciais e procure a região que permanece no quadro.</li>
+        <li>Ajuste Similarity até o fundo principal sair. Pare antes que detalhes internos de roupa, olhos ou produto fiquem transparentes.</li>
+        <li>Trabalhe Smoothness olhando cabelo, movimento e contorno dos ombros. Uma borda macia demais cria uma auréola perceptível sobre fundos claros.</li>
+        <li>Aplique Spill Reduction enquanto compara pele e materiais neutros com o clipe original. Remover reflexo verde não deve descolorir todo o primeiro plano.</li>
+        <li>Se o OBS oferece correções adicionais no mesmo filtro, trate-as como mudanças separadas e volte ao original com frequência.</li>
+        <li>Troque o fundo digital por opções clara, escura e detalhada. Um recorte aceitável sobre preto pode exibir franja sobre branco.</li>
+      </ol>
+
+      <h2>Teste o fundo que será colocado depois</h2>
+      <p>Uma chave não termina na transparência. O contorno precisa combinar com o cenário final. Um ambiente virtual claro denuncia spill e bordas escuras; uma animação detalhada revela tremulação em cabelo; desfoque artificial pode destoar da profundidade e do movimento capturados. Faça a regulagem sobre pelo menos dois fundos contrastantes e finalize com aquele da gravação.</p>
+      <p>Confira também escala e direção de luz. Se o rosto recebe luz pela esquerda e o cenário mostra uma janela forte à direita, o recorte parece artificial mesmo sem falhas técnicas. Para uma entrevista, preserve sombra e textura suficientes para o sujeito pertencer à cena. Para uma demonstração de produto, priorize bordas e cor do item sobre um efeito dramático.</p>
+
+      <h2>Checklist antes de entrar ao vivo</h2>
+      <ul>
+        <li>Grave no mesmo perfil de cena, resolução, taxa de quadros e codificação da transmissão.</li>
+        <li>Faça o movimento mais amplo previsto e confira se braços ou objetos deixam a área coberta pela tela.</li>
+        <li>Troque cenas, abra overlays e acione alertas para verificar conflitos de cor e ordem das fontes.</li>
+        <li>Observe alguns minutos de prévia para detectar variação de brilho, proteção de painel ou balanço automático.</li>
+        <li>Mantenha uma cena de segurança sem chave caso a câmera, a tela ou o filtro mude durante o programa.</li>
+        <li>Salve a cena com nome e data depois do teste aprovado; evite sobrescrever a única configuração estável durante a transmissão.</li>
+      </ul>
+
+      <h2>Como descrever um recorte que ainda falha</h2>
+      <p>Registre em qual movimento, região e fundo digital a falha aparece. Guarde um quadro com o filtro desligado, outro com o filtro ligado e os valores usados. “O cabelo desaparece quando viro para a direita” direciona a análise para exposição, foco, spill e ajuste de borda naquele lado; “a chave está ruim” não preserva contexto.</p>
+      <p>Quando o problema surge apenas depois da plataforma, compare gravação local e retorno da transmissão. A compressão pode degradar detalhes que estavam presentes no OBS. Reduzir movimento de fundo, preservar luz no sujeito ou ajustar a codificação disponível pode ajudar mais do que aumentar a remoção de cor.</p>
+
       <h2>Limites do método</h2>
       <p>Vidro, líquidos, transparências, fumaça, cabelo fino e desfoque de movimento exigem recortes mais cuidadosos. Uma tela pequena também restringe o ângulo e pode iluminar o sujeito de maneira pouco natural. Mantenha o arquivo sem chave para refazer o efeito, siga os limites de uso do painel e faça um teste completo antes de uma transmissão ao vivo. O procedimento reduz tentativas aleatórias, mas não substitui iluminação de fundo dedicada quando o acabamento precisa resistir a pós-produção exigente.</p>
     `
@@ -419,7 +601,7 @@ export default [
     description: 'Monte um fundo emissivo para objetos pequenos e controle foco, reflexos, moiré, flicker e fidelidade da cor com testes na própria câmera.',
     relatedSlugs: ['fotografia-produto-olx-mercado-livre', 'chroma-key-sem-tecido-tela-verde'],
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'Sony — Anti-flicker shooting',
@@ -488,6 +670,49 @@ export default [
         <li>Editar a cor do produto para neutralizar o fundo e acabar representando o item de forma incorreta.</li>
       </ul>
 
+      <h2>Escolha o fundo a partir do material do objeto</h2>
+      <p>Uma miniatura fosca aceita um fundo saturado de maneira diferente de uma joia polida. Vidro recolhe reflexos de toda a sala; plástico translúcido mistura a cor emitida com a luz que atravessa suas bordas; metal pode transformar a tela em um retângulo reconhecível. Antes de procurar uma paleta bonita, gire o produto sob a câmera e veja quais superfícies espelham o monitor. Essa leitura define posição, tamanho da área luminosa e necessidade de anteparos.</p>
+      <p>Produtos escuros precisam de separação nas bordas, não necessariamente de um fundo branco no brilho máximo. Um cinza ou gradiente pode desenhar melhor o contorno sem invadir o objeto. Produtos claros podem ganhar volume com um fundo ligeiramente mais escuro. Se a cor do item é parte da decisão de compra, faça também uma fotografia neutra e trate a versão colorida como imagem de contexto.</p>
+
+      <h2>Construa o gradiente com posição antes de editar a cor</h2>
+      <p>A tela permite deslocar uma mancha clara, uma faixa ou um gradiente sem mover o equipamento. Comece com transição ampla e suave. Mova o centro luminoso até ele criar separação atrás do objeto; depois altere matiz e saturação. Se cor e posição mudam juntas, fica difícil saber por que o volume melhorou.</p>
+      <p>Observe o gradiente capturado em ampliação de 100%. Transições muito lentas podem revelar banding na exportação, e as mais estreitas podem parecer uma linha atrás do produto. Uma pequena textura ou variação desenhada pode esconder defeitos, mas também muda a linguagem da fotografia. Preserve a versão sem textura para comparar e evite usar ruído como correção automática para toda imagem.</p>
+
+      <h2>Controle reflexos sem apagar a identidade do material</h2>
+      <ol>
+        <li>Faça uma foto com o ambiente como está e marque os reflexos que ajudam a descrever forma e acabamento.</li>
+        <li>Use cartões pretos ou claros fora do quadro para redesenhar apenas as áreas perturbadoras. Mova um cartão por vez.</li>
+        <li>Incline tela ou produto em pequenos passos. Se o retângulo do monitor deixa de aparecer, confira se uma borda importante também não sumiu.</li>
+        <li>Para vidro, ilumine contornos e mantenha o centro controlado. Poeira e impressões digitais devem ser removidas fisicamente quando seguro, não borradas na edição.</li>
+        <li>Para metal, preserve uma passagem tonal que revele curvatura. Uma superfície totalmente branca ou preta pode parecer recortada e esconder amassados.</li>
+        <li>Grave a posição aprovada com marcas discretas na mesa e uma foto do conjunto. Objetos refletivos respondem a deslocamentos pequenos.</li>
+      </ol>
+
+      <h2>Evite confundir pixel da tela com textura do produto</h2>
+      <p>Quando o monitor está dentro da profundidade de campo, sua malha pode competir com tecido, circuitos e superfícies gravadas. Fechar a abertura para manter todo o objeto nítido torna o fundo mais definido; abrir a abertura esconde a tela, mas pode perder detalhes do produto. Em vez de assumir que uma abertura resolve, aumente primeiro a distância entre produto e fundo, se o espaço permitir, e ajuste enquadramento e distância focal.</p>
+      <p>Moiré depende da relação entre padrões, óptica, sensor, escala e processamento. Uma mudança discreta de distância ou ângulo pode alterar o artefato sem que exista defeito em nenhuma peça. Confira o arquivo bruto quando disponível e a exportação final. Redução de tamanho pode criar um novo padrão; aplique o redimensionamento previsto antes de aprovar a imagem.</p>
+
+      <h2>Faça uma série consistente sem congelar o improviso</h2>
+      <table>
+        <thead><tr><th scope="col">O que registrar</th><th scope="col">Uso na próxima foto</th></tr></thead>
+        <tbody>
+          <tr><td>Distância e altura da câmera</td><td>Mantém escala e perspectiva entre variantes.</td></tr>
+          <tr><td>Posição do produto e da tela</td><td>Repete contorno, reflexos e desfoque do fundo.</td></tr>
+          <tr><td>Arquivo ou valor do fundo</td><td>Evita reconstruir a cor pela aparência de uma captura.</td></tr>
+          <tr><td>Exposição e balanço de branco</td><td>Reduz variações automáticas entre itens.</td></tr>
+          <tr><td>Fonte principal e modificadores</td><td>Preserva volume e textura, mesmo se o fundo mudar.</td></tr>
+        </tbody>
+      </table>
+      <p>Não é preciso montar uma planta técnica para uma fotografia avulsa. Uma foto dos bastidores e uma ficha curta bastam para voltar ao ponto inicial. Em catálogo, nomeie as receitas por família de produto e mantenha um item conhecido como comparação. Se a nova unidade parece diferente, confira primeiro acabamento e condição reais antes de forçar a edição para combinar.</p>
+
+      <h2>Revise o arquivo final, não só a captura</h2>
+      <p>Correção de lente, remoção de poeira, recorte e redimensionamento podem mudar as bordas entre produto e fundo. A compressão pode criar contornos em áreas saturadas. Exporte nas dimensões e no espaço exigidos pelo destino, reabra o arquivo entregue e confira detalhes, perfil incorporado e aparência em fundo claro e escuro quando houver transparência.</p>
+      <p>Se a imagem será usada em marketplace, confronte a versão final com a regra atual da plataforma. A orientação do Google Merchant Center, por exemplo, distingue a foto principal de vistas adicionais e exige que a imagem represente o produto correto. Um cenário colorido pode enriquecer a galeria, enquanto a imagem principal precisa de outra composição. Não corte acessórios incluídos nem acrescente objetos que pareçam fazer parte da oferta.</p>
+
+      <h2>Quando a tela deixa de ser a ferramenta adequada</h2>
+      <p>Uma tela pequena obriga a composição a ficar fechada; um painel com emissão instável pode alongar cada sessão; objetos espelhados podem revelar moldura e sala inteira. Nesses casos, papel, tecido, acrílico, uma impressão ou uma luz com modificador podem oferecer controle mais rápido. A troca não representa fracasso do método: ela responde ao tamanho, material e finalidade do produto.</p>
+      <p>Não apoie objetos sobre o painel nem improvise estruturas que forcem a tela. Proteja-a de líquidos, calor, abrasão e queda, seguindo o manual. Para sessões longas com imagem estática, considere os mecanismos de proteção e limites do modelo. O fundo só é útil enquanto produto, operador e equipamento permanecem seguros.</p>
+
       <h2>Limites do método</h2>
       <p>Objetos grandes, espelhos, metal polido e transparências podem expor a fonte e exigir modificadores físicos. A tela também não garante cor espectralmente adequada nem emissão uniforme. Se a fotografia documenta cor, acabamento ou condição para uma venda, mantenha uma imagem neutra e honesta, registre a configuração e use referências de cor compatíveis com o nível de precisão exigido.</p>
     `
@@ -500,8 +725,18 @@ export default [
     description: 'Crie um conjunto de fotos que documente aparência, escala, acessórios e defeitos do produto e revise as regras atuais da plataforma antes de publicar.',
     relatedSlugs: ['fundo-cor-fotos-produto', 'iluminacao-videochamada-dicas'],
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
+      {
+        label: 'OLX — Dicas para um bom anúncio',
+        url: 'https://ajuda.olx.com.br/s/article/dicas-como-fazer-bom-anuncio',
+        note: 'A ajuda oficial recomenda imagens nítidas que mostrem o estado do produto por vários ângulos e orienta consultar as regras de publicação.'
+      },
+      {
+        label: 'Mercado Livre — Fotos de qualidade',
+        url: 'https://vendedores.mercadolivre.com.br/aprender/nota/fotos-de-qualidade-o-segredo-para-se-destacar-e-vender-mais',
+        note: 'A orientação oficial aborda foco, iluminação, enquadramento, direitos de uso e elementos que não devem ser sobrepostos às fotos do produto.'
+      },
       {
         label: 'Google Merchant Center — Image link specification',
         url: 'https://support.google.com/merchants/answer/6324350?hl=en',
@@ -565,6 +800,51 @@ export default [
         </tbody>
       </table>
 
+      <h2>Monte a sequência pelas dúvidas do comprador</h2>
+      <p>Um notebook usado e uma cadeira pedem provas diferentes. No notebook, o comprador quer reconhecer modelo, portas, teclado, tela, carregador e estado da carcaça. Na cadeira, interessam estrutura, tecido, regulagens, rodas e dimensões. Escreva cinco perguntas prováveis antes de fotografar e transforme cada uma em uma vista. Esse roteiro produz uma galeria específica, em vez de repetir ângulos bonitos que deixam a condição sem resposta.</p>
+      <p>A imagem principal deve identificar o item com rapidez. Reserve close-ups para detalhes nas fotos seguintes e mantenha uma vista mais ampla que mostre onde cada marca está. Um risco isolado em macro pode parecer maior do que é; escondê-lo em uma foto distante faz o oposto. O par de imagens oferece contexto sem minimizar nem dramatizar.</p>
+
+      <h2>Documente defeitos com luz que os revele</h2>
+      <p>Riscos rasos aparecem quando uma fonte desliza lateralmente pela superfície. Amassados ficam legíveis com uma passagem de claro para escuro. Manchas em tecido podem pedir luz frontal uniforme; trincas em plástico se revelam ao mudar o ângulo. Faça primeiro a foto geral, depois mova a luz para mostrar o defeito. Não altere saturação ou contraste apenas nessa imagem de forma que ela deixe de combinar com o conjunto.</p>
+      <p>Quando há reparo, fotografe acabamento, fixação e região ao redor. A foto não comprova a qualidade interna do serviço, então descreva o que foi feito e guarde documentos disponíveis. Se um defeito só aparece durante movimento ou uso, um vídeo curto pode complementar a galeria, conforme o canal permitir. Preserve também uma captura estática que situe o problema.</p>
+
+      <h2>Eletrônicos exigem uma revisão de privacidade antes da câmera</h2>
+      <ol>
+        <li>Faça backup e encerre sessões conforme o procedimento do fabricante e do serviço usado.</li>
+        <li>Remova cartões, chips, mídias, acessórios pessoais e etiquetas que não acompanham a venda.</li>
+        <li>Restaure o aparelho quando isso fizer parte do processo seguro de transferência. Confirme que bloqueios de conta foram tratados pelas orientações oficiais.</li>
+        <li>Para mostrar funcionamento, use tela neutra ou conta preparada para demonstração. Não exponha caixa de entrada, rede Wi-Fi, nome completo ou notificações.</li>
+        <li>Fotografe a etiqueta de modelo separadamente e edite a cópia pública para ocultar identificadores sensíveis. Guarde o original em local privado para a negociação.</li>
+        <li>Confira reflexos: um painel preto pode revelar rosto, documentos, interior da casa e outros equipamentos.</li>
+      </ol>
+      <p>Desfoque aplicado depois pode falhar em miniaturas ou versões originais enviadas pela plataforma. Quando possível, cubra fisicamente a informação ou refaça a foto. Não esconda o modelo necessário à identificação; separe modelo, que pode ser relevante, de número de série e dados pessoais.</p>
+
+      <h2>Cor e tamanho precisam de contexto honesto</h2>
+      <p>Telas de compradores variam, e uma foto não garante correspondência perfeita de cor. Ainda assim, luz mista, balanço automático e filtros podem ampliar a diferença. Fotografe com fonte estável, inclua uma referência adequada quando a cor for decisiva e descreva o nome oficial da variante. Não use o seletor de saturação para aproximar o produto da lembrança visual sem um fluxo controlado.</p>
+      <p>Para escala, régua e fita métrica funcionam quando ficam no mesmo plano da dimensão mostrada. Uma moeda ou mão dá noção informal, mas varia e pode distorcer pela perspectiva. Faça também uma foto da medição e escreva as dimensões no anúncio. Em móveis e equipamentos, informe qual lado corresponde a largura, altura e profundidade.</p>
+
+      <h2>Fotografe o conjunto exatamente como será entregue</h2>
+      <p>Espalhe produto e acessórios sobre um fundo simples e confira a lista: fonte, cabo, adaptador, controle, manual, peças de montagem e embalagem. Se algo aparece apenas para demonstrar uso, retire da foto do conjunto ou identifique claramente que não acompanha. Itens compatíveis não são necessariamente originais; a descrição e as imagens devem concordar.</p>
+      <p>Faça detalhes de conectores e desgaste dos cabos. Para peças pequenas, use recipientes ou saquinhos transparentes e fotografe a quantidade. Se houver caixa original, mostre seu estado sem deixar endereço ou etiqueta de transporte visível. Essa organização também ajuda a conferir o pacote antes do envio.</p>
+
+      <h2>Exporte pensando no corte da plataforma</h2>
+      <p>Interfaces de busca, cartões e aplicativos podem exibir a mesma imagem em proporções diferentes. Deixe margem suficiente para o item continuar reconhecível em miniatura, sem reduzir tanto que ele vire um detalhe. Abra os arquivos exportados no celular e no computador; texto pequeno em etiqueta pode estar nítido no original e ilegível depois da redução.</p>
+      <p>As regras mudam conforme serviço e categoria. A especificação de imagens do Google Merchant Center pede o produto correto, desestimula elementos promocionais sobrepostos e trata imagens adicionais como lugar para outras vistas. Use essa referência somente quando ela se aplicar ao canal. Para OLX, Mercado Livre ou outro marketplace, consulte a ajuda vigente no próprio serviço antes de publicar.</p>
+
+      <h2>Um roteiro prático para três tipos de anúncio</h2>
+      <table>
+        <thead><tr><th scope="col">Produto</th><th scope="col">Fotos que resolvem dúvidas</th><th scope="col">Cuidado adicional</th></tr></thead>
+        <tbody>
+          <tr><td>Monitor</td><td>Frente desligada e ligada, traseira, base, entradas, acessórios, bordas e marcas.</td><td>Padrões ajudam a mostrar o funcionamento, mas não substituem teste completo nem devem conter contas pessoais.</td></tr>
+          <tr><td>Celular</td><td>Tela, laterais, câmeras, portas, bandeja, acessórios e detalhes de desgaste.</td><td>Evite IMEI público, reflexos do ambiente e telas de conta.</td></tr>
+          <tr><td>Peça de coleção</td><td>Frente, verso, laterais, escala, assinatura ou marca e cada imperfeição.</td><td>Não use luz ou edição que apague pátina, reparo ou diferença de material.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Guarde uma trilha simples até o envio</h2>
+      <p>Mantenha os originais, a seleção publicada e uma nota com data e condição do item. Antes de embalar, refaça a foto do conteúdo completo. Registre a proteção e o pacote fechado sem expor endereço na versão compartilhada. Esse material ajuda a conferir o que foi anunciado e enviado, embora não substitua os mecanismos oficiais de disputa ou transporte.</p>
+      <p>Se o produto mudar depois das fotos — novo risco, troca de acessório ou reparo — atualize galeria e descrição. Reaproveitar a sessão antiga economiza minutos, mas cria uma representação incorreta. Para várias unidades semelhantes, identifique cada conjunto e não use a melhor peça para ilustrar todas.</p>
+
       <h2>Erros comuns e limites</h2>
       <ul>
         <li>Usar apenas uma vista frontal limpa e deixar condição, traseira e acessórios sem prova.</li>
@@ -584,7 +864,7 @@ export default [
     description: 'Monte uma paleta simples, preserve tons de pele, avalie compressão e use fontes de cor do OBS ou uma tela auxiliar com controle.',
     relatedSlugs: ['monitor-como-softbox-streamer', 'chroma-key-sem-tecido-tela-verde'],
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'OBS Studio — Color Source',
@@ -595,6 +875,11 @@ export default [
         label: 'OBS Studio — Color Correction Filter',
         url: 'https://obsproject.com/kb/color-correction-filter',
         note: 'Explica controles de correção de cor aplicados às fontes do OBS.'
+      },
+      {
+        label: 'OBS Studio — Overview Guide',
+        url: 'https://obsproject.com/kb/obs-studio-overview',
+        note: 'Mostra a organização de cenas, fontes, filtros e o modo estúdio no fluxo oficial do OBS.'
       },
       {
         label: 'W3C — CSS Color Module Level 4',
@@ -638,7 +923,7 @@ export default [
         <tbody>
           <tr><td>Rosto assume cor do cenário</td><td>Compare com a luz decorativa desligada.</td><td>Afaste a fonte, use anteparo e fortaleça a luz neutra do rosto.</td></tr>
           <tr><td>Fundo vira blocos após transmissão</td><td>Compare gravação local com a saída da plataforma.</td><td>Reduza gradientes sutis, ruído e saturação; reveja a codificação disponível.</td></tr>
-          <tr><td>Contorno desaparece</td><td>Observe roupa e cabelo contra cada cena.</td><td>Mude luminância ou matiz do fundo, não apenas a intensidade global.</td></tr>
+          <tr><td>Contorno desaparece</td><td>Observe roupa e cabelo contra cada cena.</td><td>Mude luminância ou matiz do fundo, em vez de mexer somente na intensidade global.</td></tr>
           <tr><td>Texto perde leitura</td><td>Teste no tamanho real em telas menores.</td><td>Corrija contraste, fundo do componente e espessura tipográfica.</td></tr>
           <tr><td>Cor muda durante a fala</td><td>Procure exposição ou balanço automático.</td><td>Trave controles compatíveis ou reduza variações luminosas no quadro.</td></tr>
         </tbody>
@@ -653,6 +938,47 @@ export default [
         <li>Confundir uma cena chamativa em captura estática com uma imagem confortável durante horas de conteúdo.</li>
       </ul>
 
+      <h2>Dê uma função a cada cor antes de montar a cena</h2>
+      <p>Uma paleta pequena funciona quando cada elemento tem um trabalho reconhecível. A cor principal pode identificar o canal; uma segunda pode sinalizar quadro, convidado ou assunto; tons neutros sustentam texto e rosto. Se alerta, moldura, parede, cadeira e luz usam destaques diferentes, nenhum deles orienta a atenção. Faça uma lista do que precisa ser visto primeiro e retire cores que não ajudam essa ordem.</p>
+      <p>Marca não exige banhar todo o ambiente no mesmo tom. Um detalhe no fundo, uma borda e um elemento gráfico podem criar continuidade sem colorir a pele. Quando houver manual de identidade, use os valores como ponto de partida para gráficos digitais. A luz capturada pela câmera precisa ser avaliada no arquivo: uma parede iluminada não reproduz o código da marca como uma área RGB da composição.</p>
+
+      <h2>Proteja pele, produto e conteúdo principal</h2>
+      <p>Configure a luz neutra do apresentador antes do fundo. Em seguida, ligue uma fonte colorida por vez e observe se ela invade bochechas, cabelo, roupa ou objeto demonstrado. O spill pode ser agradável em uma transmissão musical e inadequado em análise de produto. Afaste o sujeito da parede, feche o feixe ou reduza intensidade antes de tentar neutralizar toda a cena com correção global.</p>
+      <p>Gameplay e slides também mudam o equilíbrio. Um jogo escuro deixa um fundo brilhante dominante; uma apresentação branca pode elevar a exposição percebida e competir com a câmera. Monte amostras reais de cada bloco do programa. A paleta deve sobreviver à alternância sem obrigar o operador a reconstruir luz e exposição no meio da transmissão.</p>
+
+      <h2>Texto precisa continuar legível depois da compressão</h2>
+      <p>Legendas, nomes e alertas são vistos em janelas pequenas, muitas vezes sobre vídeo em movimento. Avalie contraste no quadro completo e no tamanho aproximado de um celular. Contornos finos e gradientes delicados podem desaparecer após redimensionamento. Use fundos ou placas estáveis atrás do texto quando a imagem muda muito e não dependa só da diferença de matiz entre duas cores de luminosidade semelhante.</p>
+      <p>Faça uma gravação com os textos mais longos esperados, caracteres acentuados e números. Confira se o nome não invade o rosto nem sai da área segura do layout. Para alertas animados, pause em quadros claros e escuros. Uma boa leitura não deve depender de o espectador distinguir perfeitamente vermelho de verde; combine cor com rótulo, ícone ou posição.</p>
+
+      <h2>Crie cenas derivadas sem perder consistência</h2>
+      <ol>
+        <li>Construa uma cena-base com câmera, áudio e elementos recorrentes. Nomeie fontes de forma que outro operador reconheça sua função.</li>
+        <li>Duplique ou referencie a base para entrevista, gameplay, pausa e tela cheia. Evite recriar a câmera com filtros diferentes em cada cena.</li>
+        <li>Atribua uma mudança visível a cada estado: título, composição ou cor de destaque. Não mude todos ao mesmo tempo.</li>
+        <li>No modo estúdio do OBS, prepare a cena seguinte e confira fontes antes da transição, sem mostrar ajustes ao público.</li>
+        <li>Grave a sequência completa, incluindo cortes rápidos, vídeo remoto e alertas. Procure flashes, fontes ausentes e mudanças de exposição.</li>
+        <li>Exporte uma imagem de referência e anote valores e posições. A captura ajuda na remontagem, mas os números editáveis continuam sendo a fonte correta.</li>
+      </ol>
+
+      <h2>Quatro formatos com decisões diferentes</h2>
+      <table>
+        <thead><tr><th scope="col">Formato</th><th scope="col">Prioridade visual</th><th scope="col">Teste que costuma revelar problemas</th></tr></thead>
+        <tbody>
+          <tr><td>Entrevista</td><td>Separar duas pessoas e manter tons de pele coerentes.</td><td>Trocar o destaque de lado e verificar spill, balanço e compressão no convidado remoto.</td></tr>
+          <tr><td>Gameplay</td><td>Preservar o jogo como conteúdo principal sem apagar a câmera.</td><td>Abrir cenas muito claras e muito escuras e assistir em miniatura.</td></tr>
+          <tr><td>Demonstração de produto</td><td>Representar cor, material e detalhes do item.</td><td>Desligar a luz decorativa e comparar se ela alterava o produto.</td></tr>
+          <tr><td>Aula ou apresentação</td><td>Garantir leitura de slides, legendas e apontamentos.</td><td>Simular o slide mais denso e a conexão de menor qualidade prevista.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Uma tela colorida e uma parede iluminada não respondem igual</h2>
+      <p>O monitor é emissivo e tem uma superfície delimitada; pode aparecer diretamente no quadro ou refletir como retângulo. A parede recebe luz, mistura o espectro da fonte com a tinta e perde intensidade com distância e ângulo. Copiar o mesmo RGB para uma fonte do OBS e para uma luminária não produz correspondência física. Quando elas aparecem juntas, ajuste pela câmera e registre as duas separadamente.</p>
+      <p>Se o monitor fica fora de quadro para colorir uma parede, aproxime-o e observe se surge uma mancha com bordas duras. Uma distância maior distribui a luz, mas reduz sua contribuição. Em espaços pequenos, um cartão branco pode redirecionar a emissão. Não cubra ventilação nem apoie materiais sobre o painel; preserve as condições de uso previstas pelo fabricante.</p>
+
+      <h2>Faça um ensaio privado com o caminho completo</h2>
+      <p>Uma gravação local mostra câmera e composição, mas não replica necessariamente a codificação recebida pelo público. Envie um teste privado ou não listado quando a plataforma oferecer esse recurso. Assista em conexão e aparelhos diferentes, verificando sombras, gradientes, texto e flashes de transição. Compare com o arquivo local para localizar o que mudou depois do encoder.</p>
+      <p>Anote data, cena, balanço de branco, exposição, posição das luzes e versão da coleção de cenas. Se uma atualização do OBS, driver ou câmera alterar a aparência, o registro permite reconstruir a cadeia. O objetivo é distinguir uma escolha nova de uma mudança acidental.</p>
+
       <h2>Limites do controle por tela</h2>
       <p>Um monitor secundário tem área útil, potência e espectro limitados. Paredes absorvem cores de modo diferente, e PWM ou outras formas de modulação podem produzir faixas na câmera. Para uma identidade cromática repetível entre episódios, registre posição, exposição, balanço, valores das fontes e horário, e considere luminárias controláveis e medição quando a correspondência com marca ou produto for crítica.</p>
     `
@@ -665,7 +991,7 @@ export default [
     description: 'Organize janela, câmera e luz frontal, use o monitor como apoio e confira como o aplicativo altera exposição e aparência.',
     relatedSlugs: ['temperatura-de-cor-explicada', 'monitor-como-softbox-streamer'],
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'Google Meet Help — Change your video and audio settings',
@@ -735,6 +1061,47 @@ export default [
         <li>Aplicar desfoque ou correção forte sem verificar cabelos, fones e movimento.</li>
       </ul>
 
+      <h2>Escolha a posição da mesa antes de comprar outra luz</h2>
+      <p>Uma mesa de costas para a janela coloca o exterior no fundo e força a câmera a conciliar intensidades muito diferentes. De frente para a janela, o rosto recebe luz ampla, mas o resultado varia com nuvens e horário. De lado, a janela modela o rosto e pode pedir preenchimento no lado oposto. Faça uma chamada de teste nas posições possíveis antes de fixar cabos e suportes.</p>
+      <p>Se a mesa não pode mudar, trate a janela como uma variável. Persiana difunde e reduz a luz; cortina opaca permite reconstruir a cena com luminárias; uma bandeira fora do quadro pode bloquear apenas o reflexo. A solução depende do que aparece na câmera e do conforto no ambiente. Não cubra saídas de ventilação nem improvise materiais perto de fontes quentes.</p>
+
+      <h2>A luz natural muda no meio de uma reunião</h2>
+      <p>Uma configuração aprovada às nove da manhã pode falhar no fim da tarde. O sol muda de direção, nuvens alteram contraste e a câmera automática reage a cada passagem. Se a chamada é curta e informal, aceitar essa variação pode ser razoável. Para entrevista, aula ou apresentação longa, controle a janela e use uma fonte estável que sustente o rosto quando a luz externa cair.</p>
+      <p>Faça o teste no mesmo horário do evento. Grave um trecho com a persiana em duas posições e anote qual preserva o fundo sem deixar a face subexposta. Se o cenário alterna entre luz do dia e lâmpada, confira a cor da pele ao longo da transição. Um balanço travado mantém consistência, mas pode ficar inadequado quando a fonte dominante muda; o planejamento deve reduzir essa troca.</p>
+
+      <h2>Óculos e telas pedem ajuste pela prévia</h2>
+      <p>Uma área branca perto da câmera costuma aparecer nas lentes como um retângulo. Reduzir o brilho pode ajudar, mas posição e tamanho do reflexo importam mais. Eleve ou desloque a fonte até o brilho sair da região dos olhos, mantendo o rosto iluminado. Se a tela é a fonte, diminua a janela clara e mova-a para outra parte do monitor.</p>
+      <p>Não incline os óculos de maneira desconfortável para adaptar a pessoa ao setup. Ajuste câmera e luz. Em lentes com tratamentos diferentes, cada participante responde de outra forma; salve uma configuração de partida, mas repita a observação. Se a pessoa lê documentos na tela, simule esse movimento, porque o ângulo muda quando ela olha para baixo.</p>
+
+      <h2>O aplicativo pode mudar uma cena que estava pronta</h2>
+      <p>Prévia do sistema, gravação local e janela da reunião não atravessam necessariamente o mesmo processamento. O aplicativo pode ajustar exposição, enquadramento, desfoque e iluminação. O Google Meet documenta controles de vídeo e recursos que dependem do dispositivo e da conta. Confira as opções disponíveis na sessão real e evite presumir que estarão iguais em outro computador.</p>
+      <p>Teste com correção automática ligada e desligada, mantendo a luz fixa. Observe pele, ruído, contorno do cabelo e estabilidade quando você se move. Se um recurso melhora um quarto escuro, registre que o resultado depende dele. Fundos virtuais exigem atenção adicional: pouca luz e ruído dificultam a separação, e uma fonte forte demais pode recortar áreas claras.</p>
+
+      <h2>Prepare uma chamada com mais de uma pessoa</h2>
+      <ol>
+        <li>Enquadre todos na posição natural, sem pedir que permaneçam imóveis para caber no foco.</li>
+        <li>Aumente a área aparente da fonte ou sua distância para distribuir a luz de modo mais uniforme. Confira os rostos nas extremidades.</li>
+        <li>Evite uma tela pequena como única luz central: quem está mais perto recebe outra intensidade e pode bloquear os demais.</li>
+        <li>Faça cada pessoa se mover e falar. A exposição automática pode priorizar um rosto ou oscilar quando alguém entra no quadro.</li>
+        <li>Verifique microfone e eco depois de reposicionar computador e participantes; uma melhora visual não deve criar um problema de áudio.</li>
+        <li>Grave alguns segundos com a roupa final. Branco, preto e padrões finos mostram recorte, ruído e moiré que a pele sozinha não revela.</li>
+      </ol>
+
+      <h2>Separe problema de iluminação de problema de transmissão</h2>
+      <table>
+        <thead><tr><th scope="col">O que aparece</th><th scope="col">Comparação útil</th><th scope="col">Hipótese que ganha força</th></tr></thead>
+        <tbody>
+          <tr><td>Imagem granulada também na gravação local</td><td>Aproxime a fonte e repita sem mudar a rede.</td><td>Luz, exposição, câmera ou processamento local.</td></tr>
+          <tr><td>Imagem limpa localmente e blocada na reunião</td><td>Compare teste de rede, qualidade selecionada e gravação recebida.</td><td>Codificação, conexão ou plataforma.</td></tr>
+          <tr><td>Rosto nítido parado e borrado ao mover</td><td>Grave movimento com mais luz e confira foco e obturador disponíveis.</td><td>Exposição, foco, redução de ruído ou compressão.</td></tr>
+          <tr><td>Cor muda apenas no aplicativo</td><td>Desative correções e fundos, um por vez.</td><td>Processamento ou caminho de vídeo do aplicativo.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Crie uma rotina de cinco minutos antes de uma chamada importante</h2>
+      <p>Abra a sessão com antecedência, selecione câmera e microfone corretos e limpe a lente. Sente-se na posição real, ajuste janela e fonte frontal, confira reflexos nos óculos e observe o fundo. Compartilhe uma tela clara para ver se a exposição oscila. Grave uma frase e um movimento de mãos; depois ouça e assista ao arquivo.</p>
+      <p>Guarde duas ou três referências simples: posição da luminária, estado da persiana e brilho aproximado do monitor. A rotina precisa ser curta para ser usada. Quando algo muda, como novo notebook ou atualização do aplicativo, faça uma nova amostra. Copiar os controles antigos sem olhar a saída preserva números, não o resultado.</p>
+
       <h2>Limites e conforto</h2>
       <p>A tela pode ajudar em uma reunião ocasional, mas ocupa espaço visual e sua emissão muda com o painel. Evite intensidade desconfortável e pausas prolongadas diante de um campo muito claro. Se você grava com frequência, uma luminária dedicada oferece posição e repetibilidade melhores. Para reuniões importantes, faça a chamada de teste no mesmo horário: a luz natural e a exposição do fundo podem mudar ao longo do dia.</p>
     `
@@ -747,7 +1114,7 @@ export default [
     description: 'Entenda quando a área clara da tela suaviza sombras, como posicioná-la pela prévia e quais limitações diferenciam um monitor de uma softbox.',
     relatedSlugs: ['iluminacao-videochamada-dicas', 'cores-streaming-cenarios'],
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'Sony — Anti-flicker shooting',
@@ -818,6 +1185,48 @@ export default [
         <li>Ignorar PWM, faixas ou variação de exposição que só aparecem no arquivo gravado.</li>
       </ul>
 
+      <h2>O tamanho aparente da fonte muda com a distância</h2>
+      <p>Uma tela grande do outro lado da sala pode produzir sombra mais marcada do que um notebook muito próximo, porque o que importa para a borda da sombra é a área aparente vista pelo sujeito. Aproximar o monitor amplia essa área e aumenta sua contribuição, mas também traz reflexos, calor visual e pouco espaço para olhar o conteúdo da gravação. Procure uma distância que resolva a sombra sem obrigar a pessoa a encarar um campo desconfortável.</p>
+      <p>Faça a comparação com a fonte principal fixa. Posicione o monitor longe, grave, aproxime e reduza o brilho para manter exposição semelhante. Observe transição no nariz, sob o queixo e nas mãos. Se tudo fica plano, o preenchimento passou do papel de apoio para dominar a cena.</p>
+
+      <h2>A própria janela clara pode funcionar como modificador</h2>
+      <p>Não é obrigatório preencher toda a tela. Uma faixa vertical próxima da borda desloca o centro da fonte; uma área maior suaviza a passagem; uma janela menor restringe a luz. A forma não cria uma softbox física, mas permite testar geometria sem mover um monitor pesado. Mantenha o restante da tela escuro para perceber de onde vem o reflexo.</p>
+      <p>Em óculos ou produtos brilhantes, arredonde visualmente a área ou reduza sua extensão para que o reflexo pareça menos intrusivo. Avalie sempre a câmera. O painel pode ter vazamento, variação angular ou limitação de brilho em campos amplos, então duas formas com o mesmo RGB não necessariamente emitem a mesma quantidade de luz.</p>
+
+      <h2>Compare com uma superfície branca rebatendo a luz existente</h2>
+      <p>Antes de reservar um monitor para iluminação, experimente um cartão branco, parede neutra ou rebatedor recebendo a fonte principal. O material passivo não pisca, não ocupa uma tomada e pode produzir um preenchimento mais discreto. Por outro lado, depende de haver luz suficiente e posição disponível. Uma folha pequena não se comporta como um rebatedor grande apenas por ser branca.</p>
+      <p>Grave a mesma cena com tela, rebatedor e sem preenchimento. Ajuste exposição pela luz principal e compare sombra, reflexo e cor. A opção mais simples pode vencer; em outro quarto, a emissão do monitor pode ser a única contribuição prática. O teste evita comprar ou improvisar equipamento sem entender qual problema precisava ser resolvido.</p>
+
+      <h2>Use uma tela secundária sem deixar o conteúdo mudar a luz</h2>
+      <ol>
+        <li>Escolha a tela que ficará dedicada ao campo claro durante a gravação. Mantenha roteiro, chat e controles na outra tela.</li>
+        <li>Desative temporariamente brilho adaptativo, protetor e mudança automática de temperatura quando o fabricante e o sistema permitirem.</li>
+        <li>Abra a cor em tela cheia e bloqueie notificações. Uma mensagem escura ou troca de aplicativo altera a emissão e pode aparecer no reflexo.</li>
+        <li>Faça uma captura de referência do rosto com a área clara ativa. Marque a posição da janela caso precise sair de tela cheia.</li>
+        <li>Simule o fluxo: leia, olhe para a câmera, mude de cena e mova as mãos. Confira se nenhuma operação toma a tela usada como luz.</li>
+        <li>Ao terminar, restaure os recursos de proteção e a configuração de uso diário.</li>
+      </ol>
+
+      <h2>Rosto, comida e produto pedem preenchimentos distintos</h2>
+      <table>
+        <thead><tr><th scope="col">Assunto</th><th scope="col">O que preservar</th><th scope="col">Sinal de excesso</th></tr></thead>
+        <tbody>
+          <tr><td>Rosto</td><td>Textura, volume e reflexos naturais nos olhos.</td><td>Pele recortada, óculos dominados pela tela ou sombras totalmente apagadas.</td></tr>
+          <tr><td>Objeto fosco</td><td>Forma e diferença entre material e fundo.</td><td>Frente plana, sem passagem tonal nem textura.</td></tr>
+          <tr><td>Metal ou vidro</td><td>Reflexos controlados que descrevam superfície e contorno.</td><td>Retângulo branco encobrindo detalhes ou câmera refletida.</td></tr>
+          <tr><td>Comida</td><td>Textura, brilho localizado e cor plausível.</td><td>Superfície pálida ou dominante causada pela tela.</td></tr>
+        </tbody>
+      </table>
+      <p>Para qualquer assunto cuja cor precise ser fiel, uma tela sem caracterização não é fonte de referência. Use-a como recurso criativo ou apoio e mantenha uma captura neutra. Se o cliente aprova material, documente quais fontes estavam ligadas e valide por um fluxo adequado.</p>
+
+      <h2>Investigue faixas antes da gravação longa</h2>
+      <p>Algumas combinações de painel, brilho, obturador e leitura do sensor produzem faixas que não são óbvias a olho nu. Grave um campo uniforme e um movimento lento nas configurações finais. Examine o arquivo quadro a quadro e em reprodução normal. A função anti-flicker da câmera pode ajudar em condições compatíveis, mas deve ser testada; não há um valor de obturador que sirva para todo monitor.</p>
+      <p>Se as faixas aparecem, mantenha iluminação e câmera fixas e altere uma variável: brilho do painel, obturador, taxa de quadros ou posição. Registre cada clipe. Uma solução pode reduzir a faixa e aumentar desfoque de movimento; outra pode mudar exposição. Escolha pelo conjunto do resultado e confirme na plataforma de destino.</p>
+
+      <h2>Monte e desmonte sem perder a referência</h2>
+      <p>Marque na mesa a posição do monitor, da câmera e da cadeira, e fotografe o conjunto de cima. Anote a cor nominal, brilho, modo do painel, exposição e balanço de branco. Em outra sessão, refaça um clipe curto antes de assumir que o setup voltou ao estado anterior. Luz ambiente, atualização de software e distância da pessoa podem ter mudado.</p>
+      <p>Se vários apresentadores usam a mesma mesa, guarde pontos de partida por pessoa em vez de um preset tratado como universal. Altura, óculos e tom da roupa alteram reflexos e contraste. A repetibilidade vem do procedimento de ajuste, não da proibição de adaptar.</p>
+
       <h2>Limites e uso prolongado</h2>
       <p>O monitor ocupa a linha de visão e pode causar desconforto quando exibe um campo claro intenso por longos períodos. Alguns painéis aplicam limitação automática de brilho; outros aquecem ou exigem cuidados com conteúdo estático. Consulte o manual do modelo. Se o setup precisa ser montado diariamente, iluminar mais de uma pessoa ou manter cor constante entre gravações, uma luminária de vídeo com difusão, suporte e controles independentes tende a oferecer uma solução mais repetível.</p>
     `
@@ -830,7 +1239,7 @@ export default [
     description: 'Entenda CCT, D65, matiz e espectro e saiba por que um controle RGB nominal serve para comparação visual, não para medir Kelvin.',
     relatedSlugs: ['iluminacao-videochamada-dicas', 'calibrar-monitor-fotografia-design'],
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'CIE — Correlated colour temperature',
@@ -892,6 +1301,49 @@ export default [
       <h2>D65 em fotografia, design e vídeo</h2>
       <p>D65 aparece como iluminante e ponto branco de referência em vários sistemas de cor, inclusive sRGB, mas isso não transforma uma lâmpada rotulada como 6500 K em condição de referência. O ambiente de observação, a luminância, o espectro da luz e a caracterização da tela continuam relevantes. Em impressão, siga a condição de visualização e os perfis do fornecedor; em vídeo, siga o padrão e o ambiente definidos para a entrega.</p>
       <p>Se a tarefa é apenas melhorar a aparência da webcam, uma comparação nominal pode ser suficiente: escolha o tom que se mistura com a fonte principal e mantém pele plausível no arquivo. Se a tarefa é aprovar cor, medir é necessário.</p>
+
+      <h2>A adaptação visual muda o branco que parece neutro</h2>
+      <p>Depois de alguns minutos em uma sala iluminada por lâmpadas quentes, uma folha tende a voltar a parecer branca. Ao olhar logo em seguida para uma tela mais azulada, ela pode parecer fria até que a visão se adapte. Esse mecanismo ajuda no cotidiano, porém torna comparações de memória frágeis. Alternar rapidamente dois brancos também exagera a diferença entre eles.</p>
+      <p>Para comparar, mantenha o entorno estável e observe cada condição pelo mesmo intervalo. Use superfícies neutras ao redor da imagem e faça pausas. Não escolha um ponto branco apenas porque ele parece agradável depois de longa adaptação; confronte-o com o destino. Em uma videochamada, julgue o arquivo da câmera. Em impressão, use a condição de visualização prevista. Em design web, considere o fluxo gerenciado e a diversidade de telas do público.</p>
+
+      <h2>Mesma CCT não significa mesma luz sobre um objeto</h2>
+      <p>Duas fontes podem ter cromaticidade próxima e distribuições espectrais diferentes. Uma camiseta, tinta ou pele pode refletir partes distintas desses espectros e mudar de aparência entre as fontes. Esse fenômeno explica por que alinhar números de CCT não garante que objetos coloridos combinem na câmera ou a olho nu. Também impede usar uma tela RGB como substituta automática de uma luz padrão.</p>
+      <p>Faça a comparação com os materiais reais da cena. Inclua tons de pele, tecido, embalagem e uma referência apropriada quando necessário. Se o fundo parece alinhado e o produto muda, reduzir a diferença a “balanço de branco” perde informação. Para um trabalho crítico, meça as fontes e siga o método do fluxo; para uma chamada, escolha a combinação que mantém aparência coerente na câmera e registre seus limites.</p>
+
+      <h2>CCT e desvio verde ou magenta são problemas distintos</h2>
+      <p>A sequência “mais quente” a “mais fria” descreve uma direção aproximada. Uma fonte pode se afastar para verde ou magenta sem que o número de CCT comunique bem essa diferença. Tentar corrigir esse desvio movendo apenas o seletor de temperatura costuma alternar entre um branco amarelado e outro azulado sem chegar ao neutro percebido.</p>
+      <p>Quando câmera ou software oferecem controles separados de temperatura e tint, trate-os como eixos diferentes. Faça uma fotografia de referência, mude um controle e volte ao início antes do próximo. Na tela do MonitorSmith, os valores são uma aproximação RGB; eles não medem esse afastamento nem informam o espectro. Não copie o número resultante para uma luminária esperando equivalência.</p>
+
+      <h2>Como alinhar a aparência em uma videochamada</h2>
+      <ol>
+        <li>Reduza fontes que não podem ser controladas e escolha uma luz principal para o rosto.</li>
+        <li>Fixe câmera, exposição e enquadramento. Se o balanço só funciona automaticamente, espere estabilizar antes de comparar.</li>
+        <li>Abra no monitor uma área nominalmente neutra e ajuste o brilho apenas até preencher as sombras.</li>
+        <li>Compare uma variação mais quente e uma mais fria, gravando cada uma. Não altere a luz principal durante a sequência.</li>
+        <li>Assista aos arquivos lado a lado em uma tela conhecida, com atenção a pele, roupa branca e fundo.</li>
+        <li>Escolha a versão que se mistura à fonte principal sem criar uma dominante evidente. Salve valor nominal e configuração como ponto de partida.</li>
+        <li>Repita no horário da chamada se houver janela no ambiente. Uma mudança na luz dominante invalida a comparação anterior.</li>
+      </ol>
+      <p>Esse processo produz uma escolha operacional, não uma medição em kelvin. Se outra câmera, monitor ou luminária entrar na cena, refaça a amostra. Para reproduzir cor de produto, arte ou maquiagem, use iluminação e referência compatíveis com essa responsabilidade.</p>
+
+      <h2>Como evitar mistura de fontes difíceis de corrigir</h2>
+      <table>
+        <thead><tr><th scope="col">Situação</th><th scope="col">O que aparece</th><th scope="col">Primeiro teste</th></tr></thead>
+        <tbody>
+          <tr><td>Janela de um lado, lâmpada quente do outro</td><td>Cada metade do rosto assume uma dominante.</td><td>Reduzir uma fonte e escolher qual será principal.</td></tr>
+          <tr><td>Tela azulada preenchendo sombras</td><td>Áreas escuras ficam frias enquanto realces permanecem quentes.</td><td>Ajustar o tom nominal da tela e comparar com ela desligada.</td></tr>
+          <tr><td>Luz colorida sobre parede neutra</td><td>Fundo e reflexos contaminam cabelo ou produto.</td><td>Aumentar distância e conter o feixe antes da correção global.</td></tr>
+          <tr><td>Balanço automático durante slides</td><td>A pele muda quando a tela compartilhada clareia.</td><td>Travar o balanço quando suportado e repetir a transição.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Ponto branco de tela e luz de observação têm papéis diferentes</h2>
+      <p>O ponto branco do monitor integra um sistema de reprodução. A luz que cai sobre uma impressão revela o papel e as tintas. Mesmo quando as duas condições usam referências relacionadas, tela emissiva e cópia refletiva não se igualam apenas por um número. O nível de luz, o entorno e a adaptação participam da comparação.</p>
+      <p>Em prova de impressão, siga o perfil e a condição informados pelo fornecedor e compare a cópia sob iluminação apropriada. Não coloque uma folha ao lado do monitor sob qualquer lâmpada e ajuste RGB até os brancos coincidirem. Esse método mistura papel, lâmpada, brilho de tela e adaptação sem saber qual componente mudou.</p>
+
+      <h2>Uma medição precisa de contexto para ser útil</h2>
+      <p>Um instrumento fornece valores, mas o relatório precisa dizer o que foi medido, com qual geometria, em que modo e sob quais condições. Para tela, registre brilho, preset, conexão e perfil. Para fonte, registre distância, orientação e estabilização. Compare resultados obtidos pelo mesmo método antes de interpretar pequenas diferenças como deriva.</p>
+      <p>Se o objetivo é manutenção, preserve uma leitura inicial e repita após mudanças ou no intervalo definido pelo trabalho. Se é combinar fontes, meça cada uma na posição usada e avalie materiais reais. O número ganha sentido quando ligado a uma decisão concreta; sozinho, não descreve qualidade, conforto ou fidelidade.</p>
 
       <h2>Erros comuns e limites</h2>
       <ul>

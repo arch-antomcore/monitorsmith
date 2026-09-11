@@ -9,6 +9,7 @@ const EXTREME_VIEWPORTS = [
 
 const MAX_MESSAGE = 'W'.repeat(220)
 const MAX_QR_CONTENT = `https://monitorsmith.app/status?payload=${'q'.repeat(981)}`.slice(0, 1024)
+const OVERSIZED_CJK_QR_CONTENT = '界'.repeat(1024)
 
 const settleLayout = (page) =>
   page.evaluate(
@@ -115,6 +116,10 @@ test('mensagem máxima e QR fazem auto-fit sem sair do viewport', async ({ page 
   await page.getByRole('checkbox', { name: 'Exibir QR Code' }).check()
   await page.getByRole('textbox', { name: /^Conteúdo do QR/ }).fill(MAX_QR_CONTENT)
   await expect(page.locator('.message-overlay__message')).toHaveText(MAX_MESSAGE)
+  await expect(page.locator('.message-overlay__qr-code')).toHaveAttribute('data-qr-capacity-state', 'valid')
+  await expect(page.locator('.message-overlay__qr-code')).toHaveAttribute('data-qr-error-correction-minimum', 'M')
+  await expect(page.locator('.message-overlay__qr-code')).toHaveAttribute('data-qr-error-correction-boost', 'automatic')
+  await expect(page.locator('.message-overlay__qr-code')).toHaveAttribute('data-qr-quiet-zone-modules', '4')
   await hideInterface(page)
 
   for (const viewportSize of EXTREME_VIEWPORTS) {
@@ -193,4 +198,26 @@ test('mensagem máxima e QR fazem auto-fit sem sair do viewport', async ({ page 
     expect(geometry.documentOverflow.horizontal).toBeLessThanOrEqual(1)
     expect(geometry.documentOverflow.vertical).toBeLessThanOrEqual(1)
   }
+})
+
+test('QR preserva 1024 caracteres CJK e permite corrigir conteúdo acima da capacidade', async ({ page }) => {
+  await page.goto('/?tool=message')
+  await page.getByRole('checkbox', { name: 'Exibir QR Code' }).check()
+
+  const qrInput = page.getByRole('textbox', { name: /^Conteúdo do QR/ })
+  await qrInput.fill(OVERSIZED_CJK_QR_CONTENT)
+
+  await expect(qrInput).toHaveValue(OVERSIZED_CJK_QR_CONTENT)
+  await expect(qrInput).toBeEditable()
+  await expect(page.locator('[data-qr-capacity-state="exceeded"]')).toContainText(
+    'Conteúdo grande demais para um QR Code.',
+  )
+  await expect(page.getByText('O valor não foi cortado.')).toBeVisible()
+  await expect(page.locator('.message-overlay__qr-code')).toHaveCount(0)
+
+  await qrInput.fill('https://monitorsmith.app/qr-code/')
+
+  await expect(page.locator('[data-qr-capacity-state="exceeded"]')).toHaveCount(0)
+  await expect(page.locator('.message-overlay__qr-code')).toBeVisible()
+  await expect(page.locator('.message-overlay__qr-code')).toHaveAttribute('data-qr-capacity-state', 'valid')
 })

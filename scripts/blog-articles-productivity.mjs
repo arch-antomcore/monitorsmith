@@ -1,4 +1,6 @@
-export default [
+import { PRODUCTIVITY_EXPANSIONS } from './blog-articles-productivity-expansions.mjs';
+
+const PRODUCTIVITY_ARTICLES = [
   {
     slug: 'tecnica-pomodoro-guia',
     toolId: 'focus-timer',
@@ -6,7 +8,7 @@ export default [
     h1: 'Técnica Pomodoro: um procedimento prático para testar no trabalho',
     description: 'Aprenda a planejar ciclos de foco, registrar interrupções e ajustar trabalho e pausas sem tratar 25 minutos como regra universal.',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     relatedSlugs: ['ruido-marrom-branco-rosa-foco', 'foco-trabalho-remoto'],
     faq: [
       ['O que é a Técnica Pomodoro?', 'É um método de gestão de tempo criado por Francesco Cirillo que alterna blocos de trabalho focado com pausas curtas. Vinte e cinco minutos é uma convenção popular, não uma duração universal.'],
@@ -61,7 +63,7 @@ export default [
     h1: 'Ruído branco, rosa e marrom para foco: como comparar com cuidado',
     description: 'Entenda as diferenças entre ruído branco, rosa e marrom, compare a reprodução em volume baixo e reconheça os limites do navegador.',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     relatedSlugs: ['tecnica-pomodoro-guia', 'foco-trabalho-remoto'],
     faq: [
       ['Qual a diferença física entre ruído branco, rosa e marrom?', 'O ruído branco possui densidade espectral constante. O ruído rosa reduz a energia conforme a frequência sobe, e o ruído marrom concentra ainda mais energia nas frequências baixas. A reprodução percebida também depende do equipamento.'],
@@ -116,7 +118,7 @@ export default [
     h1: 'Como organizar foco no trabalho remoto sem confundir presença com resultado',
     description: 'Monte uma rotina com entregas claras, blocos de atenção, pausas, registro de interrupções e revisão do ambiente de trabalho.',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     relatedSlugs: ['tecnica-pomodoro-guia', 'setup-dois-monitores-dicas'],
     faq: [
       ['Como mitigar distrações no home office?', 'Defina uma entrega por vez, combine janelas de resposta, silencie avisos dispensáveis e registre interrupções recorrentes. O espaço e a rotina devem ser ajustados às responsabilidades reais.'],
@@ -177,7 +179,7 @@ export default [
     h1: 'Como usar um monitor secundário como relógio de mesa',
     description: 'Configure hora e data em tela cheia, confira o relógio do sistema e reduza riscos de imagem estática e consumo desnecessário.',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     relatedSlugs: ['setup-dois-monitores-dicas', 'guia-completo-monitorsmith'],
     faq: [
       ['Quais os benefícios de um relógio na tela secundária?', 'Mantém uma referência de horário visível sem precisar alternar de aplicativo ou consultar outro dispositivo.'],
@@ -232,7 +234,7 @@ export default [
     h1: 'Setup com dois monitores: configuração prática e verificação',
     description: 'Organize dois monitores com resolução, escala, posição física e ergonomia coerentes, e saiba o que comparar antes de ajustar.',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     relatedSlugs: ['relogio-digital-monitor-secundario', 'foco-trabalho-remoto'],
     faq: [
       ['Qual configuração usar: dois horizontais ou um vertical?', 'Depende das tarefas, aplicativos e espaço. O modo retrato mostra mais linhas em alguns fluxos; teste também largura, escala e rotação antes de fixar o suporte.'],
@@ -290,7 +292,7 @@ export default [
     h1: 'Como usar um teleprompter online em gravações',
     description: 'Prepare um roteiro legível, escolha quando espelhar o texto, ensaie a leitura e teste enquadramento e captura antes de gravar.',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     relatedSlugs: ['guia-completo-monitorsmith', 'sinalizacao-digital-eventos'],
     faq: [
       ['O que faz o vidro de teleprompter?', 'Uma superfície semirrefletora pode mostrar o texto ao apresentador enquanto a câmera registra a cena. Proporção, orientação e perda de luz variam por produto.'],
@@ -346,7 +348,7 @@ export default [
     h1: 'Como preparar uma mensagem em tela cheia para eventos',
     description: 'Crie avisos legíveis, teste contraste e distância, configure o navegador e mantenha um plano para falhas e mudanças urgentes.',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     relatedSlugs: ['qr-code-tela-cheia-eventos', 'logos-patrocinadores-eventos'],
     faq: [
       ['O que é Digital Signage no contexto corporativo?', 'É o uso de displays eletrônicos para apresentar avisos, orientação, status ou programação. A operação pode variar de uma página local supervisionada a uma plataforma gerenciada.'],
@@ -402,22 +404,23 @@ export default [
     h1: 'Como exibir um QR code em tela cheia com destino e contexto',
     description: 'Monte um QR code com URL reconhecível, margem, contraste e alternativa em texto; teste aparelhos, distâncias e segurança antes do evento.',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     relatedSlugs: ['sinalizacao-digital-eventos', 'vitrine-digital-lojas-estandes'],
     faq: [
       ['Por que projetar QR Codes em tela cheia durante apresentações?', 'Isso reduz a digitação manual e permite que várias pessoas tentem abrir o mesmo destino. O endereço também deve aparecer em texto para quem não puder usar a câmera.'],
       ['O que é a correção de erro Reed-Solomon em QR Codes?', 'É um mecanismo de redundância que tolera parte dos módulos ausentes ou corrompidos. Ele não garante leitura quando há reflexo, distância, foco ou obstrução excessivos.'],
-      ['Qual tamanho usar na projeção?', 'Aumente o código e a margem até diferentes celulares conseguirem ler do ponto mais distante. Não existe percentual que garanta foco em toda câmera e ambiente.'],
+      ['Qual tamanho usar na projeção?', 'Escolha uma tela e um layout que apresentem o código maior, com a margem livre preservada, e teste celulares diferentes no ponto mais distante. A interface não oferece controle manual do tamanho e nenhum percentual garante foco em toda câmera e ambiente.'],
     ],
     sources: [
       { label: 'DENSO WAVE — Error Correction Feature', url: 'https://www.qrcode.com/en/about/error_correction.html', note: 'Explica níveis de correção de erro do QR Code e a troca entre recuperação e capacidade.' },
       { label: 'DENSO WAVE — Point for setting the module size', url: 'https://www.qrcode.com/en/howto/code.html/index.html', note: 'Orienta sobre tamanho dos módulos e margem livre ao redor do símbolo.' },
+      { label: 'qrcode.react — propriedades de geração', url: 'https://github.com/zpao/qrcode.react#available-props', note: 'Documenta o nível mínimo de correção, a elevação automática quando há capacidade e o tamanho da margem configurável usados pelo componente.' },
       { label: 'Federal Trade Commission — Scammers hide harmful links in QR codes', url: 'https://consumer.ftc.gov/consumer-alerts/2023/12/scammers-hide-harmful-links-qr-codes-steal-your-information', note: 'Alerta para destinos maliciosos e para a verificação do endereço antes de abrir um QR code.' },
     ],
     body: `
       <p>Um QR code em tela funciona quando a câmera consegue separar seus módulos, reconhecer a margem e interpretar um conteúdo que permanece válido. A composição precisa dizer também o que será aberto e oferecer um caminho alternativo. Mostrar apenas um quadrado sem domínio, ação ou contexto obriga o visitante a confiar em um destino invisível e dificulta a recuperação quando a leitura falha.</p>
 
-      <p>O modo Mensagem do MonitorSmith gera uma representação visual a partir do texto ou URL fornecida e a exibe no navegador. O campo atual aceita até 1.024 caracteres e mostra uma prévia do conteúdo; confira essa prévia antes de publicar. A ferramenta não hospeda a página de destino, não encurta o endereço, não verifica malware, não mede a taxa de leitura e não garante que outro aparelho abrirá o conteúdo. Se o endereço muda ou expira, o código continua apontando para o valor antigo.</p>
+      <p>O modo Mensagem do MonitorSmith gera uma representação visual a partir do texto ou URL fornecida e a exibe no navegador. O campo aceita no máximo 1.024 caracteres, mas esse teto não garante que toda entrada caiba num QR code: a capacidade efetiva depende dos bytes, do modo de codificação e da correção de erro, e um conteúdo longo pode ser recusado. Confira a prévia antes de publicar. A ferramenta não hospeda a página de destino, não encurta o endereço, não verifica malware nem mede a taxa de leitura. Se o endereço muda ou expira, o código continua apontando para o valor antigo.</p>
 
       <h2>Prepare primeiro o destino</h2>
       <p>Use HTTPS e um domínio que o público possa reconhecer. Abra o endereço em janela privada e conexão diferente para identificar login obrigatório, permissão negada, redirecionamento inesperado ou página pesada. Confirme título, idioma, formulário, consentimento e mensagem após envio. Se usar um redirecionador sob seu controle, documente quem pode alterá-lo e por quanto tempo ele será mantido.</p>
@@ -426,7 +429,7 @@ export default [
       <ol>
         <li><strong>Copie o endereço final.</strong> Remova parâmetros desnecessários e confirme que não há espaço, quebra de linha ou erro de digitação.</li>
         <li><strong>Gere o código.</strong> Cole o valor no modo Mensagem. Quanto mais dados houver, mais denso pode ficar o símbolo; uma URL curta e estável facilita a apresentação.</li>
-        <li><strong>Preserve a margem.</strong> Não encoste texto, bordas, logo ou decoração nos quatro lados. A DENSO WAVE descreve uma zona livre ao redor do código.</li>
+        <li><strong>Preserve a margem.</strong> Reserve uma zona clara equivalente a quatro módulos em todos os lados. Não invada essa área com texto, borda, logo ou decoração.</li>
         <li><strong>Use contraste simples.</strong> Prefira código escuro sobre fundo claro. Transparência, gradiente e inversão podem falhar em leitores ou condições específicas.</li>
         <li><strong>Mostre contexto e alternativa.</strong> Escreva ação, domínio e uma URL curta legível. Explique se haverá cadastro, download ou pedido de permissão.</li>
         <li><strong>Teste no display final.</strong> Use aparelhos e aplicativos diferentes, com brilho e iluminação do evento. Leia de perto, da distância prevista e em ângulos laterais.</li>
@@ -434,9 +437,9 @@ export default [
       </ol>
 
       <h2>Interprete as falhas</h2>
-      <p>Se funciona de perto e falha longe, aumente o código ou reduza a quantidade de dados. Se falha sob luz forte, mude posição, controle reflexos e revise brilho e contraste. Se apenas um aparelho falha, compare câmera e aplicativo, mas não descarte o problema: o público pode usar combinação semelhante. Se todos reconhecem o código e não chegam ao conteúdo, investigue rede, certificado, redirecionamento e disponibilidade do destino.</p>
+      <p>Se funciona de perto e falha longe, reduza a quantidade de dados ou use uma tela e um layout que o apresentem maior; a interface não possui ajuste manual de tamanho. Se falha sob luz forte, mude a posição, controle reflexos e revise brilho e contraste. Se apenas um aparelho falha, compare câmera e aplicativo, mas não descarte o problema: o público pode usar combinação semelhante. Se todos reconhecem o código e não chegam ao conteúdo, investigue rede, certificado, redirecionamento e disponibilidade do destino.</p>
 
-      <p>Correção de erro permite recuperar parte de um símbolo danificado, com custo de capacidade, mas não torna seguro cobrir o centro com logo ou ignorar a margem. Não escolha um nível apenas pelo nome alto. Use a configuração oferecida, mantenha o símbolo desobstruído e valide no tamanho final. O MonitorSmith não fornece certificação de conformidade do código.</p>
+      <p>Correção de erro permite recuperar parte de um símbolo danificado, com custo de capacidade, mas não torna seguro cobrir o centro com logo ou ignorar a margem. O componente solicita pelo menos o nível M; a biblioteca pode elevar esse nível quando houver capacidade na mesma versão do símbolo. Mantenha a área desobstruída e valide no tamanho final. O MonitorSmith não fornece certificação de conformidade do código.</p>
 
       <h2>Segurança e erros comuns</h2>
       <ul>
@@ -458,7 +461,7 @@ export default [
     h1: 'Como organizar um loop de logos para evento ou transmissão',
     description: 'Prepare arquivos autorizados, defina ordem e duração, teste o loop no display final e escolha uma captura adequada no software de transmissão.',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     relatedSlugs: ['sinalizacao-digital-eventos', 'vitrine-digital-lojas-estandes'],
     faq: [
       ['Qual o tempo ideal de exibição por patrocinador em um loop?', 'Não existe intervalo universal. A duração deve permitir reconhecer a arte na distância real e respeitar o plano aprovado para o evento. Observe um ciclo completo antes de publicar.'],
@@ -515,7 +518,7 @@ export default [
     h1: 'Como montar uma vitrine digital simples em loja ou estande',
     description: 'Planeje uma sequência curta de imagens, confira preços e validade, instale o monitor com segurança e defina uma rotina de operação.',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     relatedSlugs: ['logos-patrocinadores-eventos', 'sinalizacao-digital-eventos'],
     faq: [
       ['Quais as vantagens de vitrines digitais?', 'Elas permitem trocar artes sem reimpressão. O efeito depende de local, conteúdo, público e operação; o MonitorSmith não mede visualizações, vendas ou conversões.'],
@@ -572,7 +575,7 @@ export default [
     h1: 'Guia do MonitorSmith: método, evidência e limites das ferramentas',
     description: 'Aprenda a formular uma pergunta, controlar variáveis, registrar observações e escolher uma verificação seguinte ao usar as 27 ferramentas.',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     relatedSlugs: ['tecnica-pomodoro-guia', 'relogio-digital-monitor-secundario', 'setup-dois-monitores-dicas'],
     faq: [
       ['O que é a suíte MonitorSmith?', 'É um conjunto de 27 utilitários web da EXVORN.TECH para inspeção visual, cálculo, teste de entradas, apoio de iluminação, tempo e apresentação. Eles operam dentro dos limites do navegador.'],
@@ -635,3 +638,12 @@ export default [
     `,
   },
 ];
+
+export default PRODUCTIVITY_ARTICLES.map((article) => {
+  const expansion = PRODUCTIVITY_EXPANSIONS[article.slug];
+  if (!expansion) throw new Error(`Expansão editorial ausente para ${article.slug}`);
+  const finalSectionAt = article.body.lastIndexOf('\n      <h2>');
+  if (finalSectionAt < 0) throw new Error(`Seção final ausente para ${article.slug}`);
+  const body = `${article.body.slice(0, finalSectionAt)}${expansion}${article.body.slice(finalSectionAt)}`;
+  return Object.freeze({ ...article, body });
+});

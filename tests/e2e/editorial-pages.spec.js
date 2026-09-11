@@ -43,11 +43,11 @@ test('artigo apresenta autoria, conteúdo, fontes e metadados coerentes', async 
   await expect(page.locator('#ms-consent')).toHaveCount(0)
 
   await expect(page.getByRole('heading', { level: 1, name: 'Como comparar IPS glow e backlight bleed' })).toBeVisible()
-  await expect(page.locator('article[data-blog-article] h2')).toHaveCount(5)
-  await expect(page.locator('[data-editorial-sources] a')).toHaveCount(2)
+  expect(await page.locator('article[data-blog-article] h2').count()).toBeGreaterThanOrEqual(10)
+  expect(await page.locator('[data-editorial-sources] a').count()).toBeGreaterThanOrEqual(3)
   await expect(page.locator('a.cta')).toHaveCount(1)
   await expect(page.locator('meta[property="article:published_time"]')).toHaveAttribute('content', '2026-08-10')
-  await expect(page.locator('meta[property="article:modified_time"]')).toHaveAttribute('content', '2026-09-09')
+  await expect(page.locator('meta[property="article:modified_time"]')).toHaveAttribute('content', '2026-09-11')
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://monitorsmith.app/blog/ips-glow-vs-backlight-bleed/')
   expect(advertisingRequests).toEqual([])
 

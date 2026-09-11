@@ -6,7 +6,7 @@ export default [
     description: 'Use um protocolo controlado para comparar áreas claras em cenas escuras, registrar as condições e levar evidências úteis ao suporte.',
     toolId: 'black',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'Dell — Troubleshooting light leakage or bleeding on an LCD display',
@@ -17,6 +17,11 @@ export default [
         label: 'ISO 9241-307 — Electronic visual displays',
         url: 'https://www.iso.org/standard/40102.html',
         note: 'Referência técnica para métodos de teste e requisitos de análise de displays eletrônicos.'
+      },
+      {
+        label: 'Dell — How to run a diagnostic test on a Dell monitor',
+        url: 'https://www.dell.com/support/kbdoc/en-us/000124390/how-to-run-diagnostic-test-on-a-dell-monitor',
+        note: 'Mostra como o autoteste interno separa uma anormalidade do monitor de problemas no computador, na placa gráfica ou no sinal.'
       }
     ],
     relatedSlugs: ['ips-glow-vs-backlight-bleed', 'como-testar-monitor-oled', 'testar-monitor-olx-mercado-livre'],
@@ -55,6 +60,35 @@ export default [
       </table>
       <p>Uma área que muda com o observador é compatível com comportamento angular, como o IPS glow. Uma região que permanece próxima da mesma borda em condições repetidas pode justificar um registro de vazamento aparente. Esses padrões orientam a conversa com o suporte; não revelam qual camada, fixação ou componente produziu a aparência.</p>
 
+      <h2>Faça duas passagens com objetivos diferentes</h2>
+      <p>Uma inspeção útil começa pelo uso normal. Abra uma cena escura de um filme, um jogo ou um projeto que você conheça, sente-se como costuma trabalhar e observe se alguma região clara chama atenção sem que você a procure. Essa primeira passagem responde à pergunta mais prática: o efeito interfere na imagem que motivou a compra do monitor? Anote o horário, a iluminação do cômodo e o ajuste de brilho. Não apague as luzes só para intensificar o achado.</p>
+      <p>A segunda passagem serve para localizar e repetir. Use preto e cinza escuro em tela cheia, mantenha as condições anotadas e percorra bordas e cantos. Se quiser incluir uma observação em ambiente escuro, faça-a depois e identifique-a como condição adicional. Separar as duas passagens evita que um caso visível somente em uma situação extrema receba o mesmo peso de uma região perceptível durante o trabalho.</p>
+
+      <h2>Monte uma ficha que outra pessoa consiga repetir</h2>
+      <p>Não é preciso transformar a mesa em laboratório. Uma ficha curta já reduz ambiguidades: modelo completo, entrada, resolução, taxa de atualização, modo de imagem, brilho mostrado no menu, HDR ligado ou desligado, escurecimento local e tempo desde que o painel foi ligado. Acrescente distância aproximada dos olhos, altura da cadeira e fontes de luz acesas. Quando repetir, mude uma variável por vez e registre a alteração.</p>
+      <table>
+        <thead><tr><th scope="col">Passagem</th><th scope="col">Condição</th><th scope="col">Pergunta respondida</th></tr></thead>
+        <tbody>
+          <tr><td>Uso habitual</td><td>Conteúdo real, brilho e luz cotidianos</td><td>A região distrai ou encobre detalhes?</td></tr>
+          <tr><td>Padrão controlado</td><td>Preto e cinza escuro, posição marcada</td><td>O achado reaparece no mesmo lugar?</td></tr>
+          <tr><td>Variação angular</td><td>Mesmo padrão, movimento da cabeça</td><td>A aparência acompanha o observador?</td></tr>
+          <tr><td>Autoteste</td><td>Rotina prevista no manual do modelo</td><td>O achado existe sem o sinal do computador?</td></tr>
+        </tbody>
+      </table>
+      <p>Se o monitor tiver diagnóstico interno, siga o manual em vez de copiar uma combinação de botões de outro aparelho. A Dell, por exemplo, orienta localizar o procedimento no guia do modelo e usa o teste integrado para verificar se uma anormalidade também aparece sem depender do computador. O princípio é útil; os comandos não são universais.</p>
+
+      <h2>Compare sem criar uma falsa equivalência</h2>
+      <p>Duas unidades do mesmo modelo oferecem uma comparação mais informativa do que telas de famílias diferentes, desde que usem configuração, entrada, ambiente e posição semelhantes. Ainda assim, a comparação lado a lado não define sozinha o limite de fabricação. Variações de tamanho, tipo de painel, curva, revestimento, sistema de iluminação e algoritmo de escurecimento tornam uma fotografia de outro produto uma referência fraca.</p>
+      <p>Também não use a borda do vídeo como prova. Filmes podem trazer barras pretas comprimidas, vinheta, granulação ou gradação irregular no próprio arquivo. Abra o padrão local em tela cheia e confirme que ele cobre a área útil. Em seguida, volte ao conteúdo real. Se a região só aparece no arquivo, investigue a fonte; se aparece no menu ou no autoteste, o registro ganha contexto para o suporte.</p>
+
+      <h2>Fotografe uma sequência, não um flagrante isolado</h2>
+      <p>Comece com uma foto ampla que mostre a tela inteira e um pouco do ambiente. Faça outra do mesmo enquadramento com cinza escuro e, se necessário, uma aproximação moderada da área. Trave exposição e foco quando o aplicativo permitir, desligue modo noturno, HDR da câmera e filtros de embelezamento. Não recorte a primeira imagem: ela documenta posição e proporção.</p>
+      <p>Ao nomear os arquivos, use uma sequência simples, como “uso-normal”, “preto-frontal”, “cinza-frontal” e “preto-angulo”. Guarde os originais e faça marcações somente em cópias. Se a câmera mostra uma mancha mais forte do que seus olhos, escreva isso no relato. A discrepância não invalida a foto; apenas define o que ela consegue demonstrar.</p>
+
+      <h2>Decida o próximo passo pelo impacto observado</h2>
+      <p>Uma região discreta no padrão, mas invisível no conteúdo de trabalho, pode ser acompanhada com a ficha guardada. Quando a claridade encobre detalhes, desvia o olhar em cenas comuns ou mudou desde a primeira inspeção, repita a sequência nas mesmas condições e procure o canal oficial. Em produto recém-entregue, verifique também os prazos e procedimentos do vendedor antes de desmontar a instalação ou descartar a embalagem.</p>
+      <p>Envie ao atendimento um conjunto enxuto: foto geral, comparação de fundos, condições anotadas, resultado do diagnóstico interno quando disponível e descrição do impacto. Frases como “canto inferior direito visível a 80 cm em cenas escuras com brilho 35” permitem uma análise melhor do que “a tela está horrível”. O suporte pode pedir outro procedimento; preserve a configuração inicial para que as duas séries continuem comparáveis.</p>
+
       <h2>Erros comuns e limites</h2>
       <ul>
         <li>Elevar o brilho apenas para produzir uma imagem mais dramática e depois comparar com o uso normal.</li>
@@ -73,7 +107,7 @@ export default [
     description: 'Compare brilho aparente em cenas escuras variando ângulo, distância e posição, sem transformar uma observação visual em diagnóstico do painel.',
     toolId: 'black',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'BenQ — What is IPS glow and how can I reduce it?',
@@ -84,6 +118,11 @@ export default [
         label: 'Dell — Troubleshooting light leakage or bleeding on an LCD display',
         url: 'https://www.dell.com/support/kbdoc/en-us/000132299/troubleshooting-light-leakage-bleeding-on-a-lcd-monitor-or-notebook-lcd-screen',
         note: 'Orienta avaliar vazamento aparente em condições controladas e considerar posição e exposição.'
+      },
+      {
+        label: 'ISO 9241-307 — Electronic visual displays',
+        url: 'https://www.iso.org/standard/40102.html',
+        note: 'Referência para métodos e condições de avaliação de displays; ajuda a separar uma observação doméstica de um ensaio de conformidade.'
       }
     ],
     relatedSlugs: ['backlight-bleed-como-testar', 'politica-dead-pixel-fabricantes', 'o-que-sao-dead-pixels'],
@@ -125,6 +164,32 @@ export default [
       <p>Se precisar fotografar, apoie o telefone no mesmo lugar para todas as imagens, mantenha a lente paralela ao centro da tela e use os mesmos controles de captura. Inclua uma foto com alguma luz ambiente e outra apenas se o suporte solicitar uma condição escura. Não edite contraste, sombras ou saturação; guarde os arquivos originais.</p>
       <p>Faça também uma descrição curta: posição do observador, distância aproximada, brilho, modo de imagem, iluminação e quais regiões mudaram durante o movimento. A descrição registra o que a câmera não reproduz bem e permite repetir a observação depois.</p>
 
+      <h2>Use pontos fixos para não confundir movimento</h2>
+      <p>Antes de começar, escolha três referências que não mudem: o centro do assento, a borda da mesa e a altura dos olhos em relação ao topo da tela. Uma fita na mesa pode marcar a distância da cadeira sem tocar no monitor. Faça a primeira leitura no centro e volte a esse ponto depois de cada deslocamento. Assim, “mudou de lugar” descreve uma comparação real, não uma lembrança aproximada.</p>
+      <p>Ao mover a cabeça, acompanhe um canto por vez. Um halo angular pode crescer no canto oposto ao deslocamento, perder intensidade quando a visão se aproxima da perpendicular ou assumir outra tonalidade. Uma faixa junto à moldura pode continuar na mesma área, embora sua aparência também mude com o ângulo. O comportamento forma um conjunto de indícios; nenhum gesto isolado cria um diagnóstico.</p>
+
+      <h2>Faça uma comparação A/B sem perder o controle</h2>
+      <ol>
+        <li>Comece na posição marcada, com luz ambiente moderada e brilho habitual. Registre a aparência em preto e cinza escuro.</li>
+        <li>Afaste a cadeira por uma distância pequena e repetível. Não incline a tela nem altere o brilho nesse momento.</li>
+        <li>Volte à marca inicial e reduza apenas a luz que causa reflexo direto. Compare o que mudou no vidro e o que permaneceu dentro da imagem.</li>
+        <li>Restaure o ambiente e ajuste somente o brilho para um nível confortável mais baixo. Anote se a região perdeu destaque junto com o restante da imagem.</li>
+        <li>Abra uma cena real escura e outra com contraste médio. Descreva se o efeito continua visível quando há objetos, movimento e detalhes.</li>
+      </ol>
+      <p>Essa ordem não procura fazer a aparência desaparecer a qualquer custo. Ela mostra qual variável exerce maior influência. Se a distância muda muito o halo e a posição aparente migra, o componente angular fica mais evidente. Se a mesma faixa junto à borda reaparece após cada retorno ao ponto inicial, registre essa estabilidade para a conversa com o fabricante.</p>
+
+      <h2>Leve em conta tamanho, curva e disposição da mesa</h2>
+      <p>Em telas grandes, os cantos são vistos por um ângulo mais oblíquo quando a pessoa fica perto. Afastar-se pode tornar a linha de visão mais uniforme sem alterar o painel. Em um monitor curvo, a relação entre olhos, centro e bordas muda novamente; por isso, a posição usada em uma tela plana não deve ser copiada de modo automático. A altura também conta: uma cadeira baixa pode intensificar uma área que fica discreta quando os olhos se alinham ao centro.</p>
+      <p>Um segundo monitor ao lado costuma ficar inclinado. Se ele for comparado ao principal sem que ambos estejam voltados para o observador, a diferença angular já está embutida no arranjo. Para uma checagem curta, gire temporariamente cada tela para uma observação frontal, sem alterar os suportes além do movimento previsto pelo fabricante. Depois devolva o conjunto à posição de trabalho e avalie o incômodo real.</p>
+
+      <h2>Leia a fotografia como registro da câmera</h2>
+      <p>O modo automático tende a clarear uma cena predominantemente preta. Em alguns telefones, múltiplos quadros são combinados para revelar detalhes que quase não apareciam ao vivo. Uma lente grande-angular perto do monitor também observa os cantos por ângulos diferentes do olho colocado mais longe. Esses recursos explicam por que a imagem pode parecer mais severa; não autorizam concluir que a câmera “inventou” tudo.</p>
+      <p>Para uma série coerente, use o mesmo aparelho, lente, distância, orientação e exposição. Inclua uma fotografia com conteúdo normal na mesma configuração. Se houver outro monitor no enquadramento, não use sua luminosidade como escala: processamento local e diferenças entre telas impedem uma comparação fotométrica. O texto que acompanha a série deve dizer o que mudava ao mover a cabeça e o que permanecia fixo.</p>
+
+      <h2>Três situações que pedem leituras diferentes</h2>
+      <p>Em um jogo escuro, a atenção se move e a região clara pode atrapalhar a leitura de detalhes próximos à borda. Em edição de fotografia, a luz ambiente e a posição central costumam ser mais controladas, então uma diferença repetível merece ser descrita nas condições de trabalho. Durante um filme visto de lado por várias pessoas, cada assento produz uma relação angular diferente; uma única foto central não representa todos os espectadores.</p>
+      <p>Relate o cenário que importa em vez de procurar uma etiqueta universal. “O halo acompanha meu movimento e some na posição central” orienta ajuste de ergonomia. “A faixa inferior permanece visível de frente e cobre detalhe em cenas comuns” orienta uma nova inspeção e possível chamado. Se os dois comportamentos aparecem ao mesmo tempo, registre-os em linhas separadas.</p>
+
       <h2>Erros comuns e limites</h2>
       <ul>
         <li>Encostar a câmera no painel, criando um ângulo que não representa o uso.</li>
@@ -143,7 +208,7 @@ export default [
     description: 'Confira sinal, superfície, cores, uniformidade aparente, retenção e rotinas de manutenção seguindo os controles previstos pelo fabricante.',
     toolId: 'black',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'LG — Troubleshooting image burn-in on an OLED display',
@@ -159,6 +224,11 @@ export default [
         label: 'LG — Lines or stains on an OLED screen',
         url: 'https://www.lg.com/us/support/help-library/lg-oled-tv-i-see-vertical-lines-or-stains-on-my-screen--20154629490729',
         note: 'Orienta usar o teste de imagem interno para separar a tela de fontes e sinais externos.'
+      },
+      {
+        label: 'Dell — How to run a diagnostic test on a Dell monitor',
+        url: 'https://www.dell.com/support/kbdoc/en-us/000124390/how-to-run-diagnostic-test-on-a-dell-monitor',
+        note: 'Documenta o uso de diagnóstico integrado para verificar anormalidades sem depender do sinal do computador; o procedimento exato varia por modelo.'
       }
     ],
     relatedSlugs: ['tela-preta-descanso-monitor', 'o-que-sao-dead-pixels', 'testar-monitor-olx-mercado-livre'],
@@ -207,6 +277,38 @@ export default [
         </tbody>
       </table>
 
+      <h2>Separe a chegada do painel da condição de uso</h2>
+      <p>Em uma unidade recém-entregue, registre o estado antes de personalizar todos os controles. Fotografe a embalagem se houver impacto, confira se a película indicada foi removida conforme o manual e deixe o aparelho completar a inicialização normal. Depois anote o modo de imagem e faça uma passagem curta. A meta é preservar uma referência de chegada, não submeter o OLED a horas de padrões.</p>
+      <p>Em uma unidade usada, o foco muda. Pergunte quais interfaces ficavam estáticas, por quanto tempo o monitor era usado por dia e como era desligado. Não há como verificar toda a história por uma conversa ou por um contador exibido em menu. Trate as respostas como contexto e concentre a decisão no que pode ser observado: imagem atual, estabilidade das entradas, integridade externa, recursos anunciados e documentação disponível.</p>
+
+      <h2>Observe tons próximos do preto com moderação</h2>
+      <p>Cinza muito escuro pode revelar faixas ou diferenças de tonalidade que desaparecem em imagens claras. Esse tipo de padrão também é sensível ao modo HDR, ao nível de preto enviado pela fonte, à compressão do arquivo e à adaptação dos olhos. Use o brilho cotidiano primeiro, mantenha alguma referência de luz no cômodo e espere apenas o suficiente para observar. Uma sessão prolongada no escuro pode tornar pequenas diferenças mais salientes sem dizer quanto elas interferem no uso.</p>
+      <p>Compare ao menos dois níveis escuros e um cinza médio. Se uma faixa aparece somente em um arquivo baixado, abra o padrão gerado localmente ou o diagnóstico interno. Se surge em todos eles, anote orientação, largura aproximada e distância em que fica visível. Evite expressões como “5% de cinza” se você não controlou toda a cadeia de vídeo; o valor digital da página não é uma medida da luz emitida.</p>
+
+      <h2>Registre imagens residuais ao longo do tempo</h2>
+      <p>Quando aparecer o contorno de uma barra, logotipo ou janela, troque para conteúdo variado e inicie um registro de tempo. Faça uma observação logo após a troca, outra alguns minutos depois e mais uma ao final do período disponível. Mantenha brilho, ambiente e posição. Escreva “visível”, “discreto” ou “não percebido” e indique em quais fundos, sem prometer que a mudança é permanente ou temporária.</p>
+      <p>Não deixe um padrão estático aberto para tentar reproduzir burn-in e não repita ciclos manuais de compensação. O fabricante define quando as rotinas devem ocorrer, e algumas funcionam automaticamente durante o modo de espera. Se a marca persiste em conteúdo comum e no teste interno, leve a linha do tempo ao suporte. Ela mostra comportamento; não estima desgaste restante.</p>
+
+      <h2>Inclua movimento e conexão no roteiro</h2>
+      <p>Fundos sólidos localizam pontos, mas uma tela usada também precisa exibir movimento e manter o sinal. Reproduza um trecho conhecido, role um texto e alterne entre uma janela clara e outra escura. Observe perdas de imagem, lampejos, mudança inesperada de brilho e demora para recuperar o sinal. Faça isso na resolução e taxa que pretende usar.</p>
+      <p>Se ocorrer uma falha, não troque cabo, porta, taxa e aplicativo ao mesmo tempo. Repita o evento; depois mude uma peça da cadeia. Um segundo cabo conhecido pode esclarecer uma perda de sinal, enquanto o menu do próprio monitor ajuda a separar a imagem recebida do funcionamento interno. Recursos como HDR, taxa variável e proteção de brilho podem mudar a aparência. Registre se estavam ativos.</p>
+
+      <h2>Use um quadro de decisão para compra</h2>
+      <table>
+        <thead><tr><th scope="col">Pergunta</th><th scope="col">Evidência disponível</th><th scope="col">Incerteza restante</th></tr></thead>
+        <tbody>
+          <tr><td>O ponto interfere na tarefa?</td><td>Conteúdo normal e distância habitual</td><td>Como evoluirá com o tempo</td></tr>
+          <tr><td>A marca depende da fonte?</td><td>Outra entrada, menu e teste interno</td><td>Componente físico exato</td></tr>
+          <tr><td>Os recursos anunciados funcionam?</td><td>Resolução, taxa e entradas testadas</td><td>Estabilidade em uso prolongado</td></tr>
+          <tr><td>Há suporte ou garantia?</td><td>Nota, política e resposta oficial</td><td>Decisão futura sobre um caso</td></tr>
+        </tbody>
+      </table>
+      <p>Um desconto não elimina a incerteza; ele apenas muda a troca proposta. Se a característica observada é incompatível com edição, jogos ou leitura que você pretende fazer, registre isso antes do pagamento. Se algum recurso essencial não pôde ser testado, nomeie a lacuna no acordo em vez de presumir que está em ordem.</p>
+
+      <h2>Prepare um conjunto de evidências enxuto</h2>
+      <p>Guarde uma foto da tela inteira por padrão, aproximações moderadas das regiões relevantes, um vídeo curto de qualquer perda de sinal e a ficha com configurações. Acrescente resultado do diagnóstico interno, modelo, data e versão da política consultada. Evite dezenas de imagens quase iguais: uma sequência nomeada e acompanhada de contexto é mais simples de revisar.</p>
+      <p>Quando a inspeção for presencial, confira as anotações com o vendedor antes de concluir. Em atendimento posterior, envie arquivos originais pelo canal oficial e oculte dados que não foram solicitados. A documentação não transforma uma observação em garantia, mas deixa claro o que estava visível, em qual condição e antes de quais alterações.</p>
+
       <h2>Erros que comprometem a inspeção</h2>
       <ul>
         <li>Rotular uma sombra após poucos segundos como burn-in permanente.</li>
@@ -224,7 +326,7 @@ export default [
     description: 'Entenda como OLED, LCD convencional e LCD com escurecimento local reagem a uma imagem preta e quando usar o modo de suspensão.',
     toolId: 'black',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'Microsoft — Battery saving tips for Windows',
@@ -240,6 +342,11 @@ export default [
         label: 'W3C — CSS Color Module Level 4',
         url: 'https://www.w3.org/TR/css-color-4/',
         note: 'Define valores de cor enviados pelo conteúdo web; a emissão física depende do sistema e do equipamento.'
+      },
+      {
+        label: 'ENERGY STAR — Monitors',
+        url: 'https://www.energystar.gov/products/monitors',
+        note: 'Recomenda ativar a suspensão do monitor e distingue os requisitos de consumo nos modos ligado e de espera.'
       }
     ],
     relatedSlugs: ['como-testar-monitor-oled', 'manchas-no-monitor-causas', 'como-limpar-monitor-sem-danificar'],
@@ -284,6 +391,41 @@ export default [
         <li><strong>OLED com manutenção automática:</strong> permita o estado de espera exigido antes de cortar energia em filtro de linha ou tomada.</li>
       </ul>
 
+      <h2>Escolha a ferramenta pelo que precisa continuar funcionando</h2>
+      <p>Há momentos em que apagar fisicamente a tela interrompe outra coisa. Em uma gravação, a janela pode precisar permanecer no mesmo monitor para que o arranjo não mude. Em uma apresentação, uma saída secundária pode estar pronta para o próximo conteúdo. Nesses intervalos curtos, o preto em tela cheia é um recurso operacional: reduz a presença visual sem desconectar a saída.</p>
+      <p>Quando nada depende da tela acordada, o gerenciamento de energia é uma escolha mais direta. O ENERGY STAR recomenda ativar a suspensão do monitor, e o Windows oferece temporizadores separados para apagar a tela e colocar o computador em espera. O intervalo adequado depende do trabalho: uma renderização pode continuar com a tela apagada, enquanto uma chamada ou reprodução pode impedir a suspensão completa.</p>
+      <table>
+        <thead><tr><th scope="col">Situação</th><th scope="col">Opção inicial</th><th scope="col">Verificação necessária</th></tr></thead>
+        <tbody>
+          <tr><td>Intervalo breve durante gravação</td><td>Página preta no monitor que deve permanecer ativo</td><td>Notificações, cursor e controles escondidos</td></tr>
+          <tr><td>Pausa de trabalho</td><td>Temporizador para apagar a tela</td><td>Retomada, áudio e janelas no lugar correto</td></tr>
+          <tr><td>Ausência prolongada</td><td>Suspensão, hibernação ou desligamento</td><td>Requisitos de rede, tarefas e manual</td></tr>
+          <tr><td>Fim do uso de OLED</td><td>Espera conforme o fabricante</td><td>Rotinas automáticas concluídas antes de cortar energia</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Teste o comportamento do sistema antes de depender dele</h2>
+      <ol>
+        <li>Salve o trabalho e anote os tempos configurados para apagar a tela e suspender o computador.</li>
+        <li>Feche vídeos, jogos ou páginas que possam manter o sistema desperto. Espere o primeiro intervalo sem tocar no mouse.</li>
+        <li>Observe se todos os monitores apagam ou se algum dispositivo continua exibindo sinal. Não use essa observação como medição de consumo.</li>
+        <li>Retome pelo método normal e confirme posição das janelas, áudio, câmera, rede e periféricos essenciais.</li>
+        <li>Repita com os aplicativos usados no dia a dia. Um programa de conferência, captura ou mídia pode produzir resultado diferente.</li>
+      </ol>
+      <p>Em um conjunto com dois ou três monitores, desligar apenas um pelo botão pode fazer o sistema reorganizar as áreas de trabalho; isso varia com conexão, driver e aparelho. Uma tela preta evita a reorganização porque a saída continua presente, mas mantém a eletrônica ativa. Faça um ensaio curto das duas opções e escolha pelo comportamento que realmente precisa.</p>
+
+      <h2>Não transforme aparência em cálculo de energia</h2>
+      <p>Em OLED, conteúdo mais escuro pode reduzir a emissão dos pixels. Em LCD convencional, o preto pode deixar a imagem visualmente escura enquanto a luz de fundo continua funcionando. Monitores com escurecimento local têm outro comportamento, condicionado ao número de zonas, ao algoritmo, ao modo e a elementos claros ainda presentes na tela. Nenhuma dessas diferenças informa quantos watts o conjunto está usando.</p>
+      <p>Para comparar consumo, seria necessário um medidor adequado e um protocolo que mantivesse iguais brilho, entrada, modo de imagem, periféricos USB e tempo de estabilização. Até uma porta USB-C carregando um notebook pode dominar a leitura feita na tomada. Sem esse controle, descreva somente o efeito visível. Para economia cotidiana, use os estados de baixa energia documentados em vez de inferir potência pela cor exibida.</p>
+
+      <h2>Cuide do que pode aparecer sobre o preto</h2>
+      <p>Tela cheia não bloqueia alertas do sistema, sobreposições de volume, aviso de bateria, ponteiro ou menus acionados por atalho. Antes de usar o fundo em palco ou gravação, ative o modo de concentração apropriado, mova o cursor para uma região segura e faça um ensaio com os mesmos cabos e aplicativos. Se há informação confidencial na sessão, bloqueie o computador; uma superfície preta não impede acesso.</p>
+      <p>O navegador também pode sair da tela cheia após uma tecla, perda de foco ou pedido de permissão. Deixe um caminho de recuperação conhecido e evite extensões que inserem elementos sobre a página. Em locais públicos, não abandone a máquina desbloqueada só porque o monitor parece apagado.</p>
+
+      <h2>Respeite a espera prevista para OLED</h2>
+      <p>Alguns OLED executam cuidados automáticos depois de entrar em espera. Cortar a tomada imediatamente após cada uso pode impedir a rotina prevista; manter uma página preta aberta tampouco equivale a colocar o aparelho nesse estado. Consulte o manual do modelo para saber como desligar e por quanto tempo manter a alimentação. Filtro de linha inteligente e automação residencial devem seguir a mesma lógica.</p>
+      <p>Se o monitor reduz o brilho, desloca a imagem ou inicia um protetor próprio, não desative esses recursos apenas para manter o preto uniforme. Eles fazem parte do comportamento projetado pelo fabricante. Uma apresentação que exige saída constante deve ser planejada com esse limite e testada antes, sem alterar menus de serviço.</p>
+
       <h2>Conforto visual e erros comuns</h2>
       <p>Uma superfície escura pode reduzir a luz periférica de um monitor ocioso, mas não corrige reflexos, brilho excessivo na tela principal, postura ou necessidade de pausas. Se alternar entre conteúdo muito claro e uma tela totalmente escura for desconfortável, ajuste o ambiente e o brilho em vez de forçar a adaptação.</p>
       <ul>
@@ -302,7 +444,7 @@ export default [
     description: 'Entenda pixels, subpixels e as descrições de pontos claros, escuros ou coloridos antes de registrar uma ocorrência para o suporte.',
     toolId: 'dead-pixel',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'Dell — Display pixel guidelines',
@@ -313,6 +455,11 @@ export default [
         label: 'ISO 9241-307 — Electronic visual displays',
         url: 'https://www.iso.org/standard/40102.html',
         note: 'Referência técnica para métodos de teste e requisitos de displays eletrônicos.'
+      },
+      {
+        label: 'Dell — How to run a diagnostic test on a Dell monitor',
+        url: 'https://www.dell.com/support/kbdoc/en-us/000124390/how-to-run-diagnostic-test-on-a-dell-monitor',
+        note: 'Explica como padrões internos do monitor ajudam a separar uma anormalidade da tela de problemas na fonte de vídeo.'
       }
     ],
     relatedSlugs: ['pixel-morto-vs-pixel-preso', 'politica-dead-pixel-fabricantes', 'testar-monitor-olx-mercado-livre'],
@@ -356,6 +503,38 @@ export default [
       <h2>Como usar a classificação sem exagerar</h2>
       <p>“Dead pixel” é uma expressão comum, mas políticas oficiais podem separar ponto brilhante, ponto escuro, subpixel e agrupamento. Registre primeiro o comportamento visível e depois consulte a definição usada para o modelo. Isso evita escolher um rótulo que não corresponde ao critério da garantia.</p>
 
+      <h2>Entenda o tamanho aparente do ponto</h2>
+      <p>Um único elemento de imagem ocupa uma fração muito pequena da tela. Em resoluções altas, ele pode desaparecer à distância de uso e ficar nítido apenas quando o rosto se aproxima. Escala do sistema e zoom do navegador aumentam os objetos da interface, mas não aumentam fisicamente o pixel do painel. Por isso, confirme a resolução nativa e observe o padrão sem redimensionamento antes de contar ocorrências.</p>
+      <p>A câmera introduz outra grade, formada pelos fotossítios do sensor de imagem, e a interação entre essa grade e a do painel pode criar moiré ou cores falsas. Uma fotografia aproximada com vários quadradinhos coloridos não é automaticamente uma imagem fiel da estrutura de subpixels. Use-a para apontar a região; deixe a classificação técnica para o método adotado pelo fabricante.</p>
+
+      <h2>Separe sujeira com paralaxe e foco</h2>
+      <p>Com a tela desligada e sob luz lateral, uma partícula na superfície costuma ganhar sombra ou mudar de destaque quando a cabeça se desloca. Com a tela ligada, alterne o foco dos olhos entre a reflexão da superfície e a imagem. Não encoste a unha para “confirmar”. Se o manual permitir, faça uma limpeza leve em toda a pequena região e repita a sequência depois que a superfície secar.</p>
+      <p>Uma marca no revestimento também pode permanecer no mesmo lugar e parecer um ponto escuro em fundo claro. Compare branco, vermelho, verde e azul e depois desligue a tela. Se a ocorrência ainda pode ser vista pela luz refletida, documente esse fato separadamente. O objetivo é evitar somar uma marca externa à contagem de pontos da imagem.</p>
+
+      <h2>Localize sem tocar no painel</h2>
+      <p>Para uma ocorrência isolada, a grade de nove regiões funciona bem. Quando há várias, use coordenadas relativas, como “25% a partir da esquerda e 40% a partir do topo”, sem prometer precisão de laboratório. Um desenho simples da tela em papel ajuda a numerar os achados. Acrescente a cor em que cada um fica mais evidente.</p>
+      <table>
+        <thead><tr><th scope="col">Registro</th><th scope="col">Exemplo</th><th scope="col">Por que ajuda</th></tr></thead>
+        <tbody>
+          <tr><td>Região</td><td>Superior esquerda, próximo ao centro</td><td>Permite reencontrar o ponto sem marcar a tela</td></tr>
+          <tr><td>Fundos</td><td>Escuro no branco e no verde</td><td>Descreve comportamento, sem impor rótulo</td></tr>
+          <tr><td>Distância</td><td>Visível a 60 cm em documento claro</td><td>Relaciona o achado ao uso</td></tr>
+          <tr><td>Repetição</td><td>Mesma posição após reiniciar a fonte</td><td>Reduz a chance de ser elemento do arquivo</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Faça três verificações de origem</h2>
+      <p>Primeiro, troque o fundo mantendo o mesmo navegador. Segundo, abra a sequência em outra aplicação ou dispositivo. Terceiro, use o menu ou o diagnóstico integrado indicado no manual. A Dell descreve testes internos que percorrem cores e ajudam a verificar se uma anormalidade pertence ao monitor ou à cadeia de vídeo. Outros fabricantes adotam comandos diferentes, e alguns modelos não oferecem esse recurso.</p>
+      <p>Uma captura de tela completa o raciocínio. Se o ponto aparece no arquivo capturado e também em outra tela, ele pode estar no conteúdo, na aplicação ou no processamento anterior à saída. Se não aparece na captura, mas continua sobre o menu interno, a tela merece atenção do suporte. Essa separação não identifica a peça defeituosa; apenas elimina etapas da cadeia.</p>
+
+      <h2>Conte em mais de uma sessão</h2>
+      <p>Faça uma primeira ficha e guarde-a. Se a compra ou prazo de troca permitir, repita no dia seguinte com as mesmas configurações. Compare posição por posição, sem procurar novos pontos indefinidamente. Uma ocorrência que não pôde ser reencontrada deve ficar marcada como inconclusiva, não ser apagada do histórico nem somada como confirmada.</p>
+      <p>Esse acompanhamento é especialmente útil quando uma partícula foi removida, o monitor mudou de mesa ou uma configuração foi restaurada. Registre a mudança entre sessões. Sem essa nota, duas fotografias diferentes podem parecer evidência de evolução quando apenas a condição de observação mudou.</p>
+
+      <h2>Relacione o mapa à tarefa cotidiana</h2>
+      <p>Depois dos padrões, abra um documento claro, uma fotografia, uma interface escura e um vídeo. Um ponto próximo ao centro pode incomodar em leitura ou retoque mesmo quando a contagem total é pequena; outro junto à borda pode passar despercebido. Esse impacto não altera por si só a política de garantia, mas informa sua decisão de compra e ajuda a explicar o problema ao atendimento.</p>
+      <p>Evite deixar os fundos sólidos abertos por tempo prolongado, sobretudo em painéis emissivos. A sequência precisa durar apenas o suficiente para percorrer a tela. O teste serve para encontrar e descrever; não é um tratamento, um exercício visual ou uma prova de vida útil.</p>
+
       <h2>Erros comuns e limites</h2>
       <ul>
         <li>Contar sujeira antes de limpar a tela pelo procedimento permitido.</li>
@@ -374,7 +553,7 @@ export default [
     description: 'Organize documentos, inspeção física, conexões, resolução, taxa de atualização e padrões de tela antes de decidir sobre um monitor usado.',
     toolId: 'dead-pixel',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'Dell — Display pixel guidelines',
@@ -390,6 +569,21 @@ export default [
         label: 'Ministério da Justiça — Guia do consumidor estrangeiro',
         url: 'https://www.gov.br/mj/pt-br/assuntos/seus-direitos/consumidor/Anexos/guia-do-consumidor-estrangeiro-portugues.pdf',
         note: 'Resume documentos e registros úteis em relações de consumo no Brasil.'
+      },
+      {
+        label: 'OLX — Está pensando em fazer uma compra?',
+        url: 'https://ajuda.olx.com.br/s/article/fazer-uma-compra',
+        note: 'Recomenda conferir anúncio e reputação, pedir evidências, negociar pela plataforma e testar o produto no encontro quando for viável.'
+      },
+      {
+        label: 'Mercado Livre — Compra Garantida',
+        url: 'https://www.mercadolivre.com.br/compra-garantida',
+        note: 'Explica o fluxo de reclamação, as condições da proteção e transações ou categorias que podem ficar fora da cobertura.'
+      },
+      {
+        label: 'Dell — How to run a diagnostic test on a Dell monitor',
+        url: 'https://www.dell.com/support/kbdoc/en-us/000124390/how-to-run-diagnostic-test-on-a-dell-monitor',
+        note: 'Explica como o diagnóstico integrado pode separar anormalidades do monitor de falhas na placa gráfica, no computador ou no sinal.'
       }
     ],
     relatedSlugs: ['como-testar-monitor-oled', 'o-que-sao-dead-pixels', 'manchas-no-monitor-causas'],
@@ -437,8 +631,55 @@ export default [
       </ol>
 
       <h2>Compra a distância e documentação</h2>
-      <p>Peça um vídeo contínuo que mostre o modelo, a conexão, o menu normal e a mudança entre padrões, mas lembre que compressão e exposição escondem ou acentuam detalhes. Prefira pagamentos e conversas dentro dos canais oficiais da plataforma. Não envie credenciais, códigos de verificação ou documentos além do necessário ao processo legítimo.</p>
-      <p>Direitos de devolução, garantia e intermediação variam com a relação de consumo, o tipo de vendedor, a modalidade e a jurisdição. Consulte os termos atuais da plataforma e os canais oficiais de defesa do consumidor. Guarde comprovante, anúncio, mensagens e gravações autorizadas.</p>
+      <p>Peça um vídeo contínuo que mostre o modelo, a conexão, o menu normal e a mudança entre padrões, mas lembre que compressão e exposição escondem ou acentuam detalhes. A orientação atual da OLX inclui ler o anúncio inteiro, conferir a reputação, pedir mais fotos ou vídeos e manter a negociação na própria plataforma. Para um encontro, a empresa também recomenda local público, horário diurno e teste do produto quando isso for viável.</p>
+      <p>No Mercado Livre, a página da Compra Garantida descreve uma proteção sujeita às condições do programa e ao motivo da solicitação. Ela também lista exclusões, como pagamentos feitos fora do Mercado Livre, envio de dinheiro e certos produtos ou situações que não atendam aos requisitos. Por isso, confira a cobertura exibida na compra concreta antes de pagar e use os recursos oficiais de pagamento, mensagens e reclamação. Não envie credenciais, códigos de verificação ou documentos por contatos improvisados.</p>
+      <p>Direitos de devolução, garantia e intermediação variam com a relação de consumo, o tipo de vendedor, a modalidade e a jurisdição. Leia os termos atuais vinculados ao pedido, sem transportar automaticamente para ele um prazo visto em outra categoria ou transação. Guarde comprovante, anúncio e mensagens; se houver gravação, observe antes as regras aplicáveis.</p>
+
+      <h2>Monte um kit pequeno e compatível</h2>
+      <p>Leve um notebook carregado, a fonte dele, um cabo conhecido e apenas os adaptadores necessários para as entradas do monitor. Baixe antes a página oficial de especificações e os padrões que pretende abrir; o local pode não ter internet. Uma extensão com proteção adequada pode ajudar quando a tomada está longe, mas não improvise adaptadores elétricos nem conecte equipamento com cabo danificado.</p>
+      <p>Inclua um pano somente para remover poeira do seu próprio aparelho. Não limpe o monitor do vendedor durante a visita: uma marca pode exigir o método específico do manual, e qualquer dano criaria uma disputa desnecessária. Uma lanterna pequena usada de lado, sem encostar na superfície, já revela riscos, lascas e sinais de pressão com a tela desligada.</p>
+
+      <h2>Divida o encontro em blocos com tempo marcado</h2>
+      <p>Uma sequência de vinte a trinta minutos costuma ser mais informativa do que passar todo o encontro olhando fundos sólidos. Reserve o começo para identidade e estado externo, o meio para sinal, portas e controles e o fim para painel e conteúdo real. Avise o vendedor sobre o roteiro antes; pressa inesperada costuma deixar justamente os itens difíceis para depois do pagamento.</p>
+      <ol>
+        <li><strong>Primeiros cinco minutos:</strong> confira modelo, etiqueta, acessórios, base, moldura e conectores sem desmontar.</li>
+        <li><strong>Próximos dez minutos:</strong> ligue, teste a entrada principal, resolução nativa, taxa de atualização e menu.</li>
+        <li><strong>Bloco seguinte:</strong> percorra fundos sólidos, cinza, texto e movimento na posição normal de uso.</li>
+        <li><strong>Fechamento:</strong> revise portas essenciais, registre achados e compare o que foi entregue com o anúncio.</li>
+      </ol>
+      <p>O relógio não transforma a inspeção em ensaio de durabilidade. Ele impede que um teste chamativo consuma todo o tempo enquanto fonte, suporte, botões ou entrada necessária ficam esquecidos.</p>
+
+      <h2>Observe estabilidade sem provocar o aparelho</h2>
+      <p>Durante o teste, preste atenção a reinicializações, perda de sinal, cheiro anormal, estalos e aquecimento concentrado. Fontes externas podem ficar mornas no funcionamento comum; a visita não permite definir uma temperatura segura pelo toque. Se houver odor forte, deformação, cabo exposto ou desligamentos repetidos, pare e desconecte de modo seguro. Não abra a carcaça.</p>
+      <p>Mude brilho e volume pelos controles normais, depois retorne à configuração inicial. Verifique se os botões respondem uma vez por comando e se o menu não se move sozinho. Alto-falante embutido, hub USB, KVM, webcam e carregamento USB-C só entram no roteiro quando fazem parte da oferta. Cada função adicional precisa de cabo e dispositivo compatíveis.</p>
+
+      <h2>Confirme a taxa anunciada sem confundir a cadeia</h2>
+      <p>O sistema mostra as taxas disponíveis para a combinação formada por monitor, resolução, porta, cabo, adaptador e placa gráfica. Se 144 Hz ou outro valor anunciado não aparece, confira primeiro a resolução selecionada e a especificação de cada elo. Um adaptador limitado pode esconder uma capacidade que o monitor possui. Da mesma forma, o menu exibir um número não comprova que todos os quadros sejam entregues de forma perfeita.</p>
+      <p>Selecione a taxa pelo painel do sistema e use uma animação ou rolagem conhecida para confirmar funcionamento básico. Não prometa medir tempo de resposta, atraso ou quadros descartados a olho nu. Se a compra depende de HDR, VRR ou uma taxa específica, faça o teste com o hardware que será usado e registre quais combinações não puderam ser verificadas.</p>
+
+      <h2>Avalie USB-C como três funções separadas</h2>
+      <p>Uma porta USB-C pode transportar vídeo, dados e energia, mas nem toda porta oferece as três funções ou a mesma potência. Confira a especificação oficial do modelo e teste o que está anunciado. Veja se o notebook recebe imagem, se os periféricos do hub aparecem e se o sistema reconhece alimentação. Um cabo que carrega pode não suportar o modo de vídeo necessário.</p>
+      <p>Não conclua que há defeito ao ver uma mensagem de carregamento lento sem comparar a potência exigida pelo notebook e a oferecida pelo monitor. Se o equipamento inclui uma fonte destacável, confirme modelo e potência na etiqueta, sem divulgar números de série. Fonte substituta incompatível deve ser esclarecida antes da compra.</p>
+
+      <h2>Peça um vídeo remoto que tenha começo, meio e fim</h2>
+      <p>Para uma negociação a distância, combine uma palavra curta e peça que ela apareça em papel ao lado do monitor no início. O vídeo pode mostrar a etiqueta com dados sensíveis cobertos, a conexão do cabo, o menu com modelo quando disponível, a troca contínua entre cores e alguns minutos de conteúdo. Um corte entre cada etapa reduz o valor da sequência porque não mostra se é a mesma unidade e condição.</p>
+      <p>Compressão pode apagar um ponto pequeno; exposição pode esconder preto ou clarear manchas. Portanto, peça também fotos originais da tela inteira em branco e preto, além de uma aproximação indicada por contexto. Nenhum arquivo remoto elimina o risco de transporte ou substitui uma inspeção física. Mantenha pagamento, conversa e envio nos recursos oficiais da plataforma.</p>
+
+      <h2>Inclua embalagem e transporte na decisão</h2>
+      <p>Monitor sem caixa original pode ser transportado com segurança, mas exige material e posição adequados. Confira se a base será removida conforme o manual, se a superfície ficará protegida sem pressão e quem assume a responsabilidade pelo envio. Não apoie outros objetos sobre a tela e não deixe cabos soltos baterem no painel.</p>
+      <p>Antes de sair do local, fotografe o estado do equipamento e os acessórios acordados. Em entrega por transportadora, registre a embalagem antes de abrir e interrompa se houver impacto grave ou líquido. Siga o procedimento da plataforma para comunicar dano; ligar imediatamente uma unidade molhada pode ampliar o problema.</p>
+
+      <h2>Registre a decisão, inclusive o que ficou sem teste</h2>
+      <table>
+        <thead><tr><th scope="col">Item</th><th scope="col">Estado</th><th scope="col">Consequência prática</th></tr></thead>
+        <tbody>
+          <tr><td>Entrada principal</td><td>Testada na resolução e taxa desejadas</td><td>Compatível com o computador levado</td></tr>
+          <tr><td>Porta secundária</td><td>Não testada por falta de cabo</td><td>Risco pendente, sem presumir funcionamento</td></tr>
+          <tr><td>Ponto aparente</td><td>Visível em branco, fora do centro</td><td>Avaliar impacto e política vigente</td></tr>
+          <tr><td>Documento de compra</td><td>Cópia disponível com dados conferidos</td><td>Consultar transferência e cobertura com o suporte</td></tr>
+        </tbody>
+      </table>
+      <p>Termine comparando essa ficha com suas prioridades e com o desconto. Uma porta sem importância para você pesa menos do que instabilidade na entrada principal. Um recurso não verificado continua sendo incerteza. Essa linguagem deixa a negociação clara e evita transformar ausência de evidência em promessa.</p>
 
       <h2>Erros comuns e limite do checklist</h2>
       <ul>
@@ -458,7 +699,7 @@ export default [
     description: 'Monte um registro visual comparável de pontos escuros, claros ou coloridos e evite concluir a causa física apenas pela aparência.',
     toolId: 'dead-pixel',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'Dell — Display pixel guidelines',
@@ -469,6 +710,11 @@ export default [
         label: 'ISO 9241-307 — Electronic visual displays',
         url: 'https://www.iso.org/standard/40102.html',
         note: 'Referência técnica sobre métodos de teste e requisitos de displays eletrônicos.'
+      },
+      {
+        label: 'Dell — How to run a diagnostic test on a Dell monitor',
+        url: 'https://www.dell.com/support/kbdoc/en-us/000124390/how-to-run-diagnostic-test-on-a-dell-monitor',
+        note: 'Explica como padrões internos ajudam a verificar se uma anormalidade continua presente sem o sinal do computador.'
       }
     ],
     relatedSlugs: ['o-que-sao-dead-pixels', 'politica-dead-pixel-fabricantes', 'testar-monitor-olx-mercado-livre'],
@@ -514,6 +760,38 @@ export default [
       <h2>Fotografia e evidência</h2>
       <p>Faça primeiro uma imagem da tela inteira para dar contexto. Depois aproxime sem encostar a lente e mantenha foco, exposição e orientação. Evite zoom digital, modo noturno e filtros. Inclua no nome do arquivo a cor do fundo e guarde o original. Um marcador pode ser adicionado a uma cópia para indicar a região, preservando o arquivo sem edição.</p>
 
+      <h2>Descreva comportamento antes de escolher um nome</h2>
+      <p>Comece cada linha da ficha com algo que qualquer pessoa possa observar: “escuro no branco”, “azul no preto”, “claro no vermelho” ou “não percebido no conteúdo normal”. Depois, se a política oficial empregar uma categoria específica, associe o registro a ela. Essa ordem evita ajustar a observação ao rótulo que você esperava encontrar.</p>
+      <p>Um ponto pode parecer diferente quando o fundo muda porque o contraste ao redor mudou. A câmera também pode registrar uma cor diferente daquela percebida. Se houver dúvida, escreva “aparência colorida” e liste os padrões. O suporte precisa do conjunto, não de uma certeza sobre um componente invisível.</p>
+
+      <h2>Confirme que a coordenada é realmente a mesma</h2>
+      <p>Em padrões de tela cheia, barras do navegador, cursor, indicadores de volume e notificações podem criar marcas transitórias. Espere a interface desaparecer e mova o cursor para uma borda conhecida. Se o ponto parece mudar junto com uma janela ou captura, investigue o conteúdo. Se fica na mesma coordenada física enquanto a imagem se move, anote essa estabilidade.</p>
+      <p>O menu do monitor e o diagnóstico integrado oferecem uma comparação sem o desenho do navegador. A Dell documenta que seus modelos compatíveis percorrem cores sólidas no teste interno; outras marcas usam rotinas e comandos próprios. Consulte o guia exato, pois uma combinação de botões errada pode apenas mudar configurações.</p>
+
+      <h2>Organize os arquivos para uma leitura rápida</h2>
+      <p>Crie uma pasta com data e modelo, sem número de série no nome. Dentro dela, use nomes previsíveis: “geral-branco”, “geral-preto”, “ponto-1-verde”, “ponto-2-azul” e “conteudo-real”. Coloque a ficha em texto ou PDF na mesma pasta. Se fizer uma cópia com círculo ou seta, acrescente “marcada” e preserve a original ao lado.</p>
+      <table>
+        <thead><tr><th scope="col">Arquivo</th><th scope="col">Enquadramento</th><th scope="col">Função</th></tr></thead>
+        <tbody>
+          <tr><td>Geral</td><td>Tela inteira e bordas</td><td>Localiza a ocorrência no painel</td></tr>
+          <tr><td>Aproximação</td><td>Região e referências próximas</td><td>Mostra a aparência sem perder contexto</td></tr>
+          <tr><td>Conteúdo real</td><td>Distância habitual</td><td>Registra o impacto na tarefa</td></tr>
+          <tr><td>Ficha</td><td>Texto com condições</td><td>Permite repetir a observação</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Faça uma repetição que possa discordar da primeira</h2>
+      <p>Após a sequência inicial, feche o navegador, restaure a posição de uso e repita uma vez. Se um ponto não reaparece, marque o resultado como inconclusivo. Não apague a primeira nota e não tente forçar o retorno com pressão, calor ou flashes. Divergência é uma informação válida e pode revelar que o elemento vinha da superfície, do arquivo ou de uma sobreposição.</p>
+      <p>Quando houver prazo para observar, repita em outro dia com as mesmas configurações. Registre qualquer limpeza autorizada, troca de cabo, atualização ou restauração feita entre as sessões. Comparar imagens sem esse histórico pode transformar uma mudança externa em suposta evolução do painel.</p>
+
+      <h2>Evite métodos agressivos apresentados como conserto</h2>
+      <p>Vídeos com alternância rápida de cores podem ser desconfortáveis para pessoas fotossensíveis e não são necessários para mapear um ponto. Massagear a tela, pressionar com pano ou aquecer a região pode danificar o painel ou o revestimento. Não há base para prometer que um ponto observado voltará ao funcionamento após uma dessas tentativas.</p>
+      <p>Se o fabricante oferecer uma rotina eletrônica para o tipo de tela, execute-a somente nas condições e frequência do manual. Rotina de compensação de OLED, diagnóstico de LCD e limpeza física são processos diferentes. O nome informal “pixel preso” não autoriza aplicar um procedimento encontrado para outra tecnologia.</p>
+
+      <h2>Mostre o efeito na atividade que motivou o chamado</h2>
+      <p>Um editor de imagens pode registrar o ponto sobre áreas uniformes do projeto; quem trabalha com texto pode mostrar um documento claro; um jogador pode indicar a região durante uma cena comum. Faça essa imagem na distância normal, sem ampliar artificialmente. Ela complementa os padrões e explica por que a ocorrência é relevante, mesmo que não defina cobertura.</p>
+      <p>Ao falar com o suporte, apresente o mapa antes de usar “morto” ou “preso”: quantidade observada, posição, fundos, repetição no menu ou teste interno e impacto no uso. Se a equipe adotar outro termo, mantenha sua descrição original. Assim, uma mudança de classificação não apaga a evidência que você realmente produziu.</p>
+
       <h2>Erros comuns e limites</h2>
       <ul>
         <li>Aplicar pressão, massagear ou aquecer a tela.</li>
@@ -532,7 +810,7 @@ export default [
     description: 'Identifique a política do modelo, reúna evidências comparáveis e organize o chamado sem depender de limites genéricos encontrados na internet.',
     toolId: 'dead-pixel',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'Dell — Display pixel guidelines',
@@ -548,6 +826,11 @@ export default [
         label: 'Ministério da Justiça — Guia do consumidor estrangeiro',
         url: 'https://www.gov.br/mj/pt-br/assuntos/seus-direitos/consumidor/Anexos/guia-do-consumidor-estrangeiro-portugues.pdf',
         note: 'Orienta conservar comprovantes, contratos e documentos usados em atendimento ao consumidor.'
+      },
+      {
+        label: 'Dell — How to run a diagnostic test on a Dell monitor',
+        url: 'https://www.dell.com/support/kbdoc/en-us/000124390/how-to-run-diagnostic-test-on-a-dell-monitor',
+        note: 'Orienta registrar anormalidades por meio do teste integrado antes de encaminhar o caso ao suporte; os comandos variam por modelo.'
       }
     ],
     relatedSlugs: ['o-que-sao-dead-pixels', 'pixel-morto-vs-pixel-preso', 'testar-monitor-olx-mercado-livre'],
@@ -563,38 +846,69 @@ export default [
       <p>Uma norma de ergonomia ou qualidade pode estabelecer classes e métodos, mas a garantia comercial pode criar condições próprias. Uma marca também pode oferecer coberturas diferentes entre linhas profissionais, consumidores, notebooks e monitores. Tipo de ponto, quantidade, proximidade entre ocorrências, localização, data da compra e país podem influenciar a análise.</p>
       <p>Capturas de fóruns ou páginas antigas não demonstram a política atual. Procure o domínio oficial, selecione sua região e use o nome completo do modelo. Se a página não mencionar seu produto, peça uma resposta por escrito ao suporte.</p>
 
-      <h2>Documentos a reunir</h2>
+      <h2>Comece pela origem da unidade, não pela contagem</h2>
+      <p>Antes de procurar um limite, descubra quem vendeu, quem emitiu a garantia e qual variante chegou às suas mãos. Um sufixo no modelo pode indicar região, revisão ou pacote comercial diferente. Copie o código da etiqueta ou do menu, entre na área de suporte da marca para o país da compra e abra os documentos a partir da página do produto. O trecho exibido pelo buscador serve apenas para localizar a página; não basta para decidir o caso.</p>
+      <table>
+        <thead><tr><th scope="col">Situação da compra</th><th scope="col">Primeira fonte a consultar</th><th scope="col">Pergunta que precisa de resposta</th></tr></thead>
+        <tbody>
+          <tr><td>Loja e distribuição nacionais</td><td>Pedido, certificado e suporte regional</td><td>Qual política cobre exatamente o modelo e a data?</td></tr>
+          <tr><td>Importação</td><td>Termos do vendedor e suporte da região de origem</td><td>A cobertura atravessa fronteiras e quem recebe o produto?</td></tr>
+          <tr><td>Unidade usada</td><td>Comprovante disponível e condições de transferência</td><td>A garantia acompanha a unidade ou o comprador original?</td></tr>
+          <tr><td>Recondicionado ou venda empresarial</td><td>Contrato específico e documento fiscal</td><td>Quais condições foram oferecidas nessa modalidade?</td></tr>
+        </tbody>
+      </table>
+      <p>Se a família não aparecer na política publicada, não complete a lacuna com uma tabela de outro país. Pergunte por escrito ao canal oficial e guarde a resposta vinculada ao protocolo. Uma cópia em PDF com título, endereço e data registra o que estava acessível, mas não transforma uma página antiga em termo aplicável à venda.</p>
+
+      <h2>Monte um dossiê curto que outra pessoa consiga conferir</h2>
+      <p>Separe o material em três grupos. No primeiro ficam modelo completo, foto privada da etiqueta, nota ou pedido e data de entrega. No segundo, a página de pixels, o certificado e o anúncio da compra. No terceiro, a ficha do ponto aparente, os arquivos originais e o histórico do atendimento. Essa divisão responde a três perguntas diferentes: qual produto é, qual regra pode valer e o que foi observado.</p>
       <ul>
-        <li><strong>Identificação do produto:</strong> modelo completo, etiqueta e número de série. Guarde dados identificadores em local privado.</li>
-        <li><strong>Prova da compra:</strong> nota fiscal, pedido, recibo e data de entrega, conforme os documentos disponíveis.</li>
-        <li><strong>Termos aplicáveis:</strong> certificado de garantia, página oficial da política, termos do vendedor e versão do anúncio.</li>
-        <li><strong>Registro do sintoma:</strong> ficha com posição, fundos em que aparece, configurações e data da inspeção.</li>
-        <li><strong>Histórico:</strong> protocolos, e-mails, ordens de serviço, respostas e comprovantes de envio ou entrega.</li>
+        <li>Nomeie os arquivos com data, fundo e enquadramento, como <em>2026-09-11_branco_geral</em>, sem colocar CPF, endereço ou número de série no nome.</li>
+        <li>Guarde a fotografia original e faça qualquer círculo ou seta somente em uma cópia identificada como marcada.</li>
+        <li>Registre versão do sistema, resolução, brilho, entrada e cabo quando esses dados influenciarem a repetição.</li>
+        <li>Associe cada e-mail, ordem de serviço e comprovante ao protocolo correspondente, em vez de juntar conversas de casos diferentes.</li>
       </ul>
-      <p>Salve a página oficial em PDF ou captura com URL e data para preservar o contexto consultado. Isso não congela os termos nem substitui o documento contratual, mas facilita mostrar qual informação estava publicada.</p>
 
-      <h2>Procedimento de evidência</h2>
+      <h2>Produza a evidência que a política consegue avaliar</h2>
       <ol>
-        <li>Limpe a superfície pelo método do manual e confirme a resolução nativa.</li>
-        <li>Exiba branco, preto, vermelho, verde e azul em tela cheia no brilho habitual.</li>
-        <li>Anote cada ponto separadamente, com posição e cor em que fica mais evidente.</li>
-        <li>Faça uma foto geral da tela e outra da região, sem encostar, editar contraste ou usar filtros.</li>
-        <li>Se houver autoteste documentado, registre o resultado. Não entre em menu de serviço nem aplique pressão.</li>
-        <li>Repita uma vez para verificar se o achado é estável e descreva também o impacto em conteúdo normal.</li>
+        <li>Limpe a superfície apenas pelo método do manual e selecione a resolução nativa recomendada.</li>
+        <li>Exiba branco, preto, vermelho, verde e azul em tela cheia, no brilho usado normalmente.</li>
+        <li>Mapeie cada ocorrência por região e descreva em quais fundos ela fica clara, escura, colorida ou imperceptível.</li>
+        <li>Fotografe primeiro a tela inteira e depois a região. Não encoste a lente, não use filtro e não altere contraste.</li>
+        <li>Execute o autoteste somente se o manual do modelo o documentar. Menu de serviço, pressão e tentativas caseiras de reparo ficam fora do roteiro.</li>
+        <li>Volte a um documento, jogo ou fotografia real e anote o impacto na distância cotidiana de uso.</li>
       </ol>
+      <p>O resultado é uma descrição, não um diagnóstico microscópico. Se a câmera produz moiré ou não separa os subpixels, diga isso. Uma imagem honesta, com contexto, vale mais do que uma ampliação artificial que parece precisa.</p>
 
-      <h2>Como abrir o chamado</h2>
-      <p>Use o canal oficial do fabricante ou vendedor e escreva de forma factual: modelo, data da compra, quando o ponto foi percebido, posição, fundos em que aparece e verificações realizadas. Anexe apenas os documentos solicitados e oculte dados desnecessários. Peça o número do protocolo, os próximos passos, custos previstos e a política específica usada na decisão.</p>
-      <p>Se for necessário enviar o produto, fotografe o estado externo, acessórios e embalagem. Siga exatamente a orientação de transporte fornecida. Guarde comprovantes e não inclua senhas, mídias ou cabos não solicitados.</p>
+      <h2>Abra um chamado que possa ser encaminhado sem tradução</h2>
+      <p>Use o canal oficial e leve as informações essenciais para o primeiro parágrafo: “Monitor [modelo], recebido em [data]. Observei [quantidade] pontos aparentes nas regiões [posição]. Eles aparecem como [descrição] nos fundos [cores] e são perceptíveis em [atividade]. O teste interno [foi executado conforme o manual e mostrou o mesmo resultado / não está disponível / não foi localizado]. Anexo foto geral, aproximações originais e comprovante. Solicito a política aplicável e a orientação para análise.”</p>
+      <p>Escolha somente a alternativa que corresponde ao que ocorreu. Depois peça o protocolo, o nome ou endereço da política considerada, os próximos passos e qualquer custo informado. Se o prazo da compra estiver correndo, abra a solicitação com o material disponível e avise quais arquivos ainda serão enviados. Isso registra a data sem inventar uma contagem ou um teste.</p>
 
-      <h2>Se a primeira resposta for negativa</h2>
+      <h2>Leia a resposta como uma árvore de decisão</h2>
       <ol>
-        <li>Peça a regra aplicável ao modelo e a justificativa por escrito.</li>
-        <li>Confira se o suporte classificou corretamente ponto claro, escuro, subpixel e agrupamento.</li>
-        <li>Corrija evidências incompletas e solicite reanálise pelo canal indicado.</li>
-        <li>Quando houver relação de consumo, consulte os canais oficiais de defesa do consumidor da sua jurisdição.</li>
+        <li><strong>A política e a variante estão identificadas?</strong> Se não, responda com o código completo, o país da compra e peça o documento usado na análise.</li>
+        <li><strong>A classificação coincide com a observação?</strong> Se o suporte fala em ponto escuro e sua ficha mostra um ponto claro no preto, encaminhe os fundos e posições novamente, sem discutir componentes internos.</li>
+        <li><strong>Falta uma evidência executável?</strong> Repita apenas a etapa solicitada e prevista no manual. Se o comando não existe no modelo, informe isso em vez de improvisar.</li>
+        <li><strong>A cobertura foi negada com justificativa clara?</strong> Guarde a decisão. Quando houver relação de consumo, os canais oficiais da sua jurisdição podem orientar os passos seguintes a partir dos documentos concretos.</li>
       </ol>
-      <p>No Brasil, direitos legais e garantia contratual têm bases próprias, e sua aplicação depende dos fatos e da relação estabelecida. O texto do Código de Defesa do Consumidor e os órgãos oficiais oferecem a referência adequada; este artigo não determina o enquadramento jurídico de uma compra específica.</p>
+      <p>No Brasil, garantia contratual e direitos legais não são a mesma coisa e dependem dos fatos da relação. Código de Defesa do Consumidor, Consumidor.gov.br, Procon, assistência jurídica e Judiciário exercem funções diferentes. Este roteiro deixa o caso legível para consulta; ele não escolhe a medida jurídica nem prevê seu resultado.</p>
+
+      <h2>Veja como o caminho muda em três casos comuns</h2>
+      <p><strong>Compra recente em loja:</strong> o pedido mostra vendedor e entrega, enquanto a política da marca classifica o ponto. Comece pelo canal indicado para aquela compra e pergunte quem fará a análise. Abrir dois chamados paralelos sem relacioná-los pode produzir orientações incompatíveis.</p>
+      <p><strong>Monitor profissional com política própria:</strong> confirme que o código completo pertence à linha citada. Uma cobertura anunciada para certos modelos não se estende automaticamente aos demais produtos da marca. Na mensagem, inclua a página encontrada e peça confirmação da correspondência.</p>
+      <p><strong>Unidade usada ou importada:</strong> ausência de nota local, troca de proprietário e região de origem podem mudar o responsável e a logística. Reúna o que existe, pergunte se a cobertura é transferível e obtenha o endereço de atendimento antes de prometer um envio. A resposta negativa de um canal não prova, sozinha, que nenhuma obrigação exista.</p>
+
+      <h2>Se o monitor precisar viajar, crie uma cadeia simples de conferência</h2>
+      <table>
+        <thead><tr><th scope="col">Momento</th><th scope="col">Ação concreta</th><th scope="col">Registro preservado</th></tr></thead>
+        <tbody>
+          <tr><td>Antes de embalar</td><td>Confirmar destino, protocolo e acessórios pedidos; fotografar tela, carcaça e conectores</td><td>Autorização e imagens originais</td></tr>
+          <tr><td>Na embalagem</td><td>Seguir a orientação recebida e impedir pressão sobre o painel</td><td>Fotos das camadas e lista do conteúdo</td></tr>
+          <tr><td>Na coleta ou postagem</td><td>Conferir destinatário e guardar peso e rastreio</td><td>Comprovante de entrega à transportadora</td></tr>
+          <tr><td>No retorno</td><td>Fotografar a caixa antes de abrir e repetir o teste inicial</td><td>Ordem de serviço e ficha posterior</td></tr>
+        </tbody>
+      </table>
+      <p>Envie apenas o que foi solicitado; cabos extras e mídias pessoais criam itens para conferir sem ajudar a análise. Em monitor com sistema integrado, remova contas e dados pelo procedimento oficial antes da coleta. Ao receber, compare o número de série em privado e veja se o sintoma descrito mudou. A palavra “reparado” na ordem de serviço não substitui essa verificação.</p>
+      <p>Se algo divergir, registre a embalagem, a unidade recebida e o teste feito, depois retome o mesmo protocolo. Datas, arquivos e comprovantes formam uma sequência verificável sem exigir gravações indevidas ou um diário de cada telefonema.</p>
 
       <h2>Erros comuns e limites</h2>
       <ul>
@@ -613,7 +927,7 @@ export default [
     description: 'Siga uma sequência conservadora para remover poeira e marcas sem borrifar líquidos, pressionar o painel ou ignorar o revestimento do modelo.',
     toolId: 'cleaner',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'Apple — How to clean your Apple products',
@@ -624,6 +938,11 @@ export default [
         label: 'LG — How to clean a monitor screen',
         url: 'https://www.lg.com/us/support/help-library/lg-monitor-how-to-clean-the-monitor-screen--20153255207578',
         note: 'Recomenda desligar o monitor, usar pano macio e evitar força excessiva, água direta e produtos químicos inadequados.'
+      },
+      {
+        label: 'Microsoft — Clean and care for your Surface',
+        url: 'https://support.microsoft.com/en-us/surface/setup/clean-and-care-for-your-surface',
+        note: 'Mostra que telas e dispositivos específicos podem ter limites próprios para pano, solução e frequência de limpeza.'
       }
     ],
     relatedSlugs: ['guia-limpeza-lcd-oled-notebook', 'manchas-no-monitor-causas', 'como-testar-monitor-oled'],
@@ -662,6 +981,42 @@ export default [
       <p>Observe primeiro com a tela desligada sob luz difusa. Depois ligue e use fundos branco, cinza e preto para distinguir resíduo superficial de algo que aparece na imagem. Se a marca mudou com a iluminação do cômodo, pode ser reflexo ou resíduo; se aparece apenas com o painel ligado, interrompa a limpeza e registre o comportamento.</p>
       <p>Use o fundo apenas para inspeção visual. Ele não identifica composição química, não revela dano abaixo da superfície e não indica qual produto deve ser aplicado. Se a marca reaparece depois de secar, consulte o manual antes de repetir.</p>
 
+      <h2>Identifique o acabamento antes de separar os materiais</h2>
+      <p>Procure o modelo na etiqueta e abra o manual oficial. Uma tela fosca pode ter uma camada externa flexível; outra pode usar vidro brilhante; alguns equipamentos têm acabamento nanotexturizado ou tratamento sensível a produtos comuns. A aparência sozinha não confirma a composição. Se o documento não disser o que pode ser usado, comece e termine com o método seco indicado.</p>
+      <p>Veja também se existe uma película de transporte claramente marcada por aba ou instrução. Não confunda borda levantada, polarizador ou revestimento funcional com plástico removível. Quando houver dúvida, fotografe sem puxar e consulte o suporte do modelo.</p>
+
+      <h2>Prepare uma área que não devolva poeira à tela</h2>
+      <p>Limpe as mãos, afaste copos e desligue ventilador direcionado ao monitor. Estenda o pano sobre uma superfície limpa apenas enquanto organiza o material; não o deixe sobre teclado, piso ou bancada com migalhas. Um pano recém-lavado também pode conter amaciante, fiapos ou resíduos. Se houver cheiro, rigidez ou partículas, escolha outro.</p>
+      <p>Use faces diferentes para poeira e etapa úmida. Dobre o pano de modo que os dedos não ultrapassem sua área e troque de face quando ela recolher material. Se mais de uma tela será limpa, não carregue gordura de uma superfície para outra. Em ambiente compartilhado, separe panos identificados e mantenha qualquer solução autorizada no recipiente original.</p>
+
+      <h2>A primeira passagem deve ser seca e curta</h2>
+      <p>Com a tela fria e sem energia, incline a luz do cômodo para enxergar as partículas. Encoste o pano sem pressionar e faça trajetos curtos, levantando-o entre regiões. Não empurre toda a poeira até a borda inferior, onde há junções e aberturas. Se uma partícula parece presa, pare de arrastá-la; insistência transforma um grão pequeno em risco comprido.</p>
+      <p>Depois da passagem, observe de outro ângulo. Muitas impressões ficam mais claras quando a poeira ao redor sai. Isso não significa que você deva aumentar a força. A etapa seguinte só existe se o fabricante autorizar alguma umidade e se a marca superficial justificar nova tentativa.</p>
+
+      <h2>Controle a umidade pelo pano, não pela tela</h2>
+      <p>Aplique uma quantidade pequena da solução permitida longe do equipamento. O pano deve ficar úmido ao toque e não soltar gota quando dobrado. Use movimentos leves sobre a marca e pare antes de alcançar moldura, microfone, câmera, alto-falante ou botão. Em monitor com orientação vertical, lembre que uma gota pode correr em direção diferente da posição original de fábrica.</p>
+      <p>Não faça misturas caseiras nem suponha que uma porcentagem citada para outro dispositivo vale para o seu. A Microsoft publica orientações próprias para a família Surface; a Apple e a LG também descrevem métodos e restrições de seus produtos. Essas páginas demonstram justamente por que o nome genérico “limpa-telas” não substitui o manual.</p>
+
+      <h2>Trate cada tipo de marca como uma pergunta</h2>
+      <table>
+        <thead><tr><th scope="col">Aparência superficial</th><th scope="col">Conduta conservadora</th><th scope="col">Ponto de parada</th></tr></thead>
+        <tbody>
+          <tr><td>Poeira solta</td><td>Pano seco, macio e sem fiapos</td><td>Partícula que não sai com passagem leve</td></tr>
+          <tr><td>Impressão digital</td><td>Etapa úmida somente se autorizada</td><td>Marca permanece após poucas passagens</td></tr>
+          <tr><td>Respingo seco desconhecido</td><td>Consultar manual antes de dissolver</td><td>Exige raspar, solvente ou pressão</td></tr>
+          <tr><td>Adesivo, tinta ou resíduo químico</td><td>Acionar fabricante ou assistência</td><td>Qualquer tentativa não prevista</td></tr>
+          <tr><td>Trinca ou camada alterada</td><td>Não limpar a região</td><td>Desligar e documentar</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Corrija faixas sem reiniciar todo o processo</h2>
+      <p>Se a superfície secar com linhas, espere a evaporação completa antes de avaliar. Sob luz difusa, passe uma face seca e limpa apenas se o manual permitir. Não adicione mais produto de imediato: excesso costuma redistribuir resíduo e alcançar as bordas. Mude o ângulo de observação para distinguir faixa de limpeza de reflexo.</p>
+      <p>Uma mancha que só aparece com a tela ligada pode pertencer à imagem ou ao painel. Abra fundos diferentes e o menu interno; limpeza adicional não resolve uma alteração eletrônica. Se a marca mudou de cor, o revestimento ficou opaco ou apareceu um arco semelhante a pressão, desligue e registre o ocorrido.</p>
+
+      <h2>Crie uma rotina que evite limpezas agressivas</h2>
+      <p>Manter comida e bebida afastadas, remover poeira leve antes que se acumule e não tocar na área visível reduz a necessidade de etapas úmidas. Cubra o monitor somente com acessório aprovado e quando estiver frio; capas improvisadas podem reter umidade ou pressionar a tela. Em notebook, mantenha teclado e apoio de mãos limpos antes de fechar a tampa.</p>
+      <p>Não estabeleça uma frequência rígida sem necessidade. Limpe quando houver sujeira observável, usando o procedimento mais leve que resolva. Registre o produto e o método em equipamentos compartilhados para que a próxima pessoa não combine soluções incompatíveis.</p>
+
       <h2>Erros comuns</h2>
       <ul>
         <li>Borrifar sobre a tela, permitindo que gotas escorram para a moldura.</li>
@@ -683,7 +1038,7 @@ export default [
     description: 'Compare cuidados para monitores foscos, OLED brilhante, notebooks, telas sensíveis ao toque e vidro nanotexturizado antes de escolher o método.',
     toolId: 'cleaner',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'Apple — Cleaning the nano-texture glass on your Apple display',
@@ -699,6 +1054,11 @@ export default [
         label: 'LG — How to clean an OLED screen',
         url: 'https://www.lg.com/us/support/help-library/lg-oled-tv-how-to-clean-the-screen--20154713242110',
         note: 'Orienta desligamento, pano macio, pouca força e ausência de aplicação direta de líquidos em OLED.'
+      },
+      {
+        label: 'Apple — How to clean your Apple products',
+        url: 'https://support.apple.com/en-us/103258',
+        note: 'Explica cuidados gerais com materiais distintos, como desconectar cabos, evitar abrasivos e nunca borrifar produto diretamente na tela.'
       }
     ],
     relatedSlugs: ['como-limpar-monitor-sem-danificar', 'manchas-no-monitor-causas', 'como-testar-monitor-oled'],
@@ -708,7 +1068,7 @@ export default [
       ['Posso colocar uma manta entre teclado e tela?', 'Somente se o fabricante aprovar. Material adicional pode aumentar a pressão quando o notebook é fechado; primeiro mantenha o teclado limpo e siga as orientações de transporte.']
     ],
     body: `
-      <p><strong>Resposta direta:</strong> escolha o método pela construção externa e pelo manual, não apenas pela sigla LCD ou OLED. Acabamento fosco, vidro brilhante, camada sensível ao toque e vidro nanotexturizado reagem de modos diferentes. Quando as instruções divergirem, vale a orientação do fabricante para o modelo exato.</p>
+      <p><strong>Resposta direta:</strong> a sigla LCD ou OLED não basta; escolha o método pela construção externa e pelo manual. Acabamento fosco, vidro brilhante, camada sensível ao toque e vidro nanotexturizado reagem de modos diferentes. Quando as instruções divergirem, vale a orientação do fabricante para o modelo exato.</p>
 
       <h2>Matriz por construção</h2>
       <table>
@@ -747,6 +1107,47 @@ export default [
         <li>Espere secar, ligue e confira em branco, cinza e preto.</li>
       </ol>
 
+      <h2>Use uma árvore de decisão antes de tocar na tela</h2>
+      <ol>
+        <li><strong>Há trinca, líquido interno ou camada levantada?</strong> Não limpe a área; desligue e procure orientação técnica.</li>
+        <li><strong>O manual identifica o acabamento e o pano?</strong> Separe exatamente esse material. Se não identifica, não improvise química.</li>
+        <li><strong>A marca é poeira solta?</strong> Comece por uma passagem seca, leve e curta.</li>
+        <li><strong>Permaneceu uma impressão ou respingo?</strong> Faça etapa úmida somente quando o documento autorizar.</li>
+        <li><strong>Algo ainda aparece após secar?</strong> Compare desligado, ligado e sob outro ângulo antes de repetir.</li>
+      </ol>
+      <p>A árvore evita usar o método mais forte como primeira tentativa. Ela também revela quando “sujeira” pode ser risco, alteração de revestimento ou achado na própria imagem. Nesses casos, mais fricção piora a evidência e pode ampliar o dano.</p>
+
+      <h2>LCD fosco pede atenção à flexão</h2>
+      <p>Em monitores sem vidro frontal aparente, a superfície pode ceder mesmo sob uma força que parece pequena. Estabilize a base, passe o pano com a mão aberta e não apoie o polegar na moldura para aumentar pressão. Se uma mancha exige insistência em um ponto, pare e confirme o método oficial.</p>
+      <p>Faixas brilhantes que surgem somente depois de esfregar podem indicar resíduo ou mudança na maneira como o revestimento reflete a luz. Espere secar, observe de vários ângulos e use uma face limpa e seca somente se permitido. Não tente igualar o brilho “polindo” o restante da tela.</p>
+
+      <h2>Vidro brilhante não significa vidro de janela</h2>
+      <p>Uma frente rígida e reflexiva ainda pode conter camadas antirreflexo ou oleofóbicas. Produtos domésticos para janela não ganham compatibilidade pela aparência do material. A Apple, por exemplo, proíbe diversos limpadores e orienta nunca borrifar diretamente em seus displays. LG e Microsoft publicam instruções próprias para outros conjuntos.</p>
+      <p>Em superfícies brilhantes, confira o resultado com luz difusa, pois uma lâmpada pontual pode fazer qualquer faixa parecer intensa. Depois ligue a tela e use conteúdo claro e escuro. Se a marca existe apenas na imagem, encerre a limpeza e passe para uma triagem de sinal ou painel.</p>
+
+      <h2>Touchscreen acumula contato, mas mantém limites</h2>
+      <p>Óleo dos dedos costuma exigir mais atenção do que poeira, porém o toque repetido não autoriza solvente mais forte. Desative ou desligue o equipamento para evitar comandos durante a limpeza e proteja portas, câmera e microfones. Se o aparelho aceita caneta, retire-a da área de trabalho para que ponta ou presilha não arranhe a superfície.</p>
+      <p>Uma tela usada em balcão pode precisar de higienização por regras do local. Nesse caso, concilie o procedimento institucional com a lista de produtos autorizados pelo fabricante. Quando houver conflito, a equipe responsável pelo equipamento deve obter orientação formal; não combine substâncias nem aumente concentração.</p>
+
+      <h2>O pano dedicado também precisa de cuidado</h2>
+      <p>No vidro nanotexturizado, o pano indicado faz parte do procedimento. Guarde-o em recipiente limpo, sem contato com chaves, papel ou superfícies oleosas. Siga a orientação oficial para lavá-lo e espere secar por completo antes de usar. Um pano dedicado contaminado deixa de ser uma opção segura apenas por conservar o mesmo nome.</p>
+      <p>Não substitua o material por uma esponja “extra macia” ou tecido de roupa. Costuras, fibras duras e partículas presas podem alterar a superfície. Se o pano específico foi perdido, consulte o fabricante sobre reposição compatível.</p>
+
+      <h2>Notebook acrescenta pressão e transporte</h2>
+      <p>Ao limpar, apoie a tampa pela parte traseira e evite empurrá-la além do ângulo normal. Ao transportar, nada deve ficar entre teclado e tela sem aprovação do fabricante. Protetores grossos, tampas de câmera, papéis e cabos esquecidos podem concentrar pressão quando o notebook fecha.</p>
+      <p>Marcas que repetem teclas ou o contorno do trackpad devem ser documentadas antes da limpeza. Remova primeiro a sujeira das áreas de contato, depois trate a tela pelo manual. Se a marca não muda e parece abaixo da superfície, não tente compensar com força.</p>
+
+      <h2>Faça a conferência final em três condições</h2>
+      <table>
+        <thead><tr><th scope="col">Condição</th><th scope="col">O que observar</th><th scope="col">Próxima ação</th></tr></thead>
+        <tbody>
+          <tr><td>Desligada, luz difusa</td><td>Fiapos, faixas, riscos e reflexos</td><td>Passagem seca permitida ou encerramento</td></tr>
+          <tr><td>Ligada, fundo claro</td><td>Resíduo superficial e pontos escuros</td><td>Separar limpeza de anomalia de imagem</td></tr>
+          <tr><td>Ligada, fundo escuro</td><td>Reflexos, áreas claras e marcas persistentes</td><td>Registrar sem aumentar exposição</td></tr>
+        </tbody>
+      </table>
+      <p>Se a tela ficou uniforme e seca, reconecte os cabos e retorne ao uso. Se apareceu opacidade, cor diferente, líquido na borda ou resposta irregular ao toque, desligue e documente. Repetir o ciclo não esclarece uma alteração material.</p>
+
       <h2>Erros comuns e limites</h2>
       <ul>
         <li>Escolher o produto apenas porque a embalagem diz “para telas”.</li>
@@ -764,7 +1165,7 @@ export default [
     description: 'Separe superfície, reflexo, fonte de vídeo e comportamento do painel com uma triagem visual organizada antes de procurar suporte.',
     toolId: 'cleaner',
     publishedAt: '2026-08-10',
-    updatedAt: '2026-09-09',
+    updatedAt: '2026-09-11',
     sources: [
       {
         label: 'LG — Lines or stains on an OLED screen',
@@ -780,6 +1181,11 @@ export default [
         label: 'LG — Should I remove the protective film from my monitor?',
         url: 'https://www.lg.com/us/support/help-library/should-i-remove-the-protective-film-from-my-lg-monitor-CT10000030-20155143214666',
         note: 'Distingue película de transporte identificada de camadas funcionais que não devem ser removidas.'
+      },
+      {
+        label: 'Dell — How to run a diagnostic test on a Dell monitor',
+        url: 'https://www.dell.com/support/kbdoc/en-us/000124390/how-to-run-diagnostic-test-on-a-dell-monitor',
+        note: 'Mostra como o autoteste integrado ajuda a separar manchas e linhas da tela de problemas no computador, na placa gráfica ou no sinal.'
       }
     ],
     relatedSlugs: ['como-limpar-monitor-sem-danificar', 'guia-limpeza-lcd-oled-notebook', 'o-que-sao-dead-pixels'],
@@ -803,31 +1209,44 @@ export default [
         <li><strong>Use o teste interno.</strong> Se o menu oferece autoteste ou teste de imagem documentado, execute-o. Uma marca presente no menu ou autoteste independe do arquivo e da fonte externa, mas ainda pode ter mais de uma origem física.</li>
       </ol>
 
-      <h2>Como ler os resultados sem rotular a causa</h2>
+      <h2>Use uma árvore de decisão, não um catálogo de defeitos</h2>
+      <p><strong>A marca também aparece com a tela desligada?</strong> Observe sob luz difusa e mude a posição da cabeça. Resíduo, risco, reflexo e alteração do revestimento entram nesse ramo. Se o manual autorizar uma limpeza leve, faça-a uma vez; uma marca que permanece não deve ser polida, raspada nem pressionada.</p>
+      <p><strong>Ela aparece no arquivo de captura quando esse arquivo é aberto em outra tela?</strong> Nesse caso, comece pelo conteúdo, aplicativo, sistema ou processamento anterior à saída. Se o arquivo estiver limpo, o caminho ainda inclui porta, cabo, entrada, eletrônica do monitor e superfície. A captura separa etapas; não aponta sozinha uma peça.</p>
+      <p><strong>Ela surge apenas com uma fonte, porta ou cabo?</strong> Refaça a combinação com componentes conhecidos e configurações compatíveis. Uma faixa que some ao trocar o HDMI merece investigação da cadeia de sinal antes de ser atribuída ao painel.</p>
+      <p><strong>Ela permanece sobre o menu do monitor ou no teste interno previsto no manual?</strong> O computador e o arquivo deixam de ser a origem daquela imagem, então o relato deve seguir para o suporte do aparelho. Ainda assim, o resultado não distingue camada, conexão interna ou componente.</p>
+      <p><strong>Ela muda bastante com ângulo, distância ou iluminação?</strong> Volte à posição de uso, bloqueie uma fonte de luz por vez e repita a observação. Reflexo e comportamento angular podem parecer uma mancha fixa em uma única fotografia.</p>
+
+      <h2>Cinco cenas reais e a próxima comparação útil</h2>
       <table>
-        <thead><tr><th scope="col">Observação</th><th scope="col">Próximo passo</th><th scope="col">Cuidado na interpretação</th></tr></thead>
+        <thead><tr><th scope="col">O que você encontra</th><th scope="col">Próximo movimento</th><th scope="col">O que ainda não dá para afirmar</th></tr></thead>
         <tbody>
-          <tr><td>Marca visível com a tela desligada</td><td>Revisar superfície, reflexos e instrução de limpeza</td><td>Não tentar polir ou remover camada</td></tr>
-          <tr><td>Marca aparece na captura de tela</td><td>Verificar aplicativo, conteúdo, sistema e driver</td><td>A captura não mostra defeitos físicos da tela</td></tr>
-          <tr><td>Marca não aparece na captura, mas aparece no autoteste</td><td>Registrar e consultar suporte do aparelho</td><td>Isso localiza o problema no caminho da tela, não a peça exata</td></tr>
-          <tr><td>Área clara muda com a posição do observador</td><td>Comparar ângulo, distância, ambiente e brilho</td><td>Pode ser comportamento angular ou reflexo</td></tr>
-          <tr><td>Contorno de interface aparece em várias fontes</td><td>Registrar duração e consultar rotina oficial do modelo</td><td>Uma sessão curta pode não separar retenção temporária de alteração persistente</td></tr>
-          <tr><td>Faixa ocorre somente em um cabo ou dispositivo</td><td>Testar combinação conhecida e configurações compatíveis</td><td>Não atribuir imediatamente ao painel</td></tr>
+          <tr><td>Oval acinzentado visível no branco e também com a tela apagada</td><td>Examinar a superfície de lado e consultar a limpeza permitida</td><td>Se é resíduo, risco ou camada alterada</td></tr>
+          <tr><td>Faixa vertical presente somente no notebook conectado por um cabo</td><td>Trocar cabo e entrada, mantendo resolução e conteúdo</td><td>Se a origem está no computador, na conexão ou no monitor</td></tr>
+          <tr><td>Nuvem clara no canto, forte no escuro e discreta de frente</td><td>Comparar brilho habitual, posição e luz do cômodo</td><td>Se há anormalidade de montagem ou efeito óptico esperado</td></tr>
+          <tr><td>Contorno de uma barra depois de trocar o conteúdo em OLED</td><td>Usar conteúdo variado e seguir a rotina oficial do modelo</td><td>Se é retenção passageira ou alteração persistente</td></tr>
+          <tr><td>Marca nova após transporte, ao lado de uma trinca na moldura</td><td>Parar a limpeza e documentar embalagem e estado externo</td><td>Qual evento produziu a alteração interna</td></tr>
         </tbody>
       </table>
+      <p>Formato e cor escolhem a próxima comparação, não o diagnóstico. Causas diferentes podem produzir desenhos parecidos, e a mesma região pode mudar de aparência conforme o fundo.</p>
 
-      <h2>Película, umidade e pressão</h2>
-      <p>Alguns produtos chegam com película de transporte identificada por aba ou impressão; outros expõem um polarizador ou revestimento que faz parte da tela. Confirme o manual antes de remover qualquer camada. Bolhas, bordas levantadas ou manchas não são autorização para puxar o material.</p>
-      <p>Uma aparência semelhante a líquido interno ou marca de pressão não deve ser “testada” pressionando o painel. A força pode ampliar o dano. Umidade externa deve ser seca pelo procedimento permitido; suspeita de entrada de líquido exige equipamento desligado e orientação técnica.</p>
+      <h2>Película, condensação e pressão pedem freio</h2>
+      <p>Alguns produtos chegam com película de transporte identificada por aba ou impressão; outros deixam exposto um polarizador ou revestimento funcional. Uma bolha ou borda levantada não autoriza puxar a camada. Confirme a documentação do modelo e, se ela não for conclusiva, envie uma foto ao suporte.</p>
+      <p>Um aparelho que saiu de ambiente frio para um cômodo quente pode condensar umidade. Mantenha-o desligado e cumpra as condições do manual, sem secador ou aquecimento improvisado. Depois de transporte, fotografe embalagem, carcaça e superfície antes de limpar. Trinca, líquido interno ou área pressionada não deve receber fricção para “ver se volta”.</p>
 
-      <h2>Registro para assistência</h2>
-      <ul>
-        <li>Modelo, data e circunstância em que a mancha foi percebida.</li>
-        <li>Brilho, modo de imagem, HDR, entrada, cabo e fonte usados.</li>
-        <li>Fundos em que aparece, comportamento com ângulo e resultado do autoteste.</li>
-        <li>Fotos da tela inteira e da região, sem filtros, com preservação dos arquivos originais.</li>
-        <li>Indicação de qualquer impacto, transporte, limpeza recente ou contato com líquido, sem omitir fatos relevantes.</li>
-      </ul>
+      <h2>Transforme o achado em um relato de uma página</h2>
+      <p>Comece pelo observável: “Área acinzentada, oval, no terço inferior, visível em branco e cinza, discreta em vídeo e também perceptível com a tela desligada”. Essa frase é mais útil do que “LCD queimado” porque continua correta mesmo que a assistência use outro nome. Acrescente modelo, data, circunstância em que surgiu e qualquer transporte, impacto, limpeza, atualização ou troca de cabo recente, sem tratar proximidade temporal como prova da causa.</p>
+      <p>Na mesma página, registre brilho, modo de imagem, HDR, entrada e fonte; depois liste o resultado de cada ramo relevante da árvore. Anexe uma foto da tela inteira e outra da região, ambas sem filtro. Guarde o arquivo original e marque a posição somente em uma cópia. Não publique etiqueta, nota fiscal ou dados pessoais.</p>
+      <p>Use proporções simples para localizar a área, como “terço inferior, próximo à borda direita”. Uma régua encostada no painel pode riscá-lo, e milímetros inferidos de uma foto passam uma precisão que a imagem não tem. Se a câmera, distância ou iluminação mudou entre arquivos, anote a mudança em vez de comparar as imagens como se fossem equivalentes.</p>
+
+      <h2>Repita somente quando a repetição responde algo</h2>
+      <p>Uma segunda observação faz sentido quando o primeiro resultado foi inconclusivo, quando o suporte pede condições específicas ou quando você precisa saber se a aparência mudou com o uso normal. Preserve a ficha inicial, repita com posição e configuração comparáveis e registre o intervalo. Não deixe padrões estáticos abertos por horas para “forçar” uma diferença, sobretudo em tela emissiva.</p>
+      <p>Se a área cresce, aparece junto com lampejos ou perda de sinal, ou passa a incomodar no conteúdo cotidiano, procure o suporte com os dois registros. Se só surge sob brilho extremo, quarto escuro e fotografia superexposta, descreva exatamente essa condição. O impacto pode ser pequeno sem que a observação seja falsa; também pode ser grande sem que uma fotografia automática consiga mostrá-lo.</p>
+      <p>Quando uma redefinição, atualização ou rotina do fabricante for solicitada, fotografe antes as configurações relevantes. A ação pode mudar o sintoma e apagar parte do contexto. Depois dela, registre o que mudou e o que permaneceu, sem reescrever a primeira ficha.</p>
+
+      <h2>Quando a fotografia conta uma história diferente do olho</h2>
+      <p>Em uma cena escura, o telefone costuma elevar automaticamente a exposição e transformar uma diferença discreta em uma nuvem luminosa. Em fundo branco, reflexos e foco impreciso podem suavizar a mesma área. Faça primeiro uma foto da distância de uso, com parte da moldura visível, e só depois aproxime para localizar a região. Apoie o aparelho, mantenha a lente paralela à tela e evite modo noturno, filtros ou edição.</p>
+      <p>Se souber travar foco e exposição, use a mesma configuração na comparação; se não souber, não esconda isso. Escreva ao lado do arquivo “mais forte na foto”, “mais discreta na foto” ou “semelhante ao observado”. Uma imagem que não reproduz perfeitamente a percepção ainda pode mostrar posição e formato. Envie o original ao suporte e deixe qualquer seta ou círculo em uma cópia separada.</p>
+      <p>Uma segunda pessoa pode observar da mesma cadeira sem ouvir antes o diagnóstico sugerido. Peça que descreva apenas o que vê e em qual fundo. Concordância ajuda a comunicar o efeito; discordância indica que ângulo, acuidade ou iluminação merecem constar no relato. Nenhum dos dois resultados converte percepção em medição instrumental.</p>
 
       <h2>Erros comuns e limites</h2>
       <ul>

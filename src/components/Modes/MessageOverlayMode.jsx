@@ -12,6 +12,12 @@ const isFiniteNumber = (value) =>
 
 const MIN_FITTED_FONT_SIZE = 8;
 const MAX_FITTED_FONT_SIZE = 256;
+const QR_ERROR_CORRECTION_MINIMUM = "M";
+// Byte-mode capacity for a version 40 QR symbol at error-correction level M.
+const QR_MAX_UTF8_BYTES_AT_LEVEL_M = 2331;
+const QR_QUIET_ZONE_MODULES = 4;
+
+const getUtf8ByteLength = (value) => new TextEncoder().encode(value).byteLength;
 
 const normalizeHex = (value, fallback) => {
   if (typeof value !== "string") return fallback;
@@ -103,7 +109,12 @@ export default function MessageOverlayMode({
     ? clamp(fontScale, 3, 16)
     : internalFontScale;
   const visibleMessage = resolvedMessage.trim() || "Mensagem";
-  const normalizedQrContent = qrContent.trim().slice(0, 1024);
+  const normalizedQrContent = qrContent.trim();
+  const qrUtf8ByteLength = useMemo(
+    () => getUtf8ByteLength(normalizedQrContent),
+    [normalizedQrContent],
+  );
+  const qrExceedsCapacity = qrUtf8ByteLength > QR_MAX_UTF8_BYTES_AT_LEVEL_M;
   const resolvedContrastRatio = useMemo(
     () => contrastRatio(resolvedTextColor, resolvedBackgroundColor),
     [resolvedBackgroundColor, resolvedTextColor],
@@ -326,14 +337,40 @@ export default function MessageOverlayMode({
             transition={shouldReduceMotion ? { duration: 0.001 } : { type: "spring", stiffness: 350, damping: 28 }}
             className="message-overlay__qr"
           >
-            {normalizedQrContent ? (
+            {normalizedQrContent && qrExceedsCapacity ? (
+              <div
+                className="message-overlay__qr-card"
+                data-qr-capacity-state="exceeded"
+                role="alert"
+                style={{
+                  boxSizing: 'border-box',
+                  color: '#111827',
+                  maxWidth: 'min(28rem, 86vw)',
+                  padding: '12px 14px',
+                  textAlign: 'left',
+                }}
+              >
+                <strong style={{ display: 'block', marginBottom: '4px' }}>
+                  Conteúdo grande demais para um QR Code.
+                </strong>
+                <span style={{ display: 'block', fontSize: '0.78rem', lineHeight: 1.45 }}>
+                  O texto foi mantido no campo. Encurte-o ou use uma URL menor para gerar o código.
+                </span>
+              </div>
+            ) : normalizedQrContent ? (
               <div className="message-overlay__qr-card">
                 <QRCodeSVG
                   className="message-overlay__qr-code"
                   value={normalizedQrContent}
                   size={160}
-                  level="M"
-                  marginSize={1}
+                  // M is the minimum; boostLevel may raise correction when it fits in the same version.
+                  level={QR_ERROR_CORRECTION_MINIMUM}
+                  boostLevel
+                  marginSize={QR_QUIET_ZONE_MODULES}
+                  data-qr-capacity-state="valid"
+                  data-qr-error-correction-minimum={QR_ERROR_CORRECTION_MINIMUM}
+                  data-qr-error-correction-boost="automatic"
+                  data-qr-quiet-zone-modules={QR_QUIET_ZONE_MODULES}
                   role="img"
                   aria-label={`QR Code com o conteúdo: ${normalizedQrContent}`}
                   title="QR Code"
@@ -516,6 +553,20 @@ export default function MessageOverlayMode({
                   color: '#ffffff',
                 }}
               />
+              <span
+                aria-live="polite"
+                style={{
+                  color: qrExceedsCapacity ? '#fca5a5' : 'rgba(255,255,255,0.68)',
+                  display: 'block',
+                  fontSize: '0.68rem',
+                  lineHeight: 1.4,
+                  margin: '-4px 0 10px',
+                }}
+              >
+                {qrExceedsCapacity
+                  ? `O conteúdo usa ${qrUtf8ByteLength.toLocaleString('pt-BR')} bytes em UTF-8 e não cabe no QR Code. O valor não foi cortado.`
+                  : 'Correção de erro M no mínimo, com elevação automática quando houver espaço.'}
+              </span>
             </label>
           ) : null}
 

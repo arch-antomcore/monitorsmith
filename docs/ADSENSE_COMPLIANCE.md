@@ -1,7 +1,7 @@
 # Preparação para AdSense e Search Console — MonitorSmith
 
 Documento operacional do estado implementado no repositório e das ações que
-dependem dos painéis do Google. Revisão: 9 de setembro de 2026. Nenhum teste
+dependem dos painéis do Google. Revisão: 11 de setembro de 2026. Nenhum teste
 local garante aprovação comercial, indexação ou rich results.
 
 ## 1. Conteúdo e arquitetura indexável
@@ -18,10 +18,14 @@ Os artigos são organizados em três trilhas editoriais e incluem autoria
 institucional, datas de publicação e revisão, sumário, procedimento, fatores de
 confusão, limites, perguntas frequentes, referências visíveis e artigos
 relacionados. O build interrompe quando um artigo tem menos de quatro seções,
-duas fontes HTTPS, três perguntas ou 500 palavras no corpo editorial, quando
-repete uma CTA dentro do texto ou quando aponta para uma relação inexistente.
-Esse limite de palavras é um controle interno contra regressão; o Google não
-publica uma contagem mínima universal e avalia propósito, originalidade e valor.
+duas fontes HTTPS, três perguntas ou a meta editorial individual registrada para
+aquele texto, quando repete uma CTA dentro do corpo ou quando aponta para uma
+relação inexistente. As metas atuais correspondem ao dobro da extensão que cada
+post tinha antes da ampliação concluída em 11 de setembro de 2026. Os 33 artigos
+somam 48.732 palavras no corpo editorial, com 1.198 a 1.870 palavras por texto e
+média de 1.477. Essa contagem é um controle interno contra regressão; o Google
+não publica uma quantidade mínima universal e avalia propósito, originalidade e
+valor.
 
 Os 44 guias descrevem o que a interface faz, sequência de uso, aplicações,
 limitações e metodologia. Resultados visuais são apresentados como observações

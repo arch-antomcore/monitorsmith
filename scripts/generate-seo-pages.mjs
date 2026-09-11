@@ -14,6 +14,7 @@ import {
 import blogInspection from './blog-articles-inspection.mjs';
 import blogCalibration from './blog-articles-calibration.mjs';
 import blogProductivity from './blog-articles-productivity.mjs';
+import { BLOG_DOUBLE_WORD_TARGETS } from './blog-editorial-targets.mjs';
 import { INSTRUMENT_EDITORIAL } from './editorial-instruments.mjs';
 import { LEGACY_REDIRECTS } from './site-migrations.mjs';
 
@@ -129,6 +130,10 @@ const BLOG_ARTICLES = BLOG_CATEGORIES.flatMap((category) => category.articles.ma
   categoryId: category.id,
   categoryLabel: category.label,
 })));
+const BLOG_LAST_MODIFIED = BLOG_ARTICLES.reduce(
+  (latest, article) => article.updatedAt > latest ? article.updatedAt : latest,
+  SITE_METADATA.contentLastModified,
+);
 const BLOG_SLUG_SET = new Set(BLOG_ARTICLES.map((a) => a.slug));
 
 const EDITORIAL_CONTENT = Object.freeze({
@@ -438,12 +443,12 @@ const EDITORIAL_CONTENT = Object.freeze({
       uses: ['Sinalização de status de salas de reunião (Ocupado / Disponível).', 'Avisos visuais de grande porte para palcos, estandes e recepções.', 'Projeção de QR Code de alto contraste para acesso imediato a links e formulários.'],
       limitations: 'Projetada para sinalização estática. O modo teleprompter apenas espelha o texto e permite rolagem manual; não há rolagem automática.',
       faq: [
-        ['Como funciona o gerador de QR Code integrado?', 'O texto ou link é codificado diretamente no navegador em um QR Code com nível de correção M. A leitura ainda depende de tamanho, contraste, foco, distância e câmera.'],
+        ['Como funciona o gerador de QR Code integrado?', 'O texto ou link é codificado diretamente no navegador com correção de erro mínima M; a biblioteca pode elevar o nível quando isso cabe no mesmo símbolo. Entradas acima da capacidade codificável são recusadas com uma mensagem.'],
         ['As mensagens digitadas são salvas em servidores externos?', 'Não. Todo o estado é mantido exclusivamente na memória local da sessão no seu navegador.']
       ],
       methodology: [
         'A tipografia escala de acordo com a janela. O usuário deve conferir a mensagem no local real, pois distância, acuidade, reflexos, tamanho e contraste mudam a leitura.',
-        'No modo QR Code, a biblioteca codifica o conteúdo localmente com correção de erro nível M. Isso fornece redundância, mas não garante leitura sob reflexo, desfoque, distância ou ângulo excessivos.',
+        'No modo QR Code, a biblioteca solicita correção de erro mínima M, pode elevar o nível quando houver capacidade e mantém uma zona livre de quatro módulos. A interface recusa conteúdo cuja representação codificada exceda a capacidade suportada.',
         'Os temas oferecem opções de contraste; a legibilidade deve ser conferida na combinação de cores e tamanho de texto escolhidos. Não há certificação integral WCAG AAA.'
       ]
     },
@@ -453,12 +458,12 @@ const EDITORIAL_CONTENT = Object.freeze({
       uses: ['Meeting room status signage (Occupied / Available).', 'Large-scale visual cue boards for stages, studios, and reception lobbies.', 'Projecting high-contrast QR codes for instant audience link distribution.'],
       limitations: 'Designed for static notices. Teleprompter mode mirrors text and allows manual scrolling; it does not auto-scroll.',
       faq: [
-        ['How does the built-in QR Code generator operate?', 'Text and URLs are encoded client-side as a QR Code with error-correction level M. Scanning still depends on size, contrast, focus, distance and camera.'],
+        ['How does the built-in QR Code generator operate?', 'Text and URLs are encoded client-side with error-correction level M as a minimum; the library may raise it when the stronger level fits the same symbol. Content beyond the encodable capacity is rejected with a message.'],
         ['Are messages stored on external database servers?', 'No. State remains strictly within the local browser memory session.']
       ],
       methodology: [
         'Typography scales with the viewport. Check the message at the real venue because distance, acuity, glare, character size and contrast affect legibility.',
-        'QR content is encoded locally with error-correction level M. Redundancy helps, but cannot guarantee scanning through glare, blur, excessive distance or angle.',
+        'QR content is encoded locally with error-correction level M as a minimum, optional automatic boosting when capacity permits, and a four-module quiet zone. The interface rejects content whose encoded representation exceeds supported capacity.',
         'Themes offer contrast options; check legibility for the chosen colors and text size. There is no claim of comprehensive WCAG AAA certification.'
       ]
     },
@@ -933,7 +938,10 @@ function validateEditorialContent() {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(article.publishedAt || '')) errors.push(`publishedAt inválido em ${label}`);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(article.updatedAt || '')) errors.push(`updatedAt inválido em ${label}`);
     if (article.updatedAt && article.publishedAt && article.updatedAt < article.publishedAt) errors.push(`updatedAt anterior à publicação em ${label}`);
-    if (countWords(article.body) < 500) errors.push(`Corpo editorial insuficiente em ${label}: ${countWords(article.body)} palavras`);
+    const wordTarget = BLOG_DOUBLE_WORD_TARGETS[article.slug];
+    const articleWords = countWords(article.body);
+    if (!wordTarget) errors.push(`Meta editorial ausente em ${label}`);
+    else if (articleWords < wordTarget) errors.push(`Corpo editorial insuficiente em ${label}: ${articleWords}/${wordTarget} palavras`);
     if ((article.body.match(/<h2\b/gi) || []).length < 4) errors.push(`Artigo sem seções suficientes: ${label}`);
     if (/\bclass=["'][^"']*\bcta\b/i.test(article.body) || /href=["']\/?\?tool=/i.test(article.body)) errors.push(`CTA promocional duplicada dentro do corpo: ${label}`);
     if (!Array.isArray(article.faq) || article.faq.length < 3) errors.push(`FAQ incompleta em ${label}`);
@@ -943,8 +951,11 @@ function validateEditorialContent() {
       if (relatedSlug === article.slug) errors.push(`Artigo relacionado a si mesmo: ${label}`);
     }
     if (!Array.isArray(article.sources) || article.sources.length < 2) errors.push(`Fontes primárias insuficientes em ${label}`);
+    const sourceUrls = new Set();
     for (const source of article.sources || []) {
       if (!source?.label || !source?.note || !/^https:\/\//.test(source?.url || '')) errors.push(`Fonte incompleta ou insegura em ${label}`);
+      if (sourceUrls.has(source?.url)) errors.push(`Fonte duplicada em ${label}: ${source?.url}`);
+      sourceUrls.add(source?.url);
     }
 
     for (const paragraph of article.body.matchAll(/<p(?:\s[^>]*)?>([\s\S]*?)<\/p>/gi)) {
@@ -954,6 +965,9 @@ function validateEditorialContent() {
       if (previous) errors.push(`Parágrafo substancial duplicado entre ${previous} e ${label}`);
       else substantialParagraphs.set(normalized, label);
     }
+  }
+  for (const slug of Object.keys(BLOG_DOUBLE_WORD_TARGETS)) {
+    if (!articleSlugs.has(slug)) errors.push(`Meta editorial sem artigo correspondente: ${slug}`);
   }
   if (errors.length) throw new Error(`Conteúdo de build inválido:\n- ${errors.join('\n- ')}`);
 }
@@ -969,16 +983,6 @@ function escapeHtml(value) {
 
 function safeJson(value) {
   return JSON.stringify(value).replaceAll('<', '\\u003c');
-}
-
-function formatContentDate(locale = 'pt-BR') {
-  const date = new Date(`${SITE_METADATA.contentLastModified}T12:00:00Z`);
-  return new Intl.DateTimeFormat(locale, {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'UTC',
-  }).format(date);
 }
 
 function formatIsoDate(value, locale = 'pt-BR') {
@@ -1091,7 +1095,7 @@ function renderToolPage(route, locale) {
       description: metadata.description,
       inLanguage: isEn ? 'en-US' : 'pt-BR',
       datePublished: '2026-08-10',
-      dateModified: SITE_METADATA.contentLastModified,
+      dateModified: route.lastModified,
       author: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
       publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
       mainEntityOfPage: url,
@@ -1209,7 +1213,7 @@ function renderToolPage(route, locale) {
     <div class="editorial-byline">
       <span>${isEn ? 'By' : 'Por'} <strong>${isEn ? 'MonitorSmith editorial team' : 'Equipe editorial MonitorSmith'} · EXVORN.TECH</strong></span>
       <span>•</span>
-      <time datetime="${SITE_METADATA.contentLastModified}">${isEn ? `Updated ${formatContentDate('en-US')}` : `Atualizado em ${formatContentDate('pt-BR')}`}</time>
+      <time datetime="${route.lastModified}">${isEn ? `Updated ${formatIsoDate(route.lastModified, 'en-US')}` : `Atualizado em ${formatIsoDate(route.lastModified, 'pt-BR')}`}</time>
       <span>•</span>
       <a href="/politica-editorial/">${isEn ? 'Editorial process' : 'Processo editorial'}</a>
     </div>
@@ -1418,7 +1422,7 @@ function renderBlogIndex() {
     description,
     url: pageUrl,
     inLanguage: 'pt-BR',
-    dateModified: SITE_METADATA.contentLastModified,
+    dateModified: BLOG_LAST_MODIFIED,
     isPartOf: { '@type': 'WebSite', name: SITE_METADATA.name, url: `${BASE_URL}/` },
     publisher: { '@type': 'Organization', name: SITE_METADATA.owner, url: 'https://exvorn.tech/' },
     hasPart: BLOG_ARTICLES.map((article) => ({ '@type': 'Article', name: article.h1, url: `${BASE_URL}/blog/${article.slug}/` })),
@@ -1596,7 +1600,7 @@ function renderLegacyRedirect(sourcePath, targetPath) {
 function generateSitemapXml() {
   const urls = [];
   urls.push({ loc: `${BASE_URL}/`, lastmod: SITE_METADATA.contentLastModified, changefreq: 'weekly', priority: '1.0' });
-  urls.push({ loc: `${BASE_URL}/blog/`, lastmod: SITE_METADATA.contentLastModified, changefreq: 'weekly', priority: '0.9' });
+  urls.push({ loc: `${BASE_URL}/blog/`, lastmod: BLOG_LAST_MODIFIED, changefreq: 'weekly', priority: '0.9' });
   urls.push({ loc: `${BASE_URL}/ferramentas/`, lastmod: SITE_METADATA.contentLastModified, changefreq: 'weekly', priority: '0.9' });
 
   for (const page of LEGAL_PAGES) {

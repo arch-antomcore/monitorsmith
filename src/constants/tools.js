@@ -40,9 +40,9 @@ export const CATEGORY_I18N = Object.freeze({
   'Touch e mobile': { en: 'Touch & mobile', es: 'Táctil y móvil' },
 });
 
-const seoPage = (key, pt, en) => ({
+const seoPage = (key, pt, en, lastModified = SITE_METADATA.contentLastModified) => ({
   key,
-  lastModified: SITE_METADATA.contentLastModified,
+  lastModified,
   pt,
   en,
 });
@@ -271,10 +271,12 @@ export const TOOLS_REGISTRY = Object.freeze([
     seoPages: [
       seoPage('fullscreen-message',
         { slug: 'mensagem-em-tela', title: 'Mensagem em Tela Cheia Online', h1: 'Mensagem em Tela Cheia', description: 'Crie um aviso legível em tela cheia com texto e cores ajustáveis.' },
-        { slug: 'fullscreen-message', title: 'Online Fullscreen Message', h1: 'Fullscreen Message', description: 'Create a readable fullscreen notice with adjustable text and colors.' }),
+        { slug: 'fullscreen-message', title: 'Online Fullscreen Message', h1: 'Fullscreen Message', description: 'Create a readable fullscreen notice with adjustable text and colors.' },
+        '2026-09-11'),
       seoPage('online-teleprompter',
         { slug: 'teleprompter-online', title: 'Teleprompter Online Espelhado', h1: 'Teleprompter Online', description: 'Exiba e espelhe texto em tela cheia como apoio simples para gravações.' },
-        { slug: 'online-teleprompter', title: 'Online Mirrored Teleprompter', h1: 'Online Teleprompter', description: 'Display and mirror fullscreen text as a simple reading aid for recordings.' }),
+        { slug: 'online-teleprompter', title: 'Online Mirrored Teleprompter', h1: 'Online Teleprompter', description: 'Display and mirror fullscreen text as a simple reading aid for recordings.' },
+        '2026-09-11'),
     ],
   },
   {

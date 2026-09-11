@@ -3,6 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { gzipSync } from 'node:zlib'
 import { PWA_SHORTCUTS } from '../src/constants/tools.js'
+import { BLOG_DOUBLE_WORD_TARGETS } from './blog-editorial-targets.mjs'
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const distDir = path.join(projectRoot, 'dist')
@@ -168,12 +169,15 @@ for (const file of htmlFiles) {
   }
 
   if (/^\/blog\/[^/]+\/$/.test(route)) {
+    const articleSlug = route.split('/')[2]
+    const wordTarget = BLOG_DOUBLE_WORD_TARGETS[articleSlug]
     const articleBody = html.match(/<article\b[^>]*data-blog-article[^>]*>([\s\S]*?)<\/article>/i)?.[1] || ''
     const words = wordCount(articleBody)
     const sourceLinks = html.match(/<section\b[^>]*data-editorial-sources[^>]*>[\s\S]*?<\/section>/i)?.[0].match(/<a\b/gi)?.length || 0
     const ctas = countClassToken(html, 'cta')
     articleMetrics.push({ route, words, sourceLinks })
-    if (words < 500) errors.push(`${relative}: artigo com apenas ${words} palavras editoriais`)
+    if (!wordTarget) errors.push(`${relative}: meta editorial ausente para ${articleSlug}`)
+    else if (words < wordTarget) errors.push(`${relative}: artigo com ${words}/${wordTarget} palavras editoriais`)
     if (sourceLinks < 2) errors.push(`${relative}: artigo com menos de duas fontes visíveis`)
     if (ctas !== 1) errors.push(`${relative}: esperado exatamente um CTA editorial; encontrado ${ctas}`)
     if (!/<meta\s+property=["']article:published_time["']/.test(html) || !/<meta\s+property=["']article:modified_time["']/.test(html)) {
