@@ -1,0 +1,60 @@
+/* Shared by the app and generated editorial pages. */
+:root {
+  /* superfícies */
+  --msx-void: #08090b;
+  --msx-void-2: #0b0d10;
+  --msx-panel: #0f1216;
+  --msx-panel-2: #14181d;
+  --msx-panel-3: #1a1f25;
+  --msx-hair: rgba(255, 255, 255, 0.085);
+  --msx-hair-2: rgba(255, 255, 255, 0.16);
+  --msx-grid: rgba(255, 255, 255, 0.038);
+
+  /* fósforo (marca) */
+  --msx-phos: #ffb020;
+  --msx-phos-2: #ffd479;
+  --msx-phos-ink: #1a1200;
+  --msx-phos-soft: rgba(255, 176, 32, 0.12);
+  --msx-phos-line: rgba(255, 176, 32, 0.32);
+
+  /* sinal / alerta */
+  --msx-signal: #4fe0a5;
+  --msx-alert: #ff5470;
+  --msx-cool: #6fc3ff;
+
+  /* tinta */
+  --msx-ink: #e9e7e2;
+  --msx-ink-2: #a8aeb6;
+  --msx-ink-3: #929ba5;
+
+  --msx-radius: 3px;
+  --msx-radius-lg: 4px;
+  --msx-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+
+  --msx-font-display: 'Chakra Petch', 'IBM Plex Sans', ui-sans-serif, sans-serif;
+  --msx-font-body: 'IBM Plex Sans Variable', 'IBM Plex Sans', ui-sans-serif, sans-serif;
+  --msx-font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, monospace;
+}
+
+html.ms-studio-light {
+  --msx-void: #e9e5dc;
+  --msx-void-2: #f1eee7;
+  --msx-panel: #faf8f3;
+  --msx-panel-2: #f3f0e9;
+  --msx-panel-3: #ebe7de;
+  --msx-hair: rgba(20, 22, 26, 0.14);
+  --msx-hair-2: rgba(20, 22, 26, 0.26);
+  --msx-grid: rgba(20, 22, 26, 0.055);
+  --msx-phos: #a8480a;
+  --msx-phos-2: #7c3406;
+  --msx-phos-ink: #fff8ec;
+  --msx-phos-soft: rgba(168, 72, 10, 0.09);
+  --msx-phos-line: rgba(168, 72, 10, 0.3);
+  --msx-signal: #0f7a55;
+  --msx-alert: #b4213c;
+  --msx-cool: #1f5f8f;
+  --msx-ink: #14171a;
+  --msx-ink-2: #4a5158;
+  --msx-ink-3: #59616a;
+  --msx-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 14px 30px -22px rgba(40, 30, 10, 0.5);
+}

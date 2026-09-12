@@ -49,7 +49,7 @@ export default function HeroSection({ onScrollToTools }) {
 
   return (
     <motion.section
-      className="ok-h11-hero msx-scan"
+      className="ok-h11-hero"
       aria-label="MonitorSmith"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -110,9 +110,6 @@ export default function HeroSection({ onScrollToTools }) {
         </div>
       </aside>
 
-      <div className="msx-hero-rule" aria-hidden="true">
-        {Array.from({ length: 60 }, (unused, index) => <span key={index} />)}
-      </div>
     </motion.section>
   );
 }

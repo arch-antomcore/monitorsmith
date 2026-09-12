@@ -51,6 +51,16 @@ test('artigo apresenta autoria, conteúdo, fontes e metadados coerentes', async 
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://monitorsmith.app/blog/ips-glow-vs-backlight-bleed/')
   expect(advertisingRequests).toEqual([])
 
+  const figures = page.locator('article[data-blog-article] figure')
+  await expect(figures).toHaveCount(2)
+  for (const figure of await figures.all()) {
+    await figure.scrollIntoViewIfNeeded()
+    await expect(figure.locator('figcaption')).toBeVisible()
+    await expect.poll(() => figure.locator('img').evaluate((img) => img.complete && img.naturalWidth > 0)).toBe(true)
+  }
+  await page.evaluate(() => document.fonts.ready)
+  expect(await page.locator('body').evaluate((body) => getComputedStyle(body).fontFamily)).toContain('IBM Plex Sans')
+
   const geometry = await page.evaluate(() => ({
     viewport: document.documentElement.clientWidth,
     content: document.documentElement.scrollWidth,
@@ -61,6 +71,44 @@ test('artigo apresenta autoria, conteúdo, fontes e metadados coerentes', async 
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
     .analyze()
   expect(articleA11y.violations).toEqual([])
+})
+
+test('todos os artigos entregam duas ilustrações legíveis e sem recursos quebrados', async ({ page, request }) => {
+  test.setTimeout(120_000)
+  await page.goto('/blog/')
+  const articles = await page.locator('article.card h3 a').evaluateAll((links) => links.map((link) => link.getAttribute('href')))
+  expect(articles).toHaveLength(33)
+  const images = new Set()
+  for (const url of articles) {
+    const response = await request.get(url)
+    expect(response.ok(), url).toBe(true)
+    const html = await response.text()
+    const figures = [...html.matchAll(/<figure class="blog-figure">([\s\S]*?)<\/figure>/g)]
+    expect(figures, url).toHaveLength(2)
+    for (const [, figure] of figures) {
+      expect(figure).toMatch(/<figcaption>/)
+      expect(figure).toMatch(/alt="[^"]+"/)
+      const src = figure.match(/<img src="([^"]+)"/)[1]
+      images.add(src)
+    }
+  }
+  expect(images.size).toBe(66)
+  for (const src of images) {
+    const response = await page.goto(src)
+    expect(response.ok(), src).toBe(true)
+    const defects = await page.evaluate(() => {
+      const svg = document.querySelector('svg')
+      if (!svg) return ['invalid SVG document']
+      const { width, height } = svg.viewBox.baseVal
+      return [...svg.querySelectorAll('text')].flatMap((node) => {
+        const box = node.getBBox()
+        return box.x < 0 || box.y < 0 || box.x + box.width > width || box.y + box.height > height
+          ? [node.textContent]
+          : []
+      })
+    })
+    expect(defects, src).toEqual([])
+  }
 })
 
 test('URL histórica encaminha ao guia canônico atual', async ({ page }) => {

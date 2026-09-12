@@ -17,6 +17,8 @@ import blogProductivity from './blog-articles-productivity.mjs';
 import { BLOG_DOUBLE_WORD_TARGETS } from './blog-editorial-targets.mjs';
 import { INSTRUMENT_EDITORIAL } from './editorial-instruments.mjs';
 import { LEGACY_REDIRECTS } from './site-migrations.mjs';
+import { buildEditorialTheme } from './editorial-theme.mjs';
+import { buildBlogFigures } from './blog-figures.mjs';
 
 const BASE_URL = SITE_METADATA.baseUrl;
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
@@ -1260,10 +1262,10 @@ function renderLegalPage(page) {
   return html;
 }
 
-function renderBlogArticle(article) {
+function renderBlogArticle(article, illustratedBody) {
   const pageUrl = `${BASE_URL}/blog/${article.slug}/`;
   const documentTitle = `${article.title} | ${SITE_METADATA.name}`;
-  const preparedBody = prepareArticleBody(article.body);
+  const preparedBody = prepareArticleBody(illustratedBody);
   const editorialWordCount = countWords(article.body);
   const readingMinutes = Math.max(3, Math.ceil(editorialWordCount / 200));
   const publishedAt = article.publishedAt;
@@ -1749,13 +1751,15 @@ async function main() {
   validateEditorialContent();
 
   const generatedFiles = [];
+  const withEditorialTheme = await buildEditorialTheme(DIST_DIR);
+  const illustratedArticles = await buildBlogFigures(BLOG_ARTICLES, DIST_DIR);
 
   for (const route of SEO_PAGE_ROUTES) {
     for (const locale of ['pt', 'en']) {
       const pageMetadata = route[locale];
       const pageDir = path.join(DIST_DIR, pageMetadata.slug);
       await fs.mkdir(pageDir, { recursive: true });
-      const html = renderToolPage(route, locale);
+      const html = withEditorialTheme(renderToolPage(route, locale));
       await fs.writeFile(path.join(pageDir, 'index.html'), html, 'utf8');
       generatedFiles.push(`/${pageMetadata.slug}/`);
     }
@@ -1764,25 +1768,25 @@ async function main() {
   for (const page of LEGAL_PAGES) {
     const pageDir = path.join(DIST_DIR, page.slug);
     await fs.mkdir(pageDir, { recursive: true });
-    const html = renderLegalPage(page);
+    const html = withEditorialTheme(renderLegalPage(page));
     await fs.writeFile(path.join(pageDir, 'index.html'), html, 'utf8');
     generatedFiles.push(`/${page.slug}/`);
   }
 
   const blogDir = path.join(DIST_DIR, 'blog');
   await fs.mkdir(blogDir, { recursive: true });
-  await fs.writeFile(path.join(blogDir, 'index.html'), renderBlogIndex(), 'utf8');
+  await fs.writeFile(path.join(blogDir, 'index.html'), withEditorialTheme(renderBlogIndex()), 'utf8');
   generatedFiles.push('/blog/');
 
   const toolsDir = path.join(DIST_DIR, 'ferramentas');
   await fs.mkdir(toolsDir, { recursive: true });
-  await fs.writeFile(path.join(toolsDir, 'index.html'), renderToolsIndex(), 'utf8');
+  await fs.writeFile(path.join(toolsDir, 'index.html'), withEditorialTheme(renderToolsIndex()), 'utf8');
   generatedFiles.push('/ferramentas/');
 
   for (const article of BLOG_ARTICLES) {
     const articleDir = path.join(blogDir, article.slug);
     await fs.mkdir(articleDir, { recursive: true });
-    const html = renderBlogArticle(article);
+    const html = withEditorialTheme(renderBlogArticle(article, illustratedArticles.get(article.slug)));
     await fs.writeFile(path.join(articleDir, 'index.html'), html, 'utf8');
     generatedFiles.push(`/blog/${article.slug}/`);
   }
@@ -1793,7 +1797,7 @@ async function main() {
     await fs.writeFile(path.join(sourceDir, 'index.html'), renderLegacyRedirect(sourcePath, targetPath), 'utf8');
   }
 
-  const notFoundHtml = render404Page();
+  const notFoundHtml = withEditorialTheme(render404Page());
   await fs.writeFile(path.join(DIST_DIR, '404.html'), notFoundHtml, 'utf8');
 
   const generatedPublicFiles = new Map([

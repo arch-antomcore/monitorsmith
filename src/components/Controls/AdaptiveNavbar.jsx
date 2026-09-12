@@ -45,8 +45,8 @@ const containerVariants = {
 };
 
 const logoVariants = {
-  expanded: { opacity: 1, x: 0, rotate: 0, transition: { type: "spring", damping: 15 } },
-  collapsed: { opacity: 0, x: -25, rotate: -180, transition: { duration: 0.3 } },
+  expanded: { opacity: 1, x: 0, transition: { type: "spring", damping: 15 } },
+  collapsed: { opacity: 0, x: -25, transition: { duration: 0.3 } },
 };
 
 const itemVariants = {
@@ -148,7 +148,7 @@ export default React.memo(function AdaptiveNavbar({
         animate={isExpanded ? "expanded" : "collapsed"}
         variants={containerVariants}
         style={{ willChange: 'width, transform' }}
-        whileHover={!isExpanded && !shouldReduceMotion ? { scale: 1.08, boxShadow: "0 4px 24px rgba(251, 191, 36, 0.4), inset 0 0 10px rgba(251, 191, 36, 0.15)" } : {}}
+        whileHover={!isExpanded && !shouldReduceMotion ? { scale: 1.03 } : {}}
         whileTap={!isExpanded && !shouldReduceMotion ? { scale: 0.95 } : {}}
         aria-hidden={!visible}
         inert={!visible ? '' : undefined}
@@ -157,7 +157,7 @@ export default React.memo(function AdaptiveNavbar({
           "wbp-navbar flex items-center overflow-hidden rounded-full h-12 pointer-events-auto shadow-sm transition-colors duration-300",
           isExpanded 
             ? "glass3d border border-border/40 bg-black/40 backdrop-blur-md" 
-            : "cursor-pointer justify-center border border-amber-400/40 bg-black/60 backdrop-blur-lg shadow-[0_0_15px_rgba(251,191,36,0.2)] hover:border-amber-400/60"
+            : "cursor-pointer justify-center border border-amber-400/40 bg-black/60 backdrop-blur-lg hover:border-amber-400/60"
         )}
       >
         <motion.div
