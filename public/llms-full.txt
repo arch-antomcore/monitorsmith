@@ -1,0 +1,91 @@
+# MonitorSmith — Documentação Completa (llms-full.txt)
+
+> Suíte de utilitários web para inspeção visual de displays, iluminação e produtividade, por EXVORN.TECH.
+
+## Ferramentas Disponíveis
+- [Tela Preta OLED e Vazamento de Luz](https://monitorsmith.app/tela-preta-oled/): Abra uma tela preta em fullscreen para reduzir luz e inspecionar pixels claros, IPS glow e vazamento de luz.
+- [Fullscreen Black Screen](https://monitorsmith.app/black-screen/): Open a fullscreen black surface to reduce emitted light and visually inspect bright pixels, IPS glow and backlight bleed.
+- [Teste de Dead Pixel Online](https://monitorsmith.app/teste-de-dead-pixel/): Alterne cores sólidas em tela cheia para inspecionar visualmente dead pixels, pixels presos e pontos luminosos.
+- [Online Dead Pixel Test](https://monitorsmith.app/dead-pixel-test/): Switch between solid fullscreen colors to visually inspect dead pixels, stuck pixels and bright spots.
+- [Guia para Limpeza e Inspeção de Tela](https://monitorsmith.app/limpeza-de-monitor/): Evidencie poeira e marcas no monitor e siga orientações prudentes para limpar o painel sem danificá-lo.
+- [Screen Cleaning and Inspection Guide](https://monitorsmith.app/screen-cleaner/): Reveal dust and marks on your monitor and follow careful guidance for cleaning the panel without damage.
+- [Teste Visual de Monitor](https://monitorsmith.app/teste-de-monitor/): Observe gradientes, contraste, escala de cinza e nitidez com padrões visuais no navegador.
+- [Visual Monitor Test](https://monitorsmith.app/monitor-test/): Observe gradients, contrast, grayscale and sharpness with browser-rendered visual patterns.
+- [Verificação Visual de Display](https://monitorsmith.app/verificacao-visual/): Use padrões de referência para observar contraste, tons, nitidez e uniformidade sem alegar calibração instrumental.
+- [Visual Display Check](https://monitorsmith.app/display-calibration/): Use reference patterns to observe contrast, tones, sharpness and uniformity without claiming instrument-grade calibration.
+- [Luz de Apoio para Videochamada](https://monitorsmith.app/luz-para-videochamada/): Use o monitor como fonte próxima de luz ajustável para videochamadas e gravações.
+- [Screen Light for Video Calls](https://monitorsmith.app/webcam-light/): Use your monitor as a nearby adjustable light source for video calls and recordings.
+- [Tela Verde para Chroma Key](https://monitorsmith.app/tela-verde-chroma/): Preencha o monitor com verde #00B140 para fundos e composições simples de foto ou vídeo.
+- [Green Screen for Chroma Key](https://monitorsmith.app/green-screen/): Fill your display with #00B140 green for simple photo or video backgrounds and composites.
+- [Timer de Foco](https://monitorsmith.app/timer-de-foco/): Organize ciclos de concentração com timer em tela cheia e sons ambientes opcionais gerados no navegador.
+- [Focus Timer](https://monitorsmith.app/focus-timer/): Organize concentration cycles with a fullscreen timer and optional browser-generated ambient sounds.
+- [Relógio em Tela Cheia](https://monitorsmith.app/relogio-em-tela-cheia/): Exiba hora e data em formatos digital ou analógico para uma tela secundária.
+- [Fullscreen Clock](https://monitorsmith.app/fullscreen-clock/): Display time and date in digital or analog formats on a secondary screen.
+- [Mensagem em Tela Cheia](https://monitorsmith.app/mensagem-em-tela/): Crie um aviso legível em tela cheia com texto e cores ajustáveis.
+- [Fullscreen Message](https://monitorsmith.app/fullscreen-message/): Create a readable fullscreen notice with adjustable text and colors.
+- [Teleprompter Online](https://monitorsmith.app/teleprompter-online/): Exiba e espelhe texto em tela cheia como apoio simples para gravações.
+- [Online Teleprompter](https://monitorsmith.app/online-teleprompter/): Display and mirror fullscreen text as a simple reading aid for recordings.
+- [Loop de Marcas em Tela Cheia](https://monitorsmith.app/loop-de-marcas/): Apresente logos e imagens locais em rotação automática para eventos, transmissões e vitrines.
+- [Fullscreen Brand Loop](https://monitorsmith.app/sponsor-loop/): Present local logos and images in an automatic rotation for events, streams and displays.
+- [Calculadora de PPI e Densidade de Pixels](https://monitorsmith.app/calculadora-ppi-densidade-monitor/): Calcule PPI, dot pitch em milímetros e a distância correspondente a um minuto de arco.
+- [Monitor PPI & Pixel Density Calculator](https://monitorsmith.app/ppi-monitor-calculator/): Calculate PPI, dot pitch in millimetres and the distance corresponding to one arcminute.
+- [Teste Visual de Ghosting e Motion Blur](https://monitorsmith.app/teste-de-ghosting-monitor/): Observe rastros de movimento e overshoot ao comparar ajustes do monitor, com estimativa da cadência da animação no navegador.
+- [Visual Ghosting & Motion Blur Test](https://monitorsmith.app/motion-blur-ghosting-test/): Visually inspect motion trails and overdrive overshoot while comparing monitor settings, with an estimate of browser animation cadence.
+- [Teste de Touchscreen e Zonas sem Resposta](https://monitorsmith.app/teste-de-touchscreen-celular-tablet/): Desenhe pela superfície para localizar áreas sem eventos de toque e observar o multi-toque que o navegador recebe.
+- [Touchscreen Response Test](https://monitorsmith.app/touchscreen-multitouch-test/): Draw across the display to locate areas without touch events and observe the multitouch input delivered to the browser.
+- [Informações Técnicas do Seu Monitor](https://monitorsmith.app/informacoes-do-monitor/): Consulte resolução lógica, devicePixelRatio e os recursos de cor, HDR e GPU informados pelo navegador, com suas limitações.
+- [Your Monitor Technical Information](https://monitorsmith.app/monitor-information/): Read logical resolution, devicePixelRatio and browser-reported color, HDR and GPU capabilities, with their limitations.
+- [Teste de Taxa de Atualização e Frame Time](https://monitorsmith.app/teste-de-taxa-de-atualizacao-hz/): Estime a cadência de animação no navegador, o intervalo médio entre quadros, o jitter e possíveis atrasos na aba ativa.
+- [Refresh Rate and Frame Time Test](https://monitorsmith.app/refresh-rate-test/): Estimate browser animation cadence, average frame interval, jitter and possible delays while the tab is active.
+- [Teste de Uniformidade de Tela](https://monitorsmith.app/teste-de-uniformidade-monitor/): Percorra degraus de cinza em tela cheia para revelar clouding, vazamento de luz de fundo, glow de bordas e manchas de retenção.
+- [Screen Uniformity Test](https://monitorsmith.app/screen-uniformity-test/): Step through fullscreen gray fields to reveal clouding, backlight bleed, edge glow and image retention stains.
+- [Teste de Teclado Online](https://monitorsmith.app/teste-de-teclado-online/): Observe eventos de teclas, repetições, códigos DOM e combinações simultâneas entregues ao navegador.
+- [Online Keyboard Test](https://monitorsmith.app/keyboard-test/): Observe key events, repeats, DOM codes and simultaneous combinations delivered to the browser.
+- [Teste de Mouse Online](https://monitorsmith.app/teste-de-mouse-online/): Observe botões, roda, taxa de eventos entregue pelo navegador e repetições de clique que merecem nova verificação.
+- [Online Mouse Test](https://monitorsmith.app/mouse-test/): Observe buttons, wheel input, browser-delivered event rate and repeated clicks that warrant another check.
+- [Teste de Controle e Stick Drift](https://monitorsmith.app/teste-de-controle-online/): Observe botões, eixos, gatilhos e vibração expostos pela Gamepad API, com limites de compatibilidade.
+- [Gamepad and Stick Drift Test](https://monitorsmith.app/gamepad-test/): Observe buttons, axes, triggers and rumble exposed through the Gamepad API, subject to browser compatibility.
+- [Calculadoras de Banda, FOV e Proporção](https://monitorsmith.app/calculadora-de-banda-hdmi-displayport/): Estime banda bruta por resolução e taxa, calcule a distância correspondente a um FOV e derive dimensões por proporção.
+- [Bandwidth, FOV and Aspect Ratio Calculators](https://monitorsmith.app/hdmi-displayport-bandwidth-calculator/): Estimate raw bandwidth by resolution and refresh rate, calculate distance for a target FOV, and derive dimensions from aspect ratio.
+
+## Artigos e Guias do Blog
+- [Como inspecionar backlight bleed em um monitor LCD](https://monitorsmith.app/blog/backlight-bleed-como-testar/): Use um protocolo controlado para comparar áreas claras em cenas escuras, registrar as condições e levar evidências úteis ao suporte.
+- [Como comparar IPS glow e backlight bleed](https://monitorsmith.app/blog/ips-glow-vs-backlight-bleed/): Compare brilho aparente em cenas escuras variando ângulo, distância e posição, sem transformar uma observação visual em diagnóstico do painel.
+- [Checklist de inspeção para monitores OLED](https://monitorsmith.app/blog/como-testar-monitor-oled/): Confira sinal, superfície, cores, uniformidade aparente, retenção e rotinas de manutenção seguindo os controles previstos pelo fabricante.
+- [O que uma tela preta muda no monitor](https://monitorsmith.app/blog/tela-preta-descanso-monitor/): Entenda como OLED, LCD convencional e LCD com escurecimento local reagem a uma imagem preta e quando usar o modo de suspensão.
+- [O que são pixels e como observar pontos aparentes na tela](https://monitorsmith.app/blog/o-que-sao-dead-pixels/): Entenda pixels, subpixels e as descrições de pontos claros, escuros ou coloridos antes de registrar uma ocorrência para o suporte.
+- [Como avaliar um monitor usado presencialmente ou a distância](https://monitorsmith.app/blog/testar-monitor-olx-mercado-livre/): Organize documentos, inspeção física, conexões, resolução, taxa de atualização e padrões de tela antes de decidir sobre um monitor usado.
+- [Como documentar um ponto aparente na tela](https://monitorsmith.app/blog/pixel-morto-vs-pixel-preso/): Monte um registro visual comparável de pontos escuros, claros ou coloridos e evite concluir a causa física apenas pela aparência.
+- [Como documentar pixels aparentes para consultar a garantia](https://monitorsmith.app/blog/politica-dead-pixel-fabricantes/): Identifique a política do modelo, reúna evidências comparáveis e organize o chamado sem depender de limites genéricos encontrados na internet.
+- [Procedimento seguro para limpar a tela do monitor](https://monitorsmith.app/blog/como-limpar-monitor-sem-danificar/): Siga uma sequência conservadora para remover poeira e marcas sem borrifar líquidos, pressionar o painel ou ignorar o revestimento do modelo.
+- [Como adaptar a limpeza ao tipo de tela e acabamento](https://monitorsmith.app/blog/guia-limpeza-lcd-oled-notebook/): Compare cuidados para monitores foscos, OLED brilhante, notebooks, telas sensíveis ao toque e vidro nanotexturizado antes de escolher o método.
+- [Como observar manchas na tela sem presumir a causa](https://monitorsmith.app/blog/manchas-no-monitor-causas/): Separe superfície, reflexo, fonte de vídeo e comportamento do painel com uma triagem visual organizada antes de procurar suporte.
+- [Calibração e Perfil de Monitor para Fotografia e Design](https://monitorsmith.app/blog/calibrar-monitor-fotografia-design/): Entenda o que padrões visuais conseguem verificar, quando usar um colorímetro e como manter um fluxo de cor documentado para fotografia e design.
+- [Color Banding: Origem, Testes e Limites do Diagnóstico Visual](https://monitorsmith.app/blog/o-que-e-color-banding/): Método para separar banding presente no arquivo de problemas na renderização, no sinal ou na tela usando comparações controladas.
+- [Como Verificar Sombras, Realces e Resposta Tonal do Monitor](https://monitorsmith.app/blog/teste-contraste-gama-monitor/): Use padrões visuais para observar recorte e separação tonal, entender funções de transferência e registrar ajustes sem confundir triagem com medição.
+- [Monitor para Edição de Vídeo: Critérios por Tipo de Entrega](https://monitorsmith.app/blog/monitor-para-edicao-video/): Organize a escolha do monitor pelo padrão de entrega, caminho do sinal, uniformidade, medição e condições reais de trabalho em SDR ou HDR.
+- [Como Testar Chroma Key com Monitor, TV ou Tablet](https://monitorsmith.app/blog/chroma-key-sem-tecido-tela-verde/): Use uma tela como fundo de chroma key em enquadramentos pequenos, controle reflexos e moiré e ajuste o recorte com um checklist reproduzível.
+- [Fundo de Cor em Tela para Fotografar Produtos Pequenos](https://monitorsmith.app/blog/fundo-cor-fotos-produto/): Monte um fundo emissivo para objetos pequenos e controle foco, reflexos, moiré, flicker e fidelidade da cor com testes na própria câmera.
+- [Como Fotografar Produtos para Venda Online com Clareza](https://monitorsmith.app/blog/fotografia-produto-olx-mercado-livre/): Crie um conjunto de fotos que documente aparência, escala, acessórios e defeitos do produto e revise as regras atuais da plataforma antes de publicar.
+- [Cores no Streaming: Paleta, Separação e Teste na Câmera](https://monitorsmith.app/blog/cores-streaming-cenarios/): Monte uma paleta simples, preserve tons de pele, avalie compressão e use fontes de cor do OBS ou uma tela auxiliar com controle.
+- [Como Melhorar a Iluminação em Videochamadas](https://monitorsmith.app/blog/iluminacao-videochamada-dicas/): Organize janela, câmera e luz frontal, use o monitor como apoio e confira como o aplicativo altera exposição e aparência.
+- [Como Usar o Monitor como Luz de Preenchimento](https://monitorsmith.app/blog/monitor-como-softbox-streamer/): Entenda quando a área clara da tela suaviza sombras, como posicioná-la pela prévia e quais limitações diferenciam um monitor de uma softbox.
+- [Temperatura de Cor, CCT e D65 sem Confundir Medição e Aparência](https://monitorsmith.app/blog/temperatura-de-cor-explicada/): Entenda CCT, D65, matiz e espectro e saiba por que um controle RGB nominal serve para comparação visual, não para medir Kelvin.
+- [Técnica Pomodoro: um procedimento prático para testar no trabalho](https://monitorsmith.app/blog/tecnica-pomodoro-guia/): Aprenda a planejar ciclos de foco, registrar interrupções e ajustar trabalho e pausas sem tratar 25 minutos como regra universal.
+- [Ruído branco, rosa e marrom para foco: como comparar com cuidado](https://monitorsmith.app/blog/ruido-marrom-branco-rosa-foco/): Entenda as diferenças entre ruído branco, rosa e marrom, compare a reprodução em volume baixo e reconheça os limites do navegador.
+- [Como organizar foco no trabalho remoto sem confundir presença com resultado](https://monitorsmith.app/blog/foco-trabalho-remoto/): Monte uma rotina com entregas claras, blocos de atenção, pausas, registro de interrupções e revisão do ambiente de trabalho.
+- [Como usar um monitor secundário como relógio de mesa](https://monitorsmith.app/blog/relogio-digital-monitor-secundario/): Configure hora e data em tela cheia, confira o relógio do sistema e reduza riscos de imagem estática e consumo desnecessário.
+- [Setup com dois monitores: configuração prática e verificação](https://monitorsmith.app/blog/setup-dois-monitores-dicas/): Organize dois monitores com resolução, escala, posição física e ergonomia coerentes, e saiba o que comparar antes de ajustar.
+- [Como usar um teleprompter online em gravações](https://monitorsmith.app/blog/como-usar-teleprompter-videos/): Prepare um roteiro legível, escolha quando espelhar o texto, ensaie a leitura e teste enquadramento e captura antes de gravar.
+- [Como preparar uma mensagem em tela cheia para eventos](https://monitorsmith.app/blog/sinalizacao-digital-eventos/): Crie avisos legíveis, teste contraste e distância, configure o navegador e mantenha um plano para falhas e mudanças urgentes.
+- [Como exibir um QR code em tela cheia com destino e contexto](https://monitorsmith.app/blog/qr-code-tela-cheia-eventos/): Monte um QR code com URL reconhecível, margem, contraste e alternativa em texto; teste aparelhos, distâncias e segurança antes do evento.
+- [Como organizar um loop de logos para evento ou transmissão](https://monitorsmith.app/blog/logos-patrocinadores-eventos/): Prepare arquivos autorizados, defina ordem e duração, teste o loop no display final e escolha uma captura adequada no software de transmissão.
+- [Como montar uma vitrine digital simples em loja ou estande](https://monitorsmith.app/blog/vitrine-digital-lojas-estandes/): Planeje uma sequência curta de imagens, confira preços e validade, instale o monitor com segurança e defina uma rotina de operação.
+- [Guia do MonitorSmith: método, evidência e limites das ferramentas](https://monitorsmith.app/blog/guia-completo-monitorsmith/): Aprenda a formular uma pergunta, controlar variáveis, registrar observações e escolher uma verificação seguinte ao usar as 27 ferramentas.
+
+## Institucional e Legal
+- [Sobre o MonitorSmith](https://monitorsmith.app/sobre/): Propósito, arquitetura client-side e padrões de engenharia de displays.
+- [Política Editorial](https://monitorsmith.app/politica-editorial/): Autoria, seleção de fontes, revisão, limites e correções.
+- [Contato e Suporte](https://monitorsmith.app/contato/): Canais oficiais de atendimento, dúvidas técnicas e feedback.
+- [Política de Privacidade](https://monitorsmith.app/privacidade/): Tratamento de dados locais, cookies e diretrizes Google AdSense.
+- [Termos de Uso](https://monitorsmith.app/termos/): Condições de uso e propriedade intelectual.

@@ -1,0 +1,102 @@
+/* Layout stays in the page templates; identity comes from brand-tokens.css. */
+:root {
+  --bg: var(--msx-void);
+  --surface: var(--msx-panel);
+  --text: var(--msx-ink);
+  --muted: var(--msx-ink-2);
+  --line: var(--msx-hair);
+  --accent: var(--msx-phos);
+}
+
+body {
+  font-family: var(--msx-font-body);
+  background: var(--msx-void);
+  color: var(--msx-ink);
+}
+
+h1, h2, h3, header a:first-child {
+  font-family: var(--msx-font-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+header a:first-child {
+  color: var(--msx-ink);
+  font-size: 1.05rem;
+}
+
+a { color: var(--msx-phos); }
+header a, .article-toc a { color: var(--msx-ink); }
+a:hover { color: var(--msx-phos-2); }
+.standfirst { color: var(--msx-ink-2); }
+.card-meta { color: var(--msx-ink-3); }
+
+.article-kicker, .eyebrow, .tool-id, .card-meta, .cta, .trail-nav {
+  font-family: var(--msx-font-mono);
+}
+
+section, .card, .tool-card, .how, .notice, .editorial-intro, .article-toc,
+.related-grid a, .trail-nav a, .tool-links a, .cta, header a, footer a,
+.blog-body .table-scroll {
+  border-radius: var(--msx-radius);
+}
+
+.card, .tool-card {
+  background: var(--msx-panel);
+  border-color: var(--msx-hair);
+  transition: border-color 150ms ease;
+}
+
+.card:hover, .tool-card:hover, .cta:hover, .cta.secondary:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--msx-phos-line);
+}
+
+.article-toc, .editorial-intro, .how {
+  background: var(--msx-panel);
+  border: 1px solid var(--msx-hair);
+  border-left: 3px solid var(--msx-phos);
+}
+
+.cta {
+  background: var(--msx-phos);
+  color: var(--msx-phos-ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+.cta:hover { background: var(--msx-phos-2); color: var(--msx-phos-ink); }
+.cta.secondary, .cta.secondary:hover { background: var(--msx-panel); color: var(--msx-ink); }
+footer a { background: transparent; }
+footer a:hover { background: var(--msx-phos-soft); color: var(--msx-phos); }
+footer button { font-family: var(--msx-font-body); border-radius: var(--msx-radius) !important; }
+
+.blog-body { font-size: 1.0625rem; line-height: 1.8; }
+.blog-body h2 { margin-top: 2.5rem; font-size: 1.5rem; line-height: 1.25; }
+.blog-body h3 { font-size: 1.18rem; line-height: 1.35; }
+.blog-body strong { color: var(--msx-ink); }
+.blog-figure { margin: 2rem 0; }
+.blog-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--msx-hair-2);
+  border-radius: var(--msx-radius);
+  background: var(--msx-panel);
+}
+.blog-figure figcaption {
+  max-width: 72ch;
+  margin-top: 0.7rem;
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--msx-phos);
+  color: var(--msx-ink-2);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.blog-figure figcaption span { color: var(--msx-ink); font-weight: 600; }
+@media (max-width: 480px) {
+  .blog-body { font-size: 1rem; }
+  .blog-body h2 { font-size: 1.35rem; }
+}
